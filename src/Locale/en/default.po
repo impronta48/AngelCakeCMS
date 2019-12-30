@@ -1,0 +1,16 @@
+msgid "Scopri di più"
+msgstr "Discover"
+
+msgid "Contattaci"
+msgstr "Contact Us"
+
+msgid "Prodotti e servizi"
+msgstr "Products and Services"
+
+msgid "Il blog di BikeSquare"
+msgstr "BikeSquare Blog"
+
+msgid "Il blog di BikeSquare: cicloturismo, e-bikes, esperienze di turismo"
+msgstr "BikeSquare Blog: cycling tourism, ebikes, turist experiences"
+
+
