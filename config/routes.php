@@ -75,6 +75,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/contact', ['controller' => 'Pages', 'action' => 'display', 'contact']);
     $routes->connect('/en/contact', ['controller' => 'Pages', 'action' => 'display', 'en', 'contact']);
     $routes->connect('/sitemap', ['controller' => 'Sitemaps', 'action' => 'index']);
+    $routes->connect('/langhe/giovani', ['controller' => 'Pages', 'action' => 'display','giovaninlanga-e-il-nostro-viaggio-continua']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
