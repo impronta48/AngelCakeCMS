@@ -139,4 +139,18 @@ class EventsController extends AppController
             $this->RequestHandler->renderAs($this, 'json');   
         }
     }
+
+    //Metodo per far iscrivere gli utenti ad un evento
+    public function subscribe($slug)
+    {
+        $event = $this->Events->findBySlug($slug)                
+                ->firstOrFail();            
+
+        $siti = $this->Events->Destinations->find('list',[
+                'conditions' => ['show_in_list' => 1, 'chiuso'=>0],
+                'order' => 'Name'
+        ]);
+        $this->set('siti', $siti);
+        $this->set('event', $event);
+    }
 }

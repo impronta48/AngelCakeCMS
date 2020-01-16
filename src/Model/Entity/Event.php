@@ -45,6 +45,7 @@ class Event extends Entity
         'modified' => true,
         'user_id' => true,
         'destination' => true,
-        'user' => true
+        'user' => true,
+        'slug' => true
     ];
 }

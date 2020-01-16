@@ -1,3 +1,8 @@
+<?php echo $this->Html->script('ckeditor/ckeditor', ['block' => true]); ?>
+<?php echo $this->Html->script('ckeditor/adapters/jquery', ['block' => true]); ?>
+<!-- configurazione custom di ckeditor che sovrascrive quella standard -->
+<?php echo $this->Html->script('bikesquare.ckeditor.config', ['block' => true]); ?>
+
 <?php
 /**
  * @var \App\View\AppView $this
@@ -9,6 +14,8 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
 
 $this->start('tb_actions');
 ?>
+
+
     <li><?=
     $this->Form->postLink(
         __('Delete'),
@@ -54,7 +61,7 @@ $this->end();
     <legend><?= __('Edit {0}', ['Event']) ?></legend>
     <?php
     echo $this->Form->control('title');
-    echo $this->Form->control('description');
+    echo $this->Form->control('description',['class'=>'jquery-ckeditor']);
     echo $this->Form->control('max_pax');
     echo $this->Form->control('place');
     echo $this->Form->control('destination_id', ['options' => $destinations]);
@@ -62,8 +69,18 @@ $this->end();
     echo $this->Form->control('end_time');
     echo $this->Form->control('min_year');
     echo $this->Form->control('max_year');
+    echo $this->Form->control('slug');
     echo $this->Form->control('user_id', ['options' => $users]);
     ?>
 </fieldset>
 <?= $this->Form->button(__("Save")); ?>
 <?= $this->Form->end() ?>
+
+
+<?php $this->Html->scriptStart(array('block' => true)); ?>
+$(function () {
+    $(".jquery-ckeditor").ckeditor({
+        customConfig: 'js/bikesquare.ckeditor.config.js'
+    });
+});
+<?php $this->Html->scriptEnd();
