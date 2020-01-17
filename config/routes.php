@@ -21,6 +21,7 @@ use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
+use Cake\Core\Configure;
 
 /**
  * The default class to use for all routes
@@ -61,21 +62,21 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->applyMiddleware('csrf');
     
 
+    //Se nel file di configurazione ho specificato customRoutes, allora
+    //importo extra-routes.php nella cartella sites/nomesito/
+    $er = Configure::read('ExtraRoutes');
+    if ($er)
+    {    
+        include_once conf_path() . DS .  'extra-routes.php';
+    }
+    
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-    $routes->connect('/blog', ['controller' => 'Static', 'action' => 'index', 'blog']);
-    $routes->connect('en/blog', ['controller' => 'Static', 'action' => 'index', 'en', 'blog']);
-    $routes->connect('/marketplace', ['controller' => 'Static', 'action' => 'view', 'marketplace']);
-    $routes->connect('/en', ['controller' => 'Pages', 'action' => 'display', 'en', 'home']);
-    //$routes->connect('/es', ['controller' => 'Pages', 'action' => 'display', 'es/home']);
-    $routes->connect('/contact', ['controller' => 'Pages', 'action' => 'display', 'contact']);
-    $routes->connect('/en/contact', ['controller' => 'Pages', 'action' => 'display', 'en', 'contact']);
     $routes->connect('/sitemap', ['controller' => 'Sitemaps', 'action' => 'index']);
-    $routes->connect('/langhe/giovani', ['controller' => 'Pages', 'action' => 'display','giovaninlanga-e-il-nostro-viaggio-continua']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

@@ -7,7 +7,7 @@ environments:
     default_database: development
     production:
         adapter: mysql
-        host: localhost
+        host: vps4.impronta48.it
         name: yepp_cake3
         user: max
         pass: clo-48tilde

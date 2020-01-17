@@ -5,7 +5,7 @@ use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use Cake\Core\Configure;
 use Cake\Utility\Text;
-
+use Cake\Routing\Router;
 
 class StaticModel
 {
@@ -133,9 +133,12 @@ class StaticModel
         /*CANONICAL*/
         if(!isset($variabili['canonical']))
         {
+            $slug = ltrim($miniPath . DS . $fname,'/');            
             $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'http://' : 'https://';
-            $canonical= $protocol . env('HTTP_HOST') . DS . 'static' . DS . 'view' . $miniPath . DS . $fname;
+            $canonical= $protocol . env('HTTP_HOST') . '/' . $slug;
+
             $variabili['canonical']= $canonical;
+            $variabili['slug']= $slug;
         }
 
         /*COPERTINA*/
