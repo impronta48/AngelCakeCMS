@@ -111,6 +111,8 @@ class StaticModel
         $body = $result->getBody();
         $variabili = $result->getFrontmatter();
         
+        $variabili['id'] = $fname;
+
         /*DESCRIPTION*/
         if(!isset($variabili['description']))
         {
@@ -130,15 +132,16 @@ class StaticModel
             $variabili['title']= $title;
         }
 
+
+        $slug = ltrim($miniPath . DS . $fname,'/');            
+        $variabili['slug']= $slug;
+
         /*CANONICAL*/
         if(!isset($variabili['canonical']))
         {
-            $slug = ltrim($miniPath . DS . $fname,'/');            
             $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'http://' : 'https://';
             $canonical= $protocol . env('HTTP_HOST') . '/' . $slug;
-
-            $variabili['canonical']= $canonical;
-            $variabili['slug']= $slug;
+            $variabili['canonical']= $canonical;    
         }
 
         /*COPERTINA*/

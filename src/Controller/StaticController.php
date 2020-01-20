@@ -117,16 +117,25 @@ class StaticController extends AppController
             $this->set($variabile, $dati[$variabile]);
         }
 
-        //Se la pagina è di tipo blog, uso un template specifico
-        if ($path[0] == 'blog'||(isset($path[1]) && $path[1]=='blog'))
+        //Se il path[0] contiene una slash devo fare una separazione in pezzi
+        //Massimoi - 2020-01-20 Problema introdotto con la gestione particolare dei path 
+        $languages = Configure::read('App.Languages');        
+        if (strpos($path[0],'/'))
         {
-            $this->render('blog');
+        	$path = explode('/',$path[0]);
+        	//Se il primo elemento è la lingua lo butto
+        	if (in_array($path[0], $languages))
+        	{
+        		array_shift($path);
+        	}
+        }
+        
+        //Se la pagina è di tipo specifico, uso un template specifico
+        $special_template = Configure::read('specialTemplate');
+        if (in_array($path[0], $special_template))
+        {
+            $this->render($path[0]);
         } 
-        //Se la pagina è di tipo target, uso un template specifico
-        if ($path[0] == 'target'||(isset($path[1]) && $path[1]=='target'))
-        {
-            $this->render('target');
-        }    
     }
     //Legge una cartella remota di webDav e aggiorna la cartella static del sito corrente
     public function getRemote()
