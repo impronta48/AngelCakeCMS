@@ -17,12 +17,30 @@
     );
  }
 ?>
+
+<div class="page-header parallax dark largest larger-desc" data-bgattach="images/backgrounds/aboutus-header.jpg" data-0="background-position:50% 0px;" data-500="background-position:50% -100%">
+    <div class="container" data-0="opacity:1;" data-top="opacity:0;">
+        <div class="row">
+            <div class="col-md-6">
+                <h1><?= $title ?></h1>
+                <p class="page-header-desc"><?= $description?></p>
+            </div><!-- End .col-md-6 -->
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active"><?= $category ?></li>
+                </ol>
+            </div><!-- End .col-md-6 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</div><!-- End .page-header -->
+
 <div class="page-header custom larger larger-desc">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-10">
-                            <h1><?= $title ?> </h1>
-                            <p class="page-header-desc"><?= $description?></p>
+                            <h1> </h1>
+                            <p class="page-header-desc"></p>
                         </div><!-- End .col-md-6 -->
                     </div><!-- End .row -->
                 </div><!-- End .container -->
