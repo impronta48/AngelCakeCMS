@@ -1,7 +1,5 @@
 <?php echo $this->Html->script('ckeditor/ckeditor', ['block' => true]); ?>
 <?php echo $this->Html->script('ckeditor/adapters/jquery', ['block' => true]); ?>
-<!-- configurazione custom di ckeditor che sovrascrive quella standard -->
-<?php echo $this->Html->script('bikesquare.ckeditor.config', ['block' => true]); ?>
 
 <?php $this->assign('title', 'Edit: ' . $article->title); ?>
 
@@ -130,14 +128,13 @@ $this->end();
 <?= $this->Form->control('published',['label'=>'Pubblicato']); ?>
 <?= $this->Form->control('archived',['label'=>'Archiviato']); ?>
 <?= $this->Form->control('promoted',['label'=>'Promosso in Home Page']); ?>
+<?= $this->Form->control('modified',['label'=>'Ultima Modifica','type'=>'text']); ?>
 <?= $this->Form->control('user_id'); ?>
 <?= $this->Form->button(__("Save")); ?>
 <?= $this->Form->end() ?>
 
 <?php $this->Html->scriptStart(array('block' => true)); ?>
-$(function () {
-	$(".jquery-ckeditor").ckeditor({
-		customConfig: 'js/bikesquare.ckeditor.config.js'
-	});
+jQuery(document).ready(function($){
+    $(".jquery-ckeditor").ckeditor();
 });
 <?php $this->Html->scriptEnd();
