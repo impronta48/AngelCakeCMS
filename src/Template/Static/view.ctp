@@ -28,7 +28,9 @@
             <div class="col-md-6">
                 <ol class="breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li class="active"><?= $category ?></li>
+                    <?php if(isset($category)): ?>
+                    	<li class="active"><?= $category ?></li>
+                    <?php endif ;?>
                 </ol>
             </div><!-- End .col-md-6 -->
         </div><!-- End .row -->
