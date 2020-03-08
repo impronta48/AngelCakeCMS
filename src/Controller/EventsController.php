@@ -16,6 +16,10 @@ class EventsController extends AppController
     public function initialize()
     {
         parent::initialize();
+    }
+
+    public function beforeFilter(Event $event)
+    {
         $this->Auth->allow('getList','subscribe');
     }
 
