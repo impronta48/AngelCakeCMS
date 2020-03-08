@@ -2,8 +2,8 @@
 <?php $this->assign('title',"Iscrizione a {$event->title}" ); ?>
 
 <!-- Validation -->
-<?= $this->Html->script('/vendor/contact-form/validate.js',['block' => true]) ?> 
-<?= $this->Html->script('/vendor/contact-form/jquery.form.js',['block' => true]) ?> 
+<?= $this->Html->script('/vendor/contact-form/validate.js',['block' => true]) ?>
+<?= $this->Html->script('/vendor/contact-form/jquery.form.js',['block' => true]) ?>
 
     <div class="theme-inner-banner">
 			<?= $this->Html->image('convegno.jpg') ?>
@@ -18,7 +18,7 @@
 						<div class="col-md-6 col-xs-12 float-right">
 							<div class="course-request-text">
 
-								<div class="top-title">									
+								<div class="top-title">
 									<h2>Iscrizione a <?= $event->title ?></h2>
 									<p><?= $event->place  ?></p>
 								</div> <!-- /.top-title -->
@@ -37,24 +37,24 @@
 
                     <?= $this->Form->create(null,['url'=>\Cake\Routing\Router::url(['controller' => 'participants', 'action' => 'add'], true), 'id'=>'event-form']); ?>
 
-                    <?= $this->Form->control('name',['label'=>'Nome']); ?>
-                    <?= $this->Form->control('surname',['label'=>'Cognome']); ?>
-                    <?= $this->Form->control('email'); ?>
-                    <?= $this->Form->control('tel'); ?>
+                    <?= $this->Form->control('name',['label'=>'Nome','required'=>'required']); ?>
+                    <?= $this->Form->control('surname',['label'=>'Cognome','required'=>'required']); ?>
+                    <?= $this->Form->control('email',['required'=>'required']); ?>
+                    <?= $this->Form->control('tel',['required'=>'required']); ?>
                     <?= $this->Form->control('facebook'); ?>
                     <?= $this->Form->control('dob',['type'=>'date','dateFormat'=>'DMY','maxYear'=>2005,'minYear'=>1940,'label'=>'Data di Nascita']); ?>
-                    <?= $this->Form->control('pob',['label'=>'Luogo di Nascita']); ?>                                        
+                    <?= $this->Form->control('pob',['label'=>'Luogo di Nascita']); ?>
                     <?= $this->Form->control('destination_id',['label'=>'Sito di Appartenenza', 'options'=>$siti,'empty' => '-- Altro / Nessun Sito --']); ?>
                     <?= $this->Form->control('city',['label'=>'Città di Residenza']); ?>
                     <?= $this->Form->control('address',['label'=>'Indirizzo']); ?>
                     <?= $this->Form->control('diet',['label'=>'Intolleranze Alimentari o Regime Alimentare']); ?>
-                    <?= $this->Form->hidden('event_id',['value'=>8]); ?>
+                    <?= $this->Form->hidden('event_id',['value'=>$event->id]); ?>
                     <?= $this->Form->hidden('referal',['value'=>$this->Url->build($this->request->getRequestTarget(),true)]); ?>
-                    <?= $this->Form->control('privacy',['type'=>'checkbox','label'=>'Autorizzo YEPP Italia al trattamento dei dati per le sole comunicazioni legate alla vita associativa']); ?>
-                    
-                    <?= $this->Form->submit('Mi Iscrivo',['class'=>"btn btn-success"]); ?>  
+                    <?= $this->Form->control('privacy',['type'=>'checkbox','label'=>'Autorizzo YEPP Italia al trattamento dei dati per le sole comunicazioni legate alla vita associativa','required'=>'required']); ?>
+
+                    <?= $this->Form->submit('Mi Iscrivo',['class'=>"btn btn-success"]); ?>
                     <?= $this->Form->end(); ?>
-                  
+
 							</div> <!-- /.theme-form-style-one -->
 						</div> <!-- /.col- -->
         </div><!-- /.row- -->

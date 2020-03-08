@@ -31,7 +31,7 @@ class EventsController extends AppController
 			->contain(['Destinations']);
 		//Se mi hai passato dei parametri in query filtro su quelli
 		if (!empty($q)) {
-            $query->where(['title LIKE' => "%$q%"]);	
+            $query->where(['title LIKE' => "%$q%"]);
         }
         $events = $this->paginate($query);
 
@@ -129,22 +129,22 @@ class EventsController extends AppController
         {
             $conditions['event_id'] = $allowedEvents;
         }
-        $events = $this->Events->find('all', ['fields'=>['id','title'],'limit' => 200, 'conditions'=>$conditions]); 
+        $events = $this->Events->find('all', ['fields'=>['id','title'],'limit' => 200, 'conditions'=>$conditions]);
         $this->set('events', $events);
 
         //Mando la risposta in ajax
         if ($this->request->isAjax())
-        {            
-            $this->set('_serialize', 'events');                        
-            $this->RequestHandler->renderAs($this, 'json');   
+        {
+            $this->set('_serialize', 'events');
+            $this->RequestHandler->renderAs($this, 'json');
         }
     }
 
     //Metodo per far iscrivere gli utenti ad un evento
     public function subscribe($slug)
     {
-        $event = $this->Events->findBySlug($slug)                
-                ->firstOrFail();            
+        $event = $this->Events->findBySlug($slug)
+                ->firstOrFail();
 
         $siti = $this->Events->Destinations->find('list',[
                 'conditions' => ['show_in_list' => 1, 'chiuso'=>0],

@@ -33,15 +33,15 @@ class ParticipantsController extends AppController
     public function index($event_id = null)
     {
         $conditions = [];
-        $ext = $this->request->getAttribute('params')['_ext'];                    
-        
+        $ext = $this->request->getAttribute('params')['_ext'];
+
         if (!empty($event_id))
         {
             $conditions['event_id'] = $event_id;
         }
 
-        if ($ext == 'xls'){            
-            $participants = $this->Participants->find('all',['conditions'=>$conditions]);            
+        if ($ext == 'xls'){
+            $participants = $this->Participants->find('all',['conditions'=>$conditions]);
         }
         else{
             $this->paginate = [
@@ -82,13 +82,13 @@ class ParticipantsController extends AppController
         if ($this->request->is('post')) {
             if (isset($this->request->getData()['referal']))
             {
-                $referal = $this->request->getData()['referal'];    
+                $referal = $this->request->getData()['referal'];
             }
             else
             {
                 $referal = $this->referer();
             }
-            
+
             $participant = $this->Participants->patchEntity($participant, $this->request->getData());
 
             //Se siete troppi ti rimando indietro
@@ -101,12 +101,12 @@ class ParticipantsController extends AppController
                 //Se il partecipante ci sta ancora, provo a salvare.
                 if ($this->Participants->save($participant)) {
                 $message = __("Ti abbiamo iscritto corretamente all'evento. Controlla la posta!");
-                $responseData = ['message' => $message, 'success'=>true];   
+                $responseData = ['message' => $message, 'success'=>true];
                 //Mando una mail di notifica
-                $this->sendNotification($participant);                            
+                $this->sendNotification($participant);
                 }else {
                     $message = __("Ci dev'essere qualche errore, per favore controlla i messaggi e riprova a salvare.");
-                    $responseData = ['message' => $message, 'success'=>false];               
+                    $responseData = ['message' => $message, 'success'=>false];
                 }
             }
 
@@ -114,23 +114,23 @@ class ParticipantsController extends AppController
             if ($this->request->isAjax())
             {
                 // Specify which view vars JsonView should serialize.
-                $this->set('responseData', $responseData);            
-                $this->set('_serialize', 'responseData');            
-                $this->response->getStatusCode(200);            
-                $this->RequestHandler->renderAs($this, 'json');   
+                $this->set('responseData', $responseData);
+                $this->set('_serialize', 'responseData');
+                $this->response->getStatusCode(200);
+                $this->RequestHandler->renderAs($this, 'json');
             }
             else
             {
                 if ($responseData['success'])
                 {
-                    $this->Flash->success($message);    
+                    $this->Flash->success($message);
                 }
                 else
                 {
-                    $this->Flash->error($message);       
-                }                
+                    $this->Flash->error($message);
+                }
                 return $this->redirect($referal);
-            }            
+            }
         }
         $events = $this->Participants->Events->find('list', ['limit' => 200]);
         $this->set(compact('participant', 'events'));
@@ -141,14 +141,14 @@ class ParticipantsController extends AppController
     {
          //Mi servono i dati dell'evento
         try{
-            $event= $this->Participants->Events->get($participant->event_id);            
+            $event= $this->Participants->Events->get($participant->event_id);
         }
         catch (Exception $e) {
             $this->Flash->error('impossibile mandare una mail al destinatario');
             return;
-        }        
+        }
 
-        //Imposto una mail dell'organizzatore di default        
+        //Imposto una mail dell'organizzatore di default
         if(empty($event->organizer_email))
         {
             $event->organizer_email='segreteria@yepp.it';
@@ -158,7 +158,7 @@ class ParticipantsController extends AppController
         $email = new Email('default');
         $email->viewBuilder()->setTemplate('iscrizione_ok');
         $email->setFrom($event->organizer_email)
-            ->setEmailFormat('html')            
+            ->setEmailFormat('html')
             ->setTo($participant->email)
             ->setCc($event->organizer_email)
             ->setSubject("Iscrizione a {$event->title}")
@@ -188,7 +188,7 @@ class ParticipantsController extends AppController
             $this->Flash->error(__('The participant could not be saved. Please, try again.'));
         }
         $events = $this->Participants->Events->find('list', ['limit' => 200]);
-        $destinations = TableRegistry::getTableLocator()->get('Destinations')->find('list', ['limit' => 200]);        
+        $destinations = TableRegistry::getTableLocator()->get('Destinations')->find('list', ['limit' => 200]);
         $this->set(compact('participant', 'events','destinations'));
     }
 

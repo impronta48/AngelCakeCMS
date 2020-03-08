@@ -93,16 +93,16 @@ class ParticipantsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['event_id'], 'Events'));
-  
-        //Questa regola sarebbe quella giusta ma non riesco a farla funzionare      
+
+        //Questa regola sarebbe quella giusta ma non riesco a farla funzionare
 /*        $rules->add(
             function ($entity, $options) use ($rules) {
                 $query = $this->Events->find();
                 $max_pax = $query->select('max_pax')
                     ->where(['id'=>$entity->event_id])
-                    ->first();                      
+                    ->first();
                 $r =  $rules->validCount('events', $max_pax , '<=', "Questo evento prevede al massimo $max_pax partecipanti");
-                debug($r);  
+                debug($r);
                 return $r;
             },
             'maxPax',
@@ -121,6 +121,21 @@ class ParticipantsTable extends Table
             //Dobbiamo controllare se abbiamo raggiunto il numero massimo di partecipanti
             //Controllo l'evento richiesto
             $e = $participant->event_id;
+
+            //Verifico il numero massimo di pax per questo evento
+            $query = $this->Events->find();
+            $max_pax = $query->select(['max_pax'])
+                ->where(['id'=>$e])
+                ->first()
+                ->max_pax;
+
+            //Se non è specificato considero che non ci sia limite
+            if (empty($max_pax) || $max_pax == 0  )
+            {
+                return false;
+            }
+
+
             //Conto quanti partecipanti ha quell'evento
             // Results in SELECT COUNT(*) count FROM ...
             $query = $this->find();
@@ -128,12 +143,6 @@ class ParticipantsTable extends Table
                 ->where(['event_id'=>$e])
                 ->first()
                 ->count;        //questo è il nome del campo
-
-            $query = $this->Events->find();            
-            $max_pax = $query->select(['max_pax'])
-                ->where(['id'=>$e])
-                ->first()
-                ->max_pax;
 
             return ($c >= $max_pax);
     }
