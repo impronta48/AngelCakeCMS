@@ -16,7 +16,7 @@ class EventsController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow('getList');
+        $this->Auth->allow('getList','subscribe');
     }
 
     /**
