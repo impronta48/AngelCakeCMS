@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use App\Model\Entity\Destination;
 use function Psy\debug;
+use Cake\Routing\Router;
+
 
 /**
  * Destinations Controller
@@ -15,14 +17,14 @@ use function Psy\debug;
 class DestinationsController extends AppController
 {
     public $paginate = [
-        'limit' => 9,
+        'limit' => 20,
+        'order' => ['Destinations.name' => 'asc'],
     ];
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
-        $this->Auth->allow('view');
-		$this->Auth->allow('index');
+        //$this->Authentication->allowUnauthenticated(['index','view']);
     }
 
     /**
@@ -31,21 +33,20 @@ class DestinationsController extends AppController
      * @return \Cake\Http\Response|void
      */
     public function index()
-    {        
+    {
         $destinations = $this->paginate($this->Destinations, [
             'contain' => ['Articles'],
             'conditions' => ['show_in_list' => TRUE],
             'order' => ['chiuso ASC', 'name'] ,
-            'limit' => 100,          
+            'limit' => 100,
         ] );
         $this->set(compact('destinations'));
     }
 
     public function adminIndex()
-    {        
+    {
         $destinations = $this->paginate($this->Destinations, [
             'contain' => ['Articles'],
-            'order' => ['name']            
         ] );
         $this->set(compact('destinations'));
     }
@@ -58,35 +59,35 @@ class DestinationsController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
-    {        
-        $query = $this->Destinations->find();        
+    {
+        $query = $this->Destinations->find();
         $a = $this->request->getQuery('archive');
-        
-        $articles_q = $this->Destinations->Articles->find()
-                        ->order( ['modified' => 'DESC']); 
 
-        if (empty($a)) { 
+        $articles_q = $this->Destinations->Articles->find()
+                        ->order( ['modified' => 'DESC']);
+
+        if (empty($a)) {
             $articles_q->where(['Articles.archived' => false]);
         }
         else {
             $articles_q->where(['Articles.archived' => true]);
-        }        
-        
+        }
+
         if (is_string($id))
         {
             try {
-                $id = $this->Destinations->findBySlug($id)->firstOrFail()->id;                            
-                
-            } catch (RecordNotFoundException $ex) {                
+                $id = $this->Destinations->findBySlug($id)->firstOrFail()->id;
+
+            } catch (\Cake\Datasource\Exception\RecordNotFoundException $ex) {
                 $this->log(sprintf('Record not found in database (id = %d)!', $id), LogLevel::WARNING);
             }
         }
-         
-        $articles_q->where(['destination_id'=>$id]); 
-        $query->where(['id'=>$id]); 
+
+        $articles_q->where(['destination_id'=>$id]);
+        $query->where(['id'=>$id]);
         $destination = $query->first();
 
-        $this->set('archived',$a);  
+        $this->set('archived',$a);
         $this->set('articles', $this->paginate($articles_q));
         $this->set('destination', $destination);
     }
@@ -98,13 +99,13 @@ class DestinationsController extends AppController
      */
     public function add()
     {
-        $destination = $this->Destinations->newEntity();
+        $destination = $this->Destinations->newEmptyEntity();
         if ($this->request->is('post')) {
             $destination = $this->Destinations->patchEntity($destination, $this->request->getData());
             if ($this->Destinations->save($destination)) {
                 $this->Flash->success(__('The destination has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                $this->redirect(Router::url( $this->referer(), true ) );
             }
             $this->Flash->error(__('The destination could not be saved. Please, try again.'));
         }
@@ -152,6 +153,6 @@ class DestinationsController extends AppController
             $this->Flash->error(__('The destination could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(Router::url( $this->referer(), true ) );
     }
 }

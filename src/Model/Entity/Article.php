@@ -20,8 +20,8 @@ class Article extends Entity{
 
 	protected function _getTagString()
 	{		
-	    if (isset($this->_properties['tag_string'])) {
-	        return $this->_properties['tag_string'];
+	    if (isset($this->_fields['tag_string'])) {
+	        return $this->_fields['tag_string'];
 	    }
 	    //debug($this);
 	    if (empty($this->tags)) {
@@ -79,7 +79,7 @@ class Article extends Entity{
 		/*Controllo*/
 		if(!$files)
 		{			
-			return '/img/'. Router::url(Configure::read('default-image','cartina-siti-locali.png'));			
+			return '/img'. Router::url(Configure::read('default-image','cartina-siti-locali.png'));			
 		}
 
 		$result = $this->getUrl() . $destination . $id. '/'. $fieldDir .'/' .$files[0];

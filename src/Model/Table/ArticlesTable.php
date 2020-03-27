@@ -9,7 +9,7 @@ use Cake\Core\Configure;
 
 class ArticlesTable extends Table
 {
-	public function initialize(array $config)
+	public function initialize(array $config): void
 	{
 		$this->addBehavior('Timestamp');
 		$this->belongsToMany('Tags');
@@ -17,12 +17,12 @@ class ArticlesTable extends Table
 		$this->belongsTo('Destinations');
 	}
 
-	public function beforeSave($event,$entity,$options)
+	public function beforeSave(\Cake\Event\EventInterface $event,$entity,$options)
 	{
 	    if ($entity->tag_string) {
     	    $entity->tags = $this->_buildTags($entity->tag_string);
 	    }
-		
+
 		if (($entity->isNew() && !$entity->slug) || $entity->renewSlug && !$entity->slug)
 		{
 			$sluggedTitle = Text::slug(strtolower($entity->title));
@@ -33,10 +33,10 @@ class ArticlesTable extends Table
 		}
 	}
 
-	public function validationDefault(Validator $validator)
+	public function validationDefault(Validator $validator): \Cake\Validation\Validator
 	{
 		$validator
-			->notEmpty('title')
+			->notEmptyString('title')
 			->minLength('title',5)
 			->maxLength('title',255)
 
@@ -54,32 +54,32 @@ class ArticlesTable extends Table
 	        'Articles.body', 'Articles.published', 'Articles.created',
 	        'Articles.slug',
 	    ];
-	
-		$query = $query 
+
+		$query = $query
 			->select($columns)
 			->distinct($columns);
 
 		if (empty($options['tags']))
 		{
 			$query->leftJoinWith('Tags')
-				->where(['Tags.title IS' => null]);				
+				->where(['Tags.title IS' => null]);
 		} else {
 			$query->innerJoinWith('Tags')
 				->where(['Tags.title IN' => $options['tags']]);
 		}
 
 		return $query->group(['Articles.id']);
-	}	
+	}
 
 	protected function _buildTags($tagString)
 	{
 		//Tagstring = lavoro, personale, cultura
 		//Explode --> array(' lavoro ', 'personale', ' cultura')
 		//array_map applica la funzione trim a tutti gli elementi di explode
-		
+
 		//Trim tags
 		$newTags= array_map('trim', explode(',', $tagString));
-		
+
 		//Toglie i tag vuoti
 		$newTags = array_filter($newTags);
 
@@ -107,7 +107,7 @@ class ArticlesTable extends Table
 
 		//Nuovi e superstiti
 		foreach ($newTags as $tag) {
-			$out[] = $this->Tags->newEntity(['title'=>$tag]);
+			$out[] = $this->Tags->newEmptyEntity(['title'=>$tag]);
 		}
 
 		return $out;

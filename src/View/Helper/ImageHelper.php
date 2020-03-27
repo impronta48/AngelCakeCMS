@@ -126,7 +126,7 @@ class ImageHelper extends Helper
                 $transparency = imagecolortransparent($image);
                 if ($transparency >= 0) {
                     $transparent_color  = imagecolorsforindex($image, $trnprt_indx);
-                    $transparency       = imagecolorallocate($image_crop, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
+                    $transparency       = imagecolorallocate($image_crop, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
                     imagefill($image_crop, 0, 0, $transparency);
                     imagecolortransparent($image_crop, $transparency);
                     imagefill($image_resized, 0, 0, $transparency);

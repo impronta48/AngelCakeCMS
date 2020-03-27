@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -25,52 +27,36 @@ use Cake\I18n\I18n;
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
  *
- * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
+ * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
  */
 class AppController extends Controller
 {
-
     /**
      * Initialization hook method.
      *
      * Use this method to add common initialization code like loading components.
      *
-     * e.g. `$this->loadComponent('Security');`
+     * e.g. `$this->loadComponent('FormProtection');`
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
-        
-        // Important: add the 'enableBeforeRedirect' config or or disable deprecation warnings
-        $this->loadComponent('RequestHandler', [
-            'enableBeforeRedirect' => false,
-        ]);
-        $this->loadComponent('Flash');                
-        $this->loadComponent('CakeDC/Users.UsersAuth');
+
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Flash');
+        $this->loadComponent('CakeDC/Users.Setup');
+
         /*
-         * Enable the following component for recommended CakePHP security settings.
-         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
+         * Enable the following component for recommended CakePHP form protection settings.
+         * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
-        //$this->loadComponent('Security');        
+        //$this->loadComponent('FormProtection');
 
-        $config['Auth']['authorize']['CakeDC/Users.SimpleRbac'] = [
-        // autoload permissions.php
-        'autoload_config' => 'permissions',
-        // role field in the Users table
-        'role_field' => 'role',
-        // default role, used in new users registered and also as role matcher when no role is available
-        'default_role' => 'user',
-        // log will default to the 'debug' value, matched rbac rules will be logged in debug.log by default when debug enabled
-        'log' => false
-    ];
-
-        $this->Auth->allow('display');
     }
-
-    public function beforeRender(\Cake\Event\Event $event)
-    {          
+   public function beforeRender(\Cake\Event\EventInterface $event)
+    {                
         if (strpos($this->request->getRequestTarget(),'/en') !== false) {
             I18n::setLocale('en');
         }elseif (strpos($this->request->getRequestTarget(),'/es') !== false ){
@@ -82,6 +68,5 @@ class AppController extends Controller
             $this->viewBuilder()->setTheme(Configure::read('theme'));
         }
     }
-
 
 }

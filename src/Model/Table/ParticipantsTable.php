@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EventsTable|\Cake\ORM\Association\BelongsTo $Events
  *
  * @method \App\Model\Entity\Participant get($primaryKey, $options = [])
- * @method \App\Model\Entity\Participant newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Participant newEmptyEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Participant[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Participant|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Participant|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
@@ -31,7 +31,7 @@ class ParticipantsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -53,7 +53,7 @@ class ParticipantsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         $validator
             ->integer('id')
@@ -90,7 +90,7 @@ class ParticipantsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): \Cake\ORM\RulesChecker
     {
         $rules->add($rules->existsIn(['event_id'], 'Events'));
 
