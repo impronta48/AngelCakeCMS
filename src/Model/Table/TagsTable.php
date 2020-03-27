@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ArticlesTable|\Cake\ORM\Association\BelongsToMany $Articles
  *
  * @method \App\Model\Entity\Tag get($primaryKey, $options = [])
- * @method \App\Model\Entity\Tag newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Tag newEmptyEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Tag[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Tag|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Tag|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
@@ -31,7 +31,7 @@ class TagsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -54,7 +54,7 @@ class TagsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         $validator
             ->integer('id')
@@ -76,7 +76,7 @@ class TagsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): \Cake\ORM\RulesChecker
     {
         $rules->add($rules->isUnique(['title']));
 

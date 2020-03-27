@@ -26,7 +26,7 @@ class ImportDrupalCommand extends Command {
   private $storagePath;
   private $io;
 
-  public function initialize()
+  public function initialize() : void
   {
       parent::initialize();
       $this->loadModel('Articles');
@@ -34,8 +34,8 @@ class ImportDrupalCommand extends Command {
   }
 
   public function execute(Arguments $args, ConsoleIo $io)
-  {          
-      $drupalsite= $args->getArgument('drupal');    
+  {
+      $drupalsite= $args->getArgument('drupal');
       $this->url = $drupalsite;
 
       $this->io = $io;
@@ -43,12 +43,12 @@ class ImportDrupalCommand extends Command {
       $this->io->out("Inizio $drupalsite");
   }
 
-  protected function buildOptionParser(ConsoleOptionParser $parser)
+  protected function buildOptionParser(ConsoleOptionParser $parser) : ConsoleOptionParser
   {
     $parser->addArgument('drupal', array(
         'help' => 'Either url of drupal site to import, eg: HTTP_HOST=cyclomap.bikesquare.test ./Console/cake import_drupal https://ebike.bikesquare.test'
     ));
-    return $parser;    
+    return $parser;
   }
 
 /**
@@ -73,38 +73,38 @@ class ImportDrupalCommand extends Command {
 			//creo la connessione al sito da cui voglio importare
 			$HttpSocket = new Client();
 			// string query
-			$response = $HttpSocket->get($this->url . '/export/nodes');			      
+			$response = $HttpSocket->get($this->url . '/export/nodes');
 
 			//leggo il dato
-			$r = json_decode($response->getStringBody());			
+			$r = json_decode($response->getStringBody());
 			//debug($r->nodes);
       //die;
 
       foreach ($r->nodes as $drupalNode)
-      {        
+      {
           //leggo lo slug
         $drupalNode = $drupalNode->node;
-          $slug =basename($drupalNode->slug); //Se lo slug è organizzato in cartelle prendo solo la parte finale          
-          //$slug =$drupalNode->slug; //Se lo slug è organizzato in cartelle prendo solo la parte finale          
+          $slug =basename($drupalNode->slug); //Se lo slug è organizzato in cartelle prendo solo la parte finale
+          //$slug =$drupalNode->slug; //Se lo slug è organizzato in cartelle prendo solo la parte finale
           $this->io->out("---->Inizio Trattamento drupalNode $slug \n");
 
           //Inizializzo newArticle
-          //Creo un nuovo record su DB e non c'è          
+          //Creo un nuovo record su DB e non c'è
           $newArticle = $this->Articles->findBySlug($slug)->first();
-          
+
           if (empty($newArticle))
           {
-              $newArticle = $this->Articles->newEntity();
-              $this->io->out('Creato nuovo record per ' . $slug);              
+              $newArticle = $this->Articles->newEmptyEntity();
+              $this->io->out('Creato nuovo record per ' . $slug);
           }
           else
           {
               $this->Articles->id = $newArticle->id;
-              $this->io->out("Aggiorno il record {$this->Articles->id} : $slug");              
+              $this->io->out("Aggiorno il record {$this->Articles->id} : $slug");
           }
 
           //Campi obbligatori
-          $newArticle->slug = ltrim($slug, '/\\');          
+          $newArticle->slug = ltrim($slug, '/\\');
           $newArticle->title=$drupalNode->title;
           $newArticle->body = $drupalNode->body;
           $newArticle->modified=$drupalNode->changed;
@@ -124,12 +124,12 @@ class ImportDrupalCommand extends Command {
                   'name'=> $drupalNode->taxonomy_vocabulary_1,
               ]);
 
-              $destination  = $this->Articles->Destinations->save($destination);              
+              $destination  = $this->Articles->Destinations->save($destination);
               if (!$destination)
               {
                 $this->io->out('Errore durante il salvataggio della destination: ' . $drupalNode->taxonomy_vocabulary_1 );
               }
-              
+
               $this->io->out('Salvataggio OK di una nuova destination: ' . $drupalNode->taxonomy_vocabulary_1 );
               //Associo la destination all'articolo
             }
@@ -140,11 +140,11 @@ class ImportDrupalCommand extends Command {
           $newArticle = $this->Articles->save($newArticle);
           if (!$newArticle)
           {
-            $this->io->out('Errore durante il savataggio Articolo: ' . $drupalNode->title );  
+            $this->io->out('Errore durante il savataggio Articolo: ' . $drupalNode->title );
           }
           else
           {
-            $this->io->out('Salvataggio Articolo OK: ' . $newArticle->id );  
+            $this->io->out('Salvataggio Articolo OK: ' . $newArticle->id );
             if (isset($destination->slug))
             {
             	$dest_slug = $destination->slug . DS .  $newArticle->id . DS;
@@ -152,8 +152,8 @@ class ImportDrupalCommand extends Command {
             else{
             	$dest_slug =  $newArticle->id . DS;
             }
-          }          
-                        
+          }
+
         //importo gli allegati e le immagini
         if (isset($drupalNode->allegati)){
         	$this->importa_allegati($drupalNode->allegati, $dest_slug . 'files', $this->io);
@@ -164,12 +164,12 @@ class ImportDrupalCommand extends Command {
         if (isset($drupalNode->copertina)){
         	$this->importa_allegati($drupalNode->copertina, $dest_slug .'copertina', $this->io);
         }
-       
+
         $this->io->out("<----Fine Trattamento percorso $slug \n\r");
-        //break;		
+        //break;
       }
   }
-  
+
 	 /**
 	 * Quando il campo è multilingua estrae la versione nella lingua richiesta
 	 *  Es: "title":[{"value":"Tour in ebike Langhe a Barolo","lang":"it"},
@@ -188,23 +188,23 @@ class ImportDrupalCommand extends Command {
 		}
 		return null;
   }
-  
+
   protected function showTable($data) {
 		$this->helper('table')->output($data);
   }
-  
+
   private function getSlug($url){
     return basename(parse_url($url, PHP_URL_PATH));
   }
- 
+
   protected function importa_allegati($allegati, $folder)
   {
     //Se non ci sono gli allegati esco subito
     if (empty($allegati))
     {
       return;
-    }        
-    
+    }
+
     if (is_string($allegati))
     {
     	$this->copiaSingolo($allegati, $folder);
@@ -212,7 +212,7 @@ class ImportDrupalCommand extends Command {
 	elseif (is_array($allegati))			//Se è un campo multiplo
 	{
 		//Se è un'immagine ha tre campi: src, alt, title
-	    foreach ($allegati as $allegato) { 
+	    foreach ($allegati as $allegato) {
 			if (isset($allegato->src))
 			{
 				$allegato = $allegato->src;
@@ -229,7 +229,7 @@ class ImportDrupalCommand extends Command {
 		$allegato = $allegati->src;
 		$this->copiaSingolo($allegato, $folder);
 	}
-	
+
   }
 
   private function copiaSingolo($allegato, $folder){
@@ -239,14 +239,14 @@ class ImportDrupalCommand extends Command {
        //Tolgo eventuali %20 dal nome
       $fname =str_replace('%20','',$fname);
       $dir = new Folder($this->storagePath . DS . $folder , true, 0777);
-      $localFile =  $dir->pwd() . DS . "$fname";	
+      $localFile =  $dir->pwd() . DS . "$fname";
       $this->io->out("file destinazione: $localFile");
       $this->copiaRemoto($originale, $localFile);
   }
- 
+
   private function copiaRemoto($remoteFile, $localFile){
       //Se il file in locale c'è già non lo tiro giù
-      
+
       if (!file_exists($localFile)){
         if ( !copy($remoteFile, $localFile) ) {
           $this->io->out("Errore durante la copia $remoteFile in locale");
