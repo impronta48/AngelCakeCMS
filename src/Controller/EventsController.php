@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Database\Type;
 use Cake\Event\Event;
 
 /**
@@ -14,10 +15,10 @@ use Cake\Event\Event;
 class EventsController extends AppController
 {
     //Necessario per gestire la risposta in json della view
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
-        $this->Auth->allow(['getList','subscribe']);
+        //$this->Authentication->allowUnauthenticated(['getList','subscribe']);
     }
 
     /**
@@ -27,7 +28,7 @@ class EventsController extends AppController
      */
     public function index()
     {
-        $q = $this->request->query('q');
+        $q = $this->request->getQuery('q');
         $query = $this->Events->find()
 			->contain(['Destinations']);
 		//Se mi hai passato dei parametri in query filtro su quelli
@@ -62,9 +63,12 @@ class EventsController extends AppController
      */
     public function add()
     {
-        $event = $this->Events->newEntity();
+        $event = $this->Events->newEmptyEntity();
+        //Necessario per questo https://discourse.cakephp.org/t/patchentity-set-date-field-to-null/7361/3
+        Type::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
         if ($this->request->is('post')) {
             $event = $this->Events->patchEntity($event, $this->request->getData());
+
             if ($this->Events->save($event)) {
                 $this->Flash->success(__('The event has been saved.'));
 
@@ -73,7 +77,7 @@ class EventsController extends AppController
             $this->Flash->error(__('The event could not be saved. Please, try again.'));
         }
         $destinations = $this->Events->Destinations->find('list', ['limit' => 200]);
-        $users = $this->Events->Users->find('list', ['limit' => 200]);
+        $users = $this->Events->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
         $this->set(compact('event', 'destinations', 'users'));
     }
 
@@ -89,8 +93,12 @@ class EventsController extends AppController
         $event = $this->Events->get($id, [
             'contain' => []
         ]);
+        //Necessario per questo https://discourse.cakephp.org/t/patchentity-set-date-field-to-null/7361/3
+        Type::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $event = $this->Events->patchEntity($event, $this->request->getData());
+
             if ($this->Events->save($event)) {
                 $this->Flash->success(__('The event has been saved.'));
 
@@ -99,7 +107,7 @@ class EventsController extends AppController
             $this->Flash->error(__('The event could not be saved. Please, try again.'));
         }
         $destinations = $this->Events->Destinations->find('list', ['limit' => 200]);
-        $users = $this->Events->Users->find('list', ['limit' => 200]);
+        $users = $this->Events->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
         $this->set(compact('event', 'destinations', 'users'));
     }
 

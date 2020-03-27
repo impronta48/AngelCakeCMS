@@ -8,14 +8,12 @@ use App\Model\Entity\Article;
 
 class ArticlesController extends AppController
 {
-	public function initialize()
+	public function initialize(): void
 	{
 		parent::initialize();
 
 		$this->loadComponent('Paginator');
-		$this->Auth->allow('getList');
-		$this->Auth->allow('view');
-		$this->Auth->allow('index');
+		//$this->Authentication->allowUnauthenticated(['getList','index','view']);
 	}
 
 	public function index()
@@ -29,30 +27,28 @@ class ArticlesController extends AppController
 		//per fare questo creo un array vuoto che si chiama $conditions
 		//$conditions = [];
 		//Se this->request->query('q') non è vuoto
-		//imposto le conditions come si deve, 
+		//imposto le conditions come si deve,
 		//$conditions['title LIKE'] = "%$q%";
 		//$conditions['body LIKE'] = "%$q%";
 		//Passo le conditions alla find find(['conditions'=>$conditions]);
 
-	
+
 		//Leggo i valori dalla querystring (quella che sta dopo il ? nell'url)
-		$q = $this->request->query('q');
-		$destination_id = $this->request->query('destination_id');
-	
+		$q = $this->request->getQuery('q');
+		$destination_id = $this->request->getQuery('destination_id');
+
 		//Faccio la query di base (tira su tutti gli articoli)
 		$query = $this->Articles->find()
 			->contain(['Users', 'Destinations'])
 			->order(['Articles.id' =>'DESC']);
-		
+
 		//Se mi hai passato dei parametri in query filtro su quelli
 		if (!empty($q)) {
-				$query->where(['title LIKE' => "%$q%"]);	
+				$query->where(['title LIKE' => "%$q%"]);
 		}
 		if (!empty($destination_id)) {
-			$query->where(['destination_id' => $destination_id]);	
+			$query->where(['destination_id' => $destination_id]);
 		}
-
-
 
 		//dd($query);
 		$this->loadModel('Destinations');
@@ -62,17 +58,17 @@ class ArticlesController extends AppController
 	}
 
 	public function view($slug = null)
-	{		
+	{
 		$article = $this->Articles->findBySlug($slug)
 				->contain(['Tags'])
-				->firstOrFail();				
+				->firstOrFail();
 		$this->set(compact('article'));
-		$this->set('user', $this->Auth->user());
+		$this->set('user',  $this->request->getAttribute('identity'));
 	}
 
 	public function add()
 	{
-		$article = $this->Articles->newEntity();
+		$article = $this->Articles->newEmptyEntity();
 		if ($this->request->is('post'))
 		{
 			$article = $this->Articles->patchEntity($article, $this->request->getData());
@@ -82,19 +78,19 @@ class ArticlesController extends AppController
 				//dd($article);
 				//Salvare allegati, copertina e galleria
 				if (!$article['newcopertina']['error'] == UPLOAD_ERR_NO_FILE)
-				{					
+				{
 					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'copertina',[$article['newcopertina']],true);					
+					$this->uploadFiles($article['id'],'copertina',[$article['newcopertina']],true);
 				}
 				if (!$article['newgallery'][0]['error'] == UPLOAD_ERR_NO_FILE)
-				{					
+				{
 					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'galleria',$article['newgallery'],false);					
+					$this->uploadFiles($article['id'],'galleria',$article['newgallery'],false);
 				}
 				if (!$article['newallegati'][0]['error']==UPLOAD_ERR_NO_FILE)
-				{					
+				{
 					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'files',$article['newallegati'],false);					
+					$this->uploadFiles($article['id'],'files',$article['newallegati'],false);
 				}
 				$this->Flash->success(__('Your article has been saved.'));
 				return $this->redirect(['action'=>'view', $article->slug]);
@@ -102,7 +98,7 @@ class ArticlesController extends AppController
 			$this->Flash->error(__('Unable to add your article'));
 		}
 		$tags = $this->Articles->Tags->find('list');
-		$users = $this->Articles->Users->find('list',['keyField' => 'id', 'valueField' => 'username']);	
+		$users = $this->Articles->Users->find('list',['keyField' => 'id', 'valueField' => 'username']);
 		$destinations = $this->Articles->Destinations->find('list');
 		$this->set(compact('article', 'tags','users','destinations'));
 	}
@@ -116,25 +112,25 @@ class ArticlesController extends AppController
 
 		if ($this->request->is(['post','put']))
 		{
-			$this->Articles->patchEntity($article,$this->request->getData());			
+			$this->Articles->patchEntity($article,$this->request->getData());
 
 			if ($this->Articles->save($article)) {
 				//dd($article);
 				//Salvare allegati, copertina e galleria
 				if (!$article['newcopertina']['error'] == UPLOAD_ERR_NO_FILE)
-				{					
+				{
 					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'copertina',[$article['newcopertina']],true);					
+					$this->uploadFiles($article['id'],'copertina',[$article['newcopertina']],true);
 				}
 				if (!$article['newgallery'][0]['error'] == UPLOAD_ERR_NO_FILE)
-				{					
+				{
 					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'galleria',$article['newgallery'],false);					
+					$this->uploadFiles($article['id'],'galleria',$article['newgallery'],false);
 				}
 				if (!$article['newallegati'][0]['error']==UPLOAD_ERR_NO_FILE)
-				{					
+				{
 					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'files',$article['newallegati'],false);					
+					$this->uploadFiles($article['id'],'files',$article['newallegati'],false);
 				}
 				$this->Flash->success(__('Salvato con successo'));
 				//return $this->redirect(['action'=>'view', $article->slug]);
@@ -145,7 +141,7 @@ class ArticlesController extends AppController
 		}
 		// Get a list of tags.
     	$tags = $this->Articles->Tags->find('list');
-		$users = $this->Articles->Users->find('list',['keyField' => 'id', 'valueField' => 'username']);			
+		$users = $this->Articles->Users->find('list',['keyField' => 'id', 'valueField' => 'username']);
     	$destinations = $this->Articles->Destinations->find('list');
 		$this->set(compact('article','tags','users','destinations'));
 	}
@@ -154,7 +150,7 @@ class ArticlesController extends AppController
 	{
 		$this->request->allowMethod(['post','delete']);
 
-		$article = $this->Articles->findById($id)->firstOrFail();	
+		$article = $this->Articles->findById($id)->firstOrFail();
 		$dest= $this->getDestinationSlug($id);
 		if ($this->Articles->delete($article))
 		{
@@ -167,7 +163,7 @@ class ArticlesController extends AppController
 					// Successfully deleted foo and its nested folders
 					$this->log('impossibile cancellare il folder:' . $save_dir);
 			}
-			
+
 			$this->Flash->success(__('The {0} article has been deleted.', $article->title));
 			return $this->redirect(['action'=>'index']);
 		}
@@ -177,7 +173,7 @@ class ArticlesController extends AppController
 	{
 		$tags = $this->request->getParam('pass');
 
-		$articles = $this->Articles->find('tagged', 
+		$articles = $this->Articles->find('tagged',
 			['tags' => $tags]
 		);
 
@@ -192,7 +188,7 @@ class ArticlesController extends AppController
 
 	private function getPath()
 	{
-		$sitedir = Configure::read('sitedir');			
+		$sitedir = Configure::read('sitedir');
 		return WWW_ROOT .  $sitedir . '/articles/' ;
 	}
 
@@ -208,15 +204,15 @@ class ArticlesController extends AppController
 		if (!empty($a->destination_id))
 		{
 			$destinations = TableRegistry::getTableLocator()->get('Destinations');
-			return $destinations->findById($a->destination_id)->first()->slug . DS;		
+			return $destinations->findById($a->destination_id)->first()->slug . DS;
 		}
 		else {
 			return null;
 		}
 	}
 
-	private function uploadFiles($id,$fieldDir,$fnames,$deleteBefore){	
-		
+	private function uploadFiles($id,$fieldDir,$fnames,$deleteBefore){
+
 		//this is the folder where i need to save
 		$f = $this->getPath();
 		$dest= $this->getDestinationSlug($id);
@@ -233,29 +229,29 @@ class ArticlesController extends AppController
 			}
 		}
 		//debug($folder);
-		$e  = $folder->errors();		
+		$e  = $folder->errors();
 		if(!empty($e)) //$save_dir is a relative path so it is checked relatively to current working directory
-		{	
+		{
 			$this->Flash->error( "Si è verificato un errore nella creazione della directory. Ripetere l'operazione - " . $e );
 			return;
 		}
 		foreach ($fnames as $fname)
-		{			
+		{
 			$name_on_server = basename($fname["name"]);
-			$copied = move_uploaded_file($fname['tmp_name'], $save_dir.DS.$name_on_server);		
+			$copied = move_uploaded_file($fname['tmp_name'], $save_dir.DS.$name_on_server);
 		}
-		
+
 		//Se non riesco a spostare nella cartella giusta, esco
 		if(!$copied)
 		{
-			$toReturn['error'] = 'Si e\' verificato un problema nella creazione dell\'immagine. 
+			$toReturn['error'] = 'Si e\' verificato un problema nella creazione dell\'immagine.
 				Ripetere l\'inserimento';
 			return $toReturn;
 		}
 	}
 
-	
-	public function removeFile(){		
+
+	public function removeFile(){
 		$fname = $this->request->getQuery('fname');
 
 		if (!empty($fname)){
@@ -264,12 +260,12 @@ class ArticlesController extends AppController
 			{
 				$ip =$_SERVER['REMOTE_ADDR'];
 				//TODO: devo cancellare lo stesso nome file anche in tutte le altre cartelle figlie
-				
+
 				unlink($fname);
 				$this->log("eliminato il file $fname da $ip");
 			}
 			else {
-				$this->Flash->error('Il file da eliminare è inesitente:' . $img);
+				$this->Flash->error('Il file da eliminare è inesitente:' . $fname);
 			}
 		}
 		$this->redirect(Router::url( $this->referer(), true ) );
