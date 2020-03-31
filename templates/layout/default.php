@@ -20,14 +20,14 @@
   </head>
 
   <body>
-    <?= $this->element('header'); ?>
+    <?= $this->element('admin-header'); ?>
     <main role="main" class="container">
 
         <?= $this->Flash->render() ?>
 	    <?= $this->fetch('content') ?>	
 
     </main><!-- /.container -->
-	  <?= $this->element('footer'); ?>
+	  <?= $this->element('admin-footer'); ?>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

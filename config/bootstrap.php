@@ -44,6 +44,7 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
+//use Cake\Utility\Inflector;
 
 /*
  * See https://github.com/josegonzalez/php-dotenv for API details.
@@ -210,6 +211,9 @@ ServerRequest::addDetector('tablet', function ($request) {
 // TypeFactory::build('timestamptimezone')
 //    ->useMutable();
 
+//Necessario per gestire i campi datetime senza specificare i secondi
+TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm');
+
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
  * table, model, controller names or whatever other string is passed to the
@@ -219,7 +223,6 @@ ServerRequest::addDetector('tablet', function ($request) {
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
-
 //require_once 'events.php';
 
 
