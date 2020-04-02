@@ -11,17 +11,17 @@ use App\Model\StaticModel;
 class SitemapsController extends AppController
 {
   //Necessario per gestire la risposta in json della view
-  public function initialize()
+  public function initialize(): void
   {
 	parent::initialize();
 	$this->modelClass = false;
 	$this->loadComponent('RequestHandler');
-	$this->Auth->allow(['index']);
+  //$this->Authentication->allowUnauthenticated(['index']);
   }
-  
+
   public function index(){
     $s = new StaticModel();
-    $static=$s->findAll();        
+    $static=$s->findAll();
     $this->set('static',$static);
   }
 }

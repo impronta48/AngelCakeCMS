@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EventsTable|\Cake\ORM\Association\HasMany $Events
  *
  * @method \App\Model\Entity\Destination get($primaryKey, $options = [])
- * @method \App\Model\Entity\Destination newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Destination newEmptyEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Destination[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Destination|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Destination|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
@@ -29,7 +29,7 @@ class DestinationsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -49,7 +49,7 @@ class DestinationsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         $validator
             ->integer('id')

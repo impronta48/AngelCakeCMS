@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2019, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2018, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -51,6 +51,47 @@
 
 return [
     'CakeDC/Auth.permissions' => [
+        //all bypass
+        [
+            'prefix' => false,
+            'plugin' => 'CakeDC/Users',
+            'controller' => 'Users',
+            'action' => [
+                // LoginTrait
+                'socialLogin',
+                'login',
+                'logout',
+                'socialEmail',
+                'verify',
+                // RegisterTrait
+                'register',
+                'validateEmail',
+                // PasswordManagementTrait used in RegisterTrait
+                'changePassword',
+                'resetPassword',
+                'requestResetPassword',
+                // UserValidationTrait used in PasswordManagementTrait
+                'resendTokenValidation',
+                'linkSocial',
+                //U2F actions
+                'u2f',
+                'u2fRegister',
+                'u2fRegisterFinish',
+                'u2fAuthenticate',
+                'u2fAuthenticateFinish',
+            ],
+            'bypassAuth' => true,
+        ],
+        [
+            'prefix' => false,
+            'plugin' => 'CakeDC/Users',
+            'controller' => 'SocialAccounts',
+            'action' => [
+                'validateAccount',
+                'resendValidation',
+            ],
+            'bypassAuth' => true,
+        ],
         //admin role allowed to all the things
         [
             'role' => 'admin',
@@ -71,7 +112,7 @@ return [
             'role' => '*',
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
-            'action' => 'resetGoogleAuthenticator',
+            'action' => 'resetOneTimePasswordAuthenticator',
             'allowed' => function (array $user, $role, \Cake\Http\ServerRequest $request) {
                 $userId = \Cake\Utility\Hash::get($request->getAttribute('params'), 'pass.0');
                 if (!empty($userId) && !empty($user)) {
@@ -81,16 +122,40 @@ return [
                 return false;
             }
         ],
-        //all roles allowed to Pages/display
+        //anonimous can VIEW Articles, Destinations, Events, Tags
         [
             'role' => '*',
-            'controller' => 'Pages',
-            'action' => 'display',
+            'controller' => ['Articles','Destinations','Events','Tags','Static'],
+            'action' => ['view'],
+            'bypassAuth' => true,
         ],
+        //anonimous can INDEX Articles, Destinations, Events, Tags
         [
             'role' => '*',
-            'controller' => 'Participant',
-            'action' => 'add',
+            'controller' => ['Articles','Destinations','Static'],
+            'action' => ['index'],
+            'bypassAuth' => true,
+        ],
+        //anonimous free actions on Events
+        [
+            'role' => '*',
+            'controller' => ['Events'],
+            'action' => ['getList','subscribe'],
+            'bypassAuth' => true,
+        ],
+        //anonimous free actions on Participants
+        [
+            'role' => '*',
+            'controller' => ['Participants'],
+            'action' => ['add','sendNotification'],
+            'bypassAuth' => true,
+        ],
+        //allow debugkit and events for anonymous users
+        [
+            'role' => '*',
+            'controller' => ['Pages','Static', 'Events','DebugKit','debug_kit','debug-kit','Sitemap'],
+            'action' => '*',
+            'bypassAuth' => true,
         ],
     ]
 ];

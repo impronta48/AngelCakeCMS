@@ -3,9 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Mailer\Email;
-use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
-
 
 /**
  * Participants Controller
@@ -16,13 +14,18 @@ use Cake\ORM\TableRegistry;
  */
 class ParticipantsController extends AppController
 {
+
+    public $paginate = [
+                'contain' => ['Events'],            
+            ];
+
     //Necessario per gestire la risposta in json della view
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
         //$this->loadComponent('Security');
-        $this->Auth->allow('add');
+        //$this->Authentication->allowUnauthenticated(['add']);
     }
 
     /**
@@ -33,25 +36,23 @@ class ParticipantsController extends AppController
     public function index($event_id = null)
     {
         $conditions = [];
-        $ext = $this->request->getAttribute('params')['_ext'];
-
+        $p = $this->request->getAttribute('params');
+        $ext = $p['_ext'];
+        
         if (!empty($event_id))
         {
             $conditions['event_id'] = $event_id;
         }
 
-        if ($ext == 'xls'){
+        if ($ext == 'xls'){        
             $participants = $this->Participants->find('all',['conditions'=>$conditions]);
         }
         else{
-            $this->paginate = [
-                'contain' => ['Events'],
-                'conditions' => $conditions,
-            ];
+            $this->paginate['conditions'] = $conditions;            
             $participants = $this->paginate($this->Participants);
         }
 
-        $columns = $this->Participants->schema()->columns();
+        $columns = $this->Participants->getSchema()->columns();
         $this->set(compact('participants','event_id','columns'));
     }
 
@@ -78,7 +79,7 @@ class ParticipantsController extends AppController
      */
     public function add()
     {
-        $participant = $this->Participants->newEntity();
+        $participant = $this->Participants->newEmptyEntity();
         if ($this->request->is('post')) {
             if (isset($this->request->getData()['referal']))
             {
@@ -143,7 +144,7 @@ class ParticipantsController extends AppController
         try{
             $event= $this->Participants->Events->get($participant->event_id);
         }
-        catch (Exception $e) {
+        catch (\Cake\Core\Exception\Exception $e) {
             $this->Flash->error('impossibile mandare una mail al destinatario');
             return;
         }

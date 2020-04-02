@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -30,29 +32,33 @@ require __DIR__ . '/paths.php';
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 use Cake\Cache\Cache;
-use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Core\Plugin;
-use Cake\Database\Type;
+use Cake\Database\TypeFactory;
 use Cake\Datasource\ConnectionManager;
+use Cake\Error\ConsoleErrorHandler;
 use Cake\Error\ErrorHandler;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
-use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
-use Cake\Utility\Inflector;
+use Cake\Routing\Router;
 use Cake\Utility\Security;
 
-/**
+/*
+ * See https://github.com/josegonzalez/php-dotenv for API details.
+ *
  * Uncomment block of code below if you want to use `.env` file during development.
- * You should copy `config/.env.default to `config/.env` and set/modify the
+ * You should copy `config/.env.example` to `config/.env` and set/modify the
  * variables as required.
  *
- * It is HIGHLY discouraged to use a .env file in production, due to security risks
- * and decreased performance on each request. The purpose of the .env file is to emulate
- * the presence of the environment variables like they would be present in production.
- */
+ * The purpose of the .env file is to emulate the presence of the environment
+ * variables like they would be present in production.
+ *
+ * If you use .env files, be careful to not commit them to source control to avoid
+ * security risks. See https://github.com/josegonzalez/php-dotenv#general-security-information
+ * for more information for recommended practices.
+*/
 // if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
 //     $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
 //     $dotenv->parse()
@@ -69,7 +75,6 @@ use Cake\Utility\Security;
  * idea to create multiple configuration files, and separate the configuration
  * that changes from configuration that does not. This makes deployment simpler.
  */
-
 /*Carico il file di configurazione specifico di questo dominio*/
 $path=conf_path();
 try {
@@ -83,11 +88,12 @@ try {
 }
 
 /*
- * Load an environment local configuration file.
- * You can use a file like app_local.php to provide local overrides to your
- * shared configuration.
+ * Load an environment local configuration file to provide overrides to your configuration.
+ * Notice: For security reasons app_local.php **should not** be included in your git repo.
  */
-//Configure::load('app_local', 'default');
+/* if (file_exists(CONFIG . 'app_local.php')) {
+    Configure::load('app_local', 'default');
+}*/
 
 /*
  * When debug = true the metadata cache should only last
@@ -137,10 +143,9 @@ if ($isCli) {
 /*
  * Set the full base URL.
  * This URL is used as the base of all absolute links.
- *
- * If you define fullBaseUrl in your config file you can remove this.
  */
-if (!Configure::read('App.fullBaseUrl')) {
+$fullBaseUrl = Configure::read('App.fullBaseUrl');
+if (!$fullBaseUrl) {
     $s = null;
     if (env('HTTPS')) {
         $s = 's';
@@ -148,24 +153,21 @@ if (!Configure::read('App.fullBaseUrl')) {
 
     $httpHost = env('HTTP_HOST');
     if (isset($httpHost)) {
-        Configure::write('App.fullBaseUrl', 'http' . $s . '://' . $httpHost);
+        $fullBaseUrl = 'http' . $s . '://' . $httpHost;
     }
     unset($httpHost, $s);
 }
+if ($fullBaseUrl) {
+    Router::fullBaseUrl($fullBaseUrl);
+}
+unset($fullBaseUrl);
 
 Cache::setConfig(Configure::consume('Cache'));
 ConnectionManager::setConfig(Configure::consume('Datasources'));
 TransportFactory::setConfig(Configure::consume('EmailTransport'));
-Email::setConfig(Configure::consume('Email'));
+Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
 Security::setSalt(Configure::consume('Security.salt'));
-
-/*
- * The default crypto extension in 3.0 is OpenSSL.
- * If you are migrating from 2.x uncomment this code to
- * use a more compatible Mcrypt based implementation
- */
-//Security::engine(new \Cake\Utility\Crypto\Mcrypt());
 
 /*
  * Setup detectors for mobile and tablet.
@@ -182,21 +184,31 @@ ServerRequest::addDetector('tablet', function ($request) {
 });
 
 /*
- * Enable immutable time objects in the ORM.
+ * You can set whether the ORM uses immutable or mutable Time types.
+ * The default changed in 4.0 to immutable types. You can uncomment
+ * below to switch back to mutable types.
  *
  * You can enable default locale format parsing by adding calls
  * to `useLocaleParser()`. This enables the automatic conversion of
  * locale specific date formats. For details see
- * @link https://book.cakephp.org/3.0/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
+ * @link https://book.cakephp.org/4/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
  */
-Type::build('time')
-    ->useImmutable();
-Type::build('date')
-    ->useImmutable();
-Type::build('datetime')
-    ->useImmutable();
-Type::build('timestamp')
-    ->useImmutable();
+// TypeFactory::build('time')
+//    ->useMutable();
+// TypeFactory::build('date')
+//    ->useMutable();
+//TypeFactory::build('datetime')
+//        ->useMutable();
+// TypeFactory::build('timestamp')
+//    ->useMutable();
+// TypeFactory::build('datetimefractional')
+//    ->useMutable();
+// TypeFactory::build('timestampfractional')
+//    ->useMutable();
+// TypeFactory::build('datetimetimezone')
+//    ->useMutable();
+// TypeFactory::build('timestamptimezone')
+//    ->useMutable();
 
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
@@ -208,16 +220,11 @@ Type::build('timestamp')
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 
-
-
-Configure::write('Users.config', ['users']);
-Configure::write('Auth.authenticate.Form.fields.username', 'email');
-
-require_once 'events.php';
+//require_once 'events.php';
 
 
 //Se nel settings definisci la variabile THEME allora carico il tema qui
-if (Configure::check('theme')){   
+if (Configure::check('theme')){
     $this->addPlugin(Configure::read('theme'));
 }
 
@@ -244,23 +251,26 @@ if (Configure::check('theme')){
  */
 function conf_path($require_settings = true, $reset = false)
 {
-	$confdir = 'sites';
-    $sites = [];
-	$uri = explode('/', $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME']);
-	$server = explode('.', implode('.', array_reverse(explode(':', rtrim($_SERVER['HTTP_HOST'], '.')))));
-	for ($i = count($uri) - 1; $i > 0; $i--) {
-		for ($j = count($server); $j > 0; $j--) {
-			$dir = implode('.', array_slice($server, -$j)) . implode('.', array_slice($uri, 0, $i));
-			if (isset($sites[$dir]) && file_exists(CONFIG . '/' . $confdir . '/' . $sites[$dir])) {
-				$dir = $sites[$dir];
-			}
-			if (file_exists(CONFIG . '/' . $confdir . '/' . $dir . '/settings.php') || (!$require_settings && file_exists(CONFIG . '/' . $confdir . '/' . $dir))) {
-				$conf = "$confdir/$dir";
-				return $conf;
-			}
-		}
-	}
-	$conf = "$confdir/default";
-	return $conf;
-}
+    $confdir = 'sites';
+    if (empty($_SERVER['HTTP_HOST'])){
+        return "$confdir/default";
+    }
 
+    $sites = [];
+    $uri = explode('/', $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME']);
+    $server = explode('.', implode('.', array_reverse(explode(':', rtrim($_SERVER['HTTP_HOST'], '.')))));
+    for ($i = count($uri) - 1; $i > 0; $i--) {
+        for ($j = count($server); $j > 0; $j--) {
+            $dir = implode('.', array_slice($server, -$j)) . implode('.', array_slice($uri, 0, $i));
+            if (isset($sites[$dir]) && file_exists(CONFIG . '/' . $confdir . '/' . $sites[$dir])) {
+                $dir = $sites[$dir];
+            }
+            if (file_exists(CONFIG . '/' . $confdir . '/' . $dir . '/settings.php') || (!$require_settings && file_exists(CONFIG . '/' . $confdir . '/' . $dir))) {
+                $conf = "$confdir/$dir";
+                return $conf;
+            }
+        }
+    }
+    $conf = "$confdir/default";
+    return $conf;
+}
