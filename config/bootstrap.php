@@ -88,6 +88,12 @@ try {
     exit($e->getMessage() . "\n");
 }
 
+//Carico la configurazione specifica per il filesystem
+//il plugin di riferimento è https://github.com/josbeir/cakephp-filesystem
+//Massimoi - 3/4/2020
+Configure::load('filesystems', 'default');
+
+
 /*
  * Load an environment local configuration file to provide overrides to your configuration.
  * Notice: For security reasons app_local.php **should not** be included in your git repo.
@@ -230,6 +236,7 @@ TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'
 if (Configure::check('theme')){
     $this->addPlugin(Configure::read('theme'));
 }
+
 
 /**
  * Returns the appropriate configuration directory.

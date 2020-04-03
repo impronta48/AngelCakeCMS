@@ -58,6 +58,7 @@ class Application extends BaseApplication
         //$this->addPlugin('Authentication');
         $this->addPlugin('BootstrapUI');
         $this->addPlugin(\CakeDC\Users\Plugin::class);
+
         /*$identifiers = Configure::read('Auth.Identifiers');
         $identifiers['Authentication.Password']['fields']['username'] = 'email';
         Configure::write('Auth.Identifiers', $identifiers); */
