@@ -110,12 +110,20 @@ class ArticlesController extends AppController
 				->contain('Tags')
 				->firstOrFail();
 
+		$old_destination = $article->destination_id;
+
 		if ($this->request->is(['post','put']))
 		{
 			$this->Articles->patchEntity($article,$this->request->getData());
 
 			if ($this->Articles->save($article)) {
-				//dd($article);
+
+				//Se hai cambiato destination devo spostare gli allegati nella cartella giusta
+				if( $old_destination != $article->destination_id)
+				{
+						$this->moveAttachments($old_destination, $article->destination_id, $id);
+				}
+
 				//Salvare allegati, copertina e galleria
 				if (!$article['newcopertina']['error'] == UPLOAD_ERR_NO_FILE)
 				{
@@ -124,12 +132,11 @@ class ArticlesController extends AppController
 				}
 				if (!$article['newgallery'][0]['error'] == UPLOAD_ERR_NO_FILE)
 				{
-					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
+					//Prima di caricare la galleria non cancello quello che c'è già
 					$this->uploadFiles($article['id'],'galleria',$article['newgallery'],false);
 				}
 				if (!$article['newallegati'][0]['error']==UPLOAD_ERR_NO_FILE)
 				{
-					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
 					$this->uploadFiles($article['id'],'files',$article['newallegati'],false);
 				}
 				$this->Flash->success(__('Salvato con successo'));
@@ -145,6 +152,7 @@ class ArticlesController extends AppController
     	$destinations = $this->Articles->Destinations->find('list');
 		$this->set(compact('article','tags','users','destinations'));
 	}
+
 
 	public function delete($id)
 	{
@@ -271,4 +279,14 @@ class ArticlesController extends AppController
 		$this->redirect(Router::url( $this->referer(), true ) );
 	}
 
+	//Quando cambio destination ad un articolo devo spostarea anche gli allegati da una cartella all'altra.
+	private function moveAttachments($old_dest, $new_dest, $id)
+	{
+		$this->loadModel('Destinations');
+		$old_dest_name = $this->Destinations->findById($old_dest)->first()->slug;
+		$new_dest_name = $this->Destinations->findById($new_dest)->first()->slug;
+		$path = $this->getPath();
+		return rename($path . $old_dest_name . DS. $id, $path . $new_dest_name . DS . $id );
+
+	}
 }

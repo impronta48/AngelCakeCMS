@@ -17,8 +17,7 @@ use Cake\Routing\Router;
 class DestinationsController extends AppController
 {
     public $paginate = [
-        'limit' => 20,
-        'order' => ['Destinations.name' => 'asc'],
+        'limit' => 12,
     ];
 
     public function initialize(): void
@@ -48,7 +47,9 @@ class DestinationsController extends AppController
         $destinations = $this->paginate($this->Destinations, [
             'contain' => ['Articles'],
         ] );
-        $this->set(compact('destinations'));
+
+
+        $this->set(compact('destinations') );
     }
 
     /**
@@ -83,13 +84,17 @@ class DestinationsController extends AppController
             }
         }
 
-        $articles_q->where(['destination_id'=>$id]);
-        $query->where(['id'=>$id]);
+
+        $query->where(['id'=>$id]);                 //Filtro le destination
         $destination = $query->first();
+        $this->set('destination', $destination);
+
+        $articles_q->where(['destination_id'=>$id]); //Filtro gli articoli
+        $articles_q->where(['published'=>true]); //Mostro solo quelli pubblicati
+        $art = $this->paginate($articles_q);
+        $this->set('articles', $art);
 
         $this->set('archived',$a);
-        $this->set('articles', $this->paginate($articles_q));
-        $this->set('destination', $destination);
     }
 
     /**
