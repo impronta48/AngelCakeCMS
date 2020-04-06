@@ -110,7 +110,13 @@ class ArticlesController extends AppController
 				->contain('Tags')
 				->firstOrFail();
 
-		$old_destination = $article->destination_id;
+		if ($article->destination_id == null)
+		{
+			$old_destination = 0;
+		}
+		else{
+			$old_destination = $article->destination_id;
+		}
 
 		if ($this->request->is(['post','put']))
 		{
@@ -121,7 +127,13 @@ class ArticlesController extends AppController
 				//Se hai cambiato destination devo spostare gli allegati nella cartella giusta
 				if( $old_destination != $article->destination_id)
 				{
-						$this->moveAttachments($old_destination, $article->destination_id, $id);
+						if ($this->moveAttachments($old_destination, $article->destination_id, $id))
+						{
+							$this->log("Allegati dell'articolo $id spostati con successo dalla cartella ${old_destination} a ${article->destination_id}");
+						}
+						else {
+							$this->log("Impossibile spostare gli allegati dell'articolo $id dalla cartella ${old_destination} a ${article->destination_id}");
+						}
 				}
 
 				//Salvare allegati, copertina e galleria
