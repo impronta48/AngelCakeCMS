@@ -44,6 +44,7 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
+//use Cake\Utility\Inflector;
 
 /*
  * See https://github.com/josegonzalez/php-dotenv for API details.
@@ -86,6 +87,12 @@ try {
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }
+
+//Carico la configurazione specifica per il filesystem
+//il plugin di riferimento è https://github.com/josbeir/cakephp-filesystem
+//Massimoi - 3/4/2020
+Configure::load('filesystems', 'default');
+
 
 /*
  * Load an environment local configuration file to provide overrides to your configuration.
@@ -210,6 +217,9 @@ ServerRequest::addDetector('tablet', function ($request) {
 // TypeFactory::build('timestamptimezone')
 //    ->useMutable();
 
+//Necessario per gestire i campi datetime senza specificare i secondi
+TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm');
+
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
  * table, model, controller names or whatever other string is passed to the
@@ -219,7 +229,6 @@ ServerRequest::addDetector('tablet', function ($request) {
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
-
 //require_once 'events.php';
 
 
@@ -227,6 +236,7 @@ ServerRequest::addDetector('tablet', function ($request) {
 if (Configure::check('theme')){
     $this->addPlugin(Configure::read('theme'));
 }
+
 
 /**
  * Returns the appropriate configuration directory.

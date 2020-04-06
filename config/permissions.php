@@ -153,9 +153,17 @@ return [
         //allow debugkit and events for anonymous users
         [
             'role' => '*',
-            'controller' => ['Pages','Static', 'Events','DebugKit','debug_kit','debug-kit','Sitemap'],
+            'controller' => ['Pages','Static', 'Events','Sitemap','Error'],
             'action' => '*',
             'bypassAuth' => true,
         ],
+        [
+            'role' => '*',
+            'plugin' => 'DebugKit',
+            'controller' => '*',
+            'action' => '*',
+            'bypassAuth' => true,
+        ],
+
     ]
 ];

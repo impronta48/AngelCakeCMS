@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Database\Type;
+use Cake\Database\TypeFactory;
 use Cake\Event\Event;
 
 /**
@@ -65,7 +65,7 @@ class EventsController extends AppController
     {
         $event = $this->Events->newEmptyEntity();
         //Necessario per questo https://discourse.cakephp.org/t/patchentity-set-date-field-to-null/7361/3
-        Type::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
+        TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
         if ($this->request->is('post')) {
             $event = $this->Events->patchEntity($event, $this->request->getData());
 
@@ -94,7 +94,7 @@ class EventsController extends AppController
             'contain' => []
         ]);
         //Necessario per questo https://discourse.cakephp.org/t/patchentity-set-date-field-to-null/7361/3
-        Type::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
+        TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $event = $this->Events->patchEntity($event, $this->request->getData());
