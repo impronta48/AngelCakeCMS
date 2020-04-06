@@ -129,10 +129,10 @@ class ArticlesController extends AppController
 				{
 						if ($this->moveAttachments($old_destination, $article->destination_id, $id))
 						{
-							$this->log("Allegati dell'articolo $id spostati con successo dalla cartella ${old_destination} a ${article->destination_id}");
+							$this->log("Allegati articolo $id spostati con successo dalla cartella {$old_destination} a {$article->destination_id}", 'info');
 						}
 						else {
-							$this->log("Impossibile spostare gli allegati dell'articolo $id dalla cartella ${old_destination} a ${article->destination_id}");
+							$this->log("Impossibile spostare gli allegati articolo $id dalla cartella {$old_destination} a {$article->destination_id}", 'error');
 						}
 				}
 
