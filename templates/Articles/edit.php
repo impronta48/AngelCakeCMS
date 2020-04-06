@@ -95,6 +95,7 @@
 <?= $this->Form->control('published',['label'=>'Pubblicato']); ?>
 <?= $this->Form->control('archived',['label'=>'Archiviato']); ?>
 <?= $this->Form->control('promoted',['label'=>'Promosso in Home Page']); ?>
+<?= $this->Form->control('slider',['label'=>'Visibile nello Slider']); ?>
 <?= $this->Form->control('modified',['label'=>'Ultima Modifica','type'=>'datetime']); ?>
 <?= $this->Form->control('user_id'); ?>
 <?= $this->Form->hidden('id'); ?>

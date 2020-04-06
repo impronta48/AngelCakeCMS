@@ -35,7 +35,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "Bossolasco\\": "plugins/Bossolasco/src/"
+            "Bossolasco\\": "plugins/Bossolasco/src/",
+            "Yepp\\": "plugins/Yepp/src/"
         }
     },
     "autoload-dev": {
