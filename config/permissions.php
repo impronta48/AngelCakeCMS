@@ -125,7 +125,7 @@ return [
         //anonimous can VIEW Articles, Destinations, Events, Tags
         [
             'role' => '*',
-            'controller' => ['Articles','Destinations','Events','Tags','Static'],
+            'controller' => ['Articles','Destinations','Events','Tags','Static','Bandi'],
             'action' => ['view'],
             'bypassAuth' => true,
         ],
