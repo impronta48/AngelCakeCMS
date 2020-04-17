@@ -164,6 +164,5 @@ return [
             'action' => '*',
             'bypassAuth' => true,
         ],
-
     ]
 ];

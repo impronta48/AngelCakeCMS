@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<?= $this->Html->charset() ?>	
+	<?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
     <title><?= $this->fetch('title') ?></title>
@@ -13,8 +13,8 @@
 
 	<!-- Custom styles for this template -->
 	<?= $this->Html->css('style') ?>
-    
-    
+
+
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
   </head>
@@ -24,7 +24,7 @@
     <main role="main" class="container">
 
         <?= $this->Flash->render() ?>
-	    <?= $this->fetch('content') ?>	
+	    <?= $this->fetch('content') ?>
 
     </main><!-- /.container -->
 	  <?= $this->element('admin-footer'); ?>

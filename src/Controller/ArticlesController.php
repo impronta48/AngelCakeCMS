@@ -73,7 +73,7 @@ class ArticlesController extends AppController
 		{
 			$article = $this->Articles->patchEntity($article, $this->request->getData());
 
-			$article->user_id = 1;
+			$article->user_id = $this->Authentication->getIdentity()->getIdentifier();;
 			if ($this->Articles->save($article)) {
 				//dd($article);
 				//Salvare allegati, copertina e galleria
@@ -96,6 +96,7 @@ class ArticlesController extends AppController
 				return $this->redirect(['action'=>'view', $article->slug]);
 			}
 			$this->Flash->error(__('Unable to add your article'));
+			dd($article->getErrors());
 		}
 		$tags = $this->Articles->Tags->find('list');
 		$users = $this->Articles->Users->find('list',['keyField' => 'id', 'valueField' => 'username']);
