@@ -1,0 +1,9 @@
+.icona {
+  width: 100px;
+}
+
+.titoloAdmin {
+  min-height: 5em;
+  display: block;
+  text-align: center;
+}
