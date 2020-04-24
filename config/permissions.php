@@ -132,7 +132,7 @@ return [
         //anonimous can INDEX Articles, Destinations, Events, Tags
         [
             'role' => '*',
-            'controller' => ['Articles','Destinations','Static'],
+            'controller' => ['Articles','Destinations','Static','Bandi'],
             'action' => ['index'],
             'bypassAuth' => true,
         ],
