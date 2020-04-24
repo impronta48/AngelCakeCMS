@@ -6,19 +6,17 @@
     <?php echo $this->Form->create(null,
         [   'type'    => 'get',
             'inputDefaults' => array(
-            'div' => 'form-group ',
-            'action'=>'index'
+                'div' => 'form-group '
             ),
             'class' => 'form-inline',
     ]); ?>
-    <div class="ricerca">
-        <?php echo $this->Form->control('destination_id',['label'=>'Sito Locale','div' => 'col col-md-3','value'=>$destination_id, 'options'=>$destinations, 'empty'=>'---'] ); ?>
-    </div>
-    <div class="ricerca">
-        <?php echo $this->Form->control('q',['label'=>'Cerca Articolo','div' => 'col col-md-3','value'=>$q]); ?>
-    </div>
-    <a href="<?= Cake\Routing\Router::url(['action' => 'add'])?>" class="btn btn-aggiungi btn-success"><i class="fa fa-plus-square"> Aggiungi Articolo</i></a>
-    <?php echo $this->Form->submit('Filtra',['class' => 'btn btn-filtra btn-primary']); ?>
+
+    <?php echo $this->Form->control('destination_id',['label'=>'Sito Locale','div' => 'col col-md-3','value'=>$destination_id, 'options'=>$destinations, 'empty'=>'---'] ); ?>
+
+    <?php echo $this->Form->control('q',['label'=>'Cerca Articolo','div' => 'col col-md-3','value'=>$q]); ?>
+
+    <a href="<?= Cake\Routing\Router::url(['action' => 'add'])?>" class="btn btn-aggiungi btn-success pull-right"><i class="fa fa-plus-square"></i> Aggiungi Articolo</a>
+    <?php echo $this->Form->submit('Filtra',['class' => 'btn btn-filtra btn-primary mt-1']); ?>
     <?php echo $this->Form->end(); ?>
     </div>
     </div>

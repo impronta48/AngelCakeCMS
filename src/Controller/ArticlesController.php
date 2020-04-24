@@ -16,7 +16,7 @@ class ArticlesController extends AppController
 		//$this->Authentication->allowUnauthenticated(['getList','index','view']);
 	}
 
-	public function index()
+	public function admin()
 	{
 		$this->loadComponent('Paginator');
 

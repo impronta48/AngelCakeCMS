@@ -42,7 +42,7 @@ class DestinationsController extends AppController
         $this->set(compact('destinations'));
     }
 
-    public function adminIndex()
+    public function admin()
     {
         $destinations = $this->paginate($this->Destinations, [
             'contain' => ['Articles'],

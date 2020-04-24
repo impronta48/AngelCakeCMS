@@ -1,3 +1,4 @@
+<?= $this->Html->css('admin.css',['inline'=>'block']) ?>
 <div class="container">
 
 <h2 style="text-align:center">Benvenuto nel sistema di gestione dei contenuti</h2>
@@ -5,15 +6,15 @@
     <div class="row">
         <div class=" col-md-2">
             <br>
-            <a href="/articles/index" class="titoloAdmin"><h4>Articoli</h4></a>
+            <a href="/articles/admin" class="titoloAdmin"><h4>Articoli</h4></a>
             <br>
-            <a href="/articles/index" style="margin-left:50px;"><img src="/img/admin/articoli.png" class="img-responsive icona"></a>
+            <a href="/articles/admin"><img src="/img/admin/articoli.png" class="img-responsive icona"></a>
         </div>
         <div class=" col-md-2">
             <br>
-            <a href="/destinations/admin_index" class="titoloAdmin"><h4>Siti Locali</h4></a>
+            <a href="/destinations/admin" class="titoloAdmin"><h4>Siti Locali</h4></a>
             <br>
-            <a href="/destinations/admin_index" style="margin-left:50px;"><img src="/img/admin/internet.png" class="img-responsive icona"></a>
+            <a href="/destinations/admin" style="margin-left:50px;"><img src="/img/admin/categorie.png" class="img-responsive icona"></a>
         </div>
         <div class=" col-md-2">
             <br>
@@ -33,19 +34,13 @@
             <br>
             <a href="/participants" style="margin-left:50px;"><img src="/img/admin/partecipanti.png" class="img-responsive icona"></a>
         </div>
-        <div class=" col-md-2">
-            <br>
-            <a href="/static/getRemote" class="titoloAdmin"><h4>Sync Statiche</h4></a>
-            <br>
-            <a href="/static/getRemote" style="margin-left:50px;"><img src="/img/admin/download.png" class="img-responsive icona"></a>
-        </div>
 
     </div>
     <hr>
     <div class="row">
         <div class="col-md-22 text-center">
               <div class="divLogout">
-                    <a type="button" class="btnLogout btn btn-danger" href="/logout">LOGOUT</a>
+                    <a type="button" class="btnLogout theme-solid-button btn btn-danger" href="/logout">LOGOUT</a>
               </div>
         </div>
     </div>
