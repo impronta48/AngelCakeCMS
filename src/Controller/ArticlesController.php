@@ -162,7 +162,8 @@ class ArticlesController extends AppController
 		// Get a list of tags.
     	$tags = $this->Articles->Tags->find('list');
 		$users = $this->Articles->Users->find('list',['keyField' => 'id', 'valueField' => 'username']);
-    	$destinations = $this->Articles->Destinations->find('list');
+		$destinations = $this->Articles->Destinations->find('list');
+		$this->set('user',  $this->request->getAttribute('identity'));
 		$this->set(compact('article','tags','users','destinations'));
 	}
 
@@ -175,7 +176,7 @@ class ArticlesController extends AppController
 		$dest= $this->getDestinationSlug($id);
 		if ($this->Articles->delete($article))
 		{
-			$f = $this->getPath();
+			$f = $this->Articles->getPath();
 			$save_dir = $f . $dest . $id ;
 
 			//Cancellare anche la cartella degli allegati
@@ -206,19 +207,6 @@ class ArticlesController extends AppController
 	////	FUNZIONI PER GESTIRE FILE ALLEGATI //////////////////////////
 	///////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////
-
-	private function getPath()
-	{
-		$sitedir = Configure::read('sitedir');
-		return WWW_ROOT .  $sitedir . '/articles/' ;
-	}
-
-	private function getUrl()
-	{
-		$sitedir = Configure::read('sitedir');
-		return  Router::url('/') . $sitedir . '/articles/' ;
-	}
-
 	private function getDestinationSlug($article_id)
 	{
 		$a = $this->Articles->get($article_id);
@@ -235,7 +223,7 @@ class ArticlesController extends AppController
 	private function uploadFiles($id,$fieldDir,$fnames,$deleteBefore){
 
 		//this is the folder where i need to save
-		$f = $this->getPath();
+		$f = $this->Articles->getPath();
 		$dest= $this->getDestinationSlug($id);
 
 		$save_dir = $f . $dest . $id . DS . $fieldDir;
@@ -298,8 +286,7 @@ class ArticlesController extends AppController
 		$this->loadModel('Destinations');
 		$old_dest_name = $this->Destinations->findById($old_dest)->first()->slug;
 		$new_dest_name = $this->Destinations->findById($new_dest)->first()->slug;
-		$path = $this->getPath();
+		$path = $this->Articles->getPath();
 		return rename($path . $old_dest_name . DS. $id, $path . $new_dest_name . DS . $id );
-
 	}
 }

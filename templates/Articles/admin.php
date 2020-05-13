@@ -54,9 +54,9 @@
             </td>
             <td><?= h($article->modified) ?></td>
             <td class="actions">
-                <?= $this->Html->link('', ['action' => 'view', $article->slug], ['title' => __('View'), 'class' => 'btn btn-primary glyphicon glyphicon-eye-open']) ?>
-                <?= $this->Html->link('', ['action' => 'edit', $article->id], ['title' => __('Edit'), 'class' => 'btn btn-primary glyphicon glyphicon-pencil']) ?>
-                <?= $this->Form->postLink('', ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete # {0}?', $article->slug), 'title' => __('Delete'), 'class' => 'btn btn-primary glyphicon glyphicon-trash']) ?>
+                <?= $this->Html->link('', ['action' => 'view', $article->slug], ['title' => __('View'), 'class' => 'btn btn-primary fa fa-eye']) ?>
+                <?= $this->Html->link('', ['action' => 'edit', $article->id], ['title' => __('Edit'), 'class' => 'btn btn-primary fa fa-pencil']) ?>
+                <?= $this->Form->postLink('', ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete # {0}?', $article->slug), 'title' => __('Delete'), 'class' => 'btn btn-primary fa fa-trash']) ?>
             </td>
         </tr>
         <?php endforeach; ?>

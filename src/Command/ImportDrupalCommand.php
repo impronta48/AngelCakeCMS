@@ -20,17 +20,23 @@ use App\Model\Entity\Destination;
 use Cake\Utility\Text;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
+use Cake\ORM\TableRegistry;
+use Cake\Core\Configure;
+use Cake\http\Exception\NotFoundException;
 
 class ImportDrupalCommand extends Command {
   private $url;
   private $storagePath;
   private $io;
+  private $articles;
+  private $uploads;
 
   public function initialize() : void
   {
       parent::initialize();
-      $this->loadModel('Articles');
-      $this->storagePath  = WWW_ROOT . 'yepp/articles';
+      $this->articles = TableRegistry::getTableLocator()->get('Articles');
+      $this->uploads = TableRegistry::getTableLocator()->get('Uploads');
+      $this->storagePath  = WWW_ROOT . Configure::read('sitedir') .  '/articles';
   }
 
   public function execute(Arguments $args, ConsoleIo $io)
@@ -260,4 +266,6 @@ class ImportDrupalCommand extends Command {
         $this->io->out("Già presente $remoteFile");
       }
    }
+
+   
   }

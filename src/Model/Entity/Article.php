@@ -9,6 +9,7 @@ use Cake\Filesystem\File;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
+use Cake\Utility;
 
 class Article extends Entity{
 	protected $_accessible = [
@@ -40,7 +41,7 @@ class Article extends Entity{
 	//Finisce con /
 	public function getPath()
 	{
-		$sitedir = Configure::read('sitedir');			
+		$sitedir = Configure::read('sitedir');					
 		return WWW_ROOT .  $sitedir . '/articles/' ;
 	}
 
@@ -68,23 +69,24 @@ class Article extends Entity{
 		//{
 		//	return $files;
 		//}				
-		$fieldDir = 'copertina';
-		$destination = $this->getDestinationSlug();
-		$id = $this->id;		
-		$fullDir = $this->getPath() . $destination . $id . DS . $fieldDir;
-		//debug($fullDir);
-		$dir = new Folder($fullDir);
+		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');		
+		$fullDir = Text::insert($fullDirTemplate, [
+			'sitedir' => Configure::read('sitedir'),
+			'model' => strtolower($this->getSource()),
+			'destination' => $this->getDestinationSlug(),
+			'id' => $this->id,
+			'field' => 'copertina',
+		]);		
 		
+		$dir = new Folder(WWW_ROOT . $fullDir);		
 		$files = $dir->find(".*\.(jpg|jpeg|png|gif)",true);
 		/*Controllo*/
 		if(!$files)
 		{			
-			return '/img'. Router::url(Configure::read('default-image','cartina-siti-locali.png'));			
+			return Router::url(Configure::read('default-image','cartina-siti-locali.png'));			
 		}
-
-		$result = $this->getUrl() . $destination . $id. '/'. $fieldDir .'/' .$files[0];
-
 		
+		$result = Router::url($fullDir . $files[0]);
 		//Cache::write("percorsi_first_image_$id", $result, 'img');
 		return $result;
 	}
@@ -104,10 +106,15 @@ class Article extends Entity{
 		// 	{
 		// 	return $files;
 		// }		
-		$destination = $this->getDestinationSlug();
-		$id = $this->id;		
-		$fullDir = $this->getPath() . $destination . $id . DS . $fieldDir;		
-		$dir = new Folder($fullDir);
+		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');		
+		$fullDir = Text::insert($fullDirTemplate, [
+			'sitedir' => Configure::read('sitedir'),
+			'model' => strtolower($this->getSource()),
+			'destination' => $this->getDestinationSlug(),
+			'id' => $this->id,
+			'field' => $fieldDir,
+		]);			
+		$dir = new Folder(WWW_ROOT . $fullDir);
 		$files = $dir->find(".*\.($allowed_extensions)",true);	
 		/*Controllo se è vuoto*/
 		if(!$files)
@@ -116,8 +123,8 @@ class Article extends Entity{
 			return [];
 		}
 		
-		//Aggiungo a tutti gli elementi il path assoluto
-		$files = preg_filter('/^/', $this->getUrl() . $destination . $id. '/'. $fieldDir .'/' , $files);
+		//Aggiungo a tutti gli elementi il path assoluto		
+		$files = preg_filter('/^/', Router::Url($fullDir) , $files);
 		//Cache::write("percorsi_gallery_$id", $files, 'img');
 		return $files;
 		
