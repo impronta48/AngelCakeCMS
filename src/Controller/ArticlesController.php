@@ -1,15 +1,35 @@
 <?php
+
 namespace App\Controller;
+
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
 use App\Model\Entity\Article;
+use Cake\Http\Exception\InternalErrorException;
+use Cake\Utility\Text;
 
 class ArticlesController extends AppController
 {
+	public $paginate = [
+		'limit' => 5,
+	];
+	private $phpFileUploadErrors;
+
 	public function initialize(): void
 	{
+		$this->phpFileUploadErrors = [
+			0 => 'There is no error, the file uploaded with success',
+			1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini: ' . ini_get("upload_max_filesize"),
+			2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+			3 => 'The uploaded file was only partially uploaded',
+			4 => 'No file was uploaded',
+			6 => 'Missing a temporary folder',
+			7 => 'Failed to write file to disk.',
+			8 => 'A PHP extension stopped the file upload.',
+		];
+
 		parent::initialize();
 
 		$this->loadComponent('Paginator');
@@ -40,11 +60,11 @@ class ArticlesController extends AppController
 		//Faccio la query di base (tira su tutti gli articoli)
 		$query = $this->Articles->find()
 			->contain(['Users', 'Destinations'])
-			->order(['Articles.id' =>'DESC']);
+			->order(['Articles.id' => 'DESC']);
 
 		//Se mi hai passato dei parametri in query filtro su quelli
 		if (!empty($q)) {
-				$query->where(['title LIKE' => "%$q%"]);
+			$query->where(['title LIKE' => "%$q%"]);
 		}
 		if (!empty($destination_id)) {
 			$query->where(['destination_id' => $destination_id]);
@@ -54,14 +74,14 @@ class ArticlesController extends AppController
 		$this->loadModel('Destinations');
 		$destinations = $this->Destinations->find('list')->order('name');
 		$this->set('articles', $this->paginate($query));
-		$this->set(compact('destinations','q','destination_id'));
+		$this->set(compact('destinations', 'q', 'destination_id'));
 	}
 
 	public function view($slug = null)
 	{
 		$article = $this->Articles->findBySlug($slug)
-				->contain(['Tags'])
-				->firstOrFail();
+			->contain(['Tags'])
+			->firstOrFail();
 		$this->set(compact('article'));
 		$this->set('user',  $this->request->getAttribute('identity'));
 	}
@@ -69,125 +89,132 @@ class ArticlesController extends AppController
 	public function add()
 	{
 		$article = $this->Articles->newEmptyEntity();
-		if ($this->request->is('post'))
-		{
+		if ($this->request->is('post')) {
 			$article = $this->Articles->patchEntity($article, $this->request->getData());
 
 			$article->user_id = $this->Authentication->getIdentity()->getIdentifier();;
 			if ($this->Articles->save($article)) {
-				//dd($article);
 				//Salvare allegati, copertina e galleria
-				if (!$article['newcopertina']['error'] == UPLOAD_ERR_NO_FILE)
-				{
+				//Salvare allegati, copertina e galleria
+				$error = $article['newcopertina']['error'];
+				if ($error == UPLOAD_ERR_OK) {
 					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'copertina',[$article['newcopertina']],true);
+					$this->uploadFiles($article['id'], 'copertina', [$article['newcopertina']], true);
+				} elseif ($error != UPLOAD_ERR_NO_FILE) {
+					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
-				if (!$article['newgallery'][0]['error'] == UPLOAD_ERR_NO_FILE)
-				{
-					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'galleria',$article['newgallery'],false);
+
+				$error = $article['newgallery'][0]['error'];
+				if ($error == UPLOAD_ERR_OK) {
+					//Prima di caricare la galleria non cancello quello che c'è $errorgià
+					$this->uploadFiles($article['id'], 'galleria', $article['newgallery'], false);
+				} elseif ($error != UPLOAD_ERR_NO_FILE) {
+					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
-				if (!$article['newallegati'][0]['error']==UPLOAD_ERR_NO_FILE)
-				{
-					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'files',$article['newallegati'],false);
+
+				$error = $article['newallegati'][0]['error'];
+				if ($error == UPLOAD_ERR_OK) {
+					$this->uploadFiles($article['id'], 'files', $article['newallegati'], false);
+				} elseif ($error != UPLOAD_ERR_NO_FILE) {
+					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
+
 				$this->Flash->success(__('Your article has been saved.'));
-				return $this->redirect(['action'=>'view', $article->slug]);
+				return $this->redirect(['action' => 'view', $article->slug]);
 			}
 			$this->Flash->error(__('Unable to add your article'));
 			dd($article->getErrors());
 		}
 		$tags = $this->Articles->Tags->find('list');
-		$users = $this->Articles->Users->find('list',['keyField' => 'id', 'valueField' => 'username']);
+		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
 		$destinations = $this->Articles->Destinations->find('list');
-		$this->set(compact('article', 'tags','users','destinations'));
+		$this->set(compact('article', 'tags', 'users', 'destinations'));
 	}
 
 	public function edit($id)
 	{
 		$article = $this->Articles
-				->findById($id)
-				->contain('Tags')
-				->firstOrFail();
+			->findById($id)
+			->contain('Tags')
+			->firstOrFail();
 
-		if ($article->destination_id == null)
-		{
+		if ($article->destination_id == null) {
 			$old_destination = 0;
-		}
-		else{
+		} else {
 			$old_destination = $article->destination_id;
 		}
 
-		if ($this->request->is(['post','put']))
-		{
-			$this->Articles->patchEntity($article,$this->request->getData());
+		if ($this->request->is(['post', 'put'])) {
+			$this->Articles->patchEntity($article, $this->request->getData());
 
 			if ($this->Articles->save($article)) {
 
 				//Se hai cambiato destination devo spostare gli allegati nella cartella giusta
-				if( $old_destination != $article->destination_id)
-				{
-						if ($this->moveAttachments($old_destination, $article->destination_id, $id))
-						{
-							$this->log("Allegati articolo $id spostati con successo dalla cartella {$old_destination} a {$article->destination_id}", 'info');
-						}
-						else {
-							$this->log("Impossibile spostare gli allegati articolo $id dalla cartella {$old_destination} a {$article->destination_id}", 'error');
-						}
+				if ($old_destination != $article->destination_id) {
+					if ($this->moveAttachments($old_destination, $article->destination_id, $id)) {
+						$this->log("Allegati articolo $id spostati con successo dalla cartella {$old_destination} a {$article->destination_id}", 'info');
+					} else {
+						$this->log("Impossibile spostare gli allegati articolo $id dalla cartella {$old_destination} a {$article->destination_id}", 'error');
+					}
 				}
 
 				//Salvare allegati, copertina e galleria
-				if (!$article['newcopertina']['error'] == UPLOAD_ERR_NO_FILE)
-				{
+				$error = $article['newcopertina']['error'];
+				if ($error == UPLOAD_ERR_OK) {
 					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'],'copertina',[$article['newcopertina']],true);
+					$this->uploadFiles($article['id'], 'copertina', [$article['newcopertina']], true);
+				} elseif ($error != UPLOAD_ERR_NO_FILE) {
+					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
-				if (!$article['newgallery'][0]['error'] == UPLOAD_ERR_NO_FILE)
-				{
-					//Prima di caricare la galleria non cancello quello che c'è già
-					$this->uploadFiles($article['id'],'galleria',$article['newgallery'],false);
+
+				$error = $article['newgallery'][0]['error'];
+				if ($error == UPLOAD_ERR_OK) {
+					//Prima di caricare la galleria non cancello quello che c'è $errorgià
+					$this->uploadFiles($article['id'], 'galleria', $article['newgallery'], false);
+				} elseif ($error != UPLOAD_ERR_NO_FILE) {
+					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
-				if (!$article['newallegati'][0]['error']==UPLOAD_ERR_NO_FILE)
-				{
-					$this->uploadFiles($article['id'],'files',$article['newallegati'],false);
+
+				$error = $article['newallegati'][0]['error'];
+				if ($error == UPLOAD_ERR_OK) {
+					$this->uploadFiles($article['id'], 'files', $article['newallegati'], false);
+				} elseif ($error != UPLOAD_ERR_NO_FILE) {
+					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
 				$this->Flash->success(__('Salvato con successo'));
 				//return $this->redirect(['action'=>'view', $article->slug]);
-			}
-			else{
+			} else {
 				$this->Flash->error(__('Unable to update your article.'));
 			}
 		}
 		// Get a list of tags.
-    	$tags = $this->Articles->Tags->find('list');
-		$users = $this->Articles->Users->find('list',['keyField' => 'id', 'valueField' => 'username']);
+		$tags = $this->Articles->Tags->find('list');
+		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
 		$destinations = $this->Articles->Destinations->find('list');
 		$this->set('user',  $this->request->getAttribute('identity'));
-		$this->set(compact('article','tags','users','destinations'));
+		$this->set(compact('article', 'tags', 'users', 'destinations'));
 	}
 
 
 	public function delete($id)
 	{
-		$this->request->allowMethod(['post','delete']);
+		$this->request->allowMethod(['post', 'delete']);
 
 		$article = $this->Articles->findById($id)->firstOrFail();
-		$dest= $this->getDestinationSlug($id);
-		if ($this->Articles->delete($article))
-		{
-			$f = $this->Articles->getPath();
-			$save_dir = $f . $dest . $id ;
+		$dest = $this->getDestinationSlug($id);
+		if ($this->Articles->delete($article)) {
+			$f = $article->getPath();
+			$save_dir = $f . $dest . $id;
 
 			//Cancellare anche la cartella degli allegati
 			$folder = new Folder($save_dir, true, 0777);
-		  if (!$folder->delete()) {
-					// Successfully deleted foo and its nested folders
-					$this->log('impossibile cancellare il folder:' . $save_dir);
+			if (!$folder->delete()) {
+				// Successfully deleted foo and its nested folders
+				$this->log('impossibile cancellare il folder:' . $save_dir);
 			}
 
 			$this->Flash->success(__('The {0} article has been deleted.', $article->title));
-			return $this->redirect(['action'=>'index']);
+			return $this->redirect(['action' => 'index']);
 		}
 	}
 
@@ -195,11 +222,12 @@ class ArticlesController extends AppController
 	{
 		$tags = $this->request->getParam('pass');
 
-		$articles = $this->Articles->find('tagged',
+		$articles = $this->Articles->find(
+			'tagged',
 			['tags' => $tags]
 		);
 
-		$this->set(compact('articles','tags'));
+		$this->set(compact('articles', 'tags'));
 	}
 
 	///////////////////////////////////////////////////////////////////
@@ -210,49 +238,52 @@ class ArticlesController extends AppController
 	private function getDestinationSlug($article_id)
 	{
 		$a = $this->Articles->get($article_id);
-		if (!empty($a->destination_id))
-		{
+		if (!empty($a->destination_id)) {
 			$destinations = TableRegistry::getTableLocator()->get('Destinations');
 			return $destinations->findById($a->destination_id)->first()->slug . DS;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
 
-	private function uploadFiles($id,$fieldDir,$fnames,$deleteBefore){
+	private function uploadFiles($id, $fieldDir, $fnames, $deleteBefore)
+	{
 
 		//this is the folder where i need to save
-		$f = $this->Articles->getPath();
-		$dest= $this->getDestinationSlug($id);
+		$article = $this->Articles->get($id);
+		$f = $article->getPath();
 
-		$save_dir = $f . $dest . $id . DS . $fieldDir;
+		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');
+		$save_dir = Text::insert($fullDirTemplate, [
+			'sitedir' => Configure::read('sitedir'),
+			'model' => strtolower($article->getSource()),
+			'destination' => $this->getDestinationSlug($id),
+			'id' => $id,
+			'field' => $fieldDir,
+		]);
 
 		//check if $save_dir exists, if not create it
-		$folder = new Folder($save_dir, true, 0777);
-		if ($deleteBefore)
-		{
+		$folder = new Folder(WWW_ROOT . $save_dir, true, 0777);
+		if ($deleteBefore) {
 			if ($folder->delete()) {
 				// Successfully deleted foo and its nested folders
-				$folder = new Folder($save_dir, true, 0777);
+				$folder = new Folder(WWW_ROOT . $save_dir, true, 0777);
 			}
 		}
 		//debug($folder);
 		$e  = $folder->errors();
-		if(!empty($e)) //$save_dir is a relative path so it is checked relatively to current working directory
+		if (!empty($e)) //$save_dir is a relative path so it is checked relatively to current working directory
 		{
-			$this->Flash->error( "Si è verificato un errore nella creazione della directory. Ripetere l'operazione - " . $e );
+			$this->Flash->error("Si è verificato un errore nella creazione della directory. Ripetere l'operazione - " . $e);
 			return;
 		}
-		foreach ($fnames as $fname)
-		{
+		foreach ($fnames as $fname) {
 			$name_on_server = basename($fname["name"]);
-			$copied = move_uploaded_file($fname['tmp_name'], $save_dir.DS.$name_on_server);
+			$copied = move_uploaded_file($fname['tmp_name'], WWW_ROOT . $save_dir . DS . $name_on_server);
 		}
 
 		//Se non riesco a spostare nella cartella giusta, esco
-		if(!$copied)
-		{
+		if (!$copied) {
 			$toReturn['error'] = 'Si e\' verificato un problema nella creazione dell\'immagine.
 				Ripetere l\'inserimento';
 			return $toReturn;
@@ -260,24 +291,23 @@ class ArticlesController extends AppController
 	}
 
 
-	public function removeFile(){
+	public function removeFile()
+	{
 		$fname = $this->request->getQuery('fname');
 
-		if (!empty($fname)){
-			$fname = rtrim(WWW_ROOT,DS) . $fname;
-			if (file_exists($fname))
-			{
-				$ip =$_SERVER['REMOTE_ADDR'];
+		if (!empty($fname)) {
+			$fname = rtrim(WWW_ROOT, DS) . $fname;
+			if (file_exists($fname)) {
+				$ip = $_SERVER['REMOTE_ADDR'];
 				//TODO: devo cancellare lo stesso nome file anche in tutte le altre cartelle figlie
 
 				unlink($fname);
 				$this->log("eliminato il file $fname da $ip");
-			}
-			else {
+			} else {
 				$this->Flash->error('Il file da eliminare è inesitente:' . $fname);
 			}
 		}
-		$this->redirect(Router::url( $this->referer(), true ) );
+		$this->redirect(Router::url($this->referer(), true));
 	}
 
 	//Quando cambio destination ad un articolo devo spostarea anche gli allegati da una cartella all'altra.
@@ -286,7 +316,35 @@ class ArticlesController extends AppController
 		$this->loadModel('Destinations');
 		$old_dest_name = $this->Destinations->findById($old_dest)->first()->slug;
 		$new_dest_name = $this->Destinations->findById($new_dest)->first()->slug;
-		$path = $this->Articles->getPath();
-		return rename($path . $old_dest_name . DS. $id, $path . $new_dest_name . DS . $id );
+		$article = $this->Articles->get($id);
+		$path = $article->getPath();
+		return rename($path . $old_dest_name . DS . $id, $path . $new_dest_name . DS . $id);
+	}
+
+
+	/**
+	 * Index method.
+	 *
+	 * @return \Cake\Http\Response|void|null Renders view
+	 */
+	public function index()
+	{
+
+		$query = $this->Articles->find()
+			->where(['published' => 1])
+			->order(['modified DESC']);
+
+		$promoted = $this->request->getQuery('promoted');
+		if ($promoted) {
+			$query->where(['promoted' => 1]);
+		}
+		$slider = $this->request->getQuery('slider');
+		if ($slider) {
+			$query->where(['slider' => 1]);
+		}
+
+		$articles = $this->paginate($query);
+		$this->set(compact('articles'));
+		$this->viewBuilder()->setOption('serialize', 'articles');
 	}
 }
