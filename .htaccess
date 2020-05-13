@@ -4,6 +4,8 @@
 #    RequestHeader unset Proxy
 #</IfModule>
 
+Options +FollowSymLinks
+
 <IfModule mod_rewrite.c>
     RewriteEngine on
     RewriteRule    ^(\.well-known/.*)$ $1 [L]
