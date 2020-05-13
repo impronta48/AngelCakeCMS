@@ -4,7 +4,7 @@
 #    RequestHeader unset Proxy
 #</IfModule>
 
-Options +FollowSymLinks
+Options +FollowSymLinks -SymLinksIfOwnerMatch
 
 <IfModule mod_rewrite.c>
     RewriteEngine on
