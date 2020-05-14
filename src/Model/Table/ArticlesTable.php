@@ -15,6 +15,7 @@ class ArticlesTable extends Table
 		$this->belongsToMany('Tags');
 		$this->belongsTo('Users');
 		$this->belongsTo('Destinations');
+		$this->hasOne('Projects');
 	}
 
 	public function beforeSave(\Cake\Event\EventInterface $event,$entity,$options)

@@ -332,7 +332,7 @@ class ArticlesController extends AppController
 
 		$query = $this->Articles->find()
 			->where(['published' => 1])
-			->order(['modified DESC']);
+			->order(['Articles.modified DESC']);
 
 		$promoted = $this->request->getQuery('promoted');
 		if ($promoted) {
@@ -341,6 +341,12 @@ class ArticlesController extends AppController
 		$slider = $this->request->getQuery('slider');
 		if ($slider) {
 			$query->where(['slider' => 1]);
+		}
+		$projects = $this->request->getQuery('projects');
+		if ($projects) {
+			$query->contain('Projects');
+			$query->contain(['Destinations' => ['fields'=>['name']] ]);
+			$query->innerJoinWith('Projects');
 		}
 
 		
