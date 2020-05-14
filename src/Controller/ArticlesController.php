@@ -343,8 +343,10 @@ class ArticlesController extends AppController
 			$query->where(['slider' => 1]);
 		}
 
+		
 		$articles = $this->paginate($query);
-		$this->set(compact('articles'));
-		$this->viewBuilder()->setOption('serialize', 'articles');
+		$pagination = $this->Paginator->getPagingParams();
+		$this->set(compact('articles','pagination'));
+		$this->viewBuilder()->setOption('serialize', ['articles','pagination']);
 	}
 }
