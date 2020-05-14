@@ -39,6 +39,8 @@ class Application extends BaseApplication
      */
     public function bootstrap(): void
     {
+        $this->addPlugin('ADmad/Glide');
+
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 
