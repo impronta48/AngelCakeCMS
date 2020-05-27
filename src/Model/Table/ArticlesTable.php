@@ -5,7 +5,6 @@ use Cake\ORM\Table;
 use Cake\ORM\Query;
 use Cake\Utility\Text;
 use Cake\Validation\Validator;
-use Cake\Core\Configure;
 
 class ArticlesTable extends Table
 {
