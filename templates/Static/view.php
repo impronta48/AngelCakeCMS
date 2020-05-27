@@ -43,7 +43,7 @@
                 <div class="entry-media">
                     <figure>                        
                         <?php if(strpos($copertina,'.jpg')||strpos($copertina,'.png')):?>
-                            <img src="<?= "$copertina?w=800&h=600"  ?>" alt="<?= $description?>" >                            
+                            <img src="<?= "/images/$copertina?w=800&h=600"  ?>" alt="<?= $description?>" >                            
                         <?php endif; ?>
 
                         <?php if(strpos($copertina,'youtube')):?>                        

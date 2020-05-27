@@ -78,7 +78,7 @@
               href="<?= \Cake\Routing\Router::url(['controller'=>'articles','action'=>'view',$article->slug]) ?>">
               <div class="image">
                 <img
-                  src="<?= "{$article->copertina}?w=370&h=260" ?>"
+                  src="<?= "/images/{$article->copertina}?w=370&h=260" ?>"
                   alt="<?= h($article->title) ?>">
               </div>
             </a>

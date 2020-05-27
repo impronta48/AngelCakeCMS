@@ -86,7 +86,7 @@ class Article extends Entity{
 			return Router::url(Configure::read('default-image', 'cartina-siti-locali.png'));			
 		}
 		
-		$result = Router::url($fullDir . $files[0]);
+		$result = Router::url(urlencode($fullDir . $files[0]));
 		//Cache::write("percorsi_first_image_$id", $result, 'img');
 		return $result;
 	}
@@ -124,7 +124,7 @@ class Article extends Entity{
 		}
 		
 		//Aggiungo a tutti gli elementi il path assoluto		
-		$files = preg_filter('/^/', Router::Url($fullDir) , $files);
+		$files = preg_filter('/^/', Router::Url(urlencode($fullDir)) , $files);
 		//Cache::write("percorsi_gallery_$id", $files, 'img');
 		return $files;
 		

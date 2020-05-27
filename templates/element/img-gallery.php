@@ -33,10 +33,10 @@
 			<div class="col-md-3 col-xs-6">
 				<div class="gallery-image-wrapper">
 					<div class="image">
-						<img src="<?= "$img?w={$small_size[0]}&h={$small_size[1]}" ?>">
+						<img src="<?= "/images/$img?w={$small_size[0]}&h={$small_size[1]}" ?>">
 						<?php if ($large_size[0]>0): ?>
 							<div class="opacity"><a data-fancybox="project" 
-							href="<?= "$img?w={$large_size[0]}&h={$large_size[1]}" ?>"							
+							href="<?= "/images/$img?w={$large_size[0]}&h={$large_size[1]}" ?>"							
 							class="zoom-view"><i class="fa fa-search" aria-hidden="true"></i></a></div>
 						<?php endif ?>
 					</div>

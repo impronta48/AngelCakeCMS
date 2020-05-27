@@ -26,10 +26,10 @@
                         <div class="entry-media">
                             <figure>
                             <?php if(!isset($f['dati']['copertina'])): ;?>
-                                <?= $this->Html->img("static/BikeSquare_Logo.png?w=520&h=290",['alt'=>'<?= $description?>']) ?>
+                                <?= $this->Html->img("/images/static/BikeSquare_Logo.png?w=520&h=290",['alt'=>'<?= $description?>']) ?>
                             <?php endif?>
                             <?php if(strpos($f['dati']['copertina'],'.jpg')||strpos($f['dati']['copertina'],'.png')):?>
-                                <?= $this->Html->img("{$f['dati']['copertina']}?w=1070&h=597",['alt'=>'<?= $description?>']) ?>                            
+                                <?= $this->Html->img("/images/{$f['dati']['copertina']}?w=1070&h=597",['alt'=>'<?= $description?>']) ?>                            
                         <?php endif; ?>
                         <?php if(strpos($f['dati']['copertina'],'youtube')):?>
                          <iframe id="youtube" width="520" height="290" src="<?= $f['dati']['copertina']?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
