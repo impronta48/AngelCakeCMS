@@ -33,9 +33,11 @@
 			<div class="col-md-3 col-xs-6">
 				<div class="gallery-image-wrapper">
 					<div class="image">
-						<img src="<?= $this->Image->resizedUrl($img, $small_size[0],$small_size[1], 90) ?>" >
+						<img src="<?= "$img?w={$small_size[0]}&h={$small_size[1]}" ?>">
 						<?php if ($large_size[0]>0): ?>
-							<div class="opacity"><a data-fancybox="project" href="<?= $this->Image->resizedUrl($img, $large_size[0],$large_size[1], 90)?>" class="zoom-view"><i class="fa fa-search" aria-hidden="true"></i></a></div>
+							<div class="opacity"><a data-fancybox="project" 
+							href="<?= "$img?w={$large_size[0]}&h={$large_size[1]}" ?>"							
+							class="zoom-view"><i class="fa fa-search" aria-hidden="true"></i></a></div>
 						<?php endif ?>
 					</div>
 					<?php if ($_canDelete): ?>

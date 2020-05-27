@@ -12,7 +12,7 @@
 			<div class="col-md-4 col-xs-6">				
 				<div class="single-blog-grid hover-effect-one">
 					<div class="image">
-						<img src="<?= $this->Image->resizedUrl($article->copertina, 370, 260, 95);  ?>" alt="<?= h($article->title) ?>">
+						<img src="<?= "{$article->copertina}?w=370&h=260" ?>" alt="<?= h($article->title) ?>">
 						<div class="title">
 							<h5><a href="<?= \Cake\Routing\Router::url(['controller'=>'articles','action'=>'view',$article->slug]) ?>"><?= h($article->title) ?></a></h5>							
 						</div>

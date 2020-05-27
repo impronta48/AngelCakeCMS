@@ -350,7 +350,11 @@ class ArticlesController extends AppController
 			$query->innerJoinWith('Projects');
 		}
 
-		
+		$destination_id = $this->request->getQuery('destination_id');
+		if ($destination_id) {						
+			$query->where(['destination_id' => $destination_id]);
+		}
+
 		$articles = $this->paginate($query);
 		$pagination = $this->Paginator->getPagingParams();
 		$this->set(compact('articles','pagination'));

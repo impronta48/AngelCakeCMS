@@ -28,7 +28,7 @@
                 <div class="single-course-block" > 
                 <figure>
                     <div class="image">
-                    <img src="<?= $this->Image->resizedUrl($destination->articles[0]->copertina , 370, 260, 95);  ?>" alt="<?= $destination->name ?>">
+                    <img src="<?= "{$article->copertina}?w=370&h=260" ?>" alt="<?= $destination->name ?>">
                     </div>
                 </figure>
                     <div class="text-box">
@@ -73,7 +73,7 @@
                 <div class="single-course-block" > 
                 <figure>
                     <div class="image">
-                    <img src="<?= $this->Image->resizedUrl($destination->articles[0]->copertina , 370, 260, 95);  ?>" alt="<?= $destination->name ?>">
+                    <img src="<?= "{$article->copertina}?w=370&h=260" ?>" alt="<?= $destination->name ?>">
                     </div>
                 </figure>
                     <div class="text-box">

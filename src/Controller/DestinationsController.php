@@ -134,7 +134,7 @@ class DestinationsController extends AppController
             if ($this->Destinations->save($destination)) {
                 $this->Flash->success(__('The destination has been saved.'));
 
-                return $this->redirect(['action' => 'admin_index']);
+                return $this->redirect(['action' => 'admin']);
             }
             $this->Flash->error(__('The destination could not be saved. Please, try again.'));
         }

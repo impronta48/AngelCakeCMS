@@ -20,7 +20,8 @@
     </div>
     <div class="panel-body">
       <?php if (isset($article->copertina)): ?>
-        <?= $this->Image->resize($article->copertina, 180,180,[], 90) ?>
+        <?= $this->Html->img($article->copertina . '?w=180&h=180') ?>
+        
         <a href="<?= Cake\Routing\Router::url(['controller'=>'Articles','action'=>'remove_file', '?'=>['fname' => $article->copertina]])?>"
            title="Elimina"
            class="btn btn-danger btn-xs">

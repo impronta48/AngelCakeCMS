@@ -77,13 +77,13 @@ class Article extends Entity{
 			'id' => $this->id,
 			'field' => 'copertina',
 		]);		
-		
+		$fullDir = str_replace('//','/',$fullDir); 
 		$dir = new Folder(WWW_ROOT . $fullDir);		
 		$files = $dir->find(".*\.(jpg|jpeg|png|gif)",true);
 		/*Controllo*/
 		if(!$files)
 		{			
-			return Router::url(Configure::read('default-image','cartina-siti-locali.png'));			
+			return Router::url(Configure::read('default-image', 'cartina-siti-locali.png'));			
 		}
 		
 		$result = Router::url($fullDir . $files[0]);

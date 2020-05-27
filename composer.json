@@ -14,13 +14,14 @@
         "cakephp/plugin-installer": "^1.2",
         "erusev/parsedown": "^1.7",
         "friendsofcake/bootstrap-ui": "dev-cake-4-bs-4",
+        "google/apiclient": "^2",
         "hkod/frontmatter": "^1",
         "intervention/imagecache": "^2.4",
         "josbeir/cakephp-filesystem": "^2.0",
         "league/flysystem-webdav": "^1.0",
         "mobiledetect/mobiledetectlib": "^2.8",
         "phpoffice/phpspreadsheet": "^1.9",
-        "google/apiclient": "^2"
+        "symfony/yaml": "^5.0"
     },
     "require-dev": {
         "cakephp/bake": "^2.0.3",
