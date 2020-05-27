@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Model\StaticModel;
+use Cake\ORM\TableRegistry;
 
 /**
  * SiteMaps Controller
@@ -22,6 +23,13 @@ class SitemapsController extends AppController
   public function index(){
     $s = new StaticModel();
     $static=$s->findAll();
-    $this->set('static',$static);
+
+    $articles = TableRegistry::getTableLocator()->get('Articles')->find()
+              ->select(['id','slug','modified'])
+              ->where(['published' => true])
+              ->order(['modified'=> 'desc'])
+              ->all();                      
+                 
+    $this->set(compact('static','articles'));
   }
 }

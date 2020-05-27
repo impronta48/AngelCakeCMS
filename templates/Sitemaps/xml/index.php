@@ -74,4 +74,24 @@
         <priority>0.5</priority>
     </url>    
   <?php endforeach; ?>
+
+
+<?php foreach ($static as $s): ?>    
+    <url>
+        <loc><?= $s['dati']['canonical'] ?></loc>
+        <lastmod><?php echo $this->Time->toAtom($s['dati']['date']) ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>    
+  <?php endforeach; ?>
+
+
+<?php foreach ($articles as $a): ?>    
+    <url>
+        <loc><?= Router::url($a['slug'], true) ?></loc>
+        <lastmod><?php echo $this->Time->toAtom($a['modified']) ?></lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>    
+  <?php endforeach; ?>
 </urlset>
