@@ -63,8 +63,8 @@ define('TESTS', ROOT . DS . 'tests' . DS);
 /*
  * Path to the temporary files directory.
  */
-//define('TMP', ROOT . DS . 'tmp' . DS);
-define('TMP',  DS . 'tmp' . DS);
+define('TMP', ROOT . DS . 'tmp' . DS);
+//define('TMP',  DS . 'tmp' . DS);
 
 /*
  * Path to the logs directory.
@@ -74,7 +74,7 @@ define('LOGS', ROOT . DS . 'logs' . DS);
 /*
  * Path to the cache files directory. It can be shared between hosts in a multi-server setup.
  */
-define('CACHE', TMP . 'cakephp_cache' . DS);
+define('CACHE', TMP . 'cache' . DS);
 
 /**
  * Path to the resources directory.
