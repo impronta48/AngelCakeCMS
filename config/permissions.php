@@ -125,14 +125,14 @@ return [
         //anonimous can VIEW Articles, Destinations, Events, Tags
         [
             'role' => '*',
-            'controller' => ['Articles','Destinations','Events','Tags','Static','Bandi'],
+            'controller' => ['Articles','Destinations','Events','Tags','Static','Bandi','Projects'],
             'action' => ['view'],
             'bypassAuth' => true,
         ],
         //anonimous can INDEX Articles, Destinations, Events, Tags
         [
             'role' => '*',
-            'controller' => ['Articles','Destinations','Static','Bandi'],
+            'controller' => ['Articles','Destinations','Static','Bandi','Projects'],
             'action' => ['index'],
             'bypassAuth' => true,
         ],
