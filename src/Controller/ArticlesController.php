@@ -128,7 +128,7 @@ class ArticlesController extends AppController
 		$tags = $this->Articles->Tags->find('list');
 		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
 		$destinations = $this->Articles->Destinations->find('list');
-		$this->set('user',  $this->request->getAttribute('identity'));
+		$this->set('user',  $this->request->getAttribute('identity')->getIdentifier());
 		$this->set(compact('article', 'tags', 'users', 'destinations'));
 	}
 
