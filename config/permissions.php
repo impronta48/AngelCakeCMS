@@ -122,6 +122,20 @@ return [
                 return false;
             }
         ],
+        //allow debugkit and events for anonymous users
+        [
+            'role' => '*',
+            'plugin' => 'DebugKit',
+            'controller' => '*',
+            'action' => '*',
+            'bypassAuth' => true,
+        ],
+        [
+            'role' => '*',
+            'controller' => ['Pages','Static', 'Sitemaps','Error'],
+            'action' => '*',
+            'bypassAuth' => true,
+        ],
         //anonimous can VIEW Articles, Destinations, Events, Tags
         [
             'role' => '*',
@@ -132,7 +146,7 @@ return [
         //anonimous can INDEX Articles, Destinations, Events, Tags
         [
             'role' => '*',
-            'controller' => ['Articles','Destinations','Static','Bandi','Projects'],
+            'controller' => ['Articles','Destinations','Bandi','Projects'],
             'action' => ['index'],
             'bypassAuth' => true,
         ],
@@ -148,20 +162,6 @@ return [
             'role' => '*',
             'controller' => ['Participants'],
             'action' => ['add','sendNotification'],
-            'bypassAuth' => true,
-        ],
-        //allow debugkit and events for anonymous users
-        [
-            'role' => '*',
-            'controller' => ['Pages','Static', 'Events','Sitemaps','Error'],
-            'action' => '*',
-            'bypassAuth' => true,
-        ],
-        [
-            'role' => '*',
-            'plugin' => 'DebugKit',
-            'controller' => '*',
-            'action' => '*',
             'bypassAuth' => true,
         ],
     ]

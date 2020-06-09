@@ -73,7 +73,7 @@ class ArticlesController extends AppController
 		//dd($query);
 		$this->loadModel('Destinations');
 		$destinations = $this->Destinations->find('list')->order('name');
-		$this->set('articles', $this->paginate($query));
+		$this->set('articles', $this->paginate($query,['limit'=> 50]));
 		$this->set(compact('destinations', 'q', 'destination_id'));
 	}
 
