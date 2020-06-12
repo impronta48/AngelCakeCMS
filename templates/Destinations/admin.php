@@ -18,9 +18,9 @@
             <td><?= h($destination->name) ?></td>
             <td><?= h($destination->slug) ?></td>
             <td class="actions">
-                <?= $this->Html->link('', ['action' => 'view', $destination->slug], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                <?= $this->Html->link('', ['action' => 'edit', $destination->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                <?= $this->Form->postLink('', ['action' => 'delete', $destination->id], ['confirm' => __('Are you sure you want to delete # {0}?', $destination->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
+                <?= $this->Html->link('', ['action' => 'view', $destination->slug], ['title' => __('View'), 'class' => 'btn btn-default fa fa-eye']) ?>
+                <?= $this->Html->link('', ['action' => 'edit', $destination->id], ['title' => __('Edit'), 'class' => 'btn btn-default fa fa-pencil']) ?>
+                <?= $this->Form->postLink('', ['action' => 'delete', $destination->id], ['confirm' => __('Are you sure you want to delete # {0}?', $destination->id), 'title' => __('Delete'), 'class' => 'btn btn-default fa fa-trash']) ?>
             </td>
         </tr>
         <?php endforeach; ?>
