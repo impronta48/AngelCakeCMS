@@ -346,7 +346,7 @@ class ArticlesController extends AppController
 		$projects = $this->request->getQuery('projects');
 		if ($projects) {
 			$query->contain('Projects');
-			$query->contain(['Destinations' => ['fields'=>['name']] ]);
+			$query->contain(['Destinations' => ['fields'=>['name','slug']] ]);
 			$query->innerJoinWith('Projects');
 		}
 
