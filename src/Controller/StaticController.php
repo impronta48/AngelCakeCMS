@@ -139,7 +139,7 @@ class StaticController extends AppController
         }
     }
     //Legge una cartella remota di webDav e aggiorna la cartella static del sito corrente
-    public function GetRemote()
+    public function getRemote()
     {
         $sitedir = Configure::read('sitedir');
         $localFolder = WWW_ROOT . $sitedir . DS . 'static';
