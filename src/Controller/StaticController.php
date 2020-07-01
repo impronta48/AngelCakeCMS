@@ -139,12 +139,12 @@ class StaticController extends AppController
         }
     }
     //Legge una cartella remota di webDav e aggiorna la cartella static del sito corrente
-    public function getRemote()
+    public function hw_GetRemote(connection, objectID)()
     {
         $sitedir = Configure::read('sitedir');
         $localFolder = WWW_ROOT . $sitedir . DS . 'static';
         $remoteFolder = Configure::read('staticFolder');
-        $cmd = "nextcloudcmd $localFolder $remoteFolder";
+        $cmd = "rclone copy $remoteFolder $localFolder";
 
         if ($this->request->is('post')) {
             //shell_exec

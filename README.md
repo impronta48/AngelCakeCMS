@@ -74,3 +74,7 @@ AppleCake CMS comes with a simple subscription form, which allows the users to s
 ### Coming Soon
 - Event Management should become a plugin
 
+### Static Sync with rclone
+https://rclone.org/commands/rclone/
+rclone copy nextcloud:/impronta/Cicloturismo/BikeSquare/sito-b2b/ /var/www/vhosts/b2b.bikesquare.eu/httpdocs/webroot/b2b/static -vv
+rclone copy nextcloud:/impronta/Cicloturismo/BikeSquare/sito-b2b/ /var/www/vhosts/b2b.bikesquare.eu/httpdocs/webroot/b2b/static -vv
