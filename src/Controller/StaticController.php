@@ -138,20 +138,26 @@ class StaticController extends AppController
             $this->render($path[0]);
         }
     }
+    
     //Legge una cartella remota di webDav e aggiorna la cartella static del sito corrente
     public function getRemote()
     {
         $sitedir = Configure::read('sitedir');
         $localFolder = WWW_ROOT . $sitedir . DS . 'static';
         $remoteFolder = Configure::read('staticFolder');
-        $cmd = "rclone copy $remoteFolder $localFolder";
+        $cmd = "rclone copy $remoteFolder $localFolder -v 2>&1";
+        echo '<pre>';
+        //echo $cmd;
 
         if ($this->request->is('post')) {
             //shell_exec
-            if(function_exists('shell_exec'))
+            if(function_exists('exec'))
             {
                 $output = 'Sincronizzazione eseguita<br>';
-                $output .= shell_exec($cmd);
+                var_dump(exec($cmd, $output));        
+                //echo $return;
+                //var_dump($output);
+                echo '</pre>';
             }
             else
             {
