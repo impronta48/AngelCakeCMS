@@ -73,14 +73,14 @@ class ArticlesController extends AppController
 		//dd($query);
 		$this->loadModel('Destinations');
 		$destinations = $this->Destinations->find('list')->order('name');
-		$this->set('articles', $this->paginate($query,['limit'=> 50]));
+		$this->set('articles', $this->paginate($query, ['limit' => 50]));
 		$this->set(compact('destinations', 'q', 'destination_id'));
 	}
 
 	public function view($slug = null)
 	{
 		$article = $this->Articles->findBySlug($slug)
-			->contain(['Tags'])
+			->contain(['Tags', 'Destinations'])
 			->firstOrFail();
 		$this->set(compact('article'));
 		$this->set('user',  $this->request->getAttribute('identity'));
@@ -346,18 +346,18 @@ class ArticlesController extends AppController
 		$projects = $this->request->getQuery('projects');
 		if ($projects) {
 			$query->contain('Projects');
-			$query->contain(['Destinations' => ['fields'=>['name','slug']] ]);
+			$query->contain(['Destinations' => ['fields' => ['name', 'slug']]]);
 			$query->innerJoinWith('Projects');
 		}
 
 		$destination_id = $this->request->getQuery('destination_id');
-		if ($destination_id) {						
+		if ($destination_id) {
 			$query->where(['destination_id' => $destination_id]);
 		}
 
 		$articles = $this->paginate($query);
 		$pagination = $this->Paginator->getPagingParams();
-		$this->set(compact('articles','pagination'));
-		$this->viewBuilder()->setOption('serialize', ['articles','pagination']);
+		$this->set(compact('articles', 'pagination'));
+		$this->viewBuilder()->setOption('serialize', ['articles', 'pagination']);
 	}
 }
