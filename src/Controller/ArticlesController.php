@@ -353,6 +353,7 @@ class ArticlesController extends AppController
 		$destination_id = $this->request->getQuery('destination_id');
 		if ($destination_id) {
 			$query->where(['destination_id' => $destination_id]);
+			$query->contain(['Destinations' => ['fields' => ['name', 'slug']]]);
 		}
 
 		$articles = $this->paginate($query);
