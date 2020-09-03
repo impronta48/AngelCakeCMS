@@ -361,4 +361,42 @@ class ArticlesController extends AppController
 		$this->set(compact('articles', 'pagination'));
 		$this->viewBuilder()->setOption('serialize', ['articles', 'pagination']);
 	}
+
+	public function search(){
+		$this->loadComponent('Paginator');
+
+		//Prima della cura: Trova tutti gli articoli
+		//Se l'utente ha compilato il form che ha valorizzato q="dav"
+		//Allora imposto una condizione della query
+		//Dopo la cura: Trova tutti gli articoli WHERE titolo like %dav% OR body like %dav%
+		//per fare questo creo un array vuoto che si chiama $conditions
+		//$conditions = [];
+		//Se this->request->query('q') non è vuoto
+		//imposto le conditions come si deve,
+		//$conditions['title LIKE'] = "%$q%";
+		//$conditions['body LIKE'] = "%$q%";
+		//Passo le conditions alla find find(['conditions'=>$conditions]);
+
+
+		//Leggo i valori dalla querystring (quella che sta dopo il ? nell'url)
+		$q = $this->request->getQuery('q');
+		
+
+		//Faccio la query di base (tira su tutti gli articoli)
+		$query = $this->Articles->find()
+			->contain(['Users', 'Destinations'])
+			->order(['Articles.id' => 'DESC']);
+
+		//Se mi hai passato dei parametri in query filtro su quelli
+		//filtro sia su body che su title
+		if (!empty($q)) {
+			//$query->where(['body LIKE' => "%$q%"])
+			//->or_(['title LIKE' => "%$q%"]);
+			$query->where(['OR' => ['body LIKE' => "%$q%", 'title LIKE' => "%$q%"]]);
+		}
+		$articles = $this->paginate($query);
+		$pagination = $this->Paginator->getPagingParams();
+		$this->set(compact('articles', 'pagination'));
+		$this->viewBuilder()->setOption('serialize', ['articles', 'pagination']);
+	}
 }

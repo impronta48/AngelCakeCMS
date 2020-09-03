@@ -13,7 +13,7 @@
         "cakephp/migrations": "^3.0",
         "cakephp/plugin-installer": "^1.2",
         "erusev/parsedown": "^1.7",
-        "friendsofcake/bootstrap-ui": "dev-cake-4-bs-4",
+        "friendsofcake/bootstrap-ui": "^3",
         "google/apiclient": "^2",
         "hkod/frontmatter": "^1",
         "intervention/imagecache": "^2.4",
