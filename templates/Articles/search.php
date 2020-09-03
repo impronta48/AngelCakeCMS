@@ -1,6 +1,6 @@
 <div id="home">
 <div class="well">
-<h1>Cerca articolo</h1>
+<h1 style="text-align: center;">Cerca articolo</h1>
         <?php
 
 use PhpOffice\PhpSpreadsheet\Chart\Title;
@@ -16,11 +16,11 @@ echo $this->Form->create(
                         'class' => 'form-inline',
                     ]
                 ); ?>
-        <div class="row" style="margin-bottom: 10px;">
-                <div class="col-md-3">
-                    <?php echo $this->Form->control('q', ['label' => 'Cerca Articolo', 'div' => 'col col-md-3']); ?>
+        <div class="row" style="margin-bottom: 10px; margin:0 auto">
+                <div style="margin:0 auto">
+                    <?php echo $this->Form->control('q', ['label' => '', 'div' => 'col col-md-3']); ?>
                 </div>
-                <div class="col-md-2" style="margin-top: 5px; margin-left:20px;">
+                <div style="margin-top: -15px;">
                     <?php echo $this->Form->submit('Filtra', ['class' => 'btn btn-filtra btn-primary mt-3']); ?>                            
                 </div>            
                 <div class="col-md-4">
