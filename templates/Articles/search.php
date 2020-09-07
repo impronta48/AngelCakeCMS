@@ -35,14 +35,14 @@ echo $this->Form->create(
         <section class="col-md-12">
             <article class="row" v-for="article in articles" v-cloak>
                 <div class="col-md-5 col-lg-4 col-sm-12 text-center round" >
-                    <a v-bind:href="article.slug">
+                    <a v-bind:href="'../' + article.slug">
                         <img v-bind:src="'/images' + article.copertina + '?w=170&h=170&fit=crop'" v-bind:alt="article.title" class="rounded-circle">
                     </a>
                 </div>
                 <div class="col-md-7 col-lg-8 col-sm-12 news">
-                    <h2><a v-bind:href="article.slug">{{article.title}}</a></h2>
+                    <h2><a v-bind:href="'../' + article.slug">{{article.title}}</a></h2>
                     <p>{{article.subtitle}}</p>
-                    <p><a v-bind:href="article.slug" role="button" class="leggi">Continua la lettura</a></p>
+                    <p><a v-bind:href="'../' + article.slug" role="button" class="leggi">Continua la lettura</a></p>
                 </div>
             </article>
 
@@ -69,11 +69,6 @@ echo $this->Form->create(
     </div>
 </div>
 
-<div class="row">
-    <div class="col">
-        <?= $this->element('mailchimp-inline'); ?>
-    </div>
-</div>
 
 <?= $this->Html->script('node_modules/axios/dist/axios.min.js', ['block'=>true]) ?>
 <?= $this->Html->script('search.js',['block' => true]) ?>

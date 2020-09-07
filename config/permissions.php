@@ -164,5 +164,12 @@ return [
             'action' => ['add','sendNotification'],
             'bypassAuth' => true,
         ],
+        //search
+        [
+            'role' => '*',
+            'controller' => ['Articles'],
+            'action' => ['search'],
+            'bypassAuth' => true,
+        ],
     ]
 ];
