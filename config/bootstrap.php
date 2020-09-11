@@ -239,7 +239,7 @@ TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'
 //require_once 'events.php';
 $api_whitelist = Configure::read('api-whitelist');
 
-if (isset($_SERVER['HTTP_ORIGIN'])) {
+if (isset($_SERVER['HTTP_ORIGIN']) && !empty($api_whitelist)) {
   if (in_array($_SERVER['HTTP_ORIGIN'], $api_whitelist)) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
   }
