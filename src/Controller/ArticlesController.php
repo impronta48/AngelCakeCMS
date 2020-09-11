@@ -167,7 +167,7 @@ class ArticlesController extends AppController
 				} elseif ($error != UPLOAD_ERR_NO_FILE) {
 					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
-
+				
 				$error = $article['newgallery'][0]['error'];
 				if ($error == UPLOAD_ERR_OK) {
 					//Prima di caricare la galleria non cancello quello che c'è $errorgià
@@ -175,7 +175,7 @@ class ArticlesController extends AppController
 				} elseif ($error != UPLOAD_ERR_NO_FILE) {
 					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
-
+				
 				$error = $article['newallegati'][0]['error'];
 				if ($error == UPLOAD_ERR_OK) {
 					$this->uploadFiles($article['id'], 'files', $article['newallegati'], false);
