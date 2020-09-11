@@ -237,14 +237,10 @@ TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 //require_once 'events.php';
+$api_whitelist = Configure::read('api-whitelist');
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
-  if (in_array($_SERVER['HTTP_ORIGIN'], [
-    'https://5t.drupalvm.test:8080',
-    'https://localhost:8080',
-    'http://localhost:8080',
-    'https://5tmoma.impronta48.it',
-  ])) {
+  if (in_array($_SERVER['HTTP_ORIGIN'], $api_whitelist)) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
   }
 }
