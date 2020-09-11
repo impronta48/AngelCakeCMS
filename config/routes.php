@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration.
  *
@@ -44,12 +45,14 @@ use Cake\Core\Configure;
  * inconsistently cased URLs when used with `:plugin`, `:controller` and
  * `:action` markers.
  */
+
 /** @var \Cake\Routing\RouteBuilder $routes */
 $routes->setRouteClass(DashedRoute::class);
 
+
 //Metto questo qui, così capisce che se l'estensione e json voglio il risultato in questo formato
 //TODO: In realtà in cake4 devo copiare anche alla riga 65 se no se lo perde! massimoi - 26/3/20
-Router::extensions(['xls','json','xml']);
+Router::extensions(['xls', 'json', 'xml']);
 
 
 Router::scope('/images', function ($routes) {
@@ -66,7 +69,7 @@ Router::scope('/images', function ($routes) {
         'server' => [
             // Path or League\Flysystem adapter instance to read images from.
             // http://glide.thephpleague.com/1.0/config/source-and-cache/
-            'source' => WWW_ROOT . Configure::read('sitedir') ,
+            'source' => WWW_ROOT . Configure::read('sitedir'),
 
             // Path or League\Flysystem adapter instance to write cached images to.
             'cache' => WWW_ROOT . Configure::read('sitedir') . '/cache',
@@ -103,22 +106,21 @@ Router::scope('/images', function ($routes) {
 
 $routes->scope('/', function (RouteBuilder $builder) {
     // Register scoped middleware for in scopes.
-    $builder->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-        'httpOnly' => true,
-    ]));
+    /* $builder->registerMiddleware('csrf', new CsrfProtectionMiddleware([
+        'httponly' => true,
+    ])); */
 
     /*
      * Apply a middleware to the current route scope.
      * Requires middleware to be registered through `Application::routes()` with `registerMiddleware()`
      */
-    $builder->applyMiddleware('csrf');
-    $builder->setExtensions(['xls','json','xml']);
+    //$builder->applyMiddleware('csrf');
+    $builder->setExtensions(['xls', 'json', 'xml']);
 
     //Se nel file di configurazione ho specificato customRoutes, allora
     //importo extra-routes.php nella cartella sites/nomesito/
     $er = Configure::read('ExtraRoutes');
-    if ($er)
-    {
+    if ($er) {
         include_once conf_path() . DS .  'extra-routes.php';
     }
 

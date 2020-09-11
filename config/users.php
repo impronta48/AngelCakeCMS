@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * Copyright 2010 - 2019, Cake Development Corporation (https://www.cakedc.com)
@@ -11,13 +12,16 @@
  */
 
 use Cake\Routing\Router;
+use Authentication\UrlChecker;
 
 $config = [
     'Users' => [
         // Table used to manage users
         'table' => 'CakeDC/Users.Users',
+        //'table' => 'Moma.Users',
         // Controller used to manage users plugin features & actions
-        'controller' => 'CakeDC/Users.Users',
+        'controller' => 'CakeDC/Users.Users',        
+        //'controller' => 'MyUsers',        
         // Password Hasher
         'passwordHasher' => '\Cake\Auth\DefaultPasswordHasher',
         'middlewareQueueLoader' => \CakeDC\Users\Loader\MiddlewareQueueLoader::class,
@@ -31,7 +35,7 @@ $config = [
         ],
         'Registration' => [
             // determines if the register is enabled
-            'active' => false,
+            'active' => true,
             // determines if the reCaptcha is enabled for registration
             'reCaptcha' => false,
             // allow a logged in user to access the registration form
@@ -72,7 +76,7 @@ $config = [
             ],
             // form key to store the social auth data
             'Form' => [
-                'social' => 'social'
+                'social' => 'social',
             ],
             'Data' => [
                 // data key to store the users email
@@ -94,8 +98,8 @@ $config = [
                 'Config' => [
                     'expires' => '1 month',
                     'httpOnly' => true,
-                ]
-            ]
+                ],
+            ],
         ],
         'Superuser' => ['allowedToChangePasswords' => true], // able to reset any users password
     ],
@@ -112,7 +116,7 @@ $config = [
         // QR-code provider (more on this later)
         'qrcodeprovider' => null,
         // Random Number Generator provider (more on this later)
-        'rngprovider' => null
+        'rngprovider' => null,
     ],
     'U2f' => [
         'enabled' => false,
@@ -121,12 +125,12 @@ $config = [
     // default configuration used to auto-load the Auth Component, override to change the way Auth works
     'Auth' => [
         'Authentication' => [
-            'serviceLoader' => \CakeDC\Users\Loader\AuthenticationServiceLoader::class
+            'serviceLoader' => \CakeDC\Users\Loader\AuthenticationServiceLoader::class,
         ],
         'AuthenticationComponent' => [
             'load' => true,
-            'loginRedirect' => '/',
-            'requireIdentity' => false
+            'loginRedirect' => '/api',
+            'requireIdentity' => false,
         ],
         'Authenticators' => [
             'Session' => [
@@ -136,7 +140,24 @@ $config = [
             ],
             'Form' => [
                 'className' => 'CakeDC/Auth.Form',
-                'urlChecker' => 'Authentication.CakeRouter',
+                
+                //'urlChecker' => 'Authentication.CakeRouter',
+                'urlChecker' => 'Authentication.Default',                
+                'loginUrl' => [
+                    '/api/my-users/login.json',
+                    '/api/my-users/login',
+                    
+                    '/api/users/login.json',
+                    '/api/users/login',
+                    '/api/login',
+
+                    '/my-users/login.json',
+                    '/my-users/login',
+                    
+                    '/users/login.json',
+                    '/users/login',                    
+                    '/login',                    
+                ]
             ],
             'Token' => [
                 'className' => 'Authentication.Token',
@@ -162,41 +183,52 @@ $config = [
             'SocialPendingEmail' => [
                 'className' => 'CakeDC/Users.SocialPendingEmail',
                 'skipTwoFactorVerify' => true,
-            ]
+            ],
+            //Queste sono le opzioni per attivare Jwt
+            'Jwt' => [
+                'className' => 'Authentication.Jwt',    //Nome della classe che usi per autenticare
+                //'queryParam' => 'token',              //Se non passi questo usa il normale "sub"
+                'returnPayload' => false,               //Se attivi questo si aspetta che tu restituisca uno User (entity), altrimenti solo l'ID dell'utente
+                'skipTwoFactorVerify' => true,
+            ],
         ],
         'Identifiers' => [
             'Password' => [
                 'className' => 'Authentication.Password',
                 'fields' => [
                     'username' => ['username', 'email'],
-                    'password' => 'password'
+                    'password' => 'password',
                 ],
                 'resolver' => [
                     'className' => 'Authentication.Orm',
-                    'finder' => 'active'
+                    'finder' => 'active',
                 ],
+            ],
+            //Massimoi - questo è fondamentale per far riconoscere l'utente
+            'Jwt' => [
+                'className' => 'Authentication.JwtSubject',     
             ],
             "Social" => [
                 'className' => 'CakeDC/Users.Social',
-                'authFinder' => 'active'
+                'authFinder' => 'active',
             ],
             'Token' => [
                 'className' => 'Authentication.Token',
                 'tokenField' => 'api_token',
                 'resolver' => [
                     'className' => 'Authentication.Orm',
-                    'finder' => 'active'
+                    'finder' => 'active',
                 ],
-            ]
+            ],
         ],
         "Authorization" => [
             'enable' => true,
-            'serviceLoader' => \CakeDC\Users\Loader\AuthorizationServiceLoader::class
+            'serviceLoader' => \CakeDC\Users\Loader\AuthorizationServiceLoader::class,
         ],
         'AuthorizationMiddleware' => [
             'unauthorizedHandler' => [
                 'className' => 'CakeDC/Users.DefaultRedirect',
-            ]
+            ],
         ],
         'AuthorizationComponent' => [
             'enabled' => true,
@@ -204,7 +236,7 @@ $config = [
         'RbacPolicy' => [],
         'PasswordRehash' => [
             'identifiers' => ['Password'],
-        ]
+        ],
     ],
     'OAuth' => [
         'providers' => [
@@ -218,7 +250,7 @@ $config = [
                     'redirectUri' => Router::fullBaseUrl() . '/auth/facebook',
                     'linkSocialUri' => Router::fullBaseUrl() . '/link-social/facebook',
                     'callbackLinkSocialUri' => Router::fullBaseUrl() . '/callback-link-social/facebook',
-                ]
+                ],
             ],
             'twitter' => [
                 'service' => 'CakeDC\Auth\Social\Service\OAuth1Service',
@@ -228,7 +260,7 @@ $config = [
                     'redirectUri' => Router::fullBaseUrl() . '/auth/twitter',
                     'linkSocialUri' => Router::fullBaseUrl() . '/link-social/twitter',
                     'callbackLinkSocialUri' => Router::fullBaseUrl() . '/callback-link-social/twitter',
-                ]
+                ],
             ],
             'linkedIn' => [
                 'service' => 'CakeDC\Auth\Social\Service\OAuth2Service',
@@ -238,7 +270,7 @@ $config = [
                     'redirectUri' => Router::fullBaseUrl() . '/auth/linkedIn',
                     'linkSocialUri' => Router::fullBaseUrl() . '/link-social/linkedIn',
                     'callbackLinkSocialUri' => Router::fullBaseUrl() . '/callback-link-social/linkedIn',
-                ]
+                ],
             ],
             'instagram' => [
                 'service' => 'CakeDC\Auth\Social\Service\OAuth2Service',
@@ -248,7 +280,7 @@ $config = [
                     'redirectUri' => Router::fullBaseUrl() . '/auth/instagram',
                     'linkSocialUri' => Router::fullBaseUrl() . '/link-social/instagram',
                     'callbackLinkSocialUri' => Router::fullBaseUrl() . '/callback-link-social/instagram',
-                ]
+                ],
             ],
             'google' => [
                 'service' => 'CakeDC\Auth\Social\Service\OAuth2Service',
@@ -259,7 +291,7 @@ $config = [
                     'redirectUri' => Router::fullBaseUrl() . '/auth/google',
                     'linkSocialUri' => Router::fullBaseUrl() . '/link-social/google',
                     'callbackLinkSocialUri' => Router::fullBaseUrl() . '/callback-link-social/google',
-                ]
+                ],
             ],
             'amazon' => [
                 'service' => 'CakeDC\Auth\Social\Service\OAuth2Service',
@@ -283,7 +315,7 @@ $config = [
                 ]
             ],
         ],
-    ]
+    ],
 ];
 
 return $config;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -77,21 +78,27 @@ use Cake\Utility\Security;
  * that changes from configuration that does not. This makes deployment simpler.
  */
 /*Carico il file di configurazione specifico di questo dominio*/
-$path=conf_path();
+
+$path = conf_path();
 try {
-    Configure::config('default', new PhpConfig());
-    Configure::load('app', 'default', false);
-    //echo  CONFIG . $path; die;
-    Configure::config('special', new PhpConfig( CONFIG . $path . DS));
-    Configure::load("settings", 'special');
+  Configure::config('default', new PhpConfig());
+  Configure::load('app', 'default', false);
+  //echo  CONFIG . $path; die;
+  Configure::config('special', new PhpConfig(CONFIG . $path . DS));
+  Configure::load("settings", 'special');
 } catch (\Exception $e) {
-    exit($e->getMessage() . "\n");
+  exit($e->getMessage() . "\n");
 }
 
 //Carico la configurazione specifica per il filesystem
 //il plugin di riferimento è https://github.com/josbeir/cakephp-filesystem
 //Massimoi - 3/4/2020
 Configure::load('filesystems', 'default');
+
+//Se nel settings definisci la variabile THEME allora carico il tema qui
+if (Configure::check('theme')) {
+  $this->addPlugin(Configure::read('theme'));
+}
 
 
 /*
@@ -107,10 +114,10 @@ Configure::load('filesystems', 'default');
  * for a short time.
  */
 if (Configure::read('debug')) {
-    Configure::write('Cache._cake_model_.duration', '+2 minutes');
-    Configure::write('Cache._cake_core_.duration', '+2 minutes');
-    // disable router cache during development
-    Configure::write('Cache._cake_routes_.duration', '+2 seconds');
+  Configure::write('Cache._cake_model_.duration', '+2 minutes');
+  Configure::write('Cache._cake_core_.duration', '+2 minutes');
+  // disable router cache during development
+  Configure::write('Cache._cake_routes_.duration', '+2 seconds');
 }
 
 /*
@@ -135,16 +142,16 @@ ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
  */
 $isCli = PHP_SAPI === 'cli';
 if ($isCli) {
-    (new ConsoleErrorHandler(Configure::read('Error')))->register();
+  (new ConsoleErrorHandler(Configure::read('Error')))->register();
 } else {
-    (new ErrorHandler(Configure::read('Error')))->register();
+  (new ErrorHandler(Configure::read('Error')))->register();
 }
 
 /*
  * Include the CLI bootstrap overrides.
  */
 if ($isCli) {
-    require __DIR__ . '/bootstrap_cli.php';
+  require __DIR__ . '/bootstrap_cli.php';
 }
 
 /*
@@ -153,19 +160,19 @@ if ($isCli) {
  */
 $fullBaseUrl = Configure::read('App.fullBaseUrl');
 if (!$fullBaseUrl) {
-    $s = null;
-    if (env('HTTPS')) {
-        $s = 's';
-    }
+  $s = null;
+  if (env('HTTPS')) {
+    $s = 's';
+  }
 
-    $httpHost = env('HTTP_HOST');
-    if (isset($httpHost)) {
-        $fullBaseUrl = 'http' . $s . '://' . $httpHost;
-    }
-    unset($httpHost, $s);
+  $httpHost = env('HTTP_HOST');
+  if (isset($httpHost)) {
+    $fullBaseUrl = 'http' . $s . '://' . $httpHost;
+  }
+  unset($httpHost, $s);
 }
 if ($fullBaseUrl) {
-    Router::fullBaseUrl($fullBaseUrl);
+  Router::fullBaseUrl($fullBaseUrl);
 }
 unset($fullBaseUrl);
 
@@ -180,14 +187,14 @@ Security::setSalt(Configure::consume('Security.salt'));
  * Setup detectors for mobile and tablet.
  */
 ServerRequest::addDetector('mobile', function ($request) {
-    $detector = new \Detection\MobileDetect();
+  $detector = new \Detection\MobileDetect();
 
-    return $detector->isMobile();
+  return $detector->isMobile();
 });
 ServerRequest::addDetector('tablet', function ($request) {
-    $detector = new \Detection\MobileDetect();
+  $detector = new \Detection\MobileDetect();
 
-    return $detector->isTablet();
+  return $detector->isTablet();
 });
 
 /*
@@ -231,11 +238,27 @@ TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 //require_once 'events.php';
 
-
-//Se nel settings definisci la variabile THEME allora carico il tema qui
-if (Configure::check('theme')){
-    $this->addPlugin(Configure::read('theme'));
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+  if (in_array($_SERVER['HTTP_ORIGIN'], [
+    'https://5t.drupalvm.test:8080',
+    'https://localhost:8080',
+    'http://localhost:8080',
+    'https://5tmoma.impronta48.it',
+  ])) {
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+  }
 }
+header('Access-Control-Allow-Methods: POST, GET, PUT, PATCH, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: *');
+//header('Access-Control-Allow-Credentials: true');
+//header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+  exit(0);
+}
+
+
 
 
 /**
@@ -261,26 +284,26 @@ if (Configure::check('theme')){
  */
 function conf_path($require_settings = true, $reset = false)
 {
-    $confdir = 'sites';
-    if (empty($_SERVER['HTTP_HOST'])){
-        return "$confdir/default";
-    }
+  $confdir = 'sites';
+  if (empty($_SERVER['HTTP_HOST'])) {
+    return "$confdir/default";
+  }
 
-    $sites = [];
-    $uri = explode('/', $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME']);
-    $server = explode('.', implode('.', array_reverse(explode(':', rtrim($_SERVER['HTTP_HOST'], '.')))));
-    for ($i = count($uri) - 1; $i > 0; $i--) {
-        for ($j = count($server); $j > 0; $j--) {
-            $dir = implode('.', array_slice($server, -$j)) . implode('.', array_slice($uri, 0, $i));
-            if (isset($sites[$dir]) && file_exists(CONFIG . '/' . $confdir . '/' . $sites[$dir])) {
-                $dir = $sites[$dir];
-            }
-            if (file_exists(CONFIG . '/' . $confdir . '/' . $dir . '/settings.php') || (!$require_settings && file_exists(CONFIG . '/' . $confdir . '/' . $dir))) {
-                $conf = "$confdir/$dir";
-                return $conf;
-            }
-        }
+  $sites = [];
+  $uri = explode('/', $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME']);
+  $server = explode('.', implode('.', array_reverse(explode(':', rtrim($_SERVER['HTTP_HOST'], '.')))));
+  for ($i = count($uri) - 1; $i > 0; $i--) {
+    for ($j = count($server); $j > 0; $j--) {
+      $dir = implode('.', array_slice($server, -$j)) . implode('.', array_slice($uri, 0, $i));
+      if (isset($sites[$dir]) && file_exists(CONFIG . '/' . $confdir . '/' . $sites[$dir])) {
+        $dir = $sites[$dir];
+      }
+      if (file_exists(CONFIG . '/' . $confdir . '/' . $dir . '/settings.php') || (!$require_settings && file_exists(CONFIG . '/' . $confdir . '/' . $dir))) {
+        $conf = "$confdir/$dir";
+        return $conf;
+      }
     }
-    $conf = "$confdir/default";
-    return $conf;
+  }
+  $conf = "$confdir/default";
+  return $conf;
 }

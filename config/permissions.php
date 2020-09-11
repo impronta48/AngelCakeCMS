@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2010 - 2019, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -50,126 +51,139 @@
  */
 
 return [
-    'CakeDC/Auth.permissions' => [
-        //all bypass
-        [
-            'prefix' => false,
-            'plugin' => 'CakeDC/Users',
-            'controller' => 'Users',
-            'action' => [
-                // LoginTrait
-                'socialLogin',
-                'login',
-                'logout',
-                'socialEmail',
-                'verify',
-                // RegisterTrait
-                'register',
-                'validateEmail',
-                // PasswordManagementTrait used in RegisterTrait
-                'changePassword',
-                'resetPassword',
-                'requestResetPassword',
-                // UserValidationTrait used in PasswordManagementTrait
-                'resendTokenValidation',
-                'linkSocial',
-                //U2F actions
-                'u2f',
-                'u2fRegister',
-                'u2fRegisterFinish',
-                'u2fAuthenticate',
-                'u2fAuthenticateFinish',
-            ],
-            'bypassAuth' => true,
-        ],
-        [
-            'prefix' => false,
-            'plugin' => 'CakeDC/Users',
-            'controller' => 'SocialAccounts',
-            'action' => [
-                'validateAccount',
-                'resendValidation',
-            ],
-            'bypassAuth' => true,
-        ],
-        //admin role allowed to all the things
-        [
-            'role' => 'admin',
-            'prefix' => '*',
-            'extension' => '*',
-            'plugin' => '*',
-            'controller' => '*',
-            'action' => '*',
-        ],
-        //specific actions allowed for the all roles in Users plugin
-        [
-            'role' => '*',
-            'plugin' => 'CakeDC/Users',
-            'controller' => 'Users',
-            'action' => ['profile', 'logout', 'linkSocial', 'callbackLinkSocial'],
-        ],
-        [
-            'role' => '*',
-            'plugin' => 'CakeDC/Users',
-            'controller' => 'Users',
-            'action' => 'resetOneTimePasswordAuthenticator',
-            'allowed' => function (array $user, $role, \Cake\Http\ServerRequest $request) {
-                $userId = \Cake\Utility\Hash::get($request->getAttribute('params'), 'pass.0');
-                if (!empty($userId) && !empty($user)) {
-                    return $userId === $user['id'];
-                }
-
-                return false;
-            }
-        ],
-        //allow debugkit and events for anonymous users
-        [
-            'role' => '*',
-            'plugin' => 'DebugKit',
-            'controller' => '*',
-            'action' => '*',
-            'bypassAuth' => true,
-        ],
-        [
-            'role' => '*',
-            'controller' => ['Pages','Static', 'Sitemaps','Error'],
-            'action' => '*',
-            'bypassAuth' => true,
-        ],
-        //anonimous can VIEW Articles, Destinations, Events, Tags
-        [
-            'role' => '*',
-            'controller' => ['Articles','Destinations','Events','Tags','Static','Bandi','Projects'],
-            'action' => ['view'],
-            'bypassAuth' => true,
-        ],
-        //anonimous can INDEX Articles, Destinations, Events, Tags
-        [
-            'role' => '*',
-            'controller' => ['Articles','Destinations','Bandi','Projects'],
-            'action' => ['index'],
-            'bypassAuth' => true,
-        ],
-        //anonimous free actions on Events
-        [
-            'role' => '*',
-            'controller' => ['Events'],
-            'action' => ['getList','subscribe'],
-            'bypassAuth' => true,
-        ],
-        //anonimous free actions on Participants
-        [
-            'role' => '*',
-            'controller' => ['Participants'],
-            'action' => ['add','sendNotification'],
-            'bypassAuth' => true,
-        ],
-        //search
-        [
-            'role' => '*',
-            'controller' => ['Articles'],
-            'action' => ['search'],
-            'bypassAuth' => true,
-        ],
-    ]
+  'CakeDC/Auth.permissions' => [
+    //all bypass
+    [
+      'prefix' => false,
+      'plugin' => 'CakeDC/Users',
+      'controller' => 'Users',
+      'action' => [
+        // LoginTrait
+        'socialLogin',
+        'login',
+        'logout',
+        'socialEmail',
+        'verify',
+        // RegisterTrait
+        'register',
+        'validateEmail',
+        // PasswordManagementTrait used in RegisterTrait
+        'changePassword',
+        'resetPassword',
+        'requestResetPassword',
+        // UserValidationTrait used in PasswordManagementTrait
+        'resendTokenValidation',
+        'linkSocial',
+        //U2F actions
+        'u2f',
+        'u2fRegister',
+        'u2fRegisterFinish',
+        'u2fAuthenticate',
+        'u2fAuthenticateFinish',
+      ],
+      'bypassAuth' => true,
+    ],
+    [
+      'prefix' => false,
+      'plugin' => 'CakeDC/Users',
+      'controller' => 'SocialAccounts',
+      'action' => [
+        'validateAccount',
+        'resendValidation',
+      ],
+      'bypassAuth' => true,
+    ],
+    //admin role allowed to all the things
+    [
+      'role' => 'admin',
+      'prefix' => '*',
+      'extension' => '*',
+      'plugin' => '*',
+      'controller' => '*',
+      'action' => '*',
+    ],
+    //specific actions allowed for the all roles in Users plugin
+    [
+      'role' => '*',
+      'plugin' => 'CakeDC/Users',
+      'controller' => 'Users',
+      'action' => ['profile', 'logout', 'linkSocial', 'callbackLinkSocial'],
+    ],
+    [
+      'role' => '*',
+      'plugin' => 'CakeDC/Users',
+      'controller' => 'Users',
+      'action' => 'resetOneTimePasswordAuthenticator',
+      'allowed' => function (array $user, $role, \Cake\Http\ServerRequest $request) {
+        $userId = \Cake\Utility\Hash::get($request->getAttribute('params'), 'pass.0');
+        if (!empty($userId) && !empty($user)) {
+          return $userId === $user['id'];
+        }
+        return false;
+      }
+    ],
+    //allow debugkit and events for anonymous users
+    [
+      'role' => '*',
+      'plugin' => 'DebugKit',
+      'controller' => '*',
+      'action' => '*',
+      'bypassAuth' => true,
+    ],
+    [
+      'role' => '*',
+      'controller' => ['Pages', 'Static', 'Sitemaps', 'Error', 'Surveys', 'Answers', 'Companies', 'Questions', 'Offices'],
+      'action' => '*',
+      'bypassAuth' => true,
+    ],
+    //anonimous can VIEW Articles, Destinations, Events, Tags
+    [
+      'role' => '*',
+      'controller' => ['Articles', 'Destinations', 'Events', 'Tags', 'Static', 'Bandi', 'Projects'],
+      'action' => ['view'],
+      'bypassAuth' => true,
+    ],
+    //anonimous can INDEX Articles, Destinations, Events, Tags
+    [
+      'role' => '*',
+      'controller' => ['Articles', 'Destinations', 'Bandi', 'Projects', 'Sections'],
+      'action' => ['index'],
+      'bypassAuth' => true,
+    ],
+    //anonimous free actions on Events
+    [
+      'role' => '*',
+      'controller' => ['Events'],
+      'action' => ['getList', 'subscribe'],
+      'bypassAuth' => true,
+    ],
+    //anonimous free actions on Participants
+    [
+      'role' => '*',
+      'controller' => ['Participants'],
+      'action' => ['add', 'sendNotification'],
+      'bypassAuth' => true,
+    ],
+    //TODO: Replace in production
+    [
+      'role' => '*',
+      'controller' => ['Surveys'],
+      'action' => ['toggleQuestionVisibility'],
+      'bypassAuth' => true,
+    ],
+    //search
+    [
+      'role' => '*',
+      'controller' => ['Articles'],
+      'action' => ['search'],
+      'bypassAuth' => true,
+    ],
+    //TODO: Replace in production
+    [
+      'role' => '*',
+      'controller' => ['Employees'],
+      'action' => ['index'],
+      'bypassAuth' => true,
+    ],
+  ]
 ];
