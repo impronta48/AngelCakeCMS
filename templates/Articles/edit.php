@@ -92,8 +92,24 @@
   <?= $this->Form->control('archived', ['label' => 'Archiviato']); ?>
   <?= $this->Form->control('promoted', ['label' => 'Promosso in Home Page']); ?>
   <?= $this->Form->control('slider', ['label' => 'Visibile nello Slider']); ?>
-  <?= $this->Form->control('modified', ['label' => 'Ultima Modifica', 'type' => 'datetime']); ?>
-  <?= $this->Form->control('user_id'); ?>
+
+  <div class="card text-white bg-secondary mt-3">
+    <div class="card-body">
+      <h5 class="card-title">SEO</h5>
+      <?= $this->Form->control('keywords', ['label' => 'KeyWords']); ?>
+      <?= $this->Form->control('description', ['label' => 'Description']); ?>
+      <?= $this->Form->control('url_canonical', ['label' => 'Canonical URL']); ?>
+    </div>
+  </div>
+
+  <div class="card text-white bg-secondary mt-3 mb-2">
+    <div class="card-body">
+      <h5 class="card-title">Pubblicazione</h5>
+      <?= $this->Form->control('modified', ['label' => 'Ultima Modifica', 'type' => 'datetime']); ?>
+      <?= $this->Form->control('user_id'); ?>
+    </div>
+  </div>
+
   <?= $this->Form->hidden('id'); ?>
   <?= $this->Form->button(__("Save")); ?>
   <?= $this->Form->end() ?>

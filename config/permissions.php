@@ -185,5 +185,12 @@ return [
       'action' => ['index'],
       'bypassAuth' => true,
     ],
+    [
+      'role' => '*',
+      'plugin' => 'Moma',
+      'controller' => ['Users'],
+      'action' => ['index'],
+      'bypassAuth' => true,
+    ],
   ]
 ];
