@@ -78,3 +78,7 @@ AppleCake CMS comes with a simple subscription form, which allows the users to s
 https://rclone.org/commands/rclone/
 rclone copy nextcloud:/impronta/Cicloturismo/BikeSquare/sito-b2b/ /var/www/vhosts/b2b.bikesquare.eu/httpdocs/webroot/b2b/static -vv
 rclone copy nextcloud:/impronta/Cicloturismo/BikeSquare/sito-b2b/ /var/www/vhosts/b2b.bikesquare.eu/httpdocs/webroot/b2b/static -vv
+
+### CakeDC Configuration
+permissions.php contained in /config/sites/mydomain.com/settings.php 
+will be merged with the main permissions.php in the /config folder.

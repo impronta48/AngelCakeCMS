@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -16,7 +17,7 @@
  * Use the DS to separate the directories in other defines
  */
 if (!defined('DS')) {
-    define('DS', DIRECTORY_SEPARATOR);
+  define('DS', DIRECTORY_SEPARATOR);
 }
 
 /*
@@ -93,3 +94,51 @@ define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'c
  */
 define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
+
+
+/**
+ * Returns the appropriate configuration directory.
+ *
+ * Returns the configuration path based on the site's hostname, port, and
+ * pathname. See default.settings.php for examples on how the URL is converted
+ * to a directory.
+ *
+ * @param bool $require_settings
+ *   Only configuration directories with an existing settings.php file
+ *   will be recognized. Defaults to TRUE. During initial installation,
+ *   this is set to FALSE so that Drupal can detect a matching directory,
+ *   then create a new settings.php file in it.
+ * @param bool $reset
+ *   Force a full search for matching directories even if one had been
+ *   found previously. Defaults to FALSE.
+ *
+ * @return
+ *   The path of the matching directory.
+ *
+ * @see default.settings.php
+ */
+function conf_path($require_settings = true, $reset = false)
+{
+  $confdir = 'sites';
+  if (empty($_SERVER['HTTP_HOST'])) {
+    return "$confdir/default";
+  }
+
+  $sites = [];
+  $uri = explode('/', $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME']);
+  $server = explode('.', implode('.', array_reverse(explode(':', rtrim($_SERVER['HTTP_HOST'], '.')))));
+  for ($i = count($uri) - 1; $i > 0; $i--) {
+    for ($j = count($server); $j > 0; $j--) {
+      $dir = implode('.', array_slice($server, -$j)) . implode('.', array_slice($uri, 0, $i));
+      if (isset($sites[$dir]) && file_exists(CONFIG . '/' . $confdir . '/' . $sites[$dir])) {
+        $dir = $sites[$dir];
+      }
+      if (file_exists(CONFIG . '/' . $confdir . '/' . $dir . '/settings.php') || (!$require_settings && file_exists(CONFIG . '/' . $confdir . '/' . $dir))) {
+        $conf = "$confdir/$dir";
+        return $conf;
+      }
+    }
+  }
+  $conf = "$confdir/default";
+  return $conf;
+}

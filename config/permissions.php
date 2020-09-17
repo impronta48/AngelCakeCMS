@@ -50,7 +50,8 @@
     ],
  */
 
-return [
+/// NOTA QUESTO FILE E' DIVERSO PER INCLUDERE LA CONFIGURAZIONE CHE TROVO IN SITES/nomesito/permissions.php
+$permissions = [
   'CakeDC/Auth.permissions' => [
     //all bypass
     [
@@ -119,6 +120,7 @@ return [
         if (!empty($userId) && !empty($user)) {
           return $userId === $user['id'];
         }
+
         return false;
       }
     ],
@@ -132,7 +134,7 @@ return [
     ],
     [
       'role' => '*',
-      'controller' => ['Pages', 'Static', 'Sitemaps', 'Error', 'Surveys', 'Answers', 'Companies', 'Questions', 'Offices'],
+      'controller' => ['Pages', 'Static', 'Sitemaps', 'Errors'],
       'action' => '*',
       'bypassAuth' => true,
     ],
@@ -146,7 +148,7 @@ return [
     //anonimous can INDEX Articles, Destinations, Events, Tags
     [
       'role' => '*',
-      'controller' => ['Articles', 'Destinations', 'Bandi', 'Projects', 'Sections'],
+      'controller' => ['Articles', 'Destinations', 'Bandi', 'Projects'],
       'action' => ['index'],
       'bypassAuth' => true,
     ],
@@ -164,13 +166,6 @@ return [
       'action' => ['add', 'sendNotification'],
       'bypassAuth' => true,
     ],
-    //TODO: Replace in production
-    [
-      'role' => '*',
-      'controller' => ['Surveys'],
-      'action' => ['toggleQuestionVisibility'],
-      'bypassAuth' => true,
-    ],
     //search
     [
       'role' => '*',
@@ -178,19 +173,12 @@ return [
       'action' => ['search'],
       'bypassAuth' => true,
     ],
-    //TODO: Replace in production
-    [
-      'role' => '*',
-      'controller' => ['Employees'],
-      'action' => ['index'],
-      'bypassAuth' => true,
-    ],
-    [
-      'role' => '*',
-      'plugin' => 'Moma',
-      'controller' => ['Users'],
-      'action' => ['index'],
-      'bypassAuth' => true,
-    ],
   ]
 ];
+
+//This part includes the specific permissions.php included into /config
+$path = conf_path();
+$sitePermissions =  include CONFIG . $path . DS . 'permissions.php';
+$allPerms['CakeDC/Auth.permissions'] = array_merge($permissions['CakeDC/Auth.permissions'], $sitePermissions['CakeDC/Auth.permissions']);
+
+return $allPerms;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
@@ -31,42 +33,41 @@ use Cake\I18n\I18n;
  */
 class AppController extends Controller
 {
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('FormProtection');`
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
+  /**
+   * Initialization hook method.
+   *
+   * Use this method to add common initialization code like loading components.
+   *
+   * e.g. `$this->loadComponent('FormProtection');`
+   *
+   * @return void
+   */
+  public function initialize(): void
+  {
+    parent::initialize();
 
-        $this->loadComponent('RequestHandler');
-        $this->loadComponent('Flash');
-        $this->loadComponent('CakeDC/Users.Setup');
+    $this->loadComponent('RequestHandler');
+    $this->loadComponent('Flash');
+    $this->loadComponent('CakeDC/Users.Setup');
 
-        /*
+    /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
-        //$this->loadComponent('FormProtection');
+    //$this->loadComponent('FormProtection');
 
+  }
+  public function beforeRender(\Cake\Event\EventInterface $event)
+  {
+    if (strpos($this->request->getRequestTarget(), '/en') !== false) {
+      I18n::setLocale('en');
+    } elseif (strpos($this->request->getRequestTarget(), '/es') !== false) {
+      I18n::setLocale('es');
     }
-   public function beforeRender(\Cake\Event\EventInterface $event)
-    {                
-        if (strpos($this->request->getRequestTarget(),'/en') !== false) {
-            I18n::setLocale('en');
-        }elseif (strpos($this->request->getRequestTarget(),'/es') !== false ){
-            I18n::setLocale('es');
-        }
-        $this->set('locale',  substr(I18n::getLocale(),0,2));
+    $this->set('locale',  substr(I18n::getLocale(), 0, 2));
 
-        if (Configure::check('theme')){
-            $this->viewBuilder()->setTheme(Configure::read('theme'));
-        }
+    if (Configure::check('theme')) {
+      $this->viewBuilder()->setTheme(Configure::read('theme'));
     }
-
+  }
 }
