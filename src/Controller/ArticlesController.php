@@ -177,6 +177,8 @@ class ArticlesController extends AppController
 				}
 				
 				$error = $article['newallegati'][0]['error'];
+				//dd($article);
+				//dd($article['newallegati'][0]['error']==1);
 				if ($error == UPLOAD_ERR_OK) {
 					$this->uploadFiles($article['id'], 'files', $article['newallegati'], false);
 				} elseif ($error != UPLOAD_ERR_NO_FILE) {
@@ -339,9 +341,25 @@ class ArticlesController extends AppController
 		if ($promoted) {
 			$query->where(['promoted' => 1]);
 		}
+		$archived = $this->request->getQuery('archived');
+		if ($archived) {
+			$query->where(['archived' => 1]);
+		}
+		/*else
+		{
+			$query->where(['archived' => 0]);
+		}*/
 		$slider = $this->request->getQuery('slider');
 		if ($slider) {
 			$query->where(['slider' => 1]);
+		}
+		$month = $this->request->getQuery('month');
+		if ($month) {
+			$query->where(['MONTH(Articles.modified)' => $month]);
+		}
+		$year = $this->request->getQuery('year');
+		if ($year) {
+			$query->where(['YEAR(Articles.modified)' => $year]);
 		}
 		$projects = $this->request->getQuery('projects');
 		if ($projects) {
@@ -351,8 +369,16 @@ class ArticlesController extends AppController
 		}
 
 		$destination_id = $this->request->getQuery('destination_id');
+		//TODO: correggere destination_id
+		//dd($destination_id);
 		if ($destination_id) {
-			$query->where(['destination_id' => $destination_id]);
+			//dd($destination_id);
+			if(is_array($destination_id)){
+				$query->where(['destination_id IN' => $destination_id]);
+			}
+			else{
+				$query->where(['destination_id' => $destination_id]);
+			}
 			$query->contain(['Destinations' => ['fields' => ['name', 'slug']]]);
 		}
 
@@ -398,5 +424,38 @@ class ArticlesController extends AppController
 		$pagination = $this->Paginator->getPagingParams();
 		$this->set(compact('articles', 'pagination'));
 		$this->viewBuilder()->setOption('serialize', ['articles', 'pagination']);
+	}
+
+	public function getMonthYear()
+	{
+		/*$query= "SELECT COUNT(id), MONTH(modified), YEAR(modified)
+		FROM articles
+		GROUP BY MONTH(modified), YEAR(modified)";*/
+		//$this->autoRender=false;
+
+		$query = $this->Articles->find();
+		$query->select([
+			'nArticoli' => $query->func()->count('MONTH(Articles.modified)'),
+			'mese' => 'MONTH(Articles.modified)',
+			'anno' => 'YEAR(Articles.modified)'
+		])
+		->group(['MONTH(Articles.modified)','YEAR(Articles.modified)'])
+		->where(['Articles.published' => 1,'destination_id']);
+
+		$destination_id = $this->request->getQuery('destination_id');
+		if ($destination_id) {
+			if(is_array($destination_id)){
+				$query->where(['destination_id IN' => $destination_id]);
+			}
+			else{
+				$query->where(['destination_id' => $destination_id]);
+			}
+		}
+		$monthyear = $this->paginate($query);
+		//dd($monthyear);
+		$this->set(compact('monthyear'));
+		$this->viewBuilder()->setOption('serialize', ['monthyear']);
+		
+
 	}
 }

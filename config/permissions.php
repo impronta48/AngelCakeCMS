@@ -170,7 +170,7 @@ $permissions = [
     [
       'role' => '*',
       'controller' => ['Articles'],
-      'action' => ['search'],
+      'action' => ['search','getMonthYear'],
       'bypassAuth' => true,
     ],
   ]
@@ -178,7 +178,15 @@ $permissions = [
 
 //This part includes the specific permissions.php included into /config
 $path = conf_path();
-$sitePermissions =  include CONFIG . $path . DS . 'permissions.php';
+$file= CONFIG . $path . DS . 'permissions.php';
+if(is_file($file))
+{
+  $sitePermissions =  include $file;
+}
+else{
+  $sitePermissions['CakeDC/Auth.permissions'] = [];
+}
+
 $allPerms['CakeDC/Auth.permissions'] = array_merge($permissions['CakeDC/Auth.permissions'], $sitePermissions['CakeDC/Auth.permissions']);
 
 return $allPerms;
