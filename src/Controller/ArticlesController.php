@@ -177,14 +177,16 @@ class ArticlesController extends AppController
 				}
 				
 				$error = $article['newallegati'][0]['error'];
-				//dd($article);
-				//dd($article['newallegati'][0]['error']==1);
+				//dd($error);
+				//dd($article['newallegati'][0]['error']==UPLOAD_ERR_INI_SIZE);
 				if ($error == UPLOAD_ERR_OK) {
 					$this->uploadFiles($article['id'], 'files', $article['newallegati'], false);
+					$this->Flash->success(__('Salvato con successo'));
+				} elseif($error == UPLOAD_ERR_INI_SIZE){
+					$this->Flash->error(__('Dimensione massima superata'));
 				} elseif ($error != UPLOAD_ERR_NO_FILE) {
 					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
-				$this->Flash->success(__('Salvato con successo'));
 				//return $this->redirect(['action'=>'view', $article->slug]);
 			} else {
 				$this->Flash->error(__('Unable to update your article.'));
@@ -369,7 +371,6 @@ class ArticlesController extends AppController
 		}
 
 		$destination_id = $this->request->getQuery('destination_id');
-		//TODO: correggere destination_id
 		//dd($destination_id);
 		if ($destination_id) {
 			//dd($destination_id);
