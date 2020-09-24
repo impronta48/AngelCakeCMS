@@ -16,6 +16,8 @@
           <th><?= $this->Paginator->sort('email', __d('CakeDC/Users', 'Email')) ?></th>
           <th><?= $this->Paginator->sort('first_name', __d('CakeDC/Users', 'First name')) ?></th>
           <th><?= $this->Paginator->sort('last_name', __d('CakeDC/Users', 'Last name')) ?></th>
+          <th><?= $this->Paginator->sort('last_name', __d('CakeDC/Users', 'Role')) ?></th>
+          <th><?= $this->Paginator->sort('last_name', __d('CakeDC/Users', 'Company')) ?></th>
           <th class="actions"><?= __d('CakeDC/Users', 'Actions') ?></th>
         </tr>
       </thead>
@@ -26,6 +28,8 @@
             <td><?= h($user->email) ?></td>
             <td><?= h($user->first_name) ?></td>
             <td><?= h($user->last_name) ?></td>
+            <td><?= h($user->role) ?></td>
+            <td><?= h($user->company) ?></td>
             <td class="actions">
               <?= $this->Html->link('View', ['action' => 'view', $user->id], ['class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
               <?= $this->Html->link('Change', ['action' => 'changePassword', $user->id], ['class' => 'btn btn-default glyphicon fa fa-key ']) ?>
