@@ -97,7 +97,7 @@ Configure::load('filesystems', 'default');
 
 //Se nel settings definisci la variabile THEME allora carico il tema qui
 if (Configure::check('theme')) {
-  $this->addPlugin(Configure::read('theme'));
+  $this->addPlugin(Configure::read('theme'), ['routes' => true]);
 }
 
 
