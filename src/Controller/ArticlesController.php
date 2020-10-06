@@ -370,6 +370,7 @@ class ArticlesController extends AppController
       $query->innerJoinWith('Projects');
     }
 
+    $destinations = [];
     $destination_id = $this->request->getQuery('destination_id');
     //dd($destination_id);
     if ($destination_id) {
