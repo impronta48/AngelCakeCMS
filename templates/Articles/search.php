@@ -1,3 +1,5 @@
+<?php $this->assign('title', "Cerca -> $q"); ?>
+
 <div id="home">
   <div class="well">
     <h1 style="text-align: center;">Cerca articolo</h1>
