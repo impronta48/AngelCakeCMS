@@ -429,8 +429,8 @@ class ArticlesController extends AppController
     }
     $articles = $this->paginate($query);
     $pagination = $this->Paginator->getPagingParams();
-    $this->set(compact('articles', 'pagination'));
-    $this->viewBuilder()->setOption('serialize', ['articles', 'pagination']);
+    $this->set(compact('articles', 'pagination', 'q'));
+    $this->viewBuilder()->setOption('serialize', ['articles', 'pagination', 'q']);
   }
 
   public function getMonthYear()
