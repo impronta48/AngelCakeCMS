@@ -251,6 +251,6 @@ header('Access-Control-Allow-Headers: *');
 //header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
