@@ -42,7 +42,9 @@
         "psr-4": {
             "App\\": "src/",
             "Moma\\": "plugins/Moma/src/",
-            "Mirafiori\\": "plugins/Mirafiori/src/"
+            "Mirafiori\\": "plugins/Mirafiori/src/",
+            "Bossolasco\\": "plugins/Bossolasco/src/",
+            "Yepp\\": "plugins/Yepp/src/"
         }
     },
     "autoload-dev": {

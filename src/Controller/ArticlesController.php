@@ -123,7 +123,7 @@ class ArticlesController extends AppController
         return $this->redirect(['action' => 'view', $article->slug]);
       }
       $this->Flash->error(__('Unable to add your article'));
-      dd($article->getErrors());
+      //dd($article->getErrors());
     }
     $tags = $this->Articles->Tags->find('list');
     $users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
