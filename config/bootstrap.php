@@ -226,6 +226,7 @@ ServerRequest::addDetector('tablet', function ($request) {
 
 //Necessario per gestire i campi datetime senza specificare i secondi
 TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm');
+//TypeFactory::build('date')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd');
 
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
@@ -250,6 +251,6 @@ header('Access-Control-Allow-Headers: *');
 //header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
