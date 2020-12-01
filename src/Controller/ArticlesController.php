@@ -463,4 +463,41 @@ class ArticlesController extends AppController
     $this->set(compact('monthyear'));
     $this->viewBuilder()->setOption('serialize', ['monthyear']);
   }
+
+  public function uploadImage()
+  {
+    $r = $this->request->getData();
+
+    //Salvo le immagini di ckeditor
+    $error = $r['upload']['error'];
+    if ($error == UPLOAD_ERR_OK) {
+      $fname = $r['upload'];
+      $fullDirTemplate = ':sitedir/attachments';
+      $save_dir = Text::insert($fullDirTemplate, [
+        'sitedir' => Configure::read('sitedir'),
+      ]);
+      $name_on_server = basename($fname["name"]);
+      $dest_fname = WWW_ROOT . $save_dir . DS . $name_on_server;
+      $copied = move_uploaded_file($fname['tmp_name'], $dest_fname);
+      //Se non riesco a spostare nella cartella giusta, esco
+      if (!$copied) {
+        $toReturn['error'] = 'Si e\' verificato un problema nella creazione dell\'immagine.
+				Ripetere l\'inserimento';
+        return $toReturn;
+      }
+      $msg = [
+        "uploaded" =>  true,
+        "url" =>  "/$save_dir/$name_on_server",
+      ];
+      $this->set([
+        'data' => $msg,
+        '_serialize' => 'data',
+      ]);
+      $this->RequestHandler->renderAs($this, 'json');
+      //$this->set('msg', $msg);
+      //$this->viewBuilder()->setOption('serialize', ['msg']);
+    } elseif ($error != UPLOAD_ERR_NO_FILE) {
+      throw new InternalErrorException($this->phpFileUploadErrors[$error]);
+    }
+  }
 }
