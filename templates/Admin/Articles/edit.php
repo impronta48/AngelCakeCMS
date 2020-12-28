@@ -14,8 +14,6 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
     'class' => 'form'
   ]); ?>
 
-
-
   <?php echo $this->Form->control('title'); ?>
   <?php
   echo $this->Form->control('slug');
@@ -82,7 +80,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
   <div class="card card-info">
 
     <div class="card-body">
-      <h5 class="card-title"><i class="fa fa-file-o"></i> File allegati a questo articolo</h5>
+      <h5 class="card-title"><i class="fa fa-paperclip"></i> File allegati a questo articolo</h5>
 
       <?php if (isset($article->allegati)) : ?>
         <ul>

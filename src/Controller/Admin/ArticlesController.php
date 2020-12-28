@@ -89,7 +89,7 @@ class ArticlesController extends AppController
         }
 
         $this->Flash->success(__('Your article has been saved.'));
-        return $this->redirect(['action' => 'view', $article->slug]);
+        return $this->redirect(['prefix' => false, 'action' => 'view', $article->slug]);
       }
       $this->Flash->error(__('Unable to add your article'));
       //dd($article->getErrors());

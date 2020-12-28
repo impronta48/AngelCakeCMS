@@ -1,10 +1,10 @@
-<?php $this->assign('title', 'Article Add'); ?>
+<?php $this->assign('title', 'Aggiungi Articolo'); ?>
 
-<div class="container">
+<div class="container" id="article">
   <?= $this->element('v-admin-navbar', ['event' => $article]); ?>
   <br>
 
-  <?= $this->Form->create($article, ['type' => 'file']); ?>
+  <?= $this->Form->create($article, ['type' => 'file',  'class' => 'form']); ?>
   <fieldset>
     <?php echo $this->Form->control('title'); ?>
 
@@ -19,9 +19,8 @@
         ]); ?>
       </div>
     </div>
-
+    <textarea class="editor" name="body"><?= $article->body ?></textarea>
     <?php
-    echo $this->Form->control('body', ['class' => 'jquery']);
     echo $this->Form->control('destination_id', ['empty' => '---']);
     ?>
   </fieldset>
@@ -41,7 +40,7 @@
 
   <div class="panel panel-info">
     <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-image"></i> File allegati a questo articolo</h3>
+      <h3 class="panel-title"><i class="fa fa-paperclip"></i> File allegati a questo articolo</h3>
     </div>
     <div class="panel-body">
       <?php echo $this->Form->file('newallegati. ', [
@@ -51,6 +50,7 @@
       ]); ?>
     </div>
   </div>
+
   <?= $this->Form->control('published', ['label' => 'Pubblicato']); ?>
   <?= $this->Form->control('archived', ['label' => 'Archiviato']); ?>
   <?= $this->Form->control('promoted', ['label' => 'Promosso in Home Page']); ?>
