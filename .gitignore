@@ -6,9 +6,22 @@
 /logs/*
 /tmp/*
 /vendor/*
-/webroot/*
+/webroot/b2b/*
+/webroot/bootstrap_u_i/*
+/webroot/bossolasco/*
+/webroot/cake_d_c/*
+/webroot/debug_kit/
+/webroot/files/
+/webroot/gal/
+/webroot/impronta/
+/webroot/mirafiori/
+/webroot/yepp/
 /plugins/*
 settings.php
+/webroot/js/node_modules/*
+/webroot/js/ckeditor5/node_modules/*
+/webroot/js/ckeditor5/sample/*
+/webroot/js/ckeditor5/src/*
 
 # OS generated files #
 ######################

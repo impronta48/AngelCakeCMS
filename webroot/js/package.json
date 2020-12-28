@@ -1,0 +1,21 @@
+{
+    "name": "angelcake",
+    "version": "1.0.0",
+    "description": "AngelCake Hybrid CMS",
+    "dependencies": {
+        "@ckeditor/ckeditor5-vue2": "^1.0.5",
+        "axios": "^0.21.1",
+        "bootstrap-vue": "^2.21.1",
+        "jquery": "^3.5.1",
+        "jquery-ui": "^1.12.1",
+        "moment": "^2.29.1",
+        "vue": "^2.6.12",
+        "vue2-datepicker": "^3.8.2"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": ""
+    },
+    "author": "Massimo INFUNTI -iMpronta",
+    "license": "UGPL"
+}
