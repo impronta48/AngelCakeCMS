@@ -10,6 +10,7 @@ use Cake\Http\Exception\InternalErrorException;
 use Cake\Core\Configure;
 use Cake\Utility\Text;
 use App\Model\Entity\Article;
+use Composer\Config;
 
 class ArticlesController extends AppController
 {
@@ -291,7 +292,7 @@ class ArticlesController extends AppController
     $error = $r['upload']['error'];
     if ($error == UPLOAD_ERR_OK) {
       $fname = $r['upload'];
-      $fullDirTemplate = ':sitedir/attachments';
+      $fullDirTemplate = ':sitedir/img';
       $save_dir = Text::insert($fullDirTemplate, [
         'sitedir' => Configure::read('sitedir'),
       ]);
@@ -316,6 +317,7 @@ class ArticlesController extends AppController
       //$this->set('msg', $msg);
       //$this->viewBuilder()->setOption('serialize', ['msg']);
     } elseif ($error != UPLOAD_ERR_NO_FILE) {
+      $phpFileUploadErrors = Configure::read('phpFileUploadErrors');
       throw new InternalErrorException($phpFileUploadErrors[$error]);
     }
   }
