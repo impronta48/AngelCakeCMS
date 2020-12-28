@@ -1,0 +1,10 @@
+ALTER TABLE participants MODIFY COLUMN ente varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE participants MODIFY COLUMN facebook varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE participants MODIFY COLUMN address varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE participants MODIFY COLUMN city varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE participants MODIFY COLUMN pob varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE participants MODIFY COLUMN destination_id int NULL;
+ALTER TABLE participants MODIFY COLUMN event_id int NOT NULL;
+ALTER TABLE participants MODIFY COLUMN forum_id_prima_scelta int NULL;
+ALTER TABLE participants MODIFY COLUMN forum_id_seconda_scelta int NULL;
+ALTER TABLE participants MODIFY COLUMN modified timestamp NULL;

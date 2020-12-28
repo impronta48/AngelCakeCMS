@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App;
 
 use Cake\Core\Configure;
@@ -24,6 +26,7 @@ use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use Cake\I18n\Middleware\LocaleSelectorMiddleware;
+
 /**
  * Application setup class.
  *
@@ -32,86 +35,96 @@ use Cake\I18n\Middleware\LocaleSelectorMiddleware;
  */
 class Application extends BaseApplication
 {
-    /**
-     * Load all the application configuration and bootstrap logic.
-     *
-     * @return void
-     */
-    public function bootstrap(): void
-    {
-        $this->addPlugin('ADmad/Glide');
+  /**
+   * Load all the application configuration and bootstrap logic.
+   *
+   * @return void
+   */
+  public function bootstrap(): void
+  {
 
-        // Call parent to load bootstrap from files.
-        parent::bootstrap();
 
-        if (PHP_SAPI === 'cli') {
-            $this->bootstrapCli();
-        }
+    // Call parent to load bootstrap from files.
+    parent::bootstrap();
 
-        /*
+    if (PHP_SAPI === 'cli') {
+      $this->bootstrapCli();
+    }
+
+    /*
          * Only try to load DebugKit in development mode
          * Debug Kit should not be installed on a production system
          */
-        if (Configure::read('debug')) {
-            $this->addPlugin('DebugKit');
+    if (Configure::read('debug')) {
+      $this->addPlugin('DebugKit');
+    }
+
+    // Load more plugins here
+    //$this->addPlugin('Authentication');
+    $this->addPlugin('BootstrapUI');
+    Configure::write('Users.config', ['users']);
+    $this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
+    $this->addPlugin('ADmad/Glide');
+
+    if (Configure::check('plugins')) {
+      $plugins = Configure::read('AngelCake.plugins');
+      if (!empty($plugins)) {
+        foreach ($plugins as $p) {
+          $this->addPlugin($p, ['routes' => true]);
         }
+      }
+    }
+  }
 
-        // Load more plugins here
-        //$this->addPlugin('Authentication');
-        $this->addPlugin('BootstrapUI');
-        Configure::write('Users.config', ['users']);
-        $this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
+  /**
+   * Setup the middleware queue your application will use.
+   *
+   * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
+   * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
+   */
+  public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
+  {
+
+    $middlewareQueue
+      // Catch any exceptions in the lower layers,
+      // and make an error page/response
+      ->add(new ErrorHandlerMiddleware(Configure::read('Error')))
+
+      // Handle plugin/theme assets like CakePHP normally does.
+      ->add(new AssetMiddleware([
+        'cacheTime' => Configure::read('Asset.cacheTime'),
+      ]))
+
+
+      // Add routing middleware.
+      // If you have a large number of routes connected, turning on routes
+      // caching in production could improve performance. For that when
+      // creating the middleware instance specify the cache config name by
+      // using it's second constructor argument:
+      // `new RoutingMiddleware($this, '_cake_routes_')`
+      ->add(new RoutingMiddleware($this));
+    //->add(new LocaleSelectorMiddleware());
+
+    return $middlewareQueue;
+  }
+
+  /**
+   * Bootrapping for CLI application.
+   *
+   * That is when running commands.
+   *
+   * @return void
+   */
+  protected function bootstrapCli(): void
+  {
+    try {
+      $this->addPlugin('Bake');
+    } catch (MissingPluginException $e) {
+      // Do not halt if the plugin is missing
     }
 
-    /**
-     * Setup the middleware queue your application will use.
-     *
-     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
-     * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
-     */
-    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
-    {
+    $this->addPlugin('Migrations');
 
-        $middlewareQueue
-            // Catch any exceptions in the lower layers,
-            // and make an error page/response
-            ->add(new ErrorHandlerMiddleware(Configure::read('Error')))
-
-            // Handle plugin/theme assets like CakePHP normally does.
-            ->add(new AssetMiddleware([
-                'cacheTime' => Configure::read('Asset.cacheTime'),
-            ]))
-
-
-            // Add routing middleware.
-            // If you have a large number of routes connected, turning on routes
-            // caching in production could improve performance. For that when
-            // creating the middleware instance specify the cache config name by
-            // using it's second constructor argument:
-            // `new RoutingMiddleware($this, '_cake_routes_')`
-            ->add(new RoutingMiddleware($this));
-            //->add(new LocaleSelectorMiddleware());
-
-        return $middlewareQueue;
-    }
-
-    /**
-     * Bootrapping for CLI application.
-     *
-     * That is when running commands.
-     *
-     * @return void
-     */
-    protected function bootstrapCli(): void
-    {
-        try {
-            $this->addPlugin('Bake');
-        } catch (MissingPluginException $e) {
-            // Do not halt if the plugin is missing
-        }
-
-        $this->addPlugin('Migrations');
-
-        // Load more plugins here
-    }
+    // Load more plugins here
+  }
 }

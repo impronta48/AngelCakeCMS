@@ -80,6 +80,7 @@ use Cake\Utility\Security;
 /*Carico il file di configurazione specifico di questo dominio*/
 
 $path = conf_path();
+Configure::write('confPath', $path);
 try {
   Configure::config('default', new PhpConfig());
   Configure::load('app', 'default', false);
@@ -99,7 +100,6 @@ Configure::load('filesystems', 'default');
 if (Configure::check('theme')) {
   $this->addPlugin(Configure::read('theme'), ['routes' => true]);
 }
-
 
 /*
  * Load an environment local configuration file to provide overrides to your configuration.
@@ -254,3 +254,15 @@ header('Access-Control-Allow-Type: application/json');
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
+
+
+$phpFileUploadErrors = [
+  0 => 'There is no error, the file uploaded with success',
+  1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini: ' . ini_get("upload_max_filesize"),
+  2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+  3 => 'The uploaded file was only partially uploaded',
+  4 => 'No file was uploaded',
+  6 => 'Missing a temporary folder',
+  7 => 'Failed to write file to disk.',
+  8 => 'A PHP extension stopped the file upload.',
+];
