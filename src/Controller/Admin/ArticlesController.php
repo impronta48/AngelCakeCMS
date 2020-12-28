@@ -276,11 +276,21 @@ class ArticlesController extends AppController
   private function moveAttachments($old_dest, $new_dest, $id)
   {
     $this->loadModel('Destinations');
-    $old_dest_name = $this->Destinations->findById($old_dest)->first()->slug;
-    $new_dest_name = $this->Destinations->findById($new_dest)->first()->slug;
+    if ($old_dest > 0) {
+      $od = $this->Destinations->findById($old_dest)->first();
+      if (!empty($od)) {
+        $old_dest_name = $od->slug;
+      }
+    }
+    if ($new_dest > 0) {
+      $nd = $this->Destinations->findById($new_dest)->first();
+      if (!empty($nd)) {
+        $new_dest_name = $nd->slug;
+      }
+    }
     $article = $this->Articles->get($id);
     $path = $article->getPath();
-    return rename($path . $old_dest_name . DS . $id, $path . $new_dest_name . DS . $id);
+    return @rename($path . $old_dest_name . DS . $id, $path . $new_dest_name . DS . $id);
   }
 
 
