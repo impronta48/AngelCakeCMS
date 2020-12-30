@@ -99,8 +99,8 @@ class ArticlesController extends AppController
       } else {
         $query->where(['destination_id' => $destination_id]);
       }
-      $query->contain(['Destinations' => ['fields' => ['name', 'slug']]]);
     }
+    $query->contain(['Destinations' => ['fields' => ['id', 'name', 'slug']]]);
 
     $articles = $this->paginate($query);
     $pagination = $this->Paginator->getPagingParams();
