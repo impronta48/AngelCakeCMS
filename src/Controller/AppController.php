@@ -50,7 +50,10 @@ class AppController extends Controller
     $this->loadComponent('Flash');
     $this->loadComponent('CakeDC/Users.Setup');
 
-    if ($this->request->getParam('prefix') === 'Admin') {
+    if (
+      $this->request->getParam('prefix') === 'Admin' ||
+      $this->request->getParam('plugin') == 'CakeDC/Users'
+    ) {
       $this->viewBuilder()->setLayout('admin');
     }
     /*

@@ -55,6 +55,14 @@ $this->element('v-admin-extra-main-icons'); //Carico le icone extra fornite dal 
 
     </div>
 
+    <div class=" col-md-2 text-center mt-5">
+      <a href="<?= Router::url(['prefix' => 'Admin', 'controller' => 'blocks', 'action' => 'index']) ?>"><img src="/img/admin/chain.svg" class="img-responsive icona"></a>
+      <a href="<?= Router::url(['prefix' => 'Admin', 'controller' => 'blocks', 'action' => 'index']) ?>" class="titoloAdmin">
+        <h4>Blocchi</h4>
+      </a>
+
+    </div>
+
 
   </div>
 
