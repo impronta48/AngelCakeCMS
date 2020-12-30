@@ -57,14 +57,14 @@ class ArticlesController extends AppController
     if ($promoted) {
       $query->where(['promoted' => 1]);
     }
+    //Valori ammessi: [0,1,*]
     $archived = $this->request->getQuery('archived');
-    if ($archived) {
+    if ($archived == 1) {
       $query->where(['archived' => 1]);
+    } else if ($archived == "0") {
+      $query->where(['archived' => 0, 'archived is' => NULL]);
     }
-    /*else
-		{
-			$query->where(['archived' => 0]);
-		}*/
+
     $slider = $this->request->getQuery('slider');
     if ($slider) {
       $query->where(['slider' => 1]);
@@ -159,6 +159,7 @@ class ArticlesController extends AppController
       'anno' => 'YEAR(Articles.modified)'
     ])
       ->group(['YEAR(Articles.modified)', 'MONTH(Articles.modified)'])
+      ->order(['YEAR(Articles.modified) DESC', 'MONTH(Articles.modified) DESC'])
       ->where(['Articles.published' => 1]);
 
     $destination_id = $this->request->getQuery('destination_id');
