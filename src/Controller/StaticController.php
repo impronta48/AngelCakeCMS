@@ -65,7 +65,7 @@ class StaticController extends AppController
     $risult = [];
     foreach ($files as $k => $f) {
       //Se inizia con _ ignoro
-      if (!substr($f, '_')) {
+      if ($f[0] != '_') {
         $risult[$k]['file']  = $f;
         $risult[$k]['dati'] = $this->StaticModel->leggi_file_md($name . DS . $f);
         if (!isset($risult[$k]['dati']['date'])) {
