@@ -12,10 +12,11 @@ class ArticlesTable extends Table
   public function initialize(array $config): void
   {
     $this->addBehavior('Timestamp');
-    $this->belongsToMany('Tags');
     $this->belongsTo('Users');
     $this->belongsTo('Destinations');
     $this->hasOne('Projects');
+    $this->belongsToMany('Tags');
+    //$this->addBehavior('Tags.Tag', ['taggedCounter' => false]);
   }
 
   public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)

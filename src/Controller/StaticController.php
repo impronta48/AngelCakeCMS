@@ -79,6 +79,9 @@ class StaticController extends AppController
       return -1 * strcmp($a['dati']['date'], $b['dati']['date']);
     });
 
+    //TEMP
+    $this->creaArticles($risult, $path[0]);
+
     $this->set('files', $risult);
     $this->set('_serialize', 'files');
 
@@ -90,6 +93,54 @@ class StaticController extends AppController
     //Se la pagina è di tipo blog, uso un template specifico
     if ($path[0] == 'portfolio' || (isset($path[1]) && $path[1] == 'portfolio')) {
       $this->render('index/portfolio');
+    }
+  }
+
+  //Crea articoli a DB a partire dalle pagine statiche
+  private function creaArticles($risult, $path)
+  {
+    $destinations['blog'] = 1;
+    $destinations['portfolio'] = 2;
+
+    $this->loadModel('Articles');
+    foreach ($risult as $r) {
+      $article = $this->Articles->newEmptyEntity();
+
+      $article->slug = basename($r['dati']['slug']);
+      $ex = $this->Articles->findBySlug($article->slug)->count();
+      if ($ex == 0) {
+        $article->title = $r['dati']['title'];
+        $article->description = $r['dati']['description'];
+        $article->keywords = $r['dati']['keywords'];
+        $article->url_canonical = $r['dati']['canonical'];
+        $article->body = $r['dati']['body'];
+        $article->modified = $r['dati']['date'];
+        $article->published = true;
+        $article->tag_string = $r['dati']['tags'];
+        $article->user_id = '7aab5817-8f9f-4a34-91b2-3c22a0c6e3d7';
+
+        if (isset($destinations[$path])) {
+          $article->destination_id = $destinations[$path];
+        } else {
+          $article->destination_id = null;
+        }
+
+        if ($this->Articles->save($article)) {
+          //La copertina va spostata da static/img a /articles/article-id/copertina
+          $r['dati']['copertina'] = ltrim($r['dati']['copertina'], '/');
+          $oldCopertina = WWW_ROOT . $r['dati']['copertina'];
+          $b = basename($oldCopertina);
+          if (file_exists($oldCopertina)) {
+            if (strlen($path)) {
+              $newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/$path/{$article->id}/copertina/";
+            } else {
+              $newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/{$article->id}/copertina/";
+            }
+            $f = new Folder($newCopertina, true);
+            rename($oldCopertina, $newCopertina . $b);
+          }
+        }
+      }
     }
   }
 

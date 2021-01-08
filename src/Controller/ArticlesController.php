@@ -48,7 +48,6 @@ class ArticlesController extends AppController
    */
   public function index()
   {
-
     $query = $this->Articles->find()
       ->where(['published' => 1])
       ->order(['Articles.modified DESC']);
