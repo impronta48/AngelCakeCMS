@@ -55,7 +55,7 @@ class StaticController extends AppController
     $risult = $this->StaticModel->find($name, $limit);
 
     $this->set('files', $risult);
-    $this->set('_serialize', 'files');
+    $this->viewBuilder()->setOption('serialize', ['files']);
 
     //Se la pagina è di tipo blog, uso un template specifico
     if ($path[0] == 'blog' || (isset($path[1]) && $path[1] == 'blog')) {
