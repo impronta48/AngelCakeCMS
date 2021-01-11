@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Http\Exception\NotFoundException;
 use App\Model\StaticModel;
+use Cake\Cache\Cache;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 
@@ -45,42 +46,13 @@ class StaticController extends AppController
   {
     $sitedir = Configure::read('sitedir');
     $name = $sitedir . DS . 'static' . DS . $this->StaticModel->combina_path(...$path);
-    $page = $subpage = null;
 
-    if (!empty($path[0])) {
-      $page = $path[0];
+
+    $limit = $this->request->getQuery('limit');
+    if (empty($limit)) {
+      $limit = 100;
     }
-    if (!empty($path[1])) {
-      $subpage = $path[1];
-    }
-
-    //Caricare il nostro frontmatter in modo che legga tutti i file nella cartella static
-    $dir = new Folder($name);
-    $files = $dir->find('.*\.md');
-
-    //fai un foreach sui file e per ogni file chiami la leggi_file_md
-    //ti metti il risultato in qualche variabile e lo passi alla view
-    //Prendi solo i primi 5
-    //dd($files);
-    $risult = [];
-    foreach ($files as $k => $f) {
-      //Se inizia con _ ignoro
-      if ($f[0] != '_') {
-        $risult[$k]['file']  = $f;
-        $risult[$k]['dati'] = $this->StaticModel->leggi_file_md($name . DS . $f);
-        if (!isset($risult[$k]['dati']['date'])) {
-          $risult[$k]['dati']['date'] = null;
-        }
-      }
-    }
-
-    //Ordino l'array dei risultati per il campo date invertito
-    usort($risult, function ($a, $b) {
-      return -1 * strcmp($a['dati']['date'], $b['dati']['date']);
-    });
-
-    //TEMP
-    //$this->creaArticles($risult, $path[0]);
+    $risult = $this->StaticModel->find($name, $limit);
 
     $this->set('files', $risult);
     $this->set('_serialize', 'files');

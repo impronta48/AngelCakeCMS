@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Authorization\Exception\ForbiddenException;
+use Cake\Cache\Cache;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use Cake\Core\Configure;
@@ -169,6 +170,52 @@ class StaticModel
     }
   }
 
+  public function find($path, $limit)
+  {
+    $simplename = str_replace('/', '-', $path);
+
+    $risult = Cache::read("static_{$simplename}_{$limit}");
+    if (empty($risult)) {
+
+      //Caricare il nostro frontmatter in modo che legga tutti i file nella cartella static
+      $dir = new Folder($path);
+      $files = $dir->find('.*\.md');
+
+      //fai un foreach sui file e per ogni file chiami la leggi_file_md
+      //ti metti il risultato in qualche variabile e lo passi alla view
+      //Prendi solo i primi 5
+      //dd($files);
+      $risult = [];
+      $i = 0;
+      foreach ($files as $k => $f) {
+        //Se inizia con _ ignoro
+        if ($f[0] != '_') {
+          $risult[$k]['file']  = $f;
+          $risult[$k]['dati'] = $this->leggi_file_md($path . DS . $f);
+          if (!isset($risult[$k]['dati']['date'])) {
+            $risult[$k]['dati']['date'] = null;
+          }
+          //Mi devo fermare quando raggiungo il limite
+          if ($i > $limit) {
+            break;
+          }
+        }
+      }
+
+      //Ordino l'array dei risultati per il campo date invertito
+      usort($risult, function ($a, $b) {
+        return -1 * strcmp($a['dati']['date'], $b['dati']['date']);
+      });
+
+
+      if (!empty($limit)) {
+        $risult = array_slice($risult, 0, $limit);
+      }
+      Cache::write("static_{$simplename}_{$limit}", $risult);
+    }
+
+    return $risult;
+  }
 
 
   //Toglie il basepath da un path complessivo
