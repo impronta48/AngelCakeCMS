@@ -4,8 +4,14 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Model\Entity\Destination;
+use Cake\Cache\Cache;
+use Cake\Core\App;
+
 use function Psy\debug;
 use Cake\Routing\Router;
+use Cake\Utility\Inflector;
+use Cake\View\Exception\MissingTemplateException;
+use Exception;
 use Psr\Log\LogLevel;
 
 /**
@@ -60,22 +66,27 @@ class DestinationsController extends AppController
 
     if (is_string($id)) {
       try {
+        $slug = $id;
         $id = $this->Destinations->findBySlug($id)->firstOrFail()->id;
       } catch (\Cake\Datasource\Exception\RecordNotFoundException $ex) {
         $this->log(sprintf('Record not found in database (id = %d)!', $id), LogLevel::WARNING);
       }
     }
 
-
-    $query->where(['id' => $id]);                 //Filtro le destination
+    $query->where(['id' => $id]);                   //Filtro le destination
     $destination = $query->first();
     $this->set('destination', $destination);
 
-    $articles_q->where(['destination_id' => $id]); //Filtro gli articoli
-    $articles_q->where(['published' => true]); //Mostro solo quelli pubblicati
+    $articles_q->where(['destination_id' => $id]);  //Filtro gli articoli
+    $articles_q->where(['published' => true]);      //Mostro solo quelli pubblicati
     $art = $this->paginate($articles_q);
     $this->set('articles', $art);
-
     $this->set('archived', $a);
+    try {
+      $this->render($slug);
+    } catch (MissingTemplateException $e) {
+      $this->viewBuilder()->setTemplate(null);
+      $this->render(null);
+    }
   }
 }

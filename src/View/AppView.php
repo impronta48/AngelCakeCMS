@@ -18,6 +18,8 @@ declare(strict_types=1);
 namespace App\View;
 
 use BootstrapUI\View\UIView;
+use Cake\View\Exception\MissingTemplateException;
+use RuntimeException;
 
 /**
  * Application View

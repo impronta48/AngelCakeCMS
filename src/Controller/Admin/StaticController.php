@@ -6,7 +6,8 @@ use App\Controller\AppController;
 use App\Model\StaticModel;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
-
+use Cake\Filesystem\File;
+use Cake\Routing\Router;
 
 /**
  * Static Controller
@@ -44,6 +45,7 @@ class StaticController extends AppController
   {
     $sitedir = Configure::read('sitedir');
     $name = $sitedir . DS . 'static' . DS . $this->StaticModel->combina_path(...$path);
+
     $page = $subpage = null;
 
     if (!empty($path[0])) {
@@ -55,38 +57,9 @@ class StaticController extends AppController
 
     //Caricare il nostro frontmatter in modo che legga tutti i file nella cartella static
     $dir = new Folder($name);
-    $files = $dir->find('.*\.md');
-
-    //fai un foreach sui file e per ogni file chiami la leggi_file_md
-    //ti metti il risultato in qualche variabile e lo passi alla view
-    //Prendi solo i primi 5
-    //dd($files);
-    $risult = [];
-    foreach ($files as $k => $f) {
-      $risult[$k]['file']  = $f;
-      $risult[$k]['dati'] = $this->StaticModel->leggi_file_md($name . DS . $f);
-      if (!isset($risult[$k]['dati']['date'])) {
-        $risult[$k]['dati']['date'] = null;
-      }
-    }
-
-    //Ordino l'array dei risultati per il campo date invertito
-    usort($risult, function ($a, $b) {
-      return -1 * strcmp($a['dati']['date'], $b['dati']['date']);
-    });
-
-    $this->set('files', $risult);
-    $this->set('_serialize', 'files');
-
-    //Se la pagina è di tipo blog, uso un template specifico
-    if ($path[0] == 'blog' || (isset($path[1]) && $path[1] == 'blog')) {
-      $this->render('index/blog');
-    }
-
-    //Se la pagina è di tipo blog, uso un template specifico
-    if ($path[0] == 'portfolio' || (isset($path[1]) && $path[1] == 'portfolio')) {
-      $this->render('index/portfolio');
-    }
+    $files = $dir->read(true);
+    $this->set('files', $files);
+    $this->set('path', $path);
   }
 
 
@@ -114,5 +87,17 @@ class StaticController extends AppController
       $this->set('msg', $output);
     }
     $this->set('msg', 'Importazione NextCloud.');
+  }
+
+  public function edit(...$fname)
+  {
+    $sitedir = Configure::read('sitedir');
+    $absoluteFname = WWW_ROOT . $sitedir . DS . 'static/' . $this->StaticModel->combina_path(...$fname);
+    $file = new File($absoluteFname);
+    $static = $file->read();
+    $title = $this->StaticModel->combina_path(...$fname);
+    //$static = $this->StaticModel->leggi_file_md($absoluteFname);
+    $this->set('path', $fname);
+    $this->set(compact(['static', 'title']));
   }
 }
