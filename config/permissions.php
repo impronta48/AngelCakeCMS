@@ -134,6 +134,7 @@ $permissions = [
     ],
     [
       'role' => '*',
+      'prefix' => false,
       'controller' => ['Pages', 'Sitemaps', 'Errors'],
       'action' => '*',
       'bypassAuth' => true,
@@ -141,6 +142,7 @@ $permissions = [
     //anonimous can VIEW Articles, Destinations, Events, Tags
     [
       'role' => '*',
+      'prefix' => false,
       'controller' => ['Articles', 'Destinations', 'Events', 'Tags', 'Static', 'Bandi', 'Projects'],
       'action' => ['view'],
       'bypassAuth' => true,
@@ -148,7 +150,8 @@ $permissions = [
     //anonimous can INDEX Articles, Destinations, Events, Tags
     [
       'role' => '*',
-      'controller' => ['Articles', 'Destinations', 'Bandi', 'Projects'],
+      'prefix' => false,
+      'controller' => ['Articles', 'Destinations', 'Bandi', 'Projects', 'Static'],
       'action' => ['index'],
       'bypassAuth' => true,
     ],
@@ -173,10 +176,11 @@ $permissions = [
       'action' => ['search', 'getMonthYear'],
       'bypassAuth' => true,
     ],
-    //prefix
+    //Admin prefix 
     [
+      'prefix' => 'admin',
       'role' => 'admin',
-      'prefix' => ['Admin'],
+      'controller' => '*',
       'action' => '*',
     ],
   ]
