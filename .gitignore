@@ -16,6 +16,7 @@
 /webroot/impronta/
 /webroot/mirafiori/
 /webroot/yepp/
+/webroot/bikesquare2020/
 /plugins/*
 settings.php
 /webroot/js/node_modules/*
