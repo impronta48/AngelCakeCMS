@@ -20,7 +20,7 @@
       <?php echo $this->Form->submit('Filtra', ['class' => 'btn btn-filtra']); ?>
     </div>
     <div class="col-md-3">
-      <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right"><i class="fa fa-plus-square"></i> Aggiungi Evento</a>
+      <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right"><i class="bi bi-plus-square"></i> Aggiungi Evento</a>
     </div>
   </div>
   <?php echo $this->Form->end(); ?>
@@ -56,10 +56,10 @@
             <td><?= h($event->start_time) ?></td>
             <td><?= h($event->end_time) ?></td>
             <td class="actions">
-              <?= $this->Html->link('', ['action' => 'view', $event->id], ['title' => __('View'), 'class' => 'btn btn-default btn btn-default fa fa-eye']) ?>
-              <?= $this->Html->link('', ['action' => 'edit', $event->id], ['title' => __('Edit'), 'class' => 'btn btn-default btn btn-default fa fa-pencil']) ?>
-              <?= $this->Html->link('', ['prefix' => false, 'action' => 'subscribe', $event->slug], ['title' => __('Subscribe'), 'class' => 'btn btn-default btn btn-default fa fa-users']) ?>
-              <?= $this->Form->postLink('', ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id), 'title' => __('Delete'), 'class' => 'btn btn-default fa fa-trash']) ?>
+              <?= $this->Html->link('', ['action' => 'view', $event->id], ['title' => __('View'), 'class' => 'btn btn-default btn btn-default bi bi-eye']) ?>
+              <?= $this->Html->link('', ['action' => 'edit', $event->id], ['title' => __('Edit'), 'class' => 'btn btn-default btn btn-default bi bi-pencil']) ?>
+              <?= $this->Html->link('', ['prefix' => false, 'action' => 'subscribe', $event->slug], ['title' => __('Subscribe'), 'class' => 'btn btn-default btn btn-default bi bi-users']) ?>
+              <?= $this->Form->postLink('', ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
             </td>
           </tr>
         <?php endforeach; ?>

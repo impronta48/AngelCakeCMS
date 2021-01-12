@@ -13,15 +13,32 @@ $this->element('v-admin-extra-main-menu'); ?>
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item href="<?= Router::url(['plugin' => false, 'prefix' => 'Admin', 'controller' => 'Articles', 'action' => 'index']) ?>">Articoli</b-nav-item>
+        <b-nav-item href="<?= Router::url(['plugin' => false, 'prefix' => 'Admin', 'controller' => 'Articles', 'action' => 'index']) ?>">
+          <b-icon-journal-text></b-icon-journal-text>
+          Articoli
+        </b-nav-item>
         <?= $this->fetch('extra-main-menu') ?>
-        <b-nav-item href="/users/index">Utenti</b-nav-item>
-        <b-nav-item href="/admin/blocks/index">Blocchi</b-nav-item>
+        <b-nav-item href="/admin/static/index">
+          <b-icon-markdown></b-icon-markdown>
+          File Statici
+        </b-nav-item>
+        <b-nav-item href="/admin/blocks/index">
+          <b-icon-bounding-box></b-icon-bounding-box>
+          Blocchi
+        </b-nav-item>
+        <b-nav-item href="/users/index">
+          <b-icon-people></b-icon-people>
+          Utenti
+        </b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item href="/" target="preview">Vai al sito</b-nav-item>
+        <b-nav-item href="/" target="preview">
+
+          Anteprima sito
+          <b-icon-globe></b-icon-globe>
+        </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>

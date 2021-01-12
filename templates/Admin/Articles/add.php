@@ -11,7 +11,7 @@
     <div class="card card-info">
 
       <div class="card-body">
-        <h3 class="card-title"><i class="fa fa-image"></i> Immagine di copertina</h3>
+        <h3 class="card-title"><i class="bi bi-image"></i> Immagine di copertina</h3>
         <?php echo $this->Form->file('newcopertina', [
           'label' => 'Immagine di copertina',
           'after' => 'In questo campo puoi caricare una sola immagine',
@@ -32,7 +32,7 @@
 
 
     <div class="card-body">
-      <h3 class="card-title"><i class="fa fa-image"></i> Immagini associate a questo articolo</h3>
+      <h3 class="card-title"><i class="bi bi-image"></i> Immagini associate a questo articolo</h3>
       <?php echo $this->Form->file('newgallery. ', [
         'multiple' => 'multiple',
         'label' => 'Immagini del articolo',
@@ -49,7 +49,7 @@
 
 
     <div class="card-body">
-      <h3 class="card-title"><i class="fa fa-paperclip"></i> File allegati a questo articolo</h3>
+      <h3 class="card-title"><i class="bi bi-paperclip"></i> File allegati a questo articolo</h3>
       <?php echo $this->Form->file('newallegati. ', [
         'multiple' => 'multiple',
         'label' => 'Allegati dell\'articolo',

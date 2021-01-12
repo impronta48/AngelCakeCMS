@@ -1,7 +1,7 @@
 <div class="container mt-3">
 
   <h1>Partecipanti</h1>
-  <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right mt-4"><i class="fa fa-plus-square"></i> Aggiungi Partecipante</a>
+  <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right mt-4"><i class="bi bi-plus-square"></i> Aggiungi Partecipante</a>
 
 
   <table class="table table-striped">

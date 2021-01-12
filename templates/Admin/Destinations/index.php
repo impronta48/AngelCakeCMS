@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <h1>Destinations / Categorie </h1>
 
-  <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right mt-4"><i class="fa fa-plus-square"></i> Aggiungi Destination</a>
+  <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right mt-4"><i class="bi bi-plus-square"></i> Aggiungi Destination</a>
 
 
   <table class="table table-striped mt-3">
@@ -20,9 +20,9 @@
           <td><?= h($destination->name) ?></td>
           <td><?= h($destination->slug) ?></td>
           <td class="actions">
-            <?= $this->Html->link('', ['prefix' => false, 'action' => 'view', $destination->slug], ['title' => __('View'), 'class' => 'btn btn-default fa fa-eye']) ?>
-            <?= $this->Html->link('', ['action' => 'edit', $destination->id], ['title' => __('Edit'), 'class' => 'btn btn-default fa fa-pencil']) ?>
-            <?= $this->Form->postLink('', ['action' => 'delete', $destination->id], ['confirm' => __('Are you sure you want to delete # {0}?', $destination->id), 'title' => __('Delete'), 'class' => 'btn btn-default fa fa-trash']) ?>
+            <?= $this->Html->link('', ['prefix' => false, 'action' => 'view', $destination->slug], ['title' => __('View'), 'class' => 'btn btn-default bi bi-eye']) ?>
+            <?= $this->Html->link('', ['action' => 'edit', $destination->id], ['title' => __('Edit'), 'class' => 'btn btn-default bi bi-pencil']) ?>
+            <?= $this->Form->postLink('', ['action' => 'delete', $destination->id], ['confirm' => __('Are you sure you want to delete # {0}?', $destination->id), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
           </td>
         </tr>
       <?php endforeach; ?>

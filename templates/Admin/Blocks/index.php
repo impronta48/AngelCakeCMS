@@ -14,8 +14,8 @@
         <td><?= $this->Number->format($block->id) ?></td>
         <td><?= h($block->title) ?></td>
         <td class="actions">
-          <?= $this->Html->link(__(''), ['action' => 'edit', $block->id], ['title' => __('Edit'), 'class' => 'btn btn-default fa fa-pencil']) ?>
-          <?= $this->Form->postLink(__(''), ['action' => 'delete', $block->id], ['confirm' => __('Are you sure you want to delete # {0}?', $block->id), 'title' => __('Delete'), 'class' => 'btn btn-default fa fa-trash']) ?>
+          <?= $this->Html->link(__(''), ['action' => 'edit', $block->id], ['title' => __('Edit'), 'class' => 'btn btn-default bi bi-pencil']) ?>
+          <?= $this->Form->postLink(__(''), ['action' => 'delete', $block->id], ['confirm' => __('Are you sure you want to delete # {0}?', $block->id), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
         </td>
       </tr>
     <?php endforeach; ?>

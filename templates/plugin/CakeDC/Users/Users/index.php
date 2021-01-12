@@ -23,9 +23,9 @@
         <td><?= h($user->last_name) ?></td>
         <td><?= h($user->role) ?></td>
         <td class="actions">
-          <?= $this->Html->link('', ['action' => 'changePassword', $user->id], ['title' => __('Change Password'), 'class' => 'btn btn-default fa fa-key']) ?>
-          <?= $this->Html->link('', ['action' => 'edit', $user->id], ['title' => __('Edit'), 'class' =>  'btn btn-default fa fa-pencil']) ?>
-          <?= $this->Form->postLink('', ['action' => 'delete', $user->id], ['confirm' => __d('CakeDC/Users', 'Are you sure you want to delete # {0}?', $user->id), 'class' => 'btn btn-default fa fa-trash']) ?>
+          <?= $this->Html->link('', ['action' => 'changePassword', $user->id], ['title' => __('Change Password'), 'class' => 'btn btn-default bi bi-key']) ?>
+          <?= $this->Html->link('', ['action' => 'edit', $user->id], ['title' => __('Edit'), 'class' =>  'btn btn-default bi bi-pencil']) ?>
+          <?= $this->Form->postLink('', ['action' => 'delete', $user->id], ['confirm' => __d('CakeDC/Users', 'Are you sure you want to delete # {0}?', $user->id), 'class' => 'btn btn-default bi bi-trash']) ?>
         </td>
       </tr>
 

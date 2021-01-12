@@ -54,7 +54,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
 
   <div class="card card-info">
     <div class="card-body">
-      <h5 class="card-title"><i class="fa fa-image"></i> Immagini associate a questo articolo</h5>
+      <h5 class="card-title"><i class="bi bi-image"></i> Immagini associate a questo articolo</h5>
       <?php if (isset($article->gallery)) : ?>
         <?php echo $this->element('img-gallery', [
           'images' => $article->gallery,
@@ -80,13 +80,13 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
   <div class="card card-info">
 
     <div class="card-body">
-      <h5 class="card-title"><i class="fa fa-paperclip"></i> File allegati a questo articolo</h5>
+      <h5 class="card-title"><i class="bi bi-paperclip"></i> File allegati a questo articolo</h5>
 
       <?php if (isset($article->allegati)) : ?>
         <ul>
           <?php foreach ($article->allegati as $file) : ?>
             <li>
-              <a href="<?= $file ?>"><i class="fa fa-file-o"></i> <?= basename($file) ?></a>
+              <a href="<?= $file ?>"><i class="bi bi-file-o"></i> <?= basename($file) ?></a>
               <a href="<?= Cake\Routing\Router::url(['controller' => 'Articles', 'action' => 'remove_file', '?' => ['fname' => $file]]) ?>" title="Elimina" class="btn btn-danger btn-xs">
                 Elimina
               </a>

@@ -16,7 +16,7 @@ if (!isset($params['escape']) || $params['escape'] !== false) {
         <h5><?= __('The following errors occurred:') ?></h5>
       </li>
       <?php foreach ($params['errors'] as $error) : ?>
-        <li class=""><i class="fa fa-edge">error</i><?= h($error) ?></li>
+        <li class=""><i class="bi bi-edge">error</i><?= h($error) ?></li>
       <?php endforeach; ?>
     </ul>
   <?php endif; ?>

@@ -2,9 +2,9 @@
 
 use Cake\Routing\Router;
 
-$icons['md'] = "fa-file-code-o";
-$icons['jpg'] = "fa-file-image-o";
-$icons['png'] = "fa-file-image-o";
+$icons['md'] = "bi-markdown";
+$icons['jpg'] = "bi-file-earmark-lock-fill";
+$icons['png'] = "bi-file-earmark-lock-fill";
 $pathStr = implode('/', $path);
 $basePath = Router::url(['controller' => 'static', 'action' => 'index']) . '/index';
 $prevPath = $basePath;
@@ -27,10 +27,10 @@ $this->assign('title', "$pathStr - Static File Manager");
 </nav>
 
 <b-dropdown id="dropdown-1" text="Nuovo" class="float-right">
-  <b-dropdown-item href="#"><i class="fa fa-folder"></i> Nuova Cartella</b-dropdown-item>
-  <b-dropdown-item href="#"><i class="fa fa-file-o"></i> Nuovo Allegato</b-dropdown-item>
-  <b-dropdown-item href="#"><i class="fa fa-file-image-o"></i> Nuova Immagine</b-dropdown-item>
-  <b-dropdown-item href="<?= Router::url(array_merge(['action' => 'add'], $path)) ?>"><i class="fa fa-file-text"></i> Nuovo MarkDown</b-dropdown-item>
+  <b-dropdown-item href="#"><i class="bi bi-folder"></i> Nuova Cartella</b-dropdown-item>
+  <b-dropdown-item href="#"><i class="bi bi-file-o"></i> Nuovo Allegato</b-dropdown-item>
+  <b-dropdown-item href="#"><i class="bi bi-file-image-o"></i> Nuova Immagine</b-dropdown-item>
+  <b-dropdown-item href="<?= Router::url(array_merge(['action' => 'add'], $path)) ?>"><i class="bi bi-file-text"></i> Nuovo MarkDown</b-dropdown-item>
 </b-dropdown>
 
 <br>
@@ -45,13 +45,13 @@ $this->assign('title', "$pathStr - Static File Manager");
     <tr>
       <td>
         <a href="<?= "$basePath/$pathStr/$f" ?>">
-          <i class="fa fa-folder"></i> <?= $f ?>
+          <i class="bi bi-folder"></i> <?= $f ?>
         </a>
       </td>
       <td>DIR</td>
       <td>
-        <a href="#" class="btn btn-sm " title="Rinomina"><i class="fa fa-i-cursor"></i> </a>
-        <a href="#" class="btn btn-sm " title="Elimina"><i class="fa fa-trash"></i> </a>
+        <a href="#" class="btn btn-sm " title="Rinomina"><i class="bi bi-i-cursor"></i> </a>
+        <a href="#" class="btn btn-sm " title="Elimina"><i class="bi bi-trash"></i> </a>
       </td>
     </tr>
   <?php endforeach ?>
@@ -61,18 +61,18 @@ $this->assign('title', "$pathStr - Static File Manager");
         <?php $pathparts = pathinfo($f); ?>
         <td>
           <?php if (isset($icons[$pathparts['extension']])) : ?>
-            <i class="fa <?= $icons[$pathparts['extension']] ?>"></i>
+            <i class="bi <?= $icons[$pathparts['extension']] ?>"></i>
           <?php else : ?>
-            <i class="fa fa-file-o"></i>
+            <i class="bi bi-file-o"></i>
           <?php endif ?>
 
           <?= $pathparts['basename'] ?>
         </td>
         <td><?= $pathparts['extension'] ?></td>
         <td>
-          <a href="<?= Router::url(array_merge(['action' => 'edit'], $path, [$f]))  ?>" class="btn btn-sm " title="Modifica"><i class="fa fa-pencil"></i> </a>
-          <a href="#" class="btn btn-sm " title="Rinomina"><i class="fa fa-i-cursor"></i> </a>
-          <?= $this->Form->postLink('', array_merge(['action' => 'delete'], $path, [$f]), ['confirm' => __('Are you sure you want to delete # {0}?', $f), 'title' => __('Delete'), 'class' => 'btn btn-default fa fa-trash']) ?>
+          <a href="<?= Router::url(array_merge(['action' => 'edit'], $path, [$f]))  ?>" class="btn btn-sm " title="Modifica"><i class="bi bi-pencil"></i> </a>
+          <a href="#" class="btn btn-sm " title="Rinomina"><i class="bi bi-cursor-text"></i> </a>
+          <?= $this->Form->postLink('', array_merge(['action' => 'delete'], $path, [$f]), ['confirm' => __('Are you sure you want to delete # {0}?', $f), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
         </td>
       </tr>
     <?php endif ?>

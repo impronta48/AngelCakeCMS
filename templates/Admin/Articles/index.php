@@ -24,7 +24,7 @@
         <?php echo $this->Form->submit('Filtra', ['class' => 'btn btn-filtra btn-primary mt-4']); ?>
       </div>
       <div class="col-md-4">
-        <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right mt-4"><i class="fa fa-plus-square"></i> Aggiungi Articolo</a>
+        <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right mt-4"><i class="bi bi-plus-square"></i> Aggiungi Articolo</a>
       </div>
     </div>
     <?php echo $this->Form->end(); ?>
@@ -68,9 +68,9 @@
           </td>
           <td><?= h($article->modified) ?></td>
           <td class="actions">
-            <?= $this->Html->link('', '/articles/view/' . $article->slug, ['title' => __('View'), 'class' => 'btn btn-default fa fa-eye', 'target' => 'preview']) ?>
-            <?= $this->Html->link('', ['action' => 'edit', $article->id], ['title' => __('Edit'), 'class' => 'btn btn-default fa fa-pencil']) ?>
-            <?= $this->Form->postLink('', ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete # {0}?', $article->slug), 'title' => __('Delete'), 'class' => 'btn btn-default fa fa-trash']) ?>
+            <?= $this->Html->link('', '/articles/view/' . $article->slug, ['title' => __('View'), 'class' => 'btn btn-default bi bi-eye', 'target' => 'preview']) ?>
+            <?= $this->Html->link('', ['action' => 'edit', $article->id], ['title' => __('Edit'), 'class' => 'btn btn-default bi bi-pencil']) ?>
+            <?= $this->Form->postLink('', ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete # {0}?', $article->slug), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
           </td>
         </tr>
       <?php endforeach; ?>
