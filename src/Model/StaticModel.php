@@ -174,7 +174,7 @@ class StaticModel
   {
     $simplename = str_replace('/', '-', $path);
 
-    $risult = Cache::read("static_{$simplename}_{$limit}");
+    $risult = Cache::read("static_{$simplename}_{$limit}", 'static');
     if (empty($risult)) {
 
       //Caricare il nostro frontmatter in modo che legga tutti i file nella cartella static
@@ -211,7 +211,7 @@ class StaticModel
       if (!empty($limit)) {
         $risult = array_slice($risult, 0, $limit);
       }
-      Cache::write("static_{$simplename}_{$limit}", $risult);
+      Cache::write("static_{$simplename}_{$limit}", $risult, 'static');
     }
 
     return $risult;

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: https://b2b.bikesquare.eu/sitemap.xml

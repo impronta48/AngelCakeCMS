@@ -69,14 +69,14 @@ Router::scope('/images', function ($routes) {
     'server' => [
       // Path or League\Flysystem adapter instance to read images from.
       // http://glide.thephpleague.com/1.0/config/source-and-cache/
-      'source' => WWW_ROOT . Configure::read('sitedir'),
+      'source' => WWW_ROOT,
 
       // Path or League\Flysystem adapter instance to write cached images to.
-      'cache' => WWW_ROOT . Configure::read('sitedir') . '/cache',
+      'cache' => CACHE, // WWW_ROOT  . 'cache',
 
       // URL part to be omitted from source path. Defaults to "/images/"
       // http://glide.thephpleague.com/1.0/config/source-and-cache/#set-a-base-url
-      'base_url' => '/images/' . Configure::read('sitedir') . '/',
+      'base_url' => '/images/',
 
       // Response class for serving images. If unset (default) an instance of
       // \ADmad\Glide\Responses\PsrResponseFactory() will be used.
