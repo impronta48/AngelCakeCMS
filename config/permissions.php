@@ -134,7 +134,7 @@ $permissions = [
     ],
     [
       'role' => '*',
-      'controller' => ['Pages', 'Static', 'Sitemaps', 'Errors'],
+      'controller' => ['Pages', 'Sitemaps', 'Errors'],
       'action' => '*',
       'bypassAuth' => true,
     ],
@@ -170,20 +170,24 @@ $permissions = [
     [
       'role' => '*',
       'controller' => ['Articles'],
-      'action' => ['search','getMonthYear'],
+      'action' => ['search', 'getMonthYear'],
       'bypassAuth' => true,
+    ],
+    //prefix
+    [
+      'role' => 'admin',
+      'prefix' => ['Admin'],
+      'action' => '*',
     ],
   ]
 ];
 
 //This part includes the specific permissions.php included into /config
 $path = conf_path();
-$file= CONFIG . $path . DS . 'permissions.php';
-if(is_file($file))
-{
+$file = CONFIG . $path . DS . 'permissions.php';
+if (is_file($file)) {
   $sitePermissions =  include $file;
-}
-else{
+} else {
   $sitePermissions['CakeDC/Auth.permissions'] = [];
 }
 

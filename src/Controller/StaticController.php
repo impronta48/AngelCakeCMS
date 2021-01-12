@@ -43,7 +43,7 @@ class StaticController extends AppController
   public function index(...$path)
   {
     $sitedir = Configure::read('sitedir');
-    $name = $sitedir . DS . 'static' . DS . $this->StaticModel->combina_path(...$path);
+    $name = $sitedir . DS . 'static' . DS . $this->StaticModel->combina_path($path);
 
 
     $limit = $this->request->getQuery('limit');
@@ -69,7 +69,7 @@ class StaticController extends AppController
   public function view(...$path)
   {
     $sitedir = Configure::read('sitedir');
-    $name = $this->StaticModel->combina_path(...$path);
+    $name = $this->StaticModel->combina_path($path);
     $page = $subpage = null;
 
 
