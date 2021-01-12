@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use App\Model\StaticModel;
+use Cake\Cache\Cache;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
@@ -44,7 +45,7 @@ class StaticController extends AppController
   public function index(...$path)
   {
     $sitedir = Configure::read('sitedir');
-    $name = $sitedir . DS . 'static' . DS . $this->StaticModel->combina_path(...$path);
+    $name = $sitedir . DS . 'static' . DS . $this->StaticModel->combina_path($path);
 
     $page = $subpage = null;
 
@@ -92,12 +93,73 @@ class StaticController extends AppController
   public function edit(...$fname)
   {
     $sitedir = Configure::read('sitedir');
-    $absoluteFname = WWW_ROOT . $sitedir . DS . 'static/' . $this->StaticModel->combina_path(...$fname);
-    $file = new File($absoluteFname);
-    $static = $file->read();
-    $title = $this->StaticModel->combina_path(...$fname);
+    $fnameStr = $this->StaticModel->combina_path($fname);
+    $absoluteFname = WWW_ROOT . $sitedir . DS . 'static/' . $fnameStr;
+    array_pop($fname);
+
+    //Salvo
+    if ($this->request->is(['post', 'put'])) {
+      $static = $this->request->getData('static');
+      if ($this->StaticModel->save($absoluteFname, $static)) {
+        $this->Flash->success('Pagina statica salvata con successo');
+        return $this->redirect(array_merge(['action' => 'index'], $fname));
+      };
+      return $this->Flash->error('Errore durante il salvataggio della pagina statica: ' . $fnameStr);
+    }
+
+    //Leggo
+    $title = $this->StaticModel->combina_path($fname);
+    $static = $this->StaticModel->get($absoluteFname);
+
+    //Non devo chiamare leggi_file_md  perchè viene parsato e convertito in HTML, mentre io voglio il raw
     //$static = $this->StaticModel->leggi_file_md($absoluteFname);
+
     $this->set('path', $fname);
     $this->set(compact(['static', 'title']));
+  }
+
+  public function delete(...$fname)
+  {
+    if ($this->StaticModel->delete($fname)) {
+      $this->Flash->success('Pagina statica eliminata con successo');
+      array_pop($fname);
+      return $this->redirect(array_merge(['action' => 'index'], $fname));
+    } else {
+      $fnameStr = $this->StaticModel->combina_path($fname);
+      return $this->Flash->error('Errore durante l\'eliminazione della pagina statica: ' . $fnameStr);
+    }
+  }
+
+  public function add(...$path)
+  {
+    $sitedir = Configure::read('sitedir');
+    $pathStr = $this->StaticModel->combina_path($path);
+    $this->set('path', $path);
+
+    //Salvo
+    if ($this->request->is(['post', 'put'])) {
+      $fname = $this->request->getData('fname');
+      $static = $this->request->getData('static');
+      $absoluteFname = WWW_ROOT . $sitedir . DS . 'static' . DS .  $pathStr . DS . $fname;
+
+      //Se il file è già esistente ne devo creare un altro
+      $i = 1;
+      while (file_exists($absoluteFname)) {
+        $parts = pathinfo($absoluteFname);
+        $absoluteFname = $parts['dirname'] . DS . $parts['filename']  . "-$i." . $parts['extension'];
+        $i++;
+      }
+
+      if ($this->StaticModel->save($absoluteFname, $static)) {
+        $this->Flash->success('Pagina statica salvata con successo');
+        return $this->redirect(array_merge(['action' => 'index'], $path));
+      };
+      $fnameStr = $this->StaticModel->combina_path($fname);
+      return $this->Flash->error('Errore durante il salvataggio della pagina statica: ' . $fnameStr);
+    }
+
+    //Se c'è un file _template.md nella cartella lo uso come modello per la pagina
+    $template = $this->StaticModel->getTemplate($path);
+    $this->set(compact('template'));
   }
 }

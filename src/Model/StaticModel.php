@@ -80,7 +80,15 @@ class StaticModel
     return ($bname[0] == '_');
   }
 
-  public function combina_path(...$path)
+
+  public function get_path_from_file($fname)
+  {
+    //Toglo il nome del file
+    array_pop($fname);
+    return $this->combina_path($fname);
+  }
+
+  public function combina_path($path)
   {
     $count = count($path);
     if (!$count) {
@@ -222,5 +230,51 @@ class StaticModel
   private function relativePath($base, $full)
   {
     return trim(str_replace($base, '', $full));
+  }
+
+  public function get($absoluteFname)
+  {
+    $file = new File($absoluteFname);
+    $static = $file->read();
+    $file->close();
+    return $static;
+  }
+  public function save($absoluteFname, $static)
+  {
+
+
+    $file = new File($absoluteFname);
+    $result = $file->write($static);
+    Cache::clear('static');
+    $file->close();
+    return $result;
+  }
+
+  public function delete($fname)
+  {
+    //Sposto in _trash
+    $sitedir = Configure::read('sitedir');
+    $absoluteFname = WWW_ROOT . $sitedir . DS . 'static/' . $this->combina_path($fname);
+    $baseName = array_pop($fname);
+    $path = WWW_ROOT . $sitedir . DS . 'static/' . $this->combina_path($fname);
+    $trash = new Folder("$path/_trash", true);
+    Cache::clear('static');
+    return rename($absoluteFname, $trash->pwd() . DS . $baseName);
+  }
+
+  public function getTemplate($path)
+  {
+    $sitedir = Configure::read('sitedir');
+    $absolutePath = WWW_ROOT . $sitedir . DS . 'static/' . $this->combina_path($path);
+    $f = new Folder($absolutePath);
+    $t = $f->find('_template.md');
+    $template = null;
+
+    if (!empty($t)) {
+      $file = new File($f->addPathElement($absolutePath, $t[0]));
+      $template = $file->read();
+      $file->close();
+    }
+    return $template;
   }
 }

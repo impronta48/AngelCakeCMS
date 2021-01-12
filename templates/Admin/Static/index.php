@@ -26,8 +26,13 @@ $this->assign('title', "$pathStr - Static File Manager");
   </ol>
 </nav>
 
-<a href="#" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Nuovo file</a>
-<a href="#" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Nuova cartella</a>
+<b-dropdown id="dropdown-1" text="Nuovo" class="float-right">
+  <b-dropdown-item href="#"><i class="fa fa-folder"></i> Nuova Cartella</b-dropdown-item>
+  <b-dropdown-item href="#"><i class="fa fa-file-o"></i> Nuovo Allegato</b-dropdown-item>
+  <b-dropdown-item href="#"><i class="fa fa-file-image-o"></i> Nuova Immagine</b-dropdown-item>
+  <b-dropdown-item href="<?= Router::url(array_merge(['action' => 'add'], $path)) ?>"><i class="fa fa-file-text"></i> Nuovo MarkDown</b-dropdown-item>
+</b-dropdown>
+
 <br>
 
 <table class="table table-striped">
@@ -46,7 +51,6 @@ $this->assign('title', "$pathStr - Static File Manager");
       <td>DIR</td>
       <td>
         <a href="#" class="btn btn-sm " title="Rinomina"><i class="fa fa-i-cursor"></i> </a>
-        <a href="#" class="btn btn-sm " title="Anteprima"><i class="fa fa-eye"></i> </a>
         <a href="#" class="btn btn-sm " title="Elimina"><i class="fa fa-trash"></i> </a>
       </td>
     </tr>
@@ -66,10 +70,9 @@ $this->assign('title', "$pathStr - Static File Manager");
         </td>
         <td><?= $pathparts['extension'] ?></td>
         <td>
-          <a href="<?= Router::url(['action' => 'edit']) .  "/$pathStr/$f" ?>" class="btn btn-sm " title="Modifica"><i class="fa fa-pencil"></i> </a>
+          <a href="<?= Router::url(array_merge(['action' => 'edit'], $path, [$f]))  ?>" class="btn btn-sm " title="Modifica"><i class="fa fa-pencil"></i> </a>
           <a href="#" class="btn btn-sm " title="Rinomina"><i class="fa fa-i-cursor"></i> </a>
-          <a href="#" class="btn btn-sm " title="Anteprima"><i class="fa fa-eye"></i> </a>
-          <a href="#" class="btn btn-sm " title="Elimina"><i class="fa fa-trash"></i> </a>
+          <?= $this->Form->postLink('', array_merge(['action' => 'delete'], $path, [$f]), ['confirm' => __('Are you sure you want to delete # {0}?', $f), 'title' => __('Delete'), 'class' => 'btn btn-default fa fa-trash']) ?>
         </td>
       </tr>
     <?php endif ?>

@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Http\Exception\NotFoundException;
 use App\Model\StaticModel;
-use Cake\Cache\Cache;
-use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 
 
