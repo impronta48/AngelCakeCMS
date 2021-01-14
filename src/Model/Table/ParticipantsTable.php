@@ -123,10 +123,10 @@ class ParticipantsTable extends Table
             $e = $participant->event_id;
 
             //Verifico il numero massimo di pax per questo evento
-            $query = $this->Events->find();
+            $query = $this->Events->find();            
             $max_pax = $query->select(['max_pax'])
                 ->where(['id'=>$e])
-                ->first()
+                ->first();                
                 ->max_pax;
 
             //Se non è specificato considero che non ci sia limite
