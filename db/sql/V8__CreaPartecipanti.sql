@@ -1,4 +1,4 @@
-ALTER TABLE `participants`
+ALTER TABLE bikesquare_b2b_cake3.participants
 DROP `diet`,
 CHANGE `modified` `modified` timestamp NULL AFTER `created`,
 DROP `destination_id`,

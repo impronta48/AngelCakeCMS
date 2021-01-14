@@ -126,8 +126,12 @@ class ParticipantsTable extends Table
             $query = $this->Events->find();            
             $max_pax = $query->select(['max_pax'])
                 ->where(['id'=>$e])
-                ->first();                
-                ->max_pax;
+                ->first();
+
+             if (!empty($max_pax)){
+                $max_pax= $max_pax->max_pax;	
+             }
+             
 
             //Se non è specificato considero che non ci sia limite
             if (empty($max_pax) || $max_pax == 0  )
