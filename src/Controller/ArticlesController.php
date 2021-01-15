@@ -24,6 +24,7 @@ class ArticlesController extends AppController
       ->firstOrFail();
     $this->set(compact('article'));
     $this->set('user',  $this->request->getAttribute('identity'));
+    $this->viewBuilder()->setOption('serialize', ['article']);
   }
 
 
