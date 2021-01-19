@@ -62,7 +62,7 @@ class ParticipantsController extends AppController
       } else {
         //Se il partecipante ci sta ancora, provo a salvare.
         if ($this->Participants->save($participant)) {
-          $message = __("Ti abbiamo iscritto corretamente all'evento. Controlla la posta!");
+          $message = __("Abbiamo ricevuto correttamente la tua richiesta. Controlla la posta!");
           $responseData = ['message' => $message, 'success' => true];
 
           //Mi servono i dati dell'evento
