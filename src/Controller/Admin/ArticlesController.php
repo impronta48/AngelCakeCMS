@@ -10,7 +10,8 @@ use Cake\Http\Exception\InternalErrorException;
 use Cake\Core\Configure;
 use Cake\Utility\Text;
 use App\Model\Entity\Article;
-use Composer\Config;
+use elFinder;
+use elFinderConnector;
 
 class ArticlesController extends AppController
 {
@@ -330,5 +331,44 @@ class ArticlesController extends AppController
       $phpFileUploadErrors = Configure::read('phpFileUploadErrors');
       throw new InternalErrorException($phpFileUploadErrors[$error]);
     }
+  }
+
+
+  public function ckeconnector()
+  {
+    $opts = [
+      'debug' => false,
+      'roots' => [
+        // Items volume
+        [
+          'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
+          'path'          =>  WWW_ROOT . Configure::read('sitedir') . '/' . 'attachments', // path to files (REQUIRED)
+          'URL'           => '/' . Configure::read('sitedir') . '/' . 'attachments', // URL to files (REQUIRED)
+          'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+          'uploadDeny'    => array('all'),                // All Mimetypes not allowed to upload
+          'uploadAllow'   => [
+            'image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon',
+            'text/plain', 'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'application/vnd.oasis.opendocument.text',
+            'application/vnd.oasis.opendocument.spreadsheet',
+            'application/vnd.oasis.opendocument.presentation',
+          ], // Mimetype `image` and `text/plain` allowed to upload
+          'uploadOrder'   => array('deny', 'allow'),      // allowed Mimetype `image` and `text/plain` only
+          'accessControl' => 'access'                     // disable and hide dot starting files (OPTIONAL)
+        ],
+      ]
+    ];
+
+    // run elFinder
+
+    $this->autoRender = false;
+    $connector = new elFinderConnector(new elFinder($opts));
+    $connector->run();
   }
 }

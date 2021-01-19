@@ -10,7 +10,7 @@
   <title><?= $this->fetch('title') ?></title>
 
   <!-- Bootstrap core CSS -->
-  <?= $this->Html->css('bootstrap.min') ?>
+  <?= $this->Html->css('/js/node_modules/bootstrap/dist/css/bootstrap.min') ?>
 
   <!-- Custom styles for this template -->
   <?= $this->Html->css('style') ?>
@@ -36,7 +36,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
-  <?= $this->Html->script('bootstrap.min') ?>
+  <?= $this->Html->script('/js/node_modules/bootstrap/dist/js/bootstrap.min') ?>
 </body>
 
 </html>

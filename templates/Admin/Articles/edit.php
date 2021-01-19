@@ -56,7 +56,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
     <div class="card-body">
       <h5 class="card-title"><i class="bi bi-image"></i> Immagini associate a questo articolo</h5>
       <?php if (isset($article->gallery)) : ?>
-        <?php echo $this->element('img-gallery', [
+        <?php echo $this->element('img-gallery-vue', [
           'images' => $article->gallery,
           'id' => $article->id,
           'canEdit' => true,

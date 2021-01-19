@@ -21,10 +21,10 @@
         <span class="small">Massima dimensione dell'immagine: <?= ini_get("upload_max_filesize") ?>B</span>
       </div>
     </div>
-    <textarea class="editor" name="body"><?= $article->body ?></textarea>
-    <?php
-    echo $this->Form->control('destination_id', ['empty' => '---']);
-    ?>
+    <ckeditor class="editor" name="body"><?= $article->body ?></textarea>
+      <?php
+      echo $this->Form->control('destination_id', ['empty' => '---']);
+      ?>
   </fieldset>
 
   <div class="card card-info">

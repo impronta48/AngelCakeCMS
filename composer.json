@@ -22,6 +22,7 @@
         "league/flysystem-webdav": "^1.0",
         "mobiledetect/mobiledetectlib": "^2.8",
         "phpoffice/phpspreadsheet": "^1.15",
+        "studio-42/elfinder": "^2.1",
         "symfony/yaml": "^5.0"
     },
     "require-dev": {

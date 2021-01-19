@@ -22,6 +22,8 @@
 
   <?= $this->fetch('meta') ?>
   <?= $this->fetch('css') ?>
+
+
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -56,7 +58,8 @@
   <?= $this->Html->script('node_modules/vue/dist/vue.js') ?>
   <?= $this->Html->script('node_modules/bootstrap-vue/dist/bootstrap-vue.js') ?>
   <?= $this->Html->script('node_modules/bootstrap-vue/dist/bootstrap-vue-icons.min.js') ?>
-  <?= $this->Html->script('ckeditor5/build/ckeditor.js') ?>
+  <?= $this->Html->script('ckeditor/ckeditor') ?>
+  <?= $this->Html->script('node_modules/ckeditor4-vue/dist/ckeditor') ?>
 
   <?= $this->fetch('script') ?>
   <?= $this->element('v-autoload')  //Carica automaticamente lo script /theme/js/vue/{Controller}/{action}.js
