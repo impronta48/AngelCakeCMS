@@ -14,7 +14,7 @@
     <?php
     echo $this->Form->control('title');
     ?>
-    <textarea class="editor" name="body"><?= $block->body ?></textarea>
+    <textarea class="xeditor form-control" name="body" rows="15"><?= $block->body ?></textarea>
   </fieldset>
   <br>
   <?= $this->Form->button(__('Submit')) ?>

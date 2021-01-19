@@ -9,7 +9,7 @@ $role = $this->Identity->get('role');
   <small><a href="<?= Router::url([
                     'prefix' => 'Admin', 'controller' => 'Blocks', 'action' => 'edit', $id,
                     '?' => ['referrer' => Router::url()]
-                  ]) ?>" class="btn btn-secondary">[Edit Block]</a></small>
+                  ]) ?>">[Edit Block]</a></small>
 <?php endif ?>
 
 <?= $block ?>
