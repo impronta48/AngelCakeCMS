@@ -22,21 +22,6 @@ class ParticipantsController extends AppController
     'contain' => ['Events'],
   ];
 
-  /**
-   * View method
-   *
-   * @param string|null $id Participant id.
-   * @return \Cake\Http\Response|void
-   * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-   */
-  public function view($id = null)
-  {
-    $participant = $this->Participants->get($id, [
-      'contain' => ['Events']
-    ]);
-
-    $this->set('participant', $participant);
-  }
 
   /**
    * Add method

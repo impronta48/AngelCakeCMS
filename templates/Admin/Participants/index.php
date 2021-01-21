@@ -28,9 +28,9 @@
           <td><?= h($participant->event->title) ?></td>
           <td><?= h($participant->dob) ?></td>
           <td class="actions">
-            <?= $this->Html->link('', ['action' => 'view', $participant->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-            <?= $this->Html->link('', ['action' => 'edit', $participant->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-            <?= $this->Form->postLink('', ['action' => 'delete', $participant->id], ['confirm' => __('Are you sure you want to delete # {0}?', $participant->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
+            <?= $this->Html->link('', ['action' => 'view', $participant->id], ['title' => __('View'), 'class' => 'btn btn-default bi bi-eye']) ?>
+            <?= $this->Html->link('', ['action' => 'edit', $participant->id], ['title' => __('Edit'), 'class' => 'btn btn-default bi bi-pencil']) ?>
+            <?= $this->Form->postLink('', ['action' => 'delete', $participant->id], ['confirm' => __('Are you sure you want to delete # {0}?', $participant->id), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
           </td>
         </tr>
       <?php endforeach; ?>

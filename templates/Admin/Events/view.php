@@ -103,9 +103,9 @@
               <td><?= h($participants->dob) ?></td>
               <td><?= h($participants->diet) ?></td>
               <td class="actions">
-                <?= $this->Html->link('', ['controller' => 'Participants', 'action' => 'view', $participants->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                <?= $this->Html->link('', ['controller' => 'Participants', 'action' => 'edit', $participants->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                <?= $this->Form->postLink('', ['controller' => 'Participants', 'action' => 'delete', $participants->id], ['confirm' => __('Are you sure you want to delete # {0}?', $participants->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
+                <?= $this->Html->link('', ['controller' => 'Participants', 'action' => 'view', $participants->id], ['title' => __('View'), 'class' => 'btn btn-default bi bi-eye']) ?>
+                <?= $this->Html->link('', ['controller' => 'Participants', 'action' => 'edit', $participants->id], ['title' => __('Edit'), 'class' => 'btn btn-default bi bi-pencil']) ?>
+                <?= $this->Form->postLink('', ['controller' => 'Participants', 'action' => 'delete', $participants->id], ['confirm' => __('Are you sure you want to delete # {0}?', $participants->id), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
               </td>
             </tr>
           <?php endforeach; ?>
