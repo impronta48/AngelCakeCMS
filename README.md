@@ -71,6 +71,23 @@ Themes are standard CakePHP 3 plugins
 ## Event Management
 AppleCake CMS comes with a simple subscription form, which allows the users to subscribe to events, export the results in form of table or XLS
 
+## Blocks
+You can insert custom blocks in your template using the concept of cake cells.
+Blocks allow you to re-use some elements and to give your users the ability to edit content outside articles.
+
+### Creating a Block
+1) Create a block in /admin/blocks
+2) Insert a title and a HTML content (I reccommend to use a slug for the title)
+3) Save
+
+### Using a Block in a template
+You can put the following code in your template in order to make a block appear
+<?= $this->cell('Block', ['title-of-the-block']); ?>
+
+### Using a Block in a article
+You can refer to a block in a extra field of your articles (eg: sidebar), using the following sintax
+@corpo-spalla
+
 ### Coming Soon
 - Event Management should become a plugin
 
@@ -82,3 +99,5 @@ rclone copy nextcloud:/impronta/Cicloturismo/BikeSquare/sito-b2b/ /var/www/vhost
 ### CakeDC Configuration
 permissions.php contained in /config/sites/mydomain.com/settings.php 
 will be merged with the main permissions.php in the /config folder.
+
+

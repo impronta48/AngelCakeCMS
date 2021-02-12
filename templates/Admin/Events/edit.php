@@ -18,9 +18,11 @@
     echo $this->Form->control('min_year');
     echo $this->Form->control('max_year');
     echo $this->Form->control('slug');
-    echo $this->Form->control('user_id');
+    echo $this->Form->control('user_id', ['options' => $users]);
+    echo $this->Form->control('cost');
     ?>
   </fieldset>
+  <small>Se si inserisce un costo per l'evento, il partecipante sarà rimandato ad una pagina di paypal dove effettuerà il pagamento.</small>
   <?= $this->Form->button(__("Save")); ?>
   <?= $this->Form->end() ?>
 </div>

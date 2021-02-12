@@ -87,7 +87,8 @@
             <th><?= __('Tel') ?></th>
             <th><?= __('Privacy') ?></th>
             <th><?= __('Dob') ?></th>
-            <th><?= __('Diet') ?></th>
+            <th><?= __('Pagamento') ?></th>
+            <th><?= __('Scadenza') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
           </tr>
         </thead>
@@ -101,7 +102,16 @@
               <td><?= h($participants->tel) ?></td>
               <td><?= h($participants->privacy) ?></td>
               <td><?= h($participants->dob) ?></td>
-              <td><?= h($participants->diet) ?></td>
+              <td>
+                <b-badge variant="<?= empty($participants->transaction_id) ? 'danger' : 'success' ?>">
+                  <?= h($participants->amount) ?>€
+                </b-badge>
+                <?php if (empty($participants->transaction_id)) : ?>
+                  <a href="<?= $this->Url->build(['prefix' => false, 'controller' => 'participants', 'action' => 'payment', $participants->id]); ?>" class="small" target="_blank">
+                    Invia Link Pagamento</a>
+                <?php endif ?>
+              </td>
+              <td><?php if (isset($participants->renewal_date)) : ?><?= h($participants->renewal_date->format('d-m-Y')) ?><?php endif ?></td>
               <td class="actions">
                 <?= $this->Html->link('', ['controller' => 'Participants', 'action' => 'view', $participants->id], ['title' => __('View'), 'class' => 'btn btn-default bi bi-eye']) ?>
                 <?= $this->Html->link('', ['controller' => 'Participants', 'action' => 'edit', $participants->id], ['title' => __('Edit'), 'class' => 'btn btn-default bi bi-pencil']) ?>

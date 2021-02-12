@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Notification\iscrizioneOkNotification;
+use Cake\Http\Exception\ForbiddenException;
+use Cake\Http\Exception\NotFoundException;
+use Cake\I18n\FrozenTime;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
 use Notifications\Plugin;
@@ -80,10 +83,55 @@ class ParticipantsController extends AppController
         } else {
           $this->Flash->error($message);
         }
+        //Se fai click su payment ti mando al pulsante del pagamento
+        if ($this->request->getData('payment')) {
+          return $this->redirect(['action' => 'payment', $participant->id]);
+        }
         return $this->redirect($referal);
       }
     }
     $events = $this->Participants->Events->find('list', ['limit' => 200]);
     $this->set(compact('participant', 'events'));
+  }
+
+  public function payment($pid): void
+  {
+    $p = $this->Participants->get($pid,  [
+      'contain' => ['Events'],
+    ]);
+    $this->set('name', $p->name);
+    $this->set('title', $p->event->title);
+    $this->set('amount', $p->event->cost);
+    $this->set('pid', $pid);
+  }
+
+  public function thankyou($pid, $transaction_id): void
+  {
+    //TODO: devo controllare se il pagamento è davvero andato a buon fine lato server
+    $p = $this->Participants->get($pid,  [
+      'contain' => ['Events'],
+    ]);
+    if (empty($p)) {
+      throw new NotFoundException("Impossibile trovare l'utente indicato");
+    }
+
+    //Se l'utente ha già memorizzato una transazione ignoro la richiesta
+    if (!empty($p->transaction_id)) {
+      throw new ForbiddenException("La transazione di questo utente è già registrata");
+    }
+
+    $now = FrozenTime::now();
+    $p->transaction_id = $transaction_id;
+    $p->transaction_date = $now;
+    $p->renewal_date = $now->month(12)->day(31);
+
+    //TODO Verificare che sia l'importo effettivamente pagato
+    $p->amount = $p->event->cost;
+    if ($this->Participants->save($p)) {
+      $this->Flash->success('Pagamento ricevuto con successo');
+    } else {
+      $this->Flash->success('Impossibile registrare il pagamento, per favore contatta la segreteria@yepp.it');
+    }
+    $this->set('participant', $p);
   }
 }

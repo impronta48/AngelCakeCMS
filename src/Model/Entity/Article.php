@@ -82,7 +82,7 @@ class Article extends Entity
     $files = $dir->find(".*\.(jpg|jpeg|png|gif|webp)", true);
     /*Controllo*/
     if (!$files) {
-      return Router::url(Configure::read('default-image', 'cartina-siti-locali.png'));
+      return Router::url(Configure::read('default-image', null));
     }
 
     $result = Router::url(str_replace(' ', '%20', $fullDir . $files[0]));

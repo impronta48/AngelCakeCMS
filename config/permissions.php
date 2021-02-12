@@ -166,7 +166,7 @@ $permissions = [
     [
       'role' => '*',
       'controller' => ['Participants'],
-      'action' => ['add', 'sendNotification'],
+      'action' => ['add', 'sendNotification', 'payment', 'thankyou'],
       'bypassAuth' => true,
     ],
     //search
