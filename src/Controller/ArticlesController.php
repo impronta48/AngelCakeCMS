@@ -61,7 +61,7 @@ class ArticlesController extends AppController
     if ($archived == 1) {
       $query->where(['archived' => 1]);
     } else if ($archived == "0") {
-      $query->where(['archived' => 0, 'archived is' => NULL]);
+      $query->where(['OR' => ['archived' => 0, 'archived is' => NULL]]);
     }
 
     $slider = $this->request->getQuery('slider');
