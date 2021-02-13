@@ -1,6 +1,6 @@
 <h1>Utenti</h1>
 
-<?= $this->Html->link(__d('CakeDC/Users', 'New {0}', $tableAlias), ['action' => 'add'], ['class' => 'btn btn-outline-primary float-right mt-4']) ?>
+<?= $this->Html->link('Aggiungi Utente', ['action' => 'add'], ['class' => 'btn btn-outline-primary float-right mt-4']) ?>
 
 
 <table class="table table-striped mt-3">

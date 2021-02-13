@@ -40,20 +40,7 @@ $Users = ${$tableAlias};
       echo $this->Form->control('email', ['label' => __d('CakeDC/Users', 'Email')]);
       echo $this->Form->control('first_name', ['label' => __d('CakeDC/Users', 'First name')]);
       echo $this->Form->control('last_name', ['label' => __d('CakeDC/Users', 'Last name')]);
-      echo $this->Form->control('role');
-      echo $this->Form->control('token', ['label' => __d('CakeDC/Users', 'Token')]);
-      echo $this->Form->control('token_expires', [
-        'label' => __d('CakeDC/Users', 'Token expires')
-      ]);
-      echo $this->Form->control('api_token', [
-        'label' => __d('CakeDC/Users', 'API token')
-      ]);
-      echo $this->Form->control('activation_date', [
-        'label' => __d('CakeDC/Users', 'Activation date')
-      ]);
-      echo $this->Form->control('tos_date', [
-        'label' => __d('CakeDC/Users', 'TOS date')
-      ]);
+      echo $this->Form->control('role', ['label' => 'Ruolo', 'options' => ['user' => 'user', 'admin' => 'admin']]);
       echo $this->Form->control('active', [
         'label' => __d('CakeDC/Users', 'Active')
       ]);

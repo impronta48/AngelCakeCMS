@@ -12,9 +12,7 @@
 ?>
 <div class="actions columns large-2 medium-3">
   <h3><?= __d('cake_d_c/users', 'Actions') ?></h3>
-  <ul class="side-nav">
-    <li><?= $this->Html->link(__d('cake_d_c/users', 'List Users'), ['action' => 'index']) ?></li>
-  </ul>
+  <?= $this->element('v-admin-navbar', ['event' => $Users]); ?>
 </div>
 <div class="users form large-10 medium-9 columns">
   <?= $this->Form->create(${$tableAlias}); ?>
@@ -26,6 +24,7 @@
     echo $this->Form->control('password', ['label' => __d('cake_d_c/users', 'Password')]);
     echo $this->Form->control('first_name', ['label' => __d('cake_d_c/users', 'First name')]);
     echo $this->Form->control('last_name', ['label' => __d('cake_d_c/users', 'Last name')]);
+    echo $this->Form->control('role', ['label' => 'Ruolo',  'options' => ['user' => 'user', 'admin' => 'admin']]);
     echo $this->Form->control('active', [
       'type' => 'checkbox',
       'label' => __d('cake_d_c/users', 'Active')
