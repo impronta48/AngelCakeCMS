@@ -46,16 +46,14 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
   </b-card>
   <br>
 
-  <textarea class="editor" name="body"><?= $article->body ?></textarea>
+  <?php echo $this->Form->control('body', ['label' => 'Corpo Articolo', 'class' => 'editor']); ?>
 
-  <?php
-  echo $this->Form->control('destination_id', ['empty' => '---']);
-  ?>
+  <?php echo $this->Form->control('destination_id', ['empty' => '---']);  ?>
 
   <div class="card card-info">
     <div class="card-body">
       <h5 class="card-title"><i class="bi bi-image"></i> Immagini associate a questo articolo</h5>
-      <?php if (isset($article->gallery)) : ?>
+      <?php if (0 && isset($article->gallery)) : ?>
         <?php echo $this->element('img-gallery-vue', [
           'images' => $article->gallery,
           'id' => $article->id,
@@ -64,7 +62,6 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
           'small_size' => [180, 180],
           'large_size' => [-1, -1]
         ]); ?>
-
       <?php endif; ?>
       <?php echo $this->Form->file('newgallery. ', [
         'multiple' => 'multiple',

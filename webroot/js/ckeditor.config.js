@@ -1,7 +1,11 @@
+CKEDITOR.dtd.$removeEmpty['i'] = false;
+CKEDITOR.dtd.$removeEmpty.i = 0;
+CKEDITOR.dtd.$removeEmpty['span'] = false;
 CKEDITOR.editorConfig = function(config) {
     config.height = '70vh';
     config.extraPlugins = 'widget,lineutils,uploadimage';
     config.contentsCss = [
+        '//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
         '/js/node_modules/bootstrap/dist/css/bootstrap.min.css',
     ];
     config.allowedContent = true;
