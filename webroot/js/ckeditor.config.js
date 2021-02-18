@@ -14,19 +14,20 @@ CKEDITOR.editorConfig = function(config) {
         { name: 'clipboard', groups: ['clipboard', 'undo'] },
         { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
         { name: 'forms', groups: ['forms'] },
+        '/',
+        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+        { name: 'links', groups: ['links'] },
+        { name: 'insert', groups: ['insert'] },
+        '/',
+        { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
         { name: 'styles', groups: ['styles'] },
         { name: 'colors', groups: ['colors'] },
         { name: 'tools', groups: ['tools'] },
         { name: 'others', groups: ['others'] },
-        { name: 'about', groups: ['about'] },
-        '/',
-        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-        { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
-        { name: 'links', groups: ['links'] },
-        { name: 'insert', groups: ['insert'] },
+        { name: 'about', groups: ['about'] }
     ];
 
-    //config.removeButtons = 'Save,NewPage,Preview,Print,Find,Replace,SelectAll,Scayt,BidiLtr,BidiRtl,Language,Flash,Smiley,Font,TextColor,BGColor,Maximize,About';	
+    config.removeButtons = 'Save,NewPage,ExportPdf,Preview,Print,SelectAll,Form,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Smiley,SpecialChar,PageBreak,Font,Format,Maximize,About';
 
     //Configurazioni per elFinder
     //config.filebrowserBrowseUrl = '#';
