@@ -13,7 +13,6 @@ CKEDITOR.editorConfig = function(config) {
         { name: 'document', groups: ['mode', 'document', 'doctools'] },
         { name: 'clipboard', groups: ['clipboard', 'undo'] },
         { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
-        { name: 'forms', groups: ['forms'] },
         '/',
         { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
         { name: 'links', groups: ['links'] },
@@ -27,7 +26,7 @@ CKEDITOR.editorConfig = function(config) {
         { name: 'about', groups: ['about'] }
     ];
 
-    config.removeButtons = 'Save,NewPage,ExportPdf,Preview,Print,SelectAll,Form,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Smiley,SpecialChar,PageBreak,Font,Format,Maximize,About';
+    config.removeButtons = 'Save,NewPage,ExportPdf,Preview,Print,SelectAll,Form,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Smiley,SpecialChar,PageBreak,Font,Format,Maximize,About,Flash';
 
     //Configurazioni per elFinder
     //config.filebrowserBrowseUrl = '#';
