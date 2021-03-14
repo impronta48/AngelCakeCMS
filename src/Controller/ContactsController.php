@@ -22,6 +22,11 @@ class ContactsController extends AppController
     if ($this->request->is('post')) {
       $d = $this->request->getData();
 
+      //honeypot
+      if ($d['admin_email'] != '') {
+        return;
+      }
+
       if (!filter_var($destination, FILTER_VALIDATE_EMAIL)) {
         throw new Exception("Email del sito non valida");
       }
