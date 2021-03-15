@@ -132,13 +132,6 @@ $permissions = [
       'action' => '*',
       'bypassAuth' => true,
     ],
-    [
-      'role' => '*',
-      'prefix' => false,
-      'controller' => ['Pages', 'Sitemaps', 'Errors'],
-      'action' => '*',
-      'bypassAuth' => true,
-    ],
     //anonimous can VIEW Articles, Destinations, Events, Tags
     [
       'role' => '*',
@@ -182,6 +175,14 @@ $permissions = [
       'role' => 'admin',
       'controller' => '*',
       'action' => '*',
+    ],
+    //Open Pages
+    [
+      'role' => '*',
+      'prefix' => false,
+      'controller' => '*',
+      'action' => '*',
+      'bypassAuth' => true,
     ],
   ]
 ];

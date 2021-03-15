@@ -22,9 +22,6 @@ class EventsController extends AppController
     //$this->Authentication->allowUnauthenticated(['getList','subscribe']);
   }
 
-
-
-
   public function getList($allowedEvents = null)
   {
     $conditions = [];
