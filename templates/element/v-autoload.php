@@ -8,7 +8,10 @@ if (empty($v)) {
 
 $vue_path = $this->Url->script($vue_name);
 
-if (!file_exists(WWW_ROOT . $vue_path)) {
-  $vue_path = $this->Url->script("vue/app.js");
+if (!empty($this->plugin) && file_exists(ROOT . "/plugins/{$this->plugin}/webroot{$vue_path}")) {
+  echo $this->Html->script("{$this->plugin}.$vue_name");
+} else if (file_exists(WWW_ROOT . $vue_path)) {
+  echo $this->Html->script($vue_path);
+} else {
+  echo $this->Html->script($this->Url->script("vue/app.js"));
 }
-echo $this->Html->script($vue_path);
