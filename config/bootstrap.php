@@ -45,7 +45,7 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
-//use Cake\Utility\Inflector;
+use Cake\Utility\Inflector;
 
 /*
  * See https://github.com/josegonzalez/php-dotenv for API details.
@@ -235,6 +235,19 @@ TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'
  */
 //Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
 //Inflector::rules('irregular', ['red' => 'redlings']);
+Inflector::rules(
+  'irregular',
+  [
+    'territorio' => 'territori',
+    'nazione' => 'nazioni',
+    'commento' => 'commenti',
+    'filtro' => 'filtri',
+    'circuito' => 'circuiti',
+    'tipo' => 'tipi',
+    'categoria' => 'categorie',
+    'tipobici' => 'tipibici',
+  ],
+); 
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 //require_once 'events.php';
