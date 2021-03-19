@@ -65,12 +65,12 @@ class AppController extends Controller
 
   public function beforeRender(\Cake\Event\EventInterface $event)
   {
-    if (strpos($this->request->getRequestTarget(), '/en') !== false) {
-      I18n::setLocale('en');
-    } elseif (strpos($this->request->getRequestTarget(), '/es') !== false) {
-      I18n::setLocale('es');
-    }
-    $this->set('locale',  substr(I18n::getLocale(), 0, 2));
+    // if (strpos($this->request->getRequestTarget(), '/en') !== false) {
+    //   I18n::setLocale('en');
+    // } elseif (strpos($this->request->getRequestTarget(), '/es') !== false) {
+    //   I18n::setLocale('es');
+    // }
+    // $this->set('locale',  substr(I18n::getLocale(), 0, 2));
 
     if (Configure::check('theme')) {
       $this->viewBuilder()->setTheme(Configure::read('theme'));

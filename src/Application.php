@@ -68,7 +68,7 @@ class Application extends BaseApplication
       $plugins = Configure::read('AngelCake.plugins');
       if (!empty($plugins)) {
         foreach ($plugins as $p) {
-          $this->addPlugin($p, ['routes' => true]);
+          $this->addPlugin($p, ['routes' => false]);
         }
       }
     }
@@ -100,7 +100,25 @@ class Application extends BaseApplication
       // creating the middleware instance specify the cache config name by
       // using it's second constructor argument:
       // `new RoutingMiddleware($this, '_cake_routes_')`
-      ->add(new RoutingMiddleware($this));
+      ->add(new RoutingMiddleware($this))
+
+      // Needed to specify locale associations, because we're using 3 letter locales (non-default)
+      ->add(new \ADmad\I18n\Middleware\I18nMiddleware([
+        // If `true` will attempt to get matching languges in "languages" list based
+        // on browser locale and redirect to that when going to site root.
+        // 'detectLanguage' => true,
+        // Default language for app. If language detection is disabled or no
+        // matching language is found redirect to this language
+        'defaultLanguage' => 'ita',
+        // Languages available in app. The keys should match the language prefix used
+        // in URLs. Based on the language the locale will be also set.
+        'languages' => [
+            'eng' => ['locale' => 'eng'],
+            'ita' => ['locale' => 'ita'],
+        ],
+      ]));
+    // Add your middlewares here
+
     //->add(new LocaleSelectorMiddleware());
 
     return $middlewareQueue;

@@ -47,6 +47,7 @@ use Cake\Core\Configure;
  */
 
 /** @var \Cake\Routing\RouteBuilder $routes */
+// $routes->setRouteClass(\ADmad\I18n\Routing\Route\I18nRoute::class);
 $routes->setRouteClass(DashedRoute::class);
 
 
@@ -104,6 +105,16 @@ Router::scope('/images', function ($routes) {
   $routes->connect('/*');
 });
 
+
+if (Configure::check('plugins')) {
+  $plugins = Configure::read('AngelCake.plugins');
+  if (!empty($plugins)) {
+    foreach ($plugins as $p) {
+      $routes->loadPlugin($p);
+    }
+  }
+}
+
 $routes->scope('/', function (RouteBuilder $builder) {
   // Register scoped middleware for in scopes.
   /* $builder->registerMiddleware('csrf', new CsrfProtectionMiddleware([
@@ -130,14 +141,22 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * to use (in this case, templates/Pages/home.php)...
      */
   $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+  $builder->connect('/',
+    ['controller' => 'Pages', 'action' => 'display', 'home'],
+    ['routeClass' => \ADmad\I18n\Routing\Route\I18nRoute::class],
+  );
+
   $builder->connect('/sitemap', ['controller' => 'Sitemaps', 'action' => 'index']);
+  // $builder->connect('/sitemap',
+  //   ['controller' => 'Sitemaps', 'action' => 'index'],
+  //   ['routeClass' => \ADmad\I18n\Routing\Route\I18nRoute::class],
+  // );
 
 
   /*
      * ...and connect the rest of 'Pages' controller's URLs.
      */
   $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-
   /*
      * Connect catchall routes for all controllers.
      *
@@ -151,16 +170,31 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
-  $builder->fallbacks(DashedRoute::class);
+
+  // $builder->fallbacks(\ADmad\I18n\Routing\Route\I18nRoute::class); // TODO: readd this, manually route everything
+  // $builder->fallbacks(DashedRoute::class);
 });
 
-$routes->prefix('Admin', function (RouteBuilder $routes) {
+$routes->prefix('Admin', function (RouteBuilder $routes) { // Admin routes
   // All routes here will be prefixed with `/admin`, and
   // have the `'prefix' => 'Admin'` route element added that
   // will be required when generating URLs for these routes
+  $routes->connect('/',
+    ['controller' => 'Pages', 'action' => 'display', 'admin'],
+    ['routeClass' => \ADmad\I18n\Routing\Route\I18nRoute::class],
+  );
   $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'admin']);
+  $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']); // TODO this fixes Poi, Percorsi, Destinations?
   $routes->setExtensions(['xls', 'json']);
+  // Admin fallbacks
+  $routes->fallbacks(\ADmad\I18n\Routing\Route\I18nRoute::class);
   $routes->fallbacks(DashedRoute::class);
+});
+
+$routes->scope('/', function (RouteBuilder $builder) { // Last, build generic fallbacks
+  $builder->setExtensions(['xls', 'json']);
+  $builder->fallbacks(\ADmad\I18n\Routing\Route\I18nRoute::class);
+  $builder->fallbacks(DashedRoute::class);
 });
 
 /*
