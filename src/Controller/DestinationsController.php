@@ -19,32 +19,56 @@ class DestinationsController extends AppController
 	public $paginate = [
 	'limit' => 12,
 	];
+	
+  /**
+   * Index method
+   *
+   * @return \Cake\Http\Response|void
+   */
+  public function index()
+  {
+        $query = $this->Destinations->find()
+                    ->contain(['Articles']);
 
-	/**
-	 * Index method
-	 *
-	 * @return \Cake\Http\Response|void
-	 */
-	public function index() {
-		$destinations = $this->paginate($this->Destinations, [
-		'contain' => ['Articles'],
-		'conditions' => ['show_in_list' => true],
-		'order' => ['chiuso ASC', 'name'],
-		'limit' => 100,
-		]);
-		$this->set(compact('destinations'));
-	}
+        $random = $this->request->getQuery('random');
+        if (!empty($random)) {
+            $query->order('rand()');
+        }
 
-	/**
-	 * View method
-	 *
-	 * @param string|null $id Destination id.
-	 * @return \Cake\Http\Response|void
-	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-	 */
-	public function view($id = null) {
-		$query = $this->Destinations->find();
-		$a = $this->request->getQuery('archive');
+        $only = $this->request->getQuery('only');
+        if (!empty($only)) {
+            $query->select(explode(',', $only));
+        }
+
+        // $limit = $this->request->getQuery('limit');
+        // if (!empty($limit)) {
+        //     $query->limit($limit);
+        // }
+
+        $count = $this->request->getQuery('count');
+        if (!empty($count)) {
+            $count = $query->count();
+            $this->set('count', $count);
+            $this->viewBuilder()->setOption('serialize', 'count');
+        } else {
+            $destinations = $this->paginate($query, ['conditions' => ['show_in_list' => TRUE]]);
+
+            $this->set(compact('destinations'));
+            $this->viewBuilder()->setOption('serialize', 'destinations');
+        }
+  }
+
+  /**
+   * View method
+   *
+   * @param string|null $id Destination id.
+   * @return \Cake\Http\Response|void
+   * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+   */
+  public function view($id = null)
+  {
+    $query = $this->Destinations->find();
+    $a = $this->request->getQuery('archive');
 
 		$articles_q = $this->Destinations->Articles->find()
 		->order(['modified' => 'DESC']);
