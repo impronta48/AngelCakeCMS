@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.2",
-        "admad/cakephp-glide": "4.0.0-RC",
+        "admad/cakephp-glide": "^4",
         "admad/cakephp-i18n": "^2.1",
         "cakedc/users": "^9.0.2",
         "cakephp/authentication": "^2.0",
