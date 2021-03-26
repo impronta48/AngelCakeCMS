@@ -61,14 +61,14 @@ class Application extends BaseApplication
     //$this->addPlugin('Authentication');
     $this->addPlugin('BootstrapUI');
     Configure::write('Users.config', ['users']);
-    $this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
+    //$this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
     $this->addPlugin('ADmad/Glide');
 
     if (Configure::check('plugins')) {
       $plugins = Configure::read('AngelCake.plugins');
       if (!empty($plugins)) {
         foreach ($plugins as $p) {
-          $this->addPlugin($p, ['routes' => false]);
+          $this->addPlugin($p, ['routes' => false, 'bootstrap' => true]);
         }
       }
     }
@@ -113,8 +113,8 @@ class Application extends BaseApplication
         // Languages available in app. The keys should match the language prefix used
         // in URLs. Based on the language the locale will be also set.
         'languages' => [
-            'eng' => ['locale' => 'eng'],
-            'ita' => ['locale' => 'ita'],
+          'eng' => ['locale' => 'eng'],
+          'ita' => ['locale' => 'ita'],
         ],
       ]));
     // Add your middlewares here
