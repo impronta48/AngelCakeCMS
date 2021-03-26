@@ -25,7 +25,6 @@ use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-use Cake\I18n\Middleware\LocaleSelectorMiddleware;
 
 /**
  * Application setup class.
@@ -50,9 +49,9 @@ class Application extends BaseApplication
     }
 
     /*
-         * Only try to load DebugKit in development mode
-         * Debug Kit should not be installed on a production system
-         */
+		 * Only try to load DebugKit in development mode
+		 * Debug Kit should not be installed on a production system
+		 */
     if (Configure::read('debug')) {
       $this->addPlugin('DebugKit');
     }
@@ -92,7 +91,6 @@ class Application extends BaseApplication
       ->add(new AssetMiddleware([
         'cacheTime' => Configure::read('Asset.cacheTime'),
       ]))
-
 
       // Add routing middleware.
       // If you have a large number of routes connected, turning on routes

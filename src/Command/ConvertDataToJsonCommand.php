@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Command;
 
 use Cake\Command\Command;
@@ -13,22 +15,21 @@ use Cake\ORM\TableRegistry;
 
 class ConvertDataToJsonCommand extends Command
 {
-    public function execute(Arguments $args, ConsoleIo $io)
-    {
-        $poitable = TableRegistry::getTableLocator()->get('Poi');
-        $pois = $poitable->find();
-        $io->out('Caricati Pois\nConversione campo data...');
+	public function execute(Arguments $args, ConsoleIo $io) {
+		$poitable = TableRegistry::getTableLocator()->get('Poi');
+		$pois = $poitable->find();
+		$io->out('Caricati Pois\nConversione campo data...');
 
-        foreach ($pois as $poi) {
-            $data = unserialize($poi->dataold);
-            if (!$data) {
-                $io->out("[!] Impossibile deserializzare dati del POI #{$poi->id}");
-                $io->out($poi->dataold);
-            } else {
-                $poi->data = json_encode($data);
-                $poitable->save($poi);
-            }
-        }
-        $io->out('Finito');
-    }
+		foreach ($pois as $poi) {
+			$data = unserialize($poi->dataold);
+			if (!$data) {
+				$io->out("[!] Impossibile deserializzare dati del POI #{$poi->id}");
+				$io->out($poi->dataold);
+			} else {
+				$poi->data = json_encode($data);
+				$poitable->save($poi);
+			}
+		}
+		$io->out('Finito');
+	}
 }

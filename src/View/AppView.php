@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -18,8 +17,6 @@ declare(strict_types=1);
 namespace App\View;
 
 use BootstrapUI\View\UIView;
-use Cake\View\Exception\MissingTemplateException;
-use RuntimeException;
 
 /**
  * Application View
@@ -30,19 +27,18 @@ use RuntimeException;
  */
 class AppView extends UIView
 {
-  /**
-   * Initialization hook method.
-   *
-   * Use this method to add common initialization code like loading helpers.
-   *
-   * e.g. `$this->loadHelper('Html');`
-   *
-   * @return void
-   */
-  public function initialize(): void
-  {
-    //Don't forget to call the parent::initialize()
-    parent::initialize();
-    $this->loadHelper('Authentication.Identity');
-  }
+	/**
+	 * Initialization hook method.
+	 *
+	 * Use this method to add common initialization code like loading helpers.
+	 *
+	 * e.g. `$this->loadHelper('Html');`
+	 *
+	 * @return void
+	 */
+	public function initialize(): void {
+	  //Don't forget to call the parent::initialize()
+		parent::initialize();
+		$this->loadHelper('Authentication.Identity');
+	}
 }

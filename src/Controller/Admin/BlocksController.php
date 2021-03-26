@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller\Admin;
@@ -14,84 +13,80 @@ use App\Controller\AppController;
  */
 class BlocksController extends AppController
 {
-  /**
-   * Index method
-   *
-   * @return \Cake\Http\Response|null|void Renders view
-   */
-  public function index()
-  {
-    $blocks = $this->paginate($this->Blocks);
+	/**
+	 * Index method
+	 *
+	 * @return \Cake\Http\Response|null|void Renders view
+	 */
+	public function index() {
+		$blocks = $this->paginate($this->Blocks);
 
-    $this->set(compact('blocks'));
-  }
+		$this->set(compact('blocks'));
+	}
 
+	/**
+	 * Add method
+	 *
+	 * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+	 */
+	public function add() {
+		$block = $this->Blocks->newEmptyEntity();
+		if ($this->request->is('post')) {
+			$block = $this->Blocks->patchEntity($block, $this->request->getData());
+			if ($this->Blocks->save($block)) {
+				$this->Flash->success(__('The block has been saved.'));
 
-  /**
-   * Add method
-   *
-   * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-   */
-  public function add()
-  {
-    $block = $this->Blocks->newEmptyEntity();
-    if ($this->request->is('post')) {
-      $block = $this->Blocks->patchEntity($block, $this->request->getData());
-      if ($this->Blocks->save($block)) {
-        $this->Flash->success(__('The block has been saved.'));
+				return $this->redirect(['action' => 'index']);
+			}
+			$this->Flash->error(__('The block could not be saved. Please, try again.'));
+		}
+		$this->set(compact('block'));
+	}
 
-        return $this->redirect(['action' => 'index']);
-      }
-      $this->Flash->error(__('The block could not be saved. Please, try again.'));
-    }
-    $this->set(compact('block'));
-  }
+	/**
+	 * Edit method
+	 *
+	 * @param string|null $id Block id.
+	 * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+	 */
+	public function edit($id = null) {
+		$block = $this->Blocks->get($id, [
+		'contain' => [],
+		]);
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$block = $this->Blocks->patchEntity($block, $this->request->getData());
+			if ($this->Blocks->save($block)) {
+				$this->Flash->success(__('The block has been saved.'));
 
-  /**
-   * Edit method
-   *
-   * @param string|null $id Block id.
-   * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-   * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-   */
-  public function edit($id = null)
-  {
-    $block = $this->Blocks->get($id, [
-      'contain' => [],
-    ]);
-    if ($this->request->is(['patch', 'post', 'put'])) {
-      $block = $this->Blocks->patchEntity($block, $this->request->getData());
-      if ($this->Blocks->save($block)) {
-        $this->Flash->success(__('The block has been saved.'));
+				$r = $this->request->getQuery('referrer');
+				if (!empty($r)) {
+					return $this->redirect($r);
+				}
 
-        $r = $this->request->getQuery('referrer');
-        if (!empty($r)) {
-          return $this->redirect($r);
-        }
-        return $this->redirect(['action' => 'index']);
-      }
-      $this->Flash->error(__('The block could not be saved. Please, try again.'));
-    }
-    $this->set(compact('block'));
-  }
+				return $this->redirect(['action' => 'index']);
+			}
+			$this->Flash->error(__('The block could not be saved. Please, try again.'));
+		}
+		$this->set(compact('block'));
+	}
 
-  /**
-   * Delete method
-   *
-   * @param string|null $id Block id.
-   * @return \Cake\Http\Response|null|void Redirects to index.
-   * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-   */
-  public function delete($id = null)
-  {
-    $this->request->allowMethod(['post', 'delete']);
-    $block = $this->Blocks->get($id);
-    if ($this->Blocks->delete($block)) {
-      $this->Flash->success(__('The block has been deleted.'));
-    } else {
-      $this->Flash->error(__('The block could not be deleted. Please, try again.'));
-    }
+	/**
+	 * Delete method
+	 *
+	 * @param string|null $id Block id.
+	 * @return \Cake\Http\Response|null|void Redirects to index.
+	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+	 */
+	public function delete($id = null) {
+		$this->request->allowMethod(['post', 'delete']);
+		$block = $this->Blocks->get($id);
+		if ($this->Blocks->delete($block)) {
+			$this->Flash->success(__('The block has been deleted.'));
+		} else {
+			$this->Flash->error(__('The block could not be deleted. Please, try again.'));
+		}
 
-    return $this->redirect(['action' => 'index']);
-  }
+		return $this->redirect(['action' => 'index']);
+	}
 }
