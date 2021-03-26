@@ -10,6 +10,8 @@
     <?php
     echo $this->Form->control('name');
     echo $this->Form->control('slug');
+    echo $this->Form->control('nazione_id', ['options' => [0 => 'it', 1=> 'fr']]);
+    echo $this->Form->control('nomiseo');
     echo $this->Form->control('show_in_list');
     ?>
   </fieldset>

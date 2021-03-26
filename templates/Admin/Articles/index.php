@@ -2,7 +2,7 @@
   <h1>Articoli</h1>
 
   <div class="well">
-    <?php echo $this->Form->create(
+    <?= $this->Form->create(
       null,
       [
         'type'    => 'get',
@@ -14,7 +14,7 @@
     ); ?>
     <div class="row">
 
-      <div class="col-md-3">
+      <div class="col-md-3 col-xs-12 col-xl-1">
         <?php echo $this->Form->control('destination_id', ['label' => 'Categoria', 'div' => 'col col-md-3', 'value' => $destination_id, 'options' => $destinations, 'empty' => '---']); ?>
       </div>
       <div class="col-md-3">
