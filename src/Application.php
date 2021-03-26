@@ -25,7 +25,6 @@ use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-use Cake\I18n\Middleware\LocaleSelectorMiddleware;
 
 /**
  * Application setup class.
@@ -50,9 +49,9 @@ class Application extends BaseApplication
     }
 
     /*
-         * Only try to load DebugKit in development mode
-         * Debug Kit should not be installed on a production system
-         */
+		 * Only try to load DebugKit in development mode
+		 * Debug Kit should not be installed on a production system
+		 */
     if (Configure::read('debug')) {
       $this->addPlugin('DebugKit');
     }
@@ -61,7 +60,7 @@ class Application extends BaseApplication
     //$this->addPlugin('Authentication');
     $this->addPlugin('BootstrapUI');
     Configure::write('Users.config', ['users']);
-    $this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
+    //$this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
     $this->addPlugin('ADmad/Glide');
 
     if (Configure::check('plugins')) {
@@ -93,7 +92,6 @@ class Application extends BaseApplication
         'cacheTime' => Configure::read('Asset.cacheTime'),
       ]))
 
-
       // Add routing middleware.
       // If you have a large number of routes connected, turning on routes
       // caching in production could improve performance. For that when
@@ -113,8 +111,8 @@ class Application extends BaseApplication
         // Languages available in app. The keys should match the language prefix used
         // in URLs. Based on the language the locale will be also set.
         'languages' => [
-            'eng' => ['locale' => 'eng'],
-            'ita' => ['locale' => 'ita'],
+          'eng' => ['locale' => 'eng'],
+          'ita' => ['locale' => 'ita'],
         ],
       ]));
     // Add your middlewares here
