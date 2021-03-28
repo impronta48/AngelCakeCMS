@@ -40,7 +40,9 @@ if (!Configure::read('debug')) :
 
 <?php
 $g = Router::url("/");
-header("Refresh: 5; URL=$g");
+if (!Configure::read('debug')) {
+  header("Refresh: 5; URL=$g");
+}
 ?>
 
 <div class="page-header parallax dark larger2x larger-desc" data-bgattach="images/backgrounds/page-header.jpg" data-0="background-position:50% 0px;" data-500="background-position:50% -100%">

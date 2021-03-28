@@ -141,6 +141,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * to use (in this case, templates/Pages/home.php)...
      */
   $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+  $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
   $builder->connect(
     '/',
     ['controller' => 'Pages', 'action' => 'display', 'home'],

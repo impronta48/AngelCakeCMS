@@ -265,3 +265,9 @@ Configure::write('phpFileUploadErrors', [
   7 => 'Failed to write file to disk.',
   8 => 'A PHP extension stopped the file upload.',
 ]);
+
+Configure::write('groups', [
+  1  => 'admin',
+  2 => 'editor',
+  3 => 'user'
+]);
