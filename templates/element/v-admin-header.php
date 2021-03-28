@@ -1,5 +1,6 @@
 <?php
 
+use Cake\Core\Configure;
 use Cake\Routing\Router;
 ?>
 <?php
@@ -7,7 +8,7 @@ use Cake\Routing\Router;
 $this->element('v-admin-extra-main-menu'); ?>
 <div>
   <b-navbar toggleable="lg" type="dark" variant="info">
-    <b-navbar-brand href="<?= Router::url(Router::url(['plugin' => false, 'prefix' => 'Admin', 'controller' => 'Pages', 'action' => 'display', 'admin'])) ?>">AngelCake CMS</b-navbar-brand>
+    <b-navbar-brand href="<?= Router::url(Router::url(['plugin' => false, 'prefix' => 'Admin', 'controller' => 'Pages', 'action' => 'display', 'admin'])) ?>"><?= Configure::read('sitename') ?></b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -26,7 +27,7 @@ $this->element('v-admin-extra-main-menu'); ?>
           <b-icon-bounding-box></b-icon-bounding-box>
           Blocchi
         </b-nav-item>
-        <b-nav-item href="/users/index">
+        <b-nav-item href="/admin/users">
           <b-icon-people></b-icon-people>
           Utenti
         </b-nav-item>

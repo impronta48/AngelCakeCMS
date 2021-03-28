@@ -25,6 +25,15 @@ use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Identifier\IdentifierInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Cake\Routing\Router;
+use Psr\Http\Message\ServerRequestInterface;
+use ADmad\SocialAuth\Middleware\SocialAuthMiddleware;
+
 
 /**
  * Application setup class.
@@ -32,7 +41,7 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface
 {
   /**
    * Load all the application configuration and bootstrap logic.
@@ -41,6 +50,7 @@ class Application extends BaseApplication
    */
   public function bootstrap(): void
   {
+
     // Call parent to load bootstrap from files.
     parent::bootstrap();
 
@@ -57,11 +67,11 @@ class Application extends BaseApplication
     }
 
     // Load more plugins here
-    //$this->addPlugin('Authentication');
+    $this->addPlugin('Authentication');
+    $this->addPlugin('Authorization');
     $this->addPlugin('BootstrapUI');
-    Configure::write('Users.config', ['users']);
-    //$this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
     $this->addPlugin('ADmad/Glide');
+    $this->addPlugin('ADmad/SocialAuth');
 
     if (Configure::check('plugins')) {
       $plugins = Configure::read('AngelCake.plugins');
@@ -115,8 +125,72 @@ class Application extends BaseApplication
           'ita' => ['locale' => 'ita'],
         ],
       ]));
-    // Add your middlewares here
 
+    // Be sure to add SocialAuthMiddleware after RoutingMiddleware
+    $middlewareQueue->add(new SocialAuthMiddleware([
+      // Request method type use to initiate authentication.
+      'requestMethod' => 'POST',
+      // Login page URL. In case of auth failure user is redirected to login
+      // page with "error" query string var.
+      'loginUrl' => '/users/login',
+      // URL to redirect to after authentication (string or array).
+      'loginRedirect' => '/',
+      // Boolean indicating whether user identity should be returned as entity.
+      'userEntity' => false,
+      // User model.
+      'userModel' => 'Users',
+      // Social profile model.
+      'socialProfileModel' => 'ADmad/SocialAuth.SocialProfiles',
+      // Finder type.
+      'finder' => 'all',
+      // Fields.
+      'fields' => [
+        'password' => 'password',
+      ],
+      // Session key to which to write identity record to.
+      'sessionKey' => 'Auth',
+      // The method in user model which should be called in case of new user.
+      // It should return a User entity.
+      'getUserCallback' => 'getUser',
+      // SocialConnect Auth service's providers config. https://github.com/SocialConnect/auth/blob/master/README.md
+      'serviceConfig' => [
+        'provider' => [
+          'facebook' => [
+            'applicationId' => Configure::read('Facebook.appid'),
+            'applicationSecret' => Configure::read('Facebook.secret'),
+            'scope' => [
+              'email',
+            ],
+            'options' => [
+              'identity.fields' => [
+                'email',
+                'first_name',
+                'last_name',
+                'name',
+                'picture',
+                'short_name',
+                // To get a full list of all possible values, refer to
+                // https://developers.facebook.com/docs/graph-api/reference/user
+              ],
+            ],
+          ],
+          'google' => [
+            'applicationId' => Configure::read('Google.appid'),
+            'applicationSecret' => Configure::read('Google.secret'),
+            'scope' => [
+              'https://www.googleapis.com/auth/userinfo.email',
+              'https://www.googleapis.com/auth/userinfo.profile',
+            ],
+          ],
+        ],
+      ],
+      // Whether social connect errors should be logged. Default `true`.
+      'logErrors' => true,
+    ]));
+
+    $middlewareQueue->add(new AuthenticationMiddleware($this));
+
+    // Add your middlewares here
     //->add(new LocaleSelectorMiddleware());
 
     return $middlewareQueue;
@@ -140,5 +214,48 @@ class Application extends BaseApplication
     $this->addPlugin('Migrations');
 
     // Load more plugins here
+  }
+
+  /**
+   * Returns a service provider instance.
+   *
+   * @param \Psr\Http\Message\ServerRequestInterface $request Request
+   * @return \Authentication\AuthenticationServiceInterface
+   */
+  public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
+  {
+    $service = new AuthenticationService();
+
+    // Define where users should be redirected to when they are not authenticated
+    $service->setConfig([
+      'unauthenticatedRedirect' => Router::url([
+        'prefix' => false,
+        'plugin' => null,
+        'controller' => 'Users',
+        'action' => 'login',
+      ]),
+      'queryParam' => 'redirect',
+    ]);
+
+    $fields = [
+      IdentifierInterface::CREDENTIAL_USERNAME => 'email',
+      IdentifierInterface::CREDENTIAL_PASSWORD => 'password'
+    ];
+    // Load the authenticators. Session should be first.
+    $service->loadAuthenticator('Authentication.Session');
+    $service->loadAuthenticator('Authentication.Form', [
+      'fields' => $fields,
+      'loginUrl' => Router::url([
+        'prefix' => false,
+        'plugin' => null,
+        'controller' => 'Users',
+        'action' => 'login',
+      ]),
+    ]);
+
+    // Load identifiers
+    $service->loadIdentifier('Authentication.Password', compact('fields'));
+
+    return $service;
   }
 }

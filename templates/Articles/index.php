@@ -1,87 +1,26 @@
-<div class="container md-3">
-  <h1>Articoli</h1>
+<?php
 
-  <div class="well">
-    <?= $this->Form->create(
-      null,
-      [
-        'type'    => 'get',
-        'inputDefaults' => array(
-          'div' => 'form-group '
-        ),
-        'class' => 'form-horizontal',
-      ]
-    ); ?>
-    <div class="row">articles
+use Cake\Routing\Router;
 
-      <div class="col-md-3 col-xs-12 col-xl-1">
-        <?php echo $this->Form->control('destination_id', ['label' => 'Categoria', 'div' => 'col col-md-3', 'value' => $destination_id, 'options' => $destinations, 'empty' => '---']); ?>
+?>
+<div class="container">
+  <h4>Articoli</h4>
+  <div class="card-deck">
+
+    <?php foreach ($articles as $a) : ?>
+      <?php $dname = (!empty($a->destination)) ? $a->destination->name : ''; ?>
+      <div class="card" style="max-width: 18rem;">
+        <img class="card-img-top" src="/images<?= $a->copertina ?>?w=309&h=200&fit=crop" alt="<?= $dname  . ", " . $a->title ?>">
+        <div class="card-body">
+          <h5 class="card-title"><?= $a->title ?></h5>
+          <p class="card-text"><?= strip_tags($this->Text->truncate($a->body, 200)); ?></p>
+        </div>
+        <div class="card-footer">
+          <a href="<?= Router::url(['action' => 'view', $a->slug]) ?>" class="btn btn-secondary btn-sm mt-2 float-right">Leggi <?= $a->title ?></a>
+        </div>
       </div>
-      <div class="col-md-3">
-        <?php echo $this->Form->control('q', ['label' => 'Cerca Articolo', 'div' => 'col col-md-3', 'value' => $query]); ?>
-      </div>
-      <div class="col-md-2">
-        <?php echo $this->Form->submit('Filtra', ['class' => 'btn btn-filtra btn-primary mt-4']); ?>
-      </div>
-      <div class="col-md-4">
-        <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right mt-4"><i class="bi bi-plus-square"></i> Aggiungi Articolo</a>
-      </div>
-    </div>
-    <?php echo $this->Form->end(); ?>
-  </div>
-  <table class="table table-striped" cellpadding="0" cellspacing="0">
-    <thead>
-      <tr>
-        <th><?= $this->Paginator->sort('id'); ?></th>
-        <th><?= $this->Paginator->sort('user_id', 'Autore'); ?></th>
-        <th><?= $this->Paginator->sort('title', 'Titolo'); ?></th>
-        <th><?= $this->Paginator->sort('destination_id', 'Categoria'); ?></th>
-        <th><?= $this->Paginator->sort('modified', 'Ultima Modifica'); ?></th>
-        <th class="actions"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($articles as $article) : ?>
-        <tr>
-          <td><?= $this->Number->format($article->id) ?></td>
-          <td>
-            <?php if ($article->user) : ?>
-              <?= $article->user->username ?>
-            <?php else : ?>
-              --
-            <?php endif; ?>
-          </td>
-          <td>
-            <?= h($article->title) ?>
-            <?php if ($article->published) : ?>
-              <span class="badge badge-success">Pubblicato</span>
-            <?php else : ?>
-              <span class="badge badge-danger">Non-Pubblicato</span>
-            <?php endif; ?>
-          </td>
-          <td>
-            <?php if ($article->destination) : ?>
-              <?= $article->destination->name ?>
-            <?php else : ?>
-              --
-            <?php endif; ?>
-          </td>
-          <td><?= h($article->modified) ?></td>
-          <td class="actions">
-            <?= $this->Html->link('', '/articles/view/' . $article->slug, ['title' => __('View'), 'class' => 'btn btn-default bi bi-eye', 'target' => 'preview']) ?>
-            <?= $this->Html->link('', ['action' => 'edit', $article->id], ['title' => __('Edit'), 'class' => 'btn btn-default bi bi-pencil']) ?>
-            <?= $this->Form->postLink('', ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete # {0}?', $article->slug), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
-          </td>
-        </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
-  <div class="paginator">
-    <ul class="pagination">
-      <?= $this->Paginator->prev('< ' . __('previous')) ?>
-      <?= $this->Paginator->numbers(['before' => '', 'after' => '']) ?>
-      <?= $this->Paginator->next(__('next') . ' >') ?>
-    </ul>
-    <p><?= $this->Paginator->counter() ?></p>
+
+
+    <?php endforeach ?>
   </div>
 </div>

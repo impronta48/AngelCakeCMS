@@ -29,8 +29,8 @@ $this->element('v-admin-extra-main-icons'); //Carico le icone extra fornite dal 
     </div>
 
     <div class=" col-md-2 text-center mt-5">
-      <a href="/users/index"><img src="/img/admin/users.png" class="img-responsive icona"></a>
-      <a href="/users/index" class="titoloAdmin">
+      <a href="admin/users"><img src="/img/admin/users.png" class="img-responsive icona"></a>
+      <a href="admin/users" class="titoloAdmin">
         <h4>Utenti</h4>
       </a>
 

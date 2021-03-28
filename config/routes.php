@@ -141,7 +141,9 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * to use (in this case, templates/Pages/home.php)...
      */
   $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-  $builder->connect('/',
+  $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+  $builder->connect(
+    '/',
     ['controller' => 'Pages', 'action' => 'display', 'home'],
     ['routeClass' => \ADmad\I18n\Routing\Route\I18nRoute::class],
   );
@@ -179,7 +181,8 @@ $routes->prefix('Admin', function (RouteBuilder $routes) { // Admin routes
   // All routes here will be prefixed with `/admin`, and
   // have the `'prefix' => 'Admin'` route element added that
   // will be required when generating URLs for these routes
-  $routes->connect('/',
+  $routes->connect(
+    '/',
     ['controller' => 'Pages', 'action' => 'display', 'admin'],
     ['routeClass' => \ADmad\I18n\Routing\Route\I18nRoute::class],
   );
