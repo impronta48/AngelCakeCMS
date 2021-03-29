@@ -11,7 +11,7 @@ use Cake\ORM\TableRegistry;
 // Remember to run this SQL query to rename the previous 'data' field to dataold and make a new one of type 'json'
 //      ALTER TABLE `poi`
 //      ADD `data` json NULL AFTER `namespace`,
-//      CHANGE `data` `dataold` text COLLATE 'latin1_swedish_ci' NULL AFTER `data`;
+//      CHANGE `data` `dataold` text COLLATE 'utf8mb4_unicode_ci' NULL AFTER `data`;
 
 class ConvertDataToJsonCommand extends Command
 {
