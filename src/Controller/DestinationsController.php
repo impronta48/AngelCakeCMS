@@ -28,7 +28,8 @@ class DestinationsController extends AppController
   public function index()
   {
         $query = $this->Destinations->find()
-                    ->contain(['Articles']);
+            ->contain(['Articles'])
+            ->select(['id', 'name', 'slug', 'nazione_id', 'regione', 'nomiseo', 'published', 'show_in_list', 'created', 'modified']);
 
         $random = $this->request->getQuery('random');
         if (!empty($random)) {
@@ -38,6 +39,11 @@ class DestinationsController extends AppController
         $only = $this->request->getQuery('only');
         if (!empty($only)) {
             $query->select(explode(',', $only));
+        }
+
+        $published = $this->request->getQuery('published');
+        if (!empty($published)) {
+            $query->where(['published' => 1]);
         }
 
         // $limit = $this->request->getQuery('limit');
