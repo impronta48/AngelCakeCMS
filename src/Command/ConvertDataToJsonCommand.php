@@ -21,14 +21,23 @@ class ConvertDataToJsonCommand extends Command
 		$io->out('Caricati Pois\nConversione campo data...');
 
 		foreach ($pois as $poi) {
-			$data = unserialize($poi->dataold);
-			if (!$data) {
-				$io->out("[!] Impossibile deserializzare dati del POI #{$poi->id}");
-				$io->out($poi->dataold);
-			} else {
-				$poi->data = json_encode($data);
-				$poitable->save($poi);
+			if (is_null($poi->dataold)) {
+				continue;
 			}
+
+			$data = @unserialize($poi->dataold);
+			if (!$data) {
+  				$data =  @unserialize(utf8_decode($poi->dataold)); // Decode first
+				if (!$data) { // Still could not unserialize! Weird
+					$io->out("[!] Impossibile deserializzare dati del POI #{$poi->id}");
+					$io->out($poi->dataold);
+					continue;
+				}
+  				$data = array_map('utf8_encode', $data ); // Encode data again
+			}
+
+			$poi->data = json_encode($data);
+			$poitable->save($poi);
 		}
 		$io->out('Finito');
 	}
