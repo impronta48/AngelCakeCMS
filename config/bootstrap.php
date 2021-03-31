@@ -46,6 +46,7 @@ use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
 use Cake\Utility\Inflector;
+use Cake\Database\Type;
 
 /*
  * See https://github.com/josegonzalez/php-dotenv for API details.
@@ -226,6 +227,7 @@ ServerRequest::addDetector('tablet', function ($request) {
 
 //Necessario per gestire i campi datetime senza specificare i secondi
 TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm');
+Type::map('json', 'Cake\Database\Type\JsonType');
 //TypeFactory::build('date')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd');
 
 /*
