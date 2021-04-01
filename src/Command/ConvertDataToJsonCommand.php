@@ -37,7 +37,7 @@ class ConvertDataToJsonCommand extends Command
 				}
   				$data = array_map('utf8_encode', $data ); // Encode data again
 			}
-			$poi->data = json_encode($data);
+			$poi->data = $data;
 			$io->out($poi->data);
 			$poitable->save($poi);
 		}
@@ -77,7 +77,7 @@ class ConvertDataToJsonCommand extends Command
 				}
 			}
 
-			$loc->content = json_encode($data);
+			$loc->content = $data;
 			$io->out($loc->content);
 			$i18ntable->save($loc);
 		}
