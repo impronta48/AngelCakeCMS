@@ -70,6 +70,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     $this->addPlugin('Authentication');
     $this->addPlugin('Authorization');
     $this->addPlugin('BootstrapUI');
+    //Configure::write('Users.config', ['users']);
+    //$this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
     $this->addPlugin('ADmad/Glide');
     $this->addPlugin('ADmad/SocialAuth');
 
@@ -77,7 +79,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
       $plugins = Configure::read('AngelCake.plugins');
       if (!empty($plugins)) {
         foreach ($plugins as $p) {
-          $this->addPlugin($p, ['routes' => false]);
+          $this->addPlugin($p, ['routes' => false, 'bootstrap' => true]);
         }
       }
     }

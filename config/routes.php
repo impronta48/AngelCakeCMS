@@ -55,7 +55,14 @@ $routes->setRouteClass(DashedRoute::class);
 //TODO: In realtà in cake4 devo copiare anche alla riga 65 se no se lo perde! massimoi - 26/3/20
 Router::extensions(['xls', 'json']);
 
-
+if (Configure::check('plugins')) {
+  $plugins = Configure::read('AngelCake.plugins');
+  if (!empty($plugins)) {
+    foreach ($plugins as $p) {
+      $routes->loadPlugin($p);
+    }
+  }
+}
 Router::scope('/images', function ($routes) {
   $routes->registerMiddleware('glide', new \ADmad\Glide\Middleware\GlideMiddleware([
     // Run this filter only for URLs starting with specified string. Default null.
@@ -106,14 +113,7 @@ Router::scope('/images', function ($routes) {
 });
 
 
-if (Configure::check('plugins')) {
-  $plugins = Configure::read('AngelCake.plugins');
-  if (!empty($plugins)) {
-    foreach ($plugins as $p) {
-      $routes->loadPlugin($p);
-    }
-  }
-}
+
 
 $routes->scope('/', function (RouteBuilder $builder) {
   // Register scoped middleware for in scopes.
