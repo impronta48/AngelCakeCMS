@@ -16,7 +16,7 @@ use \Error;
 class AttachmentsController extends AppController
 {
 
-    private function makeFolder($model, $destination, $id, $field, $deleteBefore = false)
+    private function getPath($model, $destination, $id, $field)
     {
         $fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');
 
@@ -31,7 +31,12 @@ class AttachmentsController extends AppController
         // TODO do this in a nicer way!
         $save_dir = str_replace("//", "/", $save_dir);
         $save_dir = str_replace("cyclomap.", "", $save_dir);
+        
+        return $save_dir;
+    }
 
+    private function makeFolder($save_dir, $deleteBefore = false)
+    {
         //check if $save_dir exists, if not create it
         $folder = new Folder(WWW_ROOT . $save_dir, true, 0777);
         if ($deleteBefore) {
@@ -45,8 +50,6 @@ class AttachmentsController extends AppController
         if (!empty($e)) { //$save_dir is a relative path so it is checked relatively to current working directory
             throw new Error('Si è verificato un errore nella creazione della directory. Ripetere l\'operazione - ' . $e);
         }
-
-        return $save_dir;
     }
 
     function uploadTemp($model, $field, $deleteBefore = false)
@@ -57,7 +60,9 @@ class AttachmentsController extends AppController
 
         $files = $this->request->getUploadedFiles();
 
-        $save_dir = $this->makeFolder($model, 'TEMP', session_id(), $field, $deleteBefore);
+        $save_dir = $this->getPath($model, 'TEMP', session_id(), $field);
+
+        $this->makeFolder($save_dir, $deleteBefore);
 
         foreach ($files[$field] as $file) {
             $file->moveTo(TMP . $save_dir . DS . $file->getClientFileName()); // Will raise an exc if something goes wrong
@@ -87,23 +92,27 @@ class AttachmentsController extends AppController
         $this->viewbuilder->serialize('msg');
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Attachment id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
+
+    public function removeFile($model, $destination, $id, $field, $name)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $attachment = $this->Attachments->get($id);
-        if ($this->Attachments->delete($attachment)) {
-            $this->Flash->success(__('The attachment has been deleted.'));
+        $save_dir = $this->getPath($model, $destination, $id, $field);
+        if (!empty($save_dir)) {
+            $fname = rtrim(WWW_ROOT . $save_dir . $name);
+            if (file_exists($fname)) {
+                $ip = $_SERVER['REMOTE_ADDR'];
+                //TODO: devo cancellare lo stesso nome file anche in tutte le altre cartelle figlie
+
+                unlink($fname);
+                $this->log("eliminato il file $fname da $ip");
+            } else {
+                throw new Error('Nessun file da cancellare');
+            }
         } else {
-            $this->Flash->error(__('The attachment could not be deleted. Please, try again.'));
+            throw new Error('Nessun path fornito');
         }
 
-        return $this->redirect(['action' => 'index']);
+        $msg = "OK";
+        $this->set(compact('msg'));
+        $this->viewbuilder->serialize('msg');
     }
 }
