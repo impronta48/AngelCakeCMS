@@ -59,10 +59,10 @@ class AttachmentsController extends AppController
 
     $save_dir = Text::insert($fullDirTemplate, [
       'sitedir' => Configure::read('sitedir'),
-      'model' => strtolower($model),
-      'destination' => strtolower($destination),
-      'id' => $id,
-      'field' => $field,
+      'model' => empty($model) ? 'attachments' : strtolower($model),
+      'destination' => empty($destination) ? 'none' : strtolower($destination),
+      'id' => empty($id) ? -1 : $id,
+      'field' => empty($field) ? 'dropzone' : $field,
     ]);
 
     // TODO do this in a nicer way!
