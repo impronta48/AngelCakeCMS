@@ -92,10 +92,16 @@ class AttachmentsController extends AppController
 
   function upload($model, $destination, $id, $field, $temporary = false, $deleteBefore = false)
   {
-    $this->autoRender = false;
+    $this->viewBuilder()->setOption('serialize', true);
+    $this->RequestHandler->renderAs($this, 'json');
+
     if (!$this->request->is(['patch', 'post', 'put'])) {
-      throw new Error('Nessun file allegato');
+      $this->response = $this->response->withStatus(500);
+      $this->set(['error' => 'no files']);
+      return;
     }
+
+    $errors = Configure::read('phpFileUploadErrors');
 
     $files = $this->request->getUploadedFiles();
 
@@ -104,21 +110,35 @@ class AttachmentsController extends AppController
     $this->makeFolder($save_dir, $deleteBefore, $temporary);
 
     if (is_array($files[$field])) { // multi-file upload
-      foreach ($files[$field] as $file) {
-        $file->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $file->getClientFileName()); // Will raise an exc if something goes wrong
+      foreach ($files[$field] as $n => $file) {
+        $err = $file->getError();
+        if ($err == 0) {
+          $file->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $file->getClientFileName()); // Will raise an exc if something goes wrong
+          $this->set(["upload$n" => 'OK']);
+        } else {
+          $this->response = $this->response->withStatus(500);
+          $this->set(['error' => $errors[$err]]);
+          return;
+        }
       }
     } else {
-      $files[$field]->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $files[$field]->getClientFileName()); // Will raise an exc if something goes wrong
+      $err = $files[$field]->getError();
+      if ($err == 0) {
+        $files[$field]->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $files[$field]->getClientFileName()); // Will raise an exc if something goes wrong
+        $this->set(['upload' => 'OK']);
+      } else {
+        $this->response = $this->response->withStatus(500);
+        $this->set(['error' => $errors[$err]]);
+        return;
+      }
     }
-
-    $msg = "OK";
-    $this->set(compact('msg'));
-    $this->viewBuilder()->serialize('msg');
   }
 
   public function remove($model, $destination, $id, $field, $name, $temporary = false)
   {
-    $this->autoRender = false;
+    $this->viewBuilder()->setOption('serialize', true);
+    $this->RequestHandler->renderAs($this, 'json');
+
     $save_dir = AttachmentsController::getPath($model, $destination, $id, $field);
     if (!empty($save_dir)) {
       $fname = rtrim(($temporary ? TMP : WWW_ROOT) . $save_dir . $name);
@@ -128,15 +148,12 @@ class AttachmentsController extends AppController
 
         unlink($fname);
         $this->log("eliminato il file $fname da $ip");
+        $this->set(['removed' => 'OK']);
       } else {
-        throw new Error('Nessun file da cancellare');
+        $this->set(['error' => "file doesn't exist"]);
       }
     } else {
-      throw new Error('Nessun path fornito');
+      $this->set(['error' => "no path"]);
     }
-
-    $msg = "OK";
-    $this->set(compact('msg'));
-    $this->viewBuilder()->serialize('msg');
   }
 }
