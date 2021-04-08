@@ -90,7 +90,7 @@ class AttachmentsController extends AppController
   }
 
 
-  function upload($model, $destination, $id, $field, $deleteBefore = false, $temporary = false)
+  function upload($model, $destination, $id, $field, $temporary = false, $deleteBefore = false)
   {
     $this->autoRender = false;
     if (!$this->request->is(['patch', 'post', 'put'])) {
@@ -116,12 +116,6 @@ class AttachmentsController extends AppController
     $this->viewBuilder()->serialize('msg');
   }
 
-  function uploadTemp($model, $field, $deleteBefore = false)
-  {
-    $this->upload($model, 'TEMP', session_id(), $field, $deleteBefore, true);
-  }
-
-
   public function remove($model, $destination, $id, $field, $name, $temporary = false)
   {
     $this->autoRender = false;
@@ -144,10 +138,5 @@ class AttachmentsController extends AppController
     $msg = "OK";
     $this->set(compact('msg'));
     $this->viewBuilder()->serialize('msg');
-  }
-
-  public function removeTemp($model, $field, $name)
-  {
-    $this->remove($model, 'TEMP', session_id(), $field, $name, true);
   }
 }
