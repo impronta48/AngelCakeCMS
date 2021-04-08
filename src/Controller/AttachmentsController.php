@@ -52,6 +52,13 @@ class AttachmentsController extends AppController
 	}
 	// End of code from Drupal
 
+  static private function replace_extension($fname)
+  {
+    $split = explode('.', $fname);
+    array_pop($split);
+    return implode('.', $split) . '.jpg';
+  }
+
   
   static function getPath($model, $destination, $id, $field = '')
   {
@@ -105,16 +112,30 @@ class AttachmentsController extends AppController
 
     $files = $this->request->getUploadedFiles();
 
-    $save_dir = AttachmentsController::getPath($model, $destination, $id, $field);
+    $save_dir = self::getPath($model, $destination, $id, $field);
 
     $this->makeFolder($save_dir, $deleteBefore, $temporary);
 
-    if (is_array($files[$field])) { // multi-file upload
-      foreach ($files[$field] as $n => $file) {
-        $err = $file->getError();
+    if (array_key_exists($field, $files)) {
+      if (is_array($files[$field])) { // multi-file upload
+        foreach ($files[$field] as $n => $file) {
+          $err = $file->getError();
+          if ($err == 0) {
+            $fname = self::replace_extension($file->getClientFileName());
+            $file->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $fname); // Will raise an exc if something goes wrong
+            $this->set(["upload$n" => 'OK']);
+          } else {
+            $this->response = $this->response->withStatus(500);
+            $this->set(['error' => $errors[$err]]);
+            return;
+          }
+        }
+      } else {
+        $err = $files[$field]->getError();
         if ($err == 0) {
-          $file->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $file->getClientFileName()); // Will raise an exc if something goes wrong
-          $this->set(["upload$n" => 'OK']);
+          $fname = self::replace_extension($files[$field]->getClientFileName());
+          $files[$field]->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $fname); // Will raise an exc if something goes wrong
+          $this->set(['upload' => 'OK']);
         } else {
           $this->response = $this->response->withStatus(500);
           $this->set(['error' => $errors[$err]]);
@@ -122,15 +143,9 @@ class AttachmentsController extends AppController
         }
       }
     } else {
-      $err = $files[$field]->getError();
-      if ($err == 0) {
-        $files[$field]->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $files[$field]->getClientFileName()); // Will raise an exc if something goes wrong
-        $this->set(['upload' => 'OK']);
-      } else {
-        $this->response = $this->response->withStatus(500);
-        $this->set(['error' => $errors[$err]]);
-        return;
-      }
+      $this->response = $this->response->withStatus(500);
+      $this->set(['error' => 'no file uploaded']);
+      return;
     }
   }
 
@@ -139,7 +154,9 @@ class AttachmentsController extends AppController
     $this->viewBuilder()->setOption('serialize', true);
     $this->RequestHandler->renderAs($this, 'json');
 
-    $save_dir = AttachmentsController::getPath($model, $destination, $id, $field);
+    $name = self::replace_extension($name);
+
+    $save_dir = self::getPath($model, $destination, $id, $field);
     if (!empty($save_dir)) {
       $fname = rtrim(($temporary ? TMP : WWW_ROOT) . $save_dir . $name);
       if (file_exists($fname)) {
@@ -150,10 +167,14 @@ class AttachmentsController extends AppController
         $this->log("eliminato il file $fname da $ip");
         $this->set(['removed' => 'OK']);
       } else {
-        $this->set(['error' => "file doesn't exist"]);
+        $this->response = $this->response->withStatus(500);
+        $this->set(['error' => "file doesn't exist on server"]);
+        return;
       }
     } else {
-      $this->set(['error' => "no path"]);
+      $this->response = $this->response->withStatus(500);
+      $this->set(['error' => "no path to file given"]);
+      return;
     }
   }
 }
