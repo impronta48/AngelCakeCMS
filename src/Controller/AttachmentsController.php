@@ -167,8 +167,7 @@ class AttachmentsController extends AppController
         $this->log("eliminato il file $fname da $ip");
         $this->set(['removed' => 'OK']);
       } else {
-        $this->response = $this->response->withStatus(500);
-        $this->set(['error' => "file doesn't exist on server"]);
+        $this->set(['warning' => "file doesn't exist on server"]);
         return;
       }
     } else {
