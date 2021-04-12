@@ -10,13 +10,15 @@
 	$existingImages = [];
 	if (isset($files)) {
 		foreach ($files as $img) {
-			$fname = basename($img);
-			$existingImages[] = [
-				'name' => $fname,
-				'size' => filesize(WWW_ROOT . $img),
-				'thumbnail_url' => "/images/$img?w=150&h=300&fit=crop", // TODO non-image files cannot be previewed by glide!
-				'raw_url' => $img,
-			];
+			if (!empty($img)) {
+				$fname = basename($img);
+				$existingImages[] = [
+					'name' => $fname,
+					'size' => filesize(WWW_ROOT . $img),
+					'thumbnail_url' => "/images/$img?w=150&h=300&fit=crop", // TODO non-image files cannot be previewed by glide!
+					'raw_url' => $img,
+				];
+			}
 		}
 	}
 ?>
