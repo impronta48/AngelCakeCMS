@@ -1,5 +1,10 @@
 <!doctype html>
-<html lang="en">
+
+<?php
+use Cake\Core\Configure;
+?>
+
+<html lang="<?= Configure::read('App.language') ?>">
 
 <head>
   <?= $this->Html->charset() ?>
