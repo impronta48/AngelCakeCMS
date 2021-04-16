@@ -93,7 +93,7 @@ class StaticController extends AppController
 
 	  //Se il path[0] contiene una slash devo fare una separazione in pezzi
 	  //Massimoi - 2020-01-20 Problema introdotto con la gestione particolare dei path
-		$languages = Configure::read('App.Languages');
+		$languages = Configure::read('I18n.languages');
 		if (strpos($path[0], '/')) {
 			$path = explode('/', $path[0]);
 		  //Se il primo elemento è la lingua lo butto
