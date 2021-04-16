@@ -19,7 +19,8 @@ class ConvertDataToJsonCommand extends Command
 		$poitable = TableRegistry::getTableLocator()->get('Poi');
 		$pois = $poitable->find();
 		$issues = 0;
-		$io->out('Caricati Pois\nConversione campo data...');
+		$io->out('Caricati Pois');
+		$io->out('Conversione campo data...');
 
 		foreach ($pois as $poi) {
 			if (is_null($poi->dataold)) {
@@ -31,14 +32,12 @@ class ConvertDataToJsonCommand extends Command
   				$data =  @unserialize(utf8_decode($poi->dataold)); // Decode first
 				if (!$data) { // Still could not unserialize! Weird
 					$io->out("[!] Impossibile deserializzare dati del POI #{$poi->id}");
-					$io->out($poi->dataold);
 					$issues++;
 					continue;
 				}
   				$data = array_map('utf8_encode', $data ); // Encode data again
 			}
 			$poi->data = $data;
-			$io->out($poi->data);
 			$poitable->save($poi);
 		}
 		$io->out("Finito con $issues problemi");
@@ -68,7 +67,7 @@ class ConvertDataToJsonCommand extends Command
         				$data));
 					if (!$data) {
 						$io->out("[!] Impossibile deserializzare traduzione del POI #{$loc->foreign_key}");
-						$io->out($loc->content);
+						// $io->out($loc->content);
 						$issues++;
 						continue;
 					}
@@ -77,8 +76,8 @@ class ConvertDataToJsonCommand extends Command
 				}
 			}
 
-			$loc->content = $data;
-			$io->out($loc->content);
+			$loc->content = json_encode($data);
+			// $io->out($loc->content);
 			$i18ntable->save($loc);
 		}
 		$io->out("Finito con $issues problemi");
