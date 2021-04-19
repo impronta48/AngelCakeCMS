@@ -97,7 +97,7 @@ class StaticController extends AppController
 		if (strpos($path[0], '/')) {
 			$path = explode('/', $path[0]);
 		  //Se il primo elemento è la lingua lo butto
-			if (in_array($path[0], $languages)) {
+			if (array_key_exists($path[0], $languages)) {
 				array_shift($path);
 			}
 		}
