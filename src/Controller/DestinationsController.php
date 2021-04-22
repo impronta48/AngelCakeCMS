@@ -28,10 +28,15 @@ class DestinationsController extends AppController
    */
   public function index()
   {
+    $existing_columns = $this->Destinations->getSchema()->columns();
+    $desired_columns = ['id', 'name', 'slug', 'nazione_id', 'regione', 'nomiseo', 'published', 'published', 'created', 'modified'];
+    $select_columns = array_intersect($existing_columns, $desired_columns);
+    $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
+
     $query = $this->Destinations->find()
       ->contain(['Articles'])
-      ->select(['id', 'name', 'slug', 'nazione_id', 'regione', 'nomiseo', 'published', 'show_in_list', 'created', 'modified'])
-      ->order(['nazione_id', 'name'])
+      ->select($select_columns)
+      ->order($order_columns)
       ->where(['published' => true]);
 
     $random = $this->request->getQuery('random');
@@ -60,7 +65,7 @@ class DestinationsController extends AppController
       $this->set('count', $count);
       $this->viewBuilder()->setOption('serialize', 'count');
     } else {
-      $destinations = $this->paginate($query, ['conditions' => ['show_in_list' => TRUE]]);
+      $destinations = $this->paginate($query, ['conditions' => ['published' => TRUE]]);
 
       $this->set(compact('destinations'));
       $this->viewBuilder()->setOption('serialize', 'destinations');
