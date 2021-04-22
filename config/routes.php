@@ -27,6 +27,7 @@ use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Core\Configure;
+use ADmad\I18n\Routing\Route\I18nRoute;
 
 /*
  * The default class to use for all routes
@@ -142,11 +143,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
      */
   $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
-  $builder->connect(
-    '/',
-    ['controller' => 'Pages', 'action' => 'display', 'home'],
-    ['routeClass' => \ADmad\I18n\Routing\Route\I18nRoute::class],
-  );
+  $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home'], ['routeClass' => I18nRoute::class]);
 
   $builder->connect('/sitemap', ['controller' => 'Sitemaps', 'action' => 'index']);
   // $builder->connect('/sitemap',
@@ -159,6 +156,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * ...and connect the rest of 'Pages' controller's URLs.
      */
   $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+  $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display'], ['routeClass' => I18nRoute::class]);
   /*
      * Connect catchall routes for all controllers.
      *
@@ -181,22 +179,18 @@ $routes->prefix('Admin', function (RouteBuilder $routes) { // Admin routes
   // All routes here will be prefixed with `/admin`, and
   // have the `'prefix' => 'Admin'` route element added that
   // will be required when generating URLs for these routes
-  $routes->connect(
-    '/',
-    ['controller' => 'Pages', 'action' => 'display', 'admin'],
-    ['routeClass' => \ADmad\I18n\Routing\Route\I18nRoute::class],
-  );
+  $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'admin'], ['routeClass' => I18nRoute::class]);
   $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'admin']);
   $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']); // TODO this fixes Poi, Percorsi, Destinations?
   $routes->setExtensions(['xls', 'json']);
   // Admin fallbacks
-  $routes->fallbacks(\ADmad\I18n\Routing\Route\I18nRoute::class);
+  $routes->fallbacks(I18nRoute::class);
   $routes->fallbacks(DashedRoute::class);
 });
 
 $routes->scope('/', function (RouteBuilder $builder) { // Last, build generic fallbacks
   $builder->setExtensions(['xls', 'json']);
-  $builder->fallbacks(\ADmad\I18n\Routing\Route\I18nRoute::class);
+  $builder->fallbacks(I18nRoute::class);
   $builder->fallbacks(DashedRoute::class);
 });
 
