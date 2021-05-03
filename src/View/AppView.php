@@ -40,5 +40,6 @@ class AppView extends UIView
 	  //Don't forget to call the parent::initialize()
 		parent::initialize();
 		$this->loadHelper('Authentication.Identity');
+		$this->loadHelper('AssetMix.AssetMix');
 	}
 }
