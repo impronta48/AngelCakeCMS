@@ -34,10 +34,7 @@ class DestinationsController extends AppController
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
     $query = $this->Destinations->find()
-      ->contain(['Articles'])
-      ->select($select_columns)
-      ->order($order_columns)
-      ->where(['published' => true]);
+      ->order($order_columns);
 
     $random = $this->request->getQuery('random');
     if (!empty($random)) {
@@ -46,18 +43,33 @@ class DestinationsController extends AppController
 
     $only = $this->request->getQuery('only');
     if (!empty($only)) {
-      $query->select(explode(',', $only));
+      $columns = explode(',', $only);
+      if (array_search('payment_conf', $columns) !== false) {
+        unset($columns[array_search('payment_conf', $columns)]);
+      }
+      if (array_search('caparra', $columns) !== false) {
+        unset($columns[array_search('caparra', $columns)]);
+      }
+      if (empty($columns)) {
+        $query->select($select_columns);
+      } else {
+        $query->select($columns);
+      }
+    } else {
+      $query->select($select_columns);
     }
 
     $published = $this->request->getQuery('published');
-    if (!empty($published)) {
-      $query->where(['published' => 1]);
+    if (!is_null($published)) {
+      $query->where(['published' => $published]);
+    } else {
+      $query->where(['published' => true]); // by defaylt, show only published
     }
 
-    // $limit = $this->request->getQuery('limit');
-    // if (!empty($limit)) {
-    //     $query->limit($limit);
-    // }
+    $limit = $this->request->getQuery('limit');
+    if (!empty($limit)) {
+        $query->limit($limit);
+    }
 
     $count = $this->request->getQuery('count');
     if (!empty($count)) {
@@ -65,7 +77,11 @@ class DestinationsController extends AppController
       $this->set('count', $count);
       $this->viewBuilder()->setOption('serialize', 'count');
     } else {
-      $destinations = $this->paginate($query, ['conditions' => ['published' => TRUE]]);
+      if (!$this->request->is('json')) {
+        $destinations = $this->paginate($query);
+      } else {
+        $destinations = $query->all();
+      }
 
       $this->set(compact('destinations'));
       $this->viewBuilder()->setOption('serialize', 'destinations');
