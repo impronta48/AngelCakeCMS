@@ -32,6 +32,7 @@
 	:multiple="<?= isset($multiple) && $multiple ? 'true' : 'false' ?>"
 	:temporary="<?= isset($temp) && $temp ? 'true' : 'false' ?>"
 	filetype="<?= isset($filetype) ? $filetype : null ?>"
+	:convert="<?= !isset($convert) || $convert ? 'true' : 'false' ?>"
 ></file-uploader>
 
 <?= $this->Html->css('/js/node_modules/vue2-dropzone/dist/vue2Dropzone.min.css', ['block' => true]); ?>

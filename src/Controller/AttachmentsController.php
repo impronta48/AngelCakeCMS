@@ -55,8 +55,11 @@ class AttachmentsController extends AppController
   static private function replace_extension($fname)
   {
     $split = explode('.', $fname);
-    array_pop($split);
-    return implode('.', $split) . '.jpg';
+    $ext = array_pop($split);
+    if (in_array($ext, ['.png', '.gif', '.jpeg', '.bmp'])) {
+      return implode('.', $split) . '.jpg';
+    }
+    return $fname;
   }
 
   
