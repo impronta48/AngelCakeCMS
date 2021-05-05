@@ -50,6 +50,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
    */
   public function bootstrap(): void
   {
+        $this->addPlugin('AssetMix');
 
     // Call parent to load bootstrap from files.
     parent::bootstrap();
@@ -107,8 +108,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
       // caching in production could improve performance. For that when
       // creating the middleware instance specify the cache config name by
       // using it's second constructor argument:
-      // `new RoutingMiddleware($this, '_cake_routes_')`
-      ->add(new RoutingMiddleware($this))
+      // ->add(new RoutingMiddleware($this))
+      ->add(new RoutingMiddleware($this, '_cake_routes_'))
 
       // Needed to specify locale associations, because we're using 3 letter locales (non-default)
       ->add(new \ADmad\I18n\Middleware\I18nMiddleware([

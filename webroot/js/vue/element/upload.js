@@ -18,6 +18,7 @@ Vue.component('file-uploader', {
         multiple: Boolean,
         temporary: Boolean,
         filetype: String,
+        convert: Boolean,
     },
     async mounted() {
         for (f in this.files) {
@@ -40,14 +41,14 @@ Vue.component('file-uploader', {
                     }
                 },
                 maxFiles: (this.multiple ? undefined : 1),
-                acceptedFiles: this.filetype != 'null' ? this.filetype : null,
+                acceptedFiles: this.filetype != 'null' ? this.filetype : undefined,
                 paramName: this.field, // The name that will be used to transfer the file
                 uploadMultiple: this.multiple,
                 // withCredentials: true,
                 addRemoveLinks: true,
                 url: `/attachments/upload/${this.model}/${this.destination}/${this.id}/${this.field}` + (this.temporary ? '/temp' : ''),
-                resizeWidth: 5000, // This should give jpegs of appropriate size
-                resizeMimeType: 'image/jpeg',
+                resizeWidth: this.convert ? 5000 : undefined, // This should give jpegs of appropriate size
+                resizeMimeType: this.convert ? 'image/jpeg' : undefined,
                 maxFilesize: null, // PHP will handle in AttachmentsController
                 thumbnailHeight: 300,
                 thumbnailWidth: 150,
