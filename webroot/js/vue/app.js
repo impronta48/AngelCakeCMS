@@ -1,6 +1,9 @@
 var app = new Vue({
     el: '#app',
     data() {
-        return {}
+        return {
+            form: {},
+            showMobile: false,
+        }
     }
 });
