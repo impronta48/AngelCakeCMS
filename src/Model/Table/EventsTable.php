@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -25,86 +26,82 @@ use Cake\Validation\Validator;
  */
 class EventsTable extends Table
 {
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config): void {
+		parent::initialize($config);
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config): void
-    {
-        parent::initialize($config);
+		$this->setTable('events');
+		$this->setDisplayField('title');
+		$this->setPrimaryKey('id');
 
-        $this->setTable('events');
-        $this->setDisplayField('title');
-        $this->setPrimaryKey('id');
+		$this->addBehavior('Timestamp');
 
-        $this->addBehavior('Timestamp');
+		$this->belongsTo('Destinations', [
+			'foreignKey' => 'destination_id',
+		]);
+		$this->belongsTo('Users', [
+			'foreignKey' => 'user_id',
+		]);
 
-        $this->belongsTo('Destinations', [
-            'foreignKey' => 'destination_id'
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id'
-        ]);
+		$this->hasMany('Participants');
+	}
 
-        $this->hasMany('Participants');
-    }
+	/**
+	 * Default validation rules.
+	 *
+	 * @param \Cake\Validation\Validator $validator Validator instance.
+	 * @return \Cake\Validation\Validator
+	 */
+	public function validationDefault(Validator $validator): \Cake\Validation\Validator {
+		$validator
+			->integer('id')
+			->allowEmpty('id', 'create');
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator): \Cake\Validation\Validator
-    {
-        $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+		$validator
+			->scalar('title')
+			->maxLength('title', 255)
+			->allowEmpty('title');
 
-        $validator
-            ->scalar('title')
-            ->maxLength('title', 255)
-            ->allowEmpty('title');
+		$validator
+			->scalar('description')
+			->allowEmpty('description');
 
-        $validator
-            ->scalar('description')
-            ->allowEmpty('description');
+		$validator
+			->integer('max_pax')
+			->allowEmpty('max_pax');
 
-        $validator
-            ->integer('max_pax')
-            ->allowEmpty('max_pax');
+		$validator
+			->scalar('place')
+			->maxLength('place', 255)
+			->allowEmpty('place');
 
-        $validator
-            ->scalar('place')
-            ->maxLength('place', 255)
-            ->allowEmpty('place');
+		$validator
+			->dateTime('start_time')
+			->allowEmpty('start_time');
 
-        $validator
-            ->dateTime('start_time')
-            ->allowEmpty('start_time');
+		$validator
+			->dateTime('end_time')
+			->allowEmpty('end_time');
 
-        $validator
-            ->dateTime('end_time')
-            ->allowEmpty('end_time');
+		return $validator;
+	}
 
-        return $validator;
-    }
+	/**
+	 * Returns a rules checker object that will be used for validating
+	 * application integrity.
+	 *
+	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+	 * @return \Cake\ORM\RulesChecker
+	 */
+	public function buildRules(RulesChecker $rules): \Cake\ORM\RulesChecker {
+		$rules->add($rules->existsIn(['destination_id'], 'Destinations'));
+		$rules->add($rules->existsIn(['user_id'], 'Users'));
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): \Cake\ORM\RulesChecker
-    {
-        $rules->add($rules->existsIn(['destination_id'], 'Destinations'));
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
-
-        return $rules;
-    }
+		return $rules;
+	}
 }

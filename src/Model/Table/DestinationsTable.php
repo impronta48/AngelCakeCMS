@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -22,50 +22,46 @@ use Cake\Validation\Validator;
  */
 class DestinationsTable extends Table
 {
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config): void {
+		parent::initialize($config);
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config): void
-    {
-        parent::initialize($config);
+		$this->setTable('destinations');
+		$this->setDisplayField('name');
+		$this->setPrimaryKey('id');
 
-        $this->setTable('destinations');
-        $this->setDisplayField('name');
-        $this->setPrimaryKey('id');
+		$this->hasMany('Events', [
+			'foreignKey' => 'destination_id',
+		]);
+		$this->hasMany('Articles');
+	}
 
-        $this->hasMany('Events', [
-            'foreignKey' => 'destination_id'
-        ]);
-        $this->hasMany('Articles');
-    }
+	/**
+	 * Default validation rules.
+	 *
+	 * @param \Cake\Validation\Validator $validator Validator instance.
+	 * @return \Cake\Validation\Validator
+	 */
+	public function validationDefault(Validator $validator): \Cake\Validation\Validator {
+		$validator
+			->integer('id')
+			->allowEmpty('id', 'create');
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator): \Cake\Validation\Validator
-    {
-        $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+		$validator
+			->scalar('name')
+			->maxLength('name', 250)
+			->allowEmpty('name');
 
-        $validator
-            ->scalar('name')
-            ->maxLength('name', 250)
-            ->allowEmpty('name');
+		$validator
+			->scalar('slug')
+			->maxLength('slug', 250)
+			->allowEmpty('slug');
 
-        $validator
-            ->scalar('slug')
-            ->maxLength('slug', 250)
-            ->allowEmpty('slug');
-
-        return $validator;
-    }
-
+		return $validator;
+	}
 }

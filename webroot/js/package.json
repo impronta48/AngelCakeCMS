@@ -9,11 +9,16 @@
         "ckeditor4-vue": "^1.2.0",
         "jquery": "^3.5.1",
         "jquery-ui": "^1.12.1",
+        "leaflet": "^1.7.1",
         "moment": "^2.29.1",
+        "swiper": "^5.4.5",
         "vue": "^2.6.12",
-        "vue2-datepicker": "^3.8.2"
+        "vue-awesome-swiper": "^4.1.1",
+        "vue-carousel": "^0.18.0",
+        "vue2-datepicker": "^3.8.2",
+        "vue2-dropzone": "^3.6.0",
+        "vue2-leaflet": "^2.6.0"
     },
-    "devDependencies": {},
     "scripts": {
         "test": ""
     },

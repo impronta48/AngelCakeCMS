@@ -46,6 +46,7 @@ use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
 use Cake\Utility\Inflector;
+use Cake\Database\Type;
 
 /*
  * See https://github.com/josegonzalez/php-dotenv for API details.
@@ -226,6 +227,7 @@ ServerRequest::addDetector('tablet', function ($request) {
 
 //Necessario per gestire i campi datetime senza specificare i secondi
 TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm');
+Type::map('json', 'Cake\Database\Type\JsonType');
 //TypeFactory::build('date')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd');
 
 /*
@@ -235,19 +237,6 @@ TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'
  */
 //Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
 //Inflector::rules('irregular', ['red' => 'redlings']);
-Inflector::rules(
-  'irregular',
-  [
-    'territorio' => 'territori',
-    'nazione' => 'nazioni',
-    'commento' => 'commenti',
-    'filtro' => 'filtri',
-    'circuito' => 'circuiti',
-    'tipo' => 'tipi',
-    'categoria' => 'categorie',
-    'tipobici' => 'tipibici',
-  ],
-); 
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 //require_once 'events.php';
@@ -277,4 +266,10 @@ Configure::write('phpFileUploadErrors', [
   6 => 'Missing a temporary folder',
   7 => 'Failed to write file to disk.',
   8 => 'A PHP extension stopped the file upload.',
+]);
+
+Configure::write('groups', [
+  1  => 'admin',
+  2 => 'editor',
+  3 => 'user'
 ]);

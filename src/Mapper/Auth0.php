@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -18,29 +17,29 @@ use CakeDC\Auth\Social\Mapper\AbstractMapper;
 
 class Auth0 extends AbstractMapper
 {
-  /**
-   * Map for provider fields
-   *
-   * @var array
-   */
-  protected $_mapFields = [
-    'id' => 'sub',
-    'avatar' => 'picture',
-    'username' => 'nickname',
-    'modified' => 'updated_at',
-    'first_name' => 'name',
-    'email' => 'email',
-  ];
 
-  /**
-   * Get link property value
-   *
-   * @param mixed $rawData raw data
-   *
-   * @return string
-   */
-  protected function _link($rawData)
-  {
-    return $rawData['link'] ?? null ?: '#';
-  }
+	/**
+	 * Map for provider fields
+	 *
+	 * @var array
+	 */
+	protected $_mapFields = [
+	'id' => 'sub',
+	'avatar' => 'picture',
+	'username' => 'nickname',
+	'modified' => 'updated_at',
+	'first_name' => 'name',
+	'email' => 'email',
+	];
+
+	/**
+	 * Get link property value
+	 *
+	 * @param mixed $rawData raw data
+	 *
+	 * @return string
+	 */
+	protected function _link($rawData) {
+		return $rawData['link'] ?? null ?: '#';
+	}
 }

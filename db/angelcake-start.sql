@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `destinations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(250) DEFAULT NULL,
   `slug` varchar(250) DEFAULT NULL,
-  `show_in_list` tinyint(1) NOT NULL DEFAULT '1',
+  `published` tinyint(1) NOT NULL DEFAULT '1',
   `facebook` varchar(255) NOT NULL,
   `instagram` varchar(255) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

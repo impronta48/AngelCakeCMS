@@ -4,5 +4,10 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+  "settings": {
+    "files.watcherExclude": {
+      "**/webroot/**": true,
+      "vendor/**": true
+    }
+  }
 }

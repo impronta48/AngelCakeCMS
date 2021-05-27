@@ -108,3 +108,7 @@ td.actions .btn {
 .bg-info {
     background-color: #691010 !important;
 }
+
+.mini-icon {
+    max-width: 1em;
+}

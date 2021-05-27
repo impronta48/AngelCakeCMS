@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Mailer\Mailer;
 use Exception;
@@ -10,6 +11,7 @@ use Exception;
 class ContactsController extends AppController
 {
   //Necessario per gestire la risposta in json della view
+
   public function initialize(): void
   {
     parent::initialize();

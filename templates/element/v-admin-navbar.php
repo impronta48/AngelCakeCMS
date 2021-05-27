@@ -22,12 +22,12 @@ $contr = strtolower($this->request->getParam('controller'));
       </b-nav-item>
     <?php endif ?>
 
-    <?php if (isset($event->slug)) : ?>
-      <b-nav-item href="<?= Router::url(['prefix' => false, 'action' => 'view', $event->slug, 'target' => 'preview']) ?>">
+    <?php if (isset($event->id)) : ?>
+      <b-nav-item href="<?= Router::url(['prefix' => false, 'action' => 'view', $event->id, 'target' => 'preview']) ?>">
         View
       </b-nav-item>
-    <?php elseif (isset($event->id)): ?>
-      <b-nav-item href="<?= Router::url(['prefix' => false, 'action' => 'view', $event->id, 'target' => 'preview']) ?>">
+    <?php elseif (isset($event->slug)) : ?>
+      <b-nav-item href="<?= Router::url(['prefix' => false, 'action' => 'view', $event->slug, 'target' => 'preview']) ?>">
         View
       </b-nav-item>
     <?php endif ?>

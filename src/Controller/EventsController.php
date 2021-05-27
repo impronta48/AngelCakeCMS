@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use Cake\Database\TypeFactory;
-use Cake\Event\Event;
+namespace App\Controller;
 
 /**
  * Events Controller
@@ -16,11 +14,13 @@ use Cake\Event\Event;
 class EventsController extends AppController
 {
   //Necessario per gestire la risposta in json della view
+
   public function initialize(): void
   {
     parent::initialize();
-    //$this->Authentication->allowUnauthenticated(['getList','subscribe']);
+    $this->Authentication->allowUnauthenticated(['getList', 'subscribe']);
   }
+
 
   public function getList($allowedEvents = null)
   {
@@ -45,8 +45,8 @@ class EventsController extends AppController
       ->firstOrFail();
 
     $siti = $this->Events->Destinations->find('list', [
-      'conditions' => ['show_in_list' => 1, 'chiuso' => 0],
-      'order' => 'Name'
+      'conditions' => ['published' => 1, 'chiuso' => 0],
+      'order' => 'Name',
     ]);
     $this->set('siti', $siti);
     $this->set('event', $event);

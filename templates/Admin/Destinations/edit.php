@@ -12,7 +12,7 @@
     <?php
     echo $this->Form->control('name');
     echo $this->Form->control('slug');
-    echo $this->Form->control('show_in_list');
+    echo $this->Form->control('published');
     ?>
   </fieldset>
   <?= $this->Form->button(__("Save")); ?>

@@ -43,3 +43,11 @@ nbproject/*
 .vscode
 # Sass preprocessor
 .sass-cache/
+
+
+# Asset MIX         #
+#####################
+webpack.mix.js 
+package.json
+package-lock.json 
+node_modules

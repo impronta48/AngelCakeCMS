@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 class ArticlesController extends AppController
 {
+
   public $paginate = [
     'limit' => 5,
   ];
@@ -22,11 +25,9 @@ class ArticlesController extends AppController
       ->contain(['Tags', 'Destinations'])
       ->firstOrFail();
     $this->set(compact('article'));
-    $this->set('user',  $this->request->getAttribute('identity'));
+    $this->set('user', $this->request->getAttribute('identity'));
     $this->viewBuilder()->setOption('serialize', ['article']);
   }
-
-
 
   public function tags()
   {
@@ -40,7 +41,6 @@ class ArticlesController extends AppController
     $this->set(compact('articles', 'tags'));
   }
 
-
   /**
    * Index method.
    *
@@ -49,7 +49,7 @@ class ArticlesController extends AppController
   public function index()
   {
     $query = $this->Articles->find()
-      ->where(['published' => 1])
+      ->where(['Articles.published' => 1])
       ->order(['Articles.modified DESC']);
 
     $promoted = $this->request->getQuery('promoted');
@@ -60,8 +60,8 @@ class ArticlesController extends AppController
     $archived = $this->request->getQuery('archived');
     if ($archived == 1) {
       $query->where(['archived' => 1]);
-    } else if ($archived == "0") {
-      $query->where(['OR' => ['archived' => 0, 'archived is' => NULL]]);
+    } elseif ($archived == "0") {
+      $query->where(['OR' => ['archived' => 0, 'archived is' => null]]);
     }
 
     $slider = $this->request->getQuery('slider');
@@ -101,6 +101,7 @@ class ArticlesController extends AppController
     }
     $query->contain(['Destinations' => ['fields' => ['id', 'name', 'slug']]]);
 
+
     $articles = $this->paginate($query);
     $pagination = $this->Paginator->getPagingParams();
     $this->set(compact('articles', 'pagination', 'destinations'));
@@ -121,10 +122,8 @@ class ArticlesController extends AppController
     //$conditions['body LIKE'] = "%$q%";
     //Passo le conditions alla find find(['conditions'=>$conditions]);
 
-
     //Leggo i valori dalla querystring (quella che sta dopo il ? nell'url)
     $q = $this->request->getQuery('q');
-
 
     //Faccio la query di base (tira su tutti gli articoli)
     $query = $this->Articles->find()
@@ -155,7 +154,7 @@ class ArticlesController extends AppController
     $query->select([
       'nArticoli' => $query->func()->count('MONTH(Articles.modified)'),
       'mese' => 'MONTH(Articles.modified)',
-      'anno' => 'YEAR(Articles.modified)'
+      'anno' => 'YEAR(Articles.modified)',
     ])
       ->group(['YEAR(Articles.modified)', 'MONTH(Articles.modified)'])
       ->order(['YEAR(Articles.modified) DESC', 'MONTH(Articles.modified) DESC'])
