@@ -29,6 +29,14 @@ class DestinationsTable extends Table
 	 * @return void
 	 */
 	public function initialize(array $config): void {
+		$this->addBehavior('Translate', [
+			'fields' => [
+				'nomiseo', 'title',
+			],
+			'defaultLocale' => 'ita',
+			// 'allowEmptyTranslations' => false,
+		]);
+
 		parent::initialize($config);
 
 		$this->setTable('destinations');

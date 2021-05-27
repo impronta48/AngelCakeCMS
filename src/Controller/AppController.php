@@ -20,6 +20,8 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Event\EventInterface;
+use Cake\I18n\I18n;
 
 /**
  * Application Controller
@@ -68,6 +70,9 @@ class AppController extends Controller
     //   I18n::setLocale('es');
     // }
     // $this->set('locale',  substr(I18n::getLocale(), 0, 2));
+
+    $this->set('lang', I18n::getLocale());
+
 
     if (Configure::check('theme')) {
       $this->viewBuilder()->setTheme(Configure::read('theme'));
