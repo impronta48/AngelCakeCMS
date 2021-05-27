@@ -1,0 +1,32 @@
+msgid "Destinazione"
+msgstr "Destination"
+
+msgid "Destinazioni"
+msgstr "Destinations"
+
+msgid "Percorso"
+msgstr "Route"
+
+msgid "Percorsi"
+msgstr "Routes"
+
+msgid "Dove vuoi andare?"
+msgstr "Where are you going?"
+
+msgid "Vicino a te"
+msgstr "Nearby"
+
+msgid "Attività in evidenza"
+msgstr "Suggested activities"
+
+msgid "Punti di Noleggio"
+msgstr "Rental Points"
+
+msgid "In queste località è possibile <b>noleggiare una e-bike</b> oppure fare un'esperienza sul territorio."
+msgstr "In these destinations you can <b>rent an e-bike</b> or have an experience like a local."
+
+msgid "Noleggio e-bike in {0}, esperienze e bike hotel in {1}"
+msgstr "E-bike rental in {0}, experiences and bike hotels in {1}"
+
+msgid "Noleggio Bici - E-bike Rental {0} | Bike Tour"
+msgstr "E-bike Rental {0} | Bike Tour"
