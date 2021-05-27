@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -17,6 +18,8 @@ declare(strict_types=1);
 namespace App\View;
 
 use BootstrapUI\View\UIView;
+use Cake\I18n\I18n;
+use Cake\Core\Configure;
 
 /**
  * Application View
@@ -36,10 +39,22 @@ class AppView extends UIView
 	 *
 	 * @return void
 	 */
-	public function initialize(): void {
-	  //Don't forget to call the parent::initialize()
+	public function initialize(): void
+	{
+		//Don't forget to call the parent::initialize()
 		parent::initialize();
 		$this->loadHelper('Authentication.Identity');
 		$this->loadHelper('AssetMix.AssetMix');
+
+		$lang = I18n::getLocale();
+		$base = ROOT;
+		if (!is_null($this->theme)) {
+			$base = $base . "/plugins/{$this->theme}";
+		}
+		$base = $base . DS . 'templates' . DS . $this->getTemplatePath();
+		$localized_directory = $base . DS . $lang . DS . $this->getTemplate() . '.php';
+		if (file_exists($localized_directory)) {
+			$this->setTemplatePath($this->getTemplatePath() . DS . $lang);
+		}
 	}
 }
