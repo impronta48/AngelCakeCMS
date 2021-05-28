@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Controller\AttachmentsController;
 use Cake\ORM\Entity;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
@@ -47,20 +48,15 @@ class Destination extends Entity
 	}
 
 	public function _getCopertina() {
-		$fullDirTemplate = ':sitedir/:model/';
-		$fullDir = Text::insert($fullDirTemplate, [
-			'sitedir' => Configure::read('sitedir'),
-			'model' => 'destinations',
-		]);
-
-		// TODO: do this in a nicer way!
-		$fullDir = str_replace("//", "/", $fullDir);
-		$fullDir = str_replace("cyclomap.", "", $fullDir);
+		$fullDir = AttachmentsController::getPath('Destinations', $this->slug, $this->id, 'copertina');
 
 		$dir = new Folder(WWW_ROOT . $fullDir);
-		$files = $dir->find("{$this->slug}\.(jpg|jpeg|gif|png|webp)", true);
+		$files = $dir->find(".*\.(jpg|jpeg|gif|png|webp)", true);
 
 		if (is_array($files)) {
+			if (empty($files)) {
+				return '';
+			}
 			$files = $files[0];
 		}
 
