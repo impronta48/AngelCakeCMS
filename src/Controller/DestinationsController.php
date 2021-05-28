@@ -202,12 +202,12 @@ class DestinationsController extends AppController
   public function rent($nomeseo = null)
   {
     $this->get_seo_destination_name($nomeseo);
+    $this->render('Ebike2021.view');
   }
 
   public function view($nomeseo = null)
   {
     $this->get_seo_destination_name($nomeseo);
-    $this->render('Ebike2021.rent');
   }
 
 
