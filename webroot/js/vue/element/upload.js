@@ -37,7 +37,7 @@ Vue.component('file-uploader', {
                         var _ref;
                         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
                     } catch (error) {
-                        alert(`Errore : ${error.response.data.error}`);
+                        console.log(error);
                     }
                 },
                 maxFiles: (this.multiple ? undefined : 1),

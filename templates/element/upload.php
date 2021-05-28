@@ -36,5 +36,6 @@
 ></file-uploader>
 
 <?= $this->Html->css('/js/node_modules/vue2-dropzone/dist/vue2Dropzone.min.css', ['block' => true]); ?>
+<?= $this->Html->script('node_modules/axios/dist/axios.min.js', ['block' => true]) ?>
 <?= $this->Html->script('/js/node_modules/vue2-dropzone/dist/vue2Dropzone.js', ['block' => true]); ?>
 <?= $this->Html->script('vue/element/upload.js', ['block' => true]); ?>
