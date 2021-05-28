@@ -1,11 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use App\Controller\AttachmentsController;
 use Cake\Routing\Router;
 use Psr\Log\LogLevel;
+use Cake\Event\EventInterface;
+use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 
 /**
  * Destinations Controller
@@ -16,9 +21,17 @@ use Psr\Log\LogLevel;
  */
 class DestinationsController extends AppController
 {
-	public function index() {
+
+	public function beforeRender(EventInterface $event)
+	{
+		$theme = Configure::read('theme');
+		$this->viewBuilder()->setTheme($theme);
+	}
+
+	public function index()
+	{
 		$destinations = $this->paginate($this->Destinations, [
-		'contain' => ['Articles'],
+			'contain' => ['Articles'],
 		]);
 
 		$this->set(compact('destinations'));
@@ -31,12 +44,13 @@ class DestinationsController extends AppController
 	 * @return \Cake\Http\Response|void
 	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
 	 */
-	public function view($id = null) {
+	public function view($id = null)
+	{
 		$query = $this->Destinations->find();
 		$a = $this->request->getQuery('archive');
 
 		$articles_q = $this->Destinations->Articles->find()
-		->order(['modified' => 'DESC']);
+			->order(['modified' => 'DESC']);
 
 		if (empty($a)) {
 			$articles_q->where(['Articles.archived' => false]);
@@ -69,7 +83,8 @@ class DestinationsController extends AppController
 	 *
 	 * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
 	 */
-	public function add() {
+	public function add()
+	{
 		$destination = $this->Destinations->newEmptyEntity();
 		if ($this->request->is('post')) {
 			$destination = $this->Destinations->patchEntity($destination, $this->request->getData());
@@ -90,20 +105,43 @@ class DestinationsController extends AppController
 	 * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
 	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
 	 */
-	public function edit($id = null) {
-		$destination = $this->Destinations->get($id, [
-		'contain' => [],
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$destination = $this->Destinations->patchEntity($destination, $this->request->getData());
-			if ($this->Destinations->save($destination)) {
-				$this->Flash->success(__('The destination has been saved.'));
-
-				return $this->redirect(['action' => 'index']);
-			}
-			$this->Flash->error(__('The destination could not be saved. Please, try again.'));
+	public function edit($id = null)
+	{
+		if (is_null($id)) {
+			$destination = $this->Destinations->newEmptyEntity();
+		} else {
+			$destination = $this->Destinations->get($id);
 		}
-		$this->set(compact('destination'));
+		$new = $destination->isNew();
+
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$data = $this->request->getData();
+			$destination = $this->Destinations->patchEntity($destination, $data);
+
+			if ($this->Destinations->save($destination)) {
+				$destination = $this->Destinations->get($destination->id);
+				$upload_session_fields = $this->request->getData('upload_session_id');
+				if ($new && !empty($upload_session_fields)) {
+					foreach ($upload_session_fields as $ses) {
+						if (!empty($ses)) {
+							$ses = explode('|', $ses);
+							$tmpath = AttachmentsController::getPath('Destinations', 'TEMP', $ses[0], $ses[1]);
+							if (is_dir(TMP . $tmpath)) {
+								$finalpath = AttachmentsController::getPath('Destinations', $destination->slug, $destination->id, $ses[1]);
+								$dir = new Folder(WWW_ROOT . $finalpath, true);
+								rename(TMP . $tmpath, WWW_ROOT . $finalpath);
+							}
+						}
+					}
+				}
+				$this->Flash->success(__('The percorso has been saved.'));
+				return $this->redirect(['prefix' => false, 'action' => 'view', $destination->id]);
+			}
+			$this->Flash->error(__('The percorso could not be saved. Please, try again.'));
+		}
+
+		$this->set('destination', $destination);
+		$this->set('new', $new);
 	}
 
 	/**
@@ -113,7 +151,8 @@ class DestinationsController extends AppController
 	 * @return \Cake\Http\Response|null Redirects to index.
 	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
 	 */
-	public function delete($id = null) {
+	public function delete($id = null)
+	{
 		$this->request->allowMethod(['post', 'delete']);
 		$destination = $this->Destinations->get($id);
 		if ($this->Destinations->delete($destination)) {
