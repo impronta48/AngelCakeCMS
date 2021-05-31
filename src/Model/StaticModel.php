@@ -55,9 +55,11 @@ class StaticModel
 		}
 
 	  //Ordino l'array dei risultati per il campo date invertito
+	  if (isset($a['dat']['date'])){
 		usort($risult, function ($a, $b) {
 			return -1 * strcmp($a['dati']['date'], $b['dati']['date']);
 		});
+	  }
 	  //$t2 = microtime(TRUE);
 	  //dd($t2-$t1);
 
