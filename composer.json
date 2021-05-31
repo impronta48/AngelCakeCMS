@@ -49,6 +49,7 @@
             "Mirafiori\\": "plugins/Mirafiori/src/",
             "Bossolasco\\": "plugins/Bossolasco/src/",
             "Yepp\\": "plugins/Yepp/src/",
+            "Cribyoo\\": "plugins/Cribyoo/src/",
             "Cyclomap\\": "plugins/Cyclomap/src/"
         }
     },
