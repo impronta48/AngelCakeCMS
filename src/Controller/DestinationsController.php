@@ -94,12 +94,13 @@ class DestinationsController extends AppController
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
-    $query = $this->Destinations->find()
-      ->order($order_columns);
+    $query = $this->Destinations->find();
 
     $random = $this->request->getQuery('random');
     if (!empty($random)) {
       $query->order('rand()');
+    } else {
+      $query->order($order_columns);
     }
 
     $only = $this->request->getQuery('only');
