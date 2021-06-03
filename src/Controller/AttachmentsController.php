@@ -57,9 +57,9 @@ class AttachmentsController extends AppController
     $split = explode('.', $fname);
     $ext = array_pop($split);
     if (in_array($ext, ['.png', '.gif', '.jpeg', '.bmp'])) {
-      return implode('.', $split) . '.jpg';
+      return Text::slug(implode('.', $split)) . '.jpg';
     }
-    return $fname;
+    return Text::slug(implode('.', $split)) . '.' . $ext;
   }
 
   
