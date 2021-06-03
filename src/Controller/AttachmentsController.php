@@ -124,7 +124,7 @@ class AttachmentsController extends AppController
         foreach ($files[$field] as $n => $file) {
           $err = $file->getError();
           if ($err == 0) {
-            $fname = self::replace_extension($file->getClientFileName());
+            $fname = Text::slug(self::replace_extension($file->getClientFileName()));
             $file->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $fname); // Will raise an exc if something goes wrong
             $this->set(["upload$n" => 'OK']);
           } else {
@@ -136,7 +136,7 @@ class AttachmentsController extends AppController
       } else {
         $err = $files[$field]->getError();
         if ($err == 0) {
-          $fname = self::replace_extension($files[$field]->getClientFileName());
+          $fname = Text::slug(self::replace_extension($files[$field]->getClientFileName()));
           $files[$field]->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . DS . $fname); // Will raise an exc if something goes wrong
           $this->set(['upload' => 'OK']);
         } else {
