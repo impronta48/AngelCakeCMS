@@ -7,6 +7,7 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Utility\Text;
 use Cake\Filesystem\Folder;
+use Cake\Routing\Router;
 use \Error;
 
 /**
@@ -80,6 +81,49 @@ class AttachmentsController extends AppController
     $save_dir = str_replace("cyclomap.", "", $save_dir);
 
     return $save_dir;
+  }
+
+  static function getFieldFiles($model, $destination, $id, $field, $allowed_extensions, $firstonly = false, $default = null)
+  {
+    //uso una cache per non leggere sul disco ogni volta
+    //$files = Cache::read("percorsi_gallery_$id", 'img');
+    // if ($files)
+    //  {
+    //  return $files;
+    // }
+    $fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');
+    $fullDir = Text::insert($fullDirTemplate, [
+      'sitedir' => Configure::read('sitedir'),
+      'model' => strtolower($model),
+      'destination' => $destination,
+      'id' => $id,
+      'field' => $field,
+    ]);
+
+    // TODO: do this in a nicer way!
+    $fullDir = str_replace("//", "/", $fullDir);
+    $fullDir = str_replace("cyclomap.", "", $fullDir);
+
+    $dir = new Folder(WWW_ROOT . $fullDir);
+    $files = $dir->find(".*\.($allowed_extensions)", true);
+
+    /*Controllo se è vuoto*/
+    if (!$files) {
+      if (!empty($default)) {
+        return Router::url($default);
+      }
+      if ($firstonly) {
+        return null;
+      }
+
+      return [];
+    }
+
+    if ($firstonly) {
+      $files = $files[0];
+    }
+
+    return preg_filter('/^/', Router::Url(str_replace(' ', '%20', $fullDir)), $files);
   }
 
   private function makeFolder($save_dir, $deleteBefore = false, $temporary = false)
