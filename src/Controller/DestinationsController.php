@@ -53,7 +53,8 @@ class DestinationsController extends AppController
         ->where([
           'nomiseo LIKE' => "%$nomeseo%",
           'published' => 1
-        ])->first();
+        ])
+        ->first();
     } else {
       $nomeseo = $destination->name;
       $nomeseo_slug = $destination->slug;
@@ -64,6 +65,7 @@ class DestinationsController extends AppController
     }
 
     //Creo un array dai nomiseo
+    if (isset($destination->nomiseo)){
     $nomiseo = explode(',', $destination->nomiseo);
     //Cerco l'elemento che contiene il mio nomeseo
     foreach ($nomiseo as $n) {
@@ -71,8 +73,12 @@ class DestinationsController extends AppController
         $nomeseo = $n;
       }
     }
+   } else {
+     $nomeseo = $destination->name;
+   }
 
     $this->set('nomeseo', $nomeseo);
+    
     $this->set('canonical',  $nomeseo_slug);
     $this->set('destination', $destination);
 
@@ -94,7 +100,7 @@ class DestinationsController extends AppController
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
-    $query = $this->Destinations->find();
+    $query = $this->Destinations->find()->contain(['Articles']);
 
     $random = $this->request->getQuery('random');
     if (!empty($random)) {
