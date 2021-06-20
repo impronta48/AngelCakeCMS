@@ -7,6 +7,7 @@ use App\Notification\iscrizioneOkNotification;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\FrozenTime;
+use Exception;
 
 /**
  * Participants Controller
@@ -51,7 +52,7 @@ class ParticipantsController extends AppController
 				  //Mi servono i dati dell'evento
 					try {
 						$event = $this->Participants->Events->get($participant->event_id);
-					} catch (\Cake\Core\Exception\Exception $e) {
+					} catch (Exception $e) {
 						$this->Flash->error("impossibile recuperare i dati dell'evento per mandare una mail al destinatario");
 
 						return;

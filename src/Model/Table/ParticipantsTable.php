@@ -54,29 +54,28 @@ class ParticipantsTable extends Table
 	 */
 	public function validationDefault(Validator $validator): \Cake\Validation\Validator {
 		$validator
-			->integer('id')
-			->allowEmpty('id', 'create');
+			->integer('id');
 
 		$validator
 			->scalar('name')
 			->maxLength('name', 255)
 			->requirePresence('name', 'create')
-			->notEmpty('name');
+			->allowEmptyString('name');
 
 		$validator
 			->scalar('surname')
 			->maxLength('surname', 255)
 			->requirePresence('surname', 'create')
-			->notEmpty('surname');
+			->allowEmptyString('surname');
 
 		$validator
 			->email('email')
-			->notEmpty('email');
+			->allowEmptyString('email');
 
 		$validator
 			->scalar('tel')
 			->maxLength('tel', 50)
-			->notEmpty('tel');
+			->allowEmptyString('tel');
 
 		return $validator;
 	}

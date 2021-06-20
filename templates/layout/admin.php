@@ -36,12 +36,12 @@ use Cake\Core\Configure;
 
     <div v-cloak class="d-flex flex-column min-vh-100">
 
-      <div class="xv-cloak--inline">
+      <div class="v-cloak--inline">
         <!-- Parts that will be visible before compiled your HTML -->
-        <div class="xspinner"></div>
+        <div class="spinner"></div>
       </div>
 
-      <div class="xv-cloak--hidden">
+      <div class="v-cloak--hidden">
         <!-- Parts that will be visible After compiled your HTML -->
         <?= $this->element('v-admin-header'); ?>
         <main role="main" class="container">
