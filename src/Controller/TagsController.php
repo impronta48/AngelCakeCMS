@@ -18,9 +18,16 @@ class TagsController extends AppController
 	 * @return \Cake\Http\Response|void
 	 */
 	public function index() {
-		$tags = $this->paginate($this->Tags);
+		$query = $this->Tags->find();
 
-		$this->set(compact('tags'));
+        if (!$this->request->is('json')) {
+            $tags = $query->all();
+        } else {
+            $tags = $this->paginate($query);
+        }
+
+        $this->set(compact('tags'));
+        $this->viewBuilder()->setOption('serialize', 'tags');
 	}
 
 	/**
