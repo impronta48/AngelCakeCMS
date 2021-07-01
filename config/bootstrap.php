@@ -33,6 +33,7 @@ require __DIR__ . '/paths.php';
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 use Cake\Cache\Cache;
+use Cake\Cache\Engine\FileEngine;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Database\TypeFactory;
@@ -117,8 +118,13 @@ if (Configure::check('theme')) {
 if (Configure::read('debug')) {
   Configure::write('Cache._cake_model_.duration', '+2 minutes');
   Configure::write('Cache._cake_core_.duration', '+2 minutes');
-  // disable router cache during development
-  Configure::write('Cache._cake_routes_.duration', '+2 seconds');
+  Configure::write('Cache._cake_routes_', [
+      'className' => FileEngine::class,
+      'prefix' => Configure::read('sitedir') . '_angelcake_routes_',
+      'path' =>  CACHE . Configure::read('sitedir') . 'routes' . DS,
+      'serialize' => true,
+      'duration' => '+2 seconds',
+  ]);
 }
 
 /*
