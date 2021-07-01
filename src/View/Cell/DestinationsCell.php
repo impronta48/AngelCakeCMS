@@ -27,17 +27,31 @@ class DestinationsCell extends Cell
 	public function initialize(): void {
 	}
 
+	private function make_destination_list()
+	{
+        $this->loadModel('Destinations');
+        $destionations = $this->Destinations
+            ->find()
+            ->select(['name', 'slug', 'id'])
+            ->order(['name']);
+		return $destionations;
+	}
+
 	/**
 	 * Default display method.
 	 *
 	 * @return void
 	 */
 	public function display() {
-        $this->loadModel('Destinations');
-        $destionations = $this->Destinations
-            ->find()
-            ->select(['name', 'slug', 'id'])
-            ->order(['name']);
-        $this->set('destinations', $destionations);
+        $this->set('destinations', $this->make_destination_list());
+	}
+
+	/**
+	 * Options display method.
+	 *
+	 * @return void
+	 */
+	public function options() {
+        $this->set('destinations', $this->make_destination_list());
 	}
 }
