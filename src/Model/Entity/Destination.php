@@ -36,7 +36,7 @@ class Destination extends Entity
 		'*' => true,
 	];
 
-	protected $_virtual = ['copertina', 'url'];
+	protected $_virtual = ['safeCopertina', 'copertina', 'url'];
 
 	public function _getUrl() {
 		$locale = I18n::getLocale();
@@ -47,22 +47,30 @@ class Destination extends Entity
 		return "/{$locale}/{$this->slug}";
 	}
 
+	public function _getSafeCopertina() {
+		$img = $this->_getCopertina();
+		if (empty($img)) {
+			$img = Router::url(Configure::read('default-image', null));
+		}
+		return $img;
+	}
+
 	public function _getCopertina() {
 		$fullDir = AttachmentsController::getPath('Destinations', $this->slug, $this->id, 'copertina');
 
 		$dir = new Folder(WWW_ROOT . $fullDir);
 		$files = $dir->find(".*\.(jpg|jpeg|gif|png|webp)", true);
 
+		/*Controllo se è vuoto*/
+		if (!$files) {
+			return '';
+		}
+
 		if (is_array($files)) {
 			if (empty($files)) {
 				return '';
 			}
 			$files = $files[0];
-		}
-
-		/*Controllo se è vuoto*/
-		if (!$files) {
-			return Router::url(Configure::read('default-image', null));
 		}
 
 		$asd = preg_filter('/^/', Router::Url(str_replace(' ', '%20', $fullDir)), $files);
