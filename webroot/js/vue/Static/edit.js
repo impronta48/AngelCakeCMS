@@ -1,6 +1,10 @@
 var app = new Vue({
     el: '#app',
-    data: {},
+    data() {
+        return {
+            showMobile: false,
+        }
+    },
 });
 const Editor = toastui.Editor;
 const editor = new Editor({
