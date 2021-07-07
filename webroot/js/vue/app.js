@@ -5,5 +5,10 @@ var app = new Vue({
             form: {},
             showMobile: false,
         }
+    },
+    methods: {
+        showMobileMenu() {
+            this.showMobile = !this.showMobile;
+        },
     }
 });

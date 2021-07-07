@@ -5,6 +5,11 @@ var app = new Vue({
             showMobile: false,
         }
     },
+    methods: {
+        showMobileMenu() {
+            this.showMobile = !this.showMobile;
+        },
+    }
 });
 const Editor = toastui.Editor;
 const editor = new Editor({
