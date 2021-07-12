@@ -100,7 +100,9 @@ class DestinationsController extends AppController
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
-    $query = $this->Destinations->find()->contain(['Articles']);
+    $query = $this->Destinations->find()
+              ->contain(['Articles'])
+              ->where(['published' => true]);
 
     $random = $this->request->getQuery('random');
     if (!empty($random)) {
@@ -125,13 +127,6 @@ class DestinationsController extends AppController
       }
     } else {
       $query->select($select_columns);
-    }
-
-    $published = $this->request->getQuery('published');
-    if (!is_null($published)) {
-      $query->where(['published' => $published]);
-    } else {
-      $query->where(['published' => true]); // by defaylt, show only published
     }
 
     $limit = $this->request->getQuery('limit');
