@@ -63,6 +63,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 		 * Only try to load DebugKit in development mode
 		 * Debug Kit should not be installed on a production system
 		 */
+    //Configure::write('DebugKit.forceEnable', true);
     if (Configure::read('debug')) {
       $this->addPlugin('DebugKit');
     }
@@ -73,6 +74,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     $this->addPlugin('BootstrapUI');
     $this->addPlugin('ADmad/Glide');
     $this->addPlugin('ADmad/SocialAuth');
+    //$this->addPlugin('Notifications');
+    
 
     if (Configure::check('plugins')) {
       $plugins = Configure::read('AngelCake.plugins');
