@@ -113,6 +113,8 @@ class ArticlesController extends AppController
 			$old_destination = $article->destination_id;
 		}
 
+		//dd($article);
+
 		if ($this->request->is(['post', 'put'])) {
 			$this->Articles->patchEntity($article, $this->request->getData());
 

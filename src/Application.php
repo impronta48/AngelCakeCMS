@@ -50,6 +50,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
    */
   public function bootstrap(): void
   {
+        $this->addPlugin('DebugKit');
+
         $this->addPlugin('AssetMix');
 
     // Call parent to load bootstrap from files.
