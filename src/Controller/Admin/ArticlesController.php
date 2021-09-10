@@ -72,6 +72,7 @@ class ArticlesController extends AppController
 					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
 
+				if (isset($article['newgallery'][0]['error'])){
 				$error = $article['newgallery'][0]['error'];
 				if ($error == UPLOAD_ERR_OK) {
 				  //Prima di caricare la galleria non cancello quello che c'è $errorgià
@@ -79,13 +80,16 @@ class ArticlesController extends AppController
 				} elseif ($error != UPLOAD_ERR_NO_FILE) {
 					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
+				}
 
+				if (isset($article['newallegati'][0]['error'])){
 				$error = $article['newallegati'][0]['error'];
 				if ($error == UPLOAD_ERR_OK) {
 					$this->uploadFiles($article['id'], 'files', $article['newallegati'], false);
 				} elseif ($error != UPLOAD_ERR_NO_FILE) {
 					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
 				}
+			}
 
 				$this->Flash->success(__('Your article has been saved.'));
 
@@ -209,7 +213,7 @@ class ArticlesController extends AppController
 	}
 
 	private function uploadFiles($id, $fieldDir, $fnames, $deleteBefore) {
-
+		$copied = false;
 	  //this is the folder where i need to save
 		$article = $this->Articles->get($id);
 		$f = $article->getPath();
