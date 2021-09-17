@@ -1,6 +1,8 @@
 <?php
 
 use Cake\Core\Configure;
+echo $this->Html->script("jquery-1.10.2.min");
+echo $this->Html->script("jquery-ui.min");
 
 $this->assign('title', 'Article Edit: ' . $article->title); ?>
 <?php $sitedir = Configure::read('sitedir'); ?>
