@@ -11,7 +11,7 @@
         "jquery-ui": "^1.12.1",
         "leaflet": "^1.7.1",
         "moment": "^2.29.1",
-        "swiper": "^5.4.5",
+        "swiper": "^6.5.1",
         "vue": "^2.6.12",
         "vue-avatar": "^2.3.3",
         "vue-awesome-swiper": "^4.1.1",
