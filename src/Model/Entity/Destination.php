@@ -36,7 +36,7 @@ class Destination extends Entity
 		'*' => true,
 	];
 
-	protected $_virtual = ['safeCopertina', 'copertina', 'url'];
+	protected $_virtual = ['image', 'copertina', 'url'];
 
 	public function _getUrl() {
 		$locale = I18n::getLocale();
@@ -47,7 +47,7 @@ class Destination extends Entity
 		return "/{$locale}/{$this->slug}";
 	}
 
-	public function _getSafeCopertina() {
+	public function _getImage() {
 		$img = $this->_getCopertina();
 		if (empty($img)) {
 			$img = Router::url(Configure::read('default-image', null));
