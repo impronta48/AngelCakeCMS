@@ -300,18 +300,33 @@ Type::map('json', 'Cake\Database\Type\JsonType');
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 //require_once 'events.php';
+
+// Get the API whitelist. If this is empty, all requests will have CORS enabled
 $api_whitelist = Configure::read('api-whitelist');
 
-if (isset($_SERVER['HTTP_ORIGIN']) && !empty($api_whitelist)) {
-  if (in_array($_SERVER['HTTP_ORIGIN'], $api_whitelist)) {
-    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-  }
+// header('Access-Control-Allow-Methods: POST, GET, PUT, PATCH, DELETE, OPTIONS');
+// header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Accept, Accept-Encoding, Accept-Language');
+// header('Access-Control-Allow-Type: application/json');
+
+if (isset($_SERVER['HTTP_ORIGIN']) && (empty($api_whitelist) || in_array($_SERVER['HTTP_ORIGIN'], $api_whitelist))) {
+  header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+} else {
+  header('Access-Control-Allow-Origin:');
 }
-header('Access-Control-Allow-Methods: POST, GET, PUT, PATCH, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: *');
-//header('Access-Control-Allow-Credentials: true');
-//header('Access-Control-Allow-Headers: Content-Type');
-header('Access-Control-Allow-Type: application/json');
+
+if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
+  header("Access-Control-Allow-Methods: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']}, OPTIONS");
+} else {
+  header('Access-Control-Allow-Methods: *');
+}
+
+if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+  header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+} else {
+  header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Accept, Accept-Encoding, Accept-Language');
+}
+
+header('Access-Control-Allow-Credentials: true');
 
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
@@ -329,7 +344,7 @@ Configure::write('phpFileUploadErrors', [
 ]);
 
 Configure::write('groups', [
-  1  => 'admin',
+  1 => 'admin',
   2 => 'editor',
   3 => 'user'
 ]);
