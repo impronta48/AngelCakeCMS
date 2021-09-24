@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\InternalErrorException;
@@ -95,7 +96,7 @@ class ArticlesController extends AppController
 				}
 
 				$this->Flash->success(__('Your article has been saved.'));
-
+				Cache::clear('_cake_routes_');
 				return $this->redirect(['prefix' => false, 'action' => 'view', $article->slug]);
 			}
 			$this->Flash->error(__('Unable to add your article'));
@@ -127,6 +128,9 @@ class ArticlesController extends AppController
 			$this->Articles->patchEntity($article, $this->request->getData());
 
 			if ($this->Articles->save($article)) {
+				//Importante questo è necessario altrimenti non si aggiorna la route cache
+				Cache::clear('_cake_routes_');
+
 				//Se hai cambiato destination devo spostare gli allegati nella cartella giusta
 				if ($old_destination != $article->destination_id) {
 					if ($this->moveAttachments($old_destination, $article->destination_id, $id)) {
@@ -195,7 +199,7 @@ class ArticlesController extends AppController
 			}
 
 			$this->Flash->success(__('The {0} article has been deleted.', $article->title));
-
+			Cache::clear('_cake_routes_');
 			return $this->redirect(['action' => 'index']);
 		}
 	}
