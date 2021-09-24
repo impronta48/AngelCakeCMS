@@ -34,6 +34,7 @@ require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 use Cake\Cache\Cache;
 use Cake\Cache\Engine\FileEngine;
+use Cake\Cache\Engine\MemcachedEngine;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Database\TypeFactory;
@@ -137,11 +138,13 @@ Cache::setConfig('_cake_model_', [
  * Duration will be set to '+2 seconds' in bootstrap.php when debug = true
  */
 Cache::setConfig('_cake_routes_', [
-  'className' => FileEngine::class,
-  'prefix' => 'angelcake_routes_',
-  'path' =>  CACHE . Configure::read('sitedir') . DS . 'routes' . DS,
+  'className' => MemcachedEngine::class,
   'serialize' => true,
-  'duration' => '+1 years',
+  //'className' => FileEngine::class,
+  'prefix' => 'angelcake_routes_',
+  //'path' =>  CACHE . Configure::read('sitedir') . DS . 'routes' . DS,
+  'serialize' => 'igbinary',
+  'duration' => '+1 week',
 ]);
 /*
  * Configure images cache.
