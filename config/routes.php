@@ -64,6 +64,7 @@ if (Configure::check('plugins')) {
     }
   }
 }
+
 Router::scope('/images', function ($routes) {
   $routes->registerMiddleware('glide', new \ADmad\Glide\Middleware\GlideMiddleware([
     // Run this filter only for URLs starting with specified string. Default null.
@@ -145,7 +146,11 @@ $routes->scope('/', function (RouteBuilder $builder) {
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home']);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 
-  $builder->connect('/sitemap', ['controller' => 'Sitemaps', 'action' => 'index']);
+  $builder->scope('/sitemap', function (RouteBuilder $builder) {
+    $builder->connect('/', ['controller' => 'Sitemaps', 'action' => 'index']);
+    $builder->connect('/root', ['controller' => 'Sitemaps', 'action' => 'view']);
+  });
+
   // $builder->connect('/sitemap',
   //   ['controller' => 'Sitemaps', 'action' => 'index'],
   //   ['routeClass' => \ADmad\I18n\Routing\Route\I18nRoute::class],
