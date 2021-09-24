@@ -55,7 +55,7 @@ class ArticlesTable extends Table
 	 * @return \Cake\ORM\RulesChecker
 	 */
 	public function buildRules(RulesChecker $rules): RulesChecker {
-		$rules->add($rules->isUnique(['title']));
+		//$rules->add($rules->isUnique(['title']));
 
 		return $rules;
 	}
