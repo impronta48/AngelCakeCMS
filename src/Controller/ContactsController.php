@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Mailer\Mailer;
+use Cake\Routing\Router;
 use Exception;
 
 class ContactsController extends AppController
@@ -20,7 +21,7 @@ class ContactsController extends AppController
 
   public function index($destination)
   {
-    $this->autoRender = false;
+    //$this->autoRender = false;
     if ($this->request->is('post')) {
       $d = $this->request->getData();
 
@@ -54,7 +55,11 @@ class ContactsController extends AppController
         ->deliver($msg);
 
       $this->Flash->success('Grazie, ti risponderemo al più presto.');
-      $this->redirect($this->referer());
+      $referer = $this->referer();
+      if (empty($referer)) {
+        $referer = Router::url('/');
+      } 
+      $this->set(compact('referer'));
     }
   }
 }
