@@ -196,7 +196,7 @@ class StaticModel
 					$risult[$k]['file']  = $f;
 					$risult[$k]['dati'] = $this->leggi_file_md($path . DS . $f);
 					if (!isset($risult[$k]['dati']['date'])) {
-						$risult[$k]['dati']['date'] = null;
+						$risult[$k]['dati']['date'] = filemtime($path . DS . $f);
 					}
 				  //Mi devo fermare quando raggiungo il limite
 					if ($i > $limit) {
@@ -207,6 +207,9 @@ class StaticModel
 
 		  //Ordino l'array dei risultati per il campo date invertito
 			usort($risult, function ($a, $b) {
+				if (!is_string($a['dati']['date']) || !is_string($b['dati']['date'])){
+					return 0;
+				} 
 				return -1 * strcmp($a['dati']['date'], $b['dati']['date']);
 			});
 
