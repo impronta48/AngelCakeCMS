@@ -19,7 +19,7 @@ class Article extends Entity
 	'id' => false,
 	];
 
-	protected $_virtual = ['copertina', 'gallery', 'allegati'];
+	protected $_virtual = ['image', 'copertina', 'gallery', 'allegati'];
 
 	protected function _getTagString() {
 		if (isset($this->_fields['tag_string'])) {
@@ -61,6 +61,14 @@ class Article extends Entity
 		} else {
 			return null;
 		}
+	}
+
+	public function _getImage() {
+		$img = $this->_getCopertina();
+		if (!empty($img)) return $img;
+		$img = $this->_getGallery();
+		if (!empty($img)) return $img[0];
+    	return Router::url(Configure::read('default-image', null));
 	}
 
 	public function _getCopertina() {
