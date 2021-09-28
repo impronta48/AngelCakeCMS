@@ -140,7 +140,7 @@ Cache::setConfig('_cake_model_', [
 Cache::setConfig('_cake_routes_', [
   'className' => MemcachedEngine::class,
   'serialize' => true,
-  'prefix' => 'angelcake_routes_',
+  'prefix' => 'angelcake_routes_' . Configure::read('sitedir') . '_',
   //'className' => FileEngine::class,
   //'path' =>  CACHE . Configure::read('sitedir') . DS . 'routes' . DS,
   'serialize' => 'php',
