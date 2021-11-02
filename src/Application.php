@@ -30,10 +30,20 @@ use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Identifier\IdentifierInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Policy\ResolverCollection;
+use Authorization\Policy\MapResolver;
+use Authorization\Policy\OrmResolver;
+use Psr\Http\Message\ResponseInterface;
 use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use ADmad\SocialAuth\Middleware\SocialAuthMiddleware;
-
+use Authorization\Middleware\RequestAuthorizationMiddleware;
+use App\Policy\RequestPolicy;
+use Cake\Http\ServerRequest;
 
 /**
  * Application setup class.
@@ -41,7 +51,7 @@ use ADmad\SocialAuth\Middleware\SocialAuthMiddleware;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication implements AuthenticationServiceProviderInterface
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
 {
   /**
    * Load all the application configuration and bootstrap logic.
@@ -50,9 +60,9 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
    */
   public function bootstrap(): void
   {
-        $this->addPlugin('DebugKit');
+    $this->addPlugin('DebugKit');
 
-        $this->addPlugin('AssetMix');
+    $this->addPlugin('AssetMix');
 
     // Call parent to load bootstrap from files.
     parent::bootstrap();
@@ -195,6 +205,13 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     ]));
 
     $middlewareQueue->add(new AuthenticationMiddleware($this));
+    $middlewareQueue->add(new AuthorizationMiddleware($this, [
+      // 'requireAuthorizationCheck' => false,
+      // 'identityDecorator' => function ($auth, $user) {
+      //   return $user->setAuthorization($auth);
+      // }
+    ]));
+    // $middlewareQueue->add(new RequestAuthorizationMiddleware());
 
     // Add your middlewares here
     //->add(new LocaleSelectorMiddleware());
@@ -264,4 +281,19 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
     return $service;
   }
+
+  public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+  {
+    $ormResolver = new OrmResolver();
+    $mapResolver = new MapResolver();
+
+    // $mapResolver->map(ServerRequest::class, RequestPolicy::class);
+      
+    // Check the map resolver, and fallback to the orm resolver if
+    // a resource is not explicitly mapped.
+    $resolver = new ResolverCollection([$mapResolver, $ormResolver]);
+
+    return new AuthorizationService($resolver);
+  }
+
 }

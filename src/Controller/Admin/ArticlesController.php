@@ -60,6 +60,7 @@ class ArticlesController extends AppController
 	public function add()
 	{
 		$article = $this->Articles->newEmptyEntity();
+		$this->Authorization->authorize($article);
 		if ($this->request->is('post')) {
 			$article = $this->Articles->patchEntity($article, $this->request->getData());
 
@@ -115,6 +116,8 @@ class ArticlesController extends AppController
 			->findById($id)
 			->contain('Tags')
 			->firstOrFail();
+
+		$this->Authorization->authorize($article);
 
 		if ($article->destination_id == null) {
 			$old_destination = 0;
@@ -186,6 +189,8 @@ class ArticlesController extends AppController
 		$this->request->allowMethod(['post', 'delete']);
 
 		$article = $this->Articles->findById($id)->firstOrFail();
+		$this->Authorization->authorize($article);
+
 		$dest = $this->getDestinationSlug($id);
 		if ($this->Articles->delete($article)) {
 			$f = $article->getPath();
@@ -227,6 +232,8 @@ class ArticlesController extends AppController
 		$copied = false;
 		//this is the folder where i need to save
 		$article = $this->Articles->get($id);
+		$this->Authorization->authorize($article, 'edit');
+
 		$f = $article->getPath();
 
 		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');

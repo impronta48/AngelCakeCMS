@@ -68,6 +68,9 @@ class DestinationsController extends AppController
 
 		$query->where(['id' => $id]);                 //Filtro le destination
 		$destination = $query->first();
+
+		$this->Authorization->authorize($destination);
+
 		$this->set('destination', $destination);
 
 		$articles_q->where(['destination_id' => $id]); //Filtro gli articoli
@@ -86,6 +89,8 @@ class DestinationsController extends AppController
 	public function add()
 	{
 		$destination = $this->Destinations->newEmptyEntity();
+		$this->Authorization->authorize($destination);
+
 		if ($this->request->is('post')) {
 			$destination = $this->Destinations->patchEntity($destination, $this->request->getData());
 			if ($this->Destinations->save($destination)) {
@@ -113,6 +118,7 @@ class DestinationsController extends AppController
 			$destination = $this->Destinations->get($id);
 		}
 		$new = $destination->isNew();
+		$this->Authorization->authorize($destination);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$data = $this->request->getData();
@@ -155,6 +161,8 @@ class DestinationsController extends AppController
 	{
 		$this->request->allowMethod(['post', 'delete']);
 		$destination = $this->Destinations->get($id);
+		$this->Authorization->authorize($destination);
+
 		if ($this->Destinations->delete($destination)) {
 			$this->Flash->success(__('The destination has been deleted.'));
 		} else {

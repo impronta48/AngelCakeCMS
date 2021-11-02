@@ -46,6 +46,13 @@ class PagesController extends AppController
 	 * @throws \Cake\View\Exception\MissingTemplateException In debug mode.
 	 */
 	public function display(...$path): ?Response {
+		// TODO create a custom policy for pages and map it!
+		$this->Authorization->skipAuthorization();
+		$user = $this->request->getAttribute('identity');
+		if (!in_array($user->group_id, [1, 2, 3, 4, 9])) {
+			$this->redirect('/');
+		}
+
 		if (!$path) {
 			return $this->redirect('/');
 		}
