@@ -33,7 +33,7 @@ class DestinationsController extends AppController
 		$query = $this->Destinations->find()
 			->contain(['Articles']);
 
-		$this->Authorization->appluScope($query);
+		$this->Authorization->applyScope($query);
 
 		$destinations = $this->paginate($query);
 

@@ -50,6 +50,8 @@ class ArticlesController extends AppController
 			$query->where(['destination_id' => $destination_id]);
 		}
 
+		$this->Authorization->applyScope($query);
+
 		//dd($query);
 		$this->loadModel('Destinations');
 		$destinations = $this->Destinations->find('list')->order('name');
@@ -60,11 +62,12 @@ class ArticlesController extends AppController
 	public function add()
 	{
 		$article = $this->Articles->newEmptyEntity();
-		$this->Authorization->authorize($article);
 		if ($this->request->is('post')) {
 			$article = $this->Articles->patchEntity($article, $this->request->getData());
 
 			$article->user_id = $this->Authentication->getIdentity()->getIdentifier();
+
+			$this->Authorization->authorize($article);
 
 			if ($this->Articles->save($article)) {
 				//Salvare allegati, copertina e galleria
@@ -103,6 +106,8 @@ class ArticlesController extends AppController
 			$this->Flash->error(__('Unable to add your article'));
 			//dd($article->getErrors());
 		}
+		$this->Authorization->skipAuthorization();
+
 		$tags = $this->Articles->Tags->find('list');
 		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
 		$destinations = $this->Articles->Destinations->find('list');

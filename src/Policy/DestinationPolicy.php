@@ -17,18 +17,6 @@ class DestinationPolicy
             return true;
     }
 
-    private function canTakeAction(IdentityInterface $user, Destination $destination)
-    {
-        if (
-            $user->group_id == 9 || // EDITOR can edit anything
-            ( isset($destination->id) && $user->group_id == 2 && $user->destination_id == $destination->id ) // BAM can edit their destination
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * Check if $user can add Destination
      *
@@ -38,7 +26,6 @@ class DestinationPolicy
      */
     public function canAdd(IdentityInterface $user, Destination $destination)
     {
-        if ($user->group_id == 9) return true; // Only editors can add more destinations
         return false;
     }
 
@@ -51,7 +38,7 @@ class DestinationPolicy
      */
     public function canEdit(IdentityInterface $user, Destination $destination)
     {
-        return $this->canTakeAction($user, $destination);
+        return false;
     }
 
     /**
@@ -63,7 +50,6 @@ class DestinationPolicy
      */
     public function canDelete(IdentityInterface $user, Destination $destination)
     {
-        if ($user->group_id == 9) return true; // Only editors can delete destinations
         return false;
     }
 
