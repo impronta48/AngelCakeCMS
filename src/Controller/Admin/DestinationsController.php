@@ -30,9 +30,12 @@ class DestinationsController extends AppController
 
 	public function index()
 	{
-		$destinations = $this->paginate($this->Destinations, [
-			'contain' => ['Articles'],
-		]);
+		$query = $this->Destinations->find()
+			->contain(['Articles']);
+
+		$this->Authorization->appluScope($query);
+
+		$destinations = $this->paginate($query);
 
 		$this->set(compact('destinations'));
 	}
