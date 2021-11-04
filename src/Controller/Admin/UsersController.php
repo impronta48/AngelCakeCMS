@@ -18,9 +18,8 @@ class UsersController extends AppController
   public function beforeFilter(\Cake\Event\EventInterface $event)
   {
     parent::beforeFilter($event);
-    $this->loadComponent('Authentication.Authentication');
     $this->Authentication->allowUnauthenticated(['login']);
-    $this->Authentication->authorizeModel('add', 'edit', 'delete');
+    // $this->Authentication->authorizeModel('add', 'edit', 'delete');
   }
 
   /**
@@ -30,9 +29,12 @@ class UsersController extends AppController
    */
   public function index()
   {
-    $this->paginate = ['contain' => ['Destinations']];
-    $users = $this->paginate($this->Users);
+    $query = $this->Users->find()
+              ->contain(['Destinations']);
 
+    $this->Authorization->applyScope($query);
+
+    $users = $this->paginate($query);
 
     $this->set(compact('users'));
   }
@@ -49,6 +51,8 @@ class UsersController extends AppController
     $user = $this->Users->get($id, [
       'contain' => ['Articles', 'Events', 'SocialAccounts'],
     ]);
+
+    $this->Authorization->authorize($user);
 
     $this->set(compact('user'));
   }
@@ -67,12 +71,16 @@ class UsersController extends AppController
       $user->username = $user->gmail;
       $user->password = 'IMPOSSIBILE' . rand(0, 12345);
 
+      $this->Authorization->authorize($user);
+
       if ($this->Users->save($user)) {
         $this->Flash->success(__('The user has been saved.'));
 
         return $this->redirect(['action' => 'index']);
       }
       $this->Flash->error(__('The user could not be saved. Please, try again.'));
+    } else {
+      $this->Authorization->skipAuthorization();
     }
     $destinations = $this->Users->Destinations->find('list');
     $this->set(compact('user', 'destinations'));
@@ -90,8 +98,10 @@ class UsersController extends AppController
     $user = $this->Users->get($id, [
       'contain' => [],
     ]);
+    $this->Authorization->authorize($user);
     if ($this->request->is(['patch', 'post', 'put'])) {
       $user = $this->Users->patchEntity($user, $this->request->getData());
+      $this->Authorization->authorize($user);
       if ($this->Users->save($user)) {
         $this->Flash->success(__('The user has been saved.'));
 
@@ -114,6 +124,7 @@ class UsersController extends AppController
   {
     $this->request->allowMethod(['post', 'delete']);
     $user = $this->Users->get($id);
+    $this->Authorization->authorize($user);
     if ($this->Users->delete($user)) {
       $this->Flash->success(__('The user has been deleted.'));
     } else {
