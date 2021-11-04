@@ -15,6 +15,8 @@ class ArticlePolicy
     {
         if ($user->group_id == 1) // is an admin, can do whatever
             return true;
+        if (!in_array($user->group_id, [1,2,3,6,9])) // is not allowed to edit
+            return false;
     }
 
     private function canTakeAction(IdentityInterface $user, Article $article)
@@ -83,6 +85,24 @@ class ArticlePolicy
             return true;
         }
 
+        return false;
+    }
+
+    /**
+     * Check if $user can manage attachments of Article
+     *
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Article $article
+     * @return bool
+     */
+    public function canUpload(IdentityInterface $user, Article $article)
+    {
+        if (in_array($user->group_id, [1,2,3,6,9])) {
+            if (!is_null($article)) {
+                return $this->canEdit($user, $article);
+            }
+            return true;
+        }
         return false;
     }
 }

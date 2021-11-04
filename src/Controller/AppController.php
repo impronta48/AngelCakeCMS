@@ -59,7 +59,12 @@ class AppController extends Controller
     //This way i load a different layout and I request authentication just for admin/
     if ($this->request->getParam('prefix') === 'Admin') {
       $this->loadComponent('Authentication.Authentication');
-      $this->viewBuilder()->setLayout('admin');
+		  $user = $this->request->getAttribute('identity');
+		  if (!in_array($user->group_id, [1, 2, 3, 4, 9])) { // kinda raw, there's probably a nicer way, TODO
+		  	$this->redirect('/');
+		  } else {
+        $this->viewBuilder()->setLayout('admin');
+      }
     } else {
       $this->Authorization->skipAuthorization();
     }

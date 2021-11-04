@@ -96,6 +96,7 @@ class DestinationsController extends AppController
 
 		if ($this->request->is('post')) {
 			$destination = $this->Destinations->patchEntity($destination, $this->request->getData());
+			$this->Authorization->authorize($destination);
 			if ($this->Destinations->save($destination)) {
 				$this->Flash->success(__('The destination has been saved.'));
 
@@ -126,6 +127,7 @@ class DestinationsController extends AppController
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$data = $this->request->getData();
 			$destination = $this->Destinations->patchEntity($destination, $data);
+			$this->Authorization->authorize($destination);
 
 			if ($this->Destinations->save($destination)) {
 				$destination = $this->Destinations->get($destination->id);

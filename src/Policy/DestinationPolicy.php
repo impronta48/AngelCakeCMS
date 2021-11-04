@@ -15,6 +15,8 @@ class DestinationPolicy
     {
         if ($user->group_id == 1) // is an admin, can do whatever
             return true;
+        if (!in_array($user->group_id, [1,2,3,6,9])) // is not allowed to edit
+            return false;
     }
 
     /**

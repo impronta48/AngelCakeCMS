@@ -105,8 +105,9 @@ class ArticlesController extends AppController
 			}
 			$this->Flash->error(__('Unable to add your article'));
 			//dd($article->getErrors());
+		} else {
+			$this->Authorization->skipAuthorization();
 		}
-		$this->Authorization->skipAuthorization();
 
 		$tags = $this->Articles->Tags->find('list');
 		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
@@ -134,6 +135,8 @@ class ArticlesController extends AppController
 
 		if ($this->request->is(['post', 'put'])) {
 			$this->Articles->patchEntity($article, $this->request->getData());
+
+			$this->Authorization->authorize($article);
 
 			if ($this->Articles->save($article)) {
 				//Importante questo è necessario altrimenti non si aggiorna la route cache
@@ -237,7 +240,7 @@ class ArticlesController extends AppController
 		$copied = false;
 		//this is the folder where i need to save
 		$article = $this->Articles->get($id);
-		$this->Authorization->authorize($article, 'edit');
+		$this->Authorization->authorize($article, 'upload');
 
 		$f = $article->getPath();
 
@@ -282,6 +285,7 @@ class ArticlesController extends AppController
 	public function removeFile()
 	{
 		$fname = $this->request->getQuery('fname');
+		$this->Authorization->authorize(null, 'upload'); // TODO need an article to enforce perms!
 
 		if (!empty($fname)) {
 			$fname = rtrim(WWW_ROOT, DS) . $fname;
@@ -302,6 +306,7 @@ class ArticlesController extends AppController
 
 	private function moveAttachments($old_dest, $new_dest, $id)
 	{
+		$this->Authorization->authorize(null, 'upload'); // TODO need an article to enforce perms!
 		$this->loadModel('Destinations');
 		if ($old_dest > 0) {
 			$od = $this->Destinations->findById($old_dest)->first();
@@ -324,6 +329,7 @@ class ArticlesController extends AppController
 	public function uploadImage()
 	{
 		$r = $this->request->getData();
+		$this->Authorization->authorize(null, 'upload'); // TODO need an article to enforce perms!
 
 		//Salvo le immagini di ckeditor
 		$error = $r['upload']['error'];
