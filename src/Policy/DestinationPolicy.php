@@ -5,11 +5,12 @@ namespace App\Policy;
 
 use App\Model\Entity\Destination;
 use Authorization\IdentityInterface;
+use Authorization\Policy\BeforePolicyInterface;
 
 /**
  * Destination policy
  */
-class DestinationPolicy
+class DestinationPolicy implements BeforePolicyInterface
 {
     public function before(?IdentityInterface $user, $resource, $action)
     {

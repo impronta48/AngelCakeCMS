@@ -56,7 +56,6 @@ class AppController extends Controller
     //$this->loadComponent('FormProtection');
 
     $this->loadComponent('Authorization.Authorization');
-    $this->Authorization->skipAuthorization();
     //This way i load a different layout and I request authentication just for admin/
     if ($this->request->getParam('prefix') === 'Admin') {
       $this->loadComponent('Authentication.Authentication');
