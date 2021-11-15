@@ -144,7 +144,10 @@ $routes->scope('/', function (RouteBuilder $builder) {
      */
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home']);
+  $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+  $builder->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['routeClass' => I18nRoute::class]);
+  $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
 
   $builder->scope('/sitemap', function (RouteBuilder $builder) {
     $builder->connect('/', ['controller' => 'Sitemaps', 'action' => 'index']);
@@ -186,6 +189,7 @@ $routes->prefix('Admin', function (RouteBuilder $routes) { // Admin routes
   // will be required when generating URLs for these routes
   $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'admin'], ['routeClass' => I18nRoute::class]);
   $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'admin']);
+  $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index'], ['routeClass' => I18nRoute::class]);
   $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']); // TODO this fixes Poi, Percorsi, Destinations?
   $routes->setExtensions(['xls', 'json']);
   // Admin fallbacks
