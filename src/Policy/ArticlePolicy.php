@@ -22,6 +22,7 @@ class ArticlePolicy
     private function canTakeAction(IdentityInterface $user, Article $article)
     {
         if (
+            $user->group_id == 1 || // ADMIN can edit anything
             $user->group_id == 9 || // EDITOR can edit anything
             ( isset($article->destination_id) && $user->group_id == 2 && $user->destination_id == $article->destination_id ) || // BAM can only edit in its destination
             ( isset($article->user_id) && in_array($user->group_id, [3, 6]) && $user->id == $article->user_id ) // Renter/Commerciale can only edit his entries

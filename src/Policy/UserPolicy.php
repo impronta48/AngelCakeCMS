@@ -5,13 +5,14 @@ namespace App\Policy;
 
 use App\Model\Entity\User;
 use Authorization\IdentityInterface;
+use Authorization\Policy\BeforePolicyInterface;
 
 /**
  * User policy
  */
-class UserPolicy
+class UserPolicy  implements BeforePolicyInterface
 {
-    public function before(?IdentityInterface $user, User $resource, $action)
+    public function before($user, $resource, $action)
     {
         if ($user->group_id == 1) // is an admin, can do whatever
             return true;
