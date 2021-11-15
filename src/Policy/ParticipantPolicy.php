@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Entity\User;
+use App\Model\Entity\Participant;
 use Authorization\IdentityInterface;
 use Authorization\Policy\BeforePolicyInterface;
 
 /**
- * User policy
+ * Participant policy
  */
-class UserPolicy implements BeforePolicyInterface
+class ParticipantPolicy implements BeforePolicyInterface
 {
-    public function before($user, $resource, $action)
+    public function before(?IdentityInterface $user, $resource, $action)
     {
         if ($user->group_id == 1) // is an admin, can do whatever
             return true;
@@ -21,53 +21,50 @@ class UserPolicy implements BeforePolicyInterface
     }
 
     /**
-     * Check if $user can add User
+     * Check if $user can add Participant
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Participant $participant
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, User $resource)
+    public function canAdd(IdentityInterface $user, Participant $participant)
     {
         return false;
     }
 
     /**
-     * Check if $user can edit User
+     * Check if $user can edit Participant
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Participant $participant
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, User $resource)
+    public function canEdit(IdentityInterface $user, Participant $participant)
     {
         return false;
     }
 
     /**
-     * Check if $user can delete User
+     * Check if $user can delete Participant
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Participant $participant
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, User $resource)
+    public function canDelete(IdentityInterface $user, Participant $participant)
     {
         return false;
     }
 
     /**
-     * Check if $user can view User
+     * Check if $user can view Participant
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Participant $participant
      * @return bool
      */
-    public function canView(IdentityInterface $user, User $resource)
+    public function canView(IdentityInterface $user, Participant $participant)
     {
-        if ($user->id == $resource->id) {
-            return true;
-        }
         return false;
     }
 }

@@ -38,11 +38,15 @@ class ParticipantsController extends AppController
 			$conditions['event_id'] = $event_id;
 		}
 
+		$query = $this->Participants->find('all', ['conditions' => $conditions]);
+
+		$this->Authorization->applyScope($query);
+
 		if ($ext == 'xls') {
-			$participants = $this->Participants->find('all', ['conditions' => $conditions]);
+			$participants = $query->toList();
 		} else {
 			$this->paginate['conditions'] = $conditions;
-			$participants = $this->paginate($this->Participants);
+			$participants = $this->paginate($query);
 		}
 
 		$columns = $this->Participants->getSchema()->columns();
@@ -60,8 +64,10 @@ class ParticipantsController extends AppController
 		$participant = $this->Participants->get($id, [
 		'contain' => [],
 		]);
+		$this->Authorization->authorize($participant);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$participant = $this->Participants->patchEntity($participant, $this->request->getData());
+			$this->Authorization->authorize($participant);
 			if ($this->Participants->save($participant)) {
 				$this->Flash->success(__('The participant has been saved.'));
 
@@ -84,6 +90,7 @@ class ParticipantsController extends AppController
 	public function delete($id = null) {
 		$this->request->allowMethod(['post', 'delete']);
 		$participant = $this->Participants->get($id);
+		$this->Authorization->authorize($participant);
 		if ($this->Participants->delete($participant)) {
 			$this->Flash->success(__('The participant has been deleted.'));
 		} else {
@@ -104,6 +111,8 @@ class ParticipantsController extends AppController
 		$participant = $this->Participants->get($id, [
 		'contain' => ['Events'],
 		]);
+
+		$this->Authorization->authorize($participant);
 
 		$this->set('participant', $participant);
 	}

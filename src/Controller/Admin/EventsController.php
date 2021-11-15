@@ -24,6 +24,9 @@ class EventsController extends AppController
 		$q = $this->request->getQuery('q');
 		$query = $this->Events->find()
 		->contain(['Destinations']);
+
+		$this->Authorization->applyScope($query);
+
 	  //Se mi hai passato dei parametri in query filtro su quelli
 		if (!empty($q)) {
 			$query->where(['title LIKE' => "%$q%"]);
@@ -44,13 +47,15 @@ class EventsController extends AppController
 		TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
 		if ($this->request->is('post')) {
 			$event = $this->Events->patchEntity($event, $this->request->getData());
-
+			$this->Authorization->authorize($event);
 			if ($this->Events->save($event)) {
 				$this->Flash->success(__('The event has been saved.'));
 
 				return $this->redirect(['action' => 'index']);
 			}
 			$this->Flash->error(__('The event could not be saved. Please, try again.'));
+		} else {
+			$this->Authorization->skipAuthorization();
 		}
 		$destinations = $this->Events->Destinations->find('list', ['limit' => 200]);
 		$users = $this->Events->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
@@ -68,12 +73,13 @@ class EventsController extends AppController
 		$event = $this->Events->get($id, [
 		'contain' => [],
 		]);
+		$this->Authorization->authorize($event);
 	  //Necessario per questo https://discourse.cakephp.org/t/patchentity-set-date-field-to-null/7361/3
 		TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$event = $this->Events->patchEntity($event, $this->request->getData());
-
+			$this->Authorization->authorize($event);
 			if ($this->Events->save($event)) {
 				$this->Flash->success(__('The event has been saved.'));
 
@@ -96,6 +102,7 @@ class EventsController extends AppController
 	public function delete($id = null) {
 		$this->request->allowMethod(['post', 'delete']);
 		$event = $this->Events->get($id);
+		$this->Authorization->authorize($event);
 		if ($this->Events->delete($event)) {
 			$this->Flash->success(__('The event has been deleted.'));
 		} else {
@@ -116,6 +123,8 @@ class EventsController extends AppController
 		$event = $this->Events->get($id, [
 		'contain' => ['Destinations', 'Users', 'Participants'],
 		]);
+
+		$this->Authorization->authorize($event);
 
 		$this->set('event', $event);
 	}

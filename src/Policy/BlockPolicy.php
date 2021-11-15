@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Entity\User;
+use App\Model\Entity\Block;
 use Authorization\IdentityInterface;
 use Authorization\Policy\BeforePolicyInterface;
 
 /**
- * User policy
+ * Block policy
  */
-class UserPolicy implements BeforePolicyInterface
+class BlockPolicy implements BeforePolicyInterface
 {
-    public function before($user, $resource, $action)
+    public function before(?IdentityInterface $user, $resource, $action)
     {
         if ($user->group_id == 1) // is an admin, can do whatever
             return true;
@@ -21,53 +21,50 @@ class UserPolicy implements BeforePolicyInterface
     }
 
     /**
-     * Check if $user can add User
+     * Check if $user can add Block
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Block $block
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, User $resource)
+    public function canAdd(IdentityInterface $user, Block $block)
     {
         return false;
     }
 
     /**
-     * Check if $user can edit User
+     * Check if $user can edit Block
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Block $block
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, User $resource)
+    public function canEdit(IdentityInterface $user, Block $block)
     {
         return false;
     }
 
     /**
-     * Check if $user can delete User
+     * Check if $user can delete Block
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Block $block
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, User $resource)
+    public function canDelete(IdentityInterface $user, Block $block)
     {
         return false;
     }
 
     /**
-     * Check if $user can view User
+     * Check if $user can view Block
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Block $block
      * @return bool
      */
-    public function canView(IdentityInterface $user, User $resource)
+    public function canView(IdentityInterface $user, Block $block)
     {
-        if ($user->id == $resource->id) {
-            return true;
-        }
         return false;
     }
 }

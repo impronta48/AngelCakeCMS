@@ -5,11 +5,12 @@ namespace App\Policy;
 
 use App\Model\Entity\Article;
 use Authorization\IdentityInterface;
+use Authorization\Policy\BeforePolicyInterface;
 
 /**
  * Article policy
  */
-class ArticlePolicy
+class ArticlePolicy implements BeforePolicyInterface
 {
     public function before(?IdentityInterface $user, $resource, $action)
     {

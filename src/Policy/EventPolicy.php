@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Entity\User;
+use App\Model\Entity\Event;
 use Authorization\IdentityInterface;
 use Authorization\Policy\BeforePolicyInterface;
 
 /**
- * User policy
+ * Event policy
  */
-class UserPolicy implements BeforePolicyInterface
+class EventPolicy implements BeforePolicyInterface
 {
-    public function before($user, $resource, $action)
+    public function before(?IdentityInterface $user, $resource, $action)
     {
         if ($user->group_id == 1) // is an admin, can do whatever
             return true;
@@ -21,53 +21,50 @@ class UserPolicy implements BeforePolicyInterface
     }
 
     /**
-     * Check if $user can add User
+     * Check if $user can add Event
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Event $event
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, User $resource)
+    public function canAdd(IdentityInterface $user, Event $event)
     {
         return false;
     }
 
     /**
-     * Check if $user can edit User
+     * Check if $user can edit Event
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Event $event
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, User $resource)
+    public function canEdit(IdentityInterface $user, Event $event)
     {
         return false;
     }
 
     /**
-     * Check if $user can delete User
+     * Check if $user can delete Event
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Event $event
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, User $resource)
+    public function canDelete(IdentityInterface $user, Event $event)
     {
         return false;
     }
 
     /**
-     * Check if $user can view User
+     * Check if $user can view Event
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
+     * @param \App\Model\Entity\Event $event
      * @return bool
      */
-    public function canView(IdentityInterface $user, User $resource)
+    public function canView(IdentityInterface $user, Event $event)
     {
-        if ($user->id == $resource->id) {
-            return true;
-        }
         return false;
     }
 }

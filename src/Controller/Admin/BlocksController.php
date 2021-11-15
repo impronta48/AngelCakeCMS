@@ -19,7 +19,11 @@ class BlocksController extends AppController
 	 * @return \Cake\Http\Response|null|void Renders view
 	 */
 	public function index() {
-		$blocks = $this->paginate($this->Blocks);
+		$query = $this->Blocks->find();
+
+		$this->Authorization->applyScope($query);
+
+		$blocks = $this->paginate($query);
 
 		$this->set(compact('blocks'));
 	}
@@ -33,12 +37,15 @@ class BlocksController extends AppController
 		$block = $this->Blocks->newEmptyEntity();
 		if ($this->request->is('post')) {
 			$block = $this->Blocks->patchEntity($block, $this->request->getData());
+			$this->Authorization->authorize($block);
 			if ($this->Blocks->save($block)) {
 				$this->Flash->success(__('The block has been saved.'));
 
 				return $this->redirect(['action' => 'index']);
 			}
 			$this->Flash->error(__('The block could not be saved. Please, try again.'));
+		} else {
+			$this->Authorization->skipAuthorization();
 		}
 		$this->set(compact('block'));
 	}
@@ -54,8 +61,10 @@ class BlocksController extends AppController
 		$block = $this->Blocks->get($id, [
 		'contain' => [],
 		]);
+		$this->Authorization->authorize($block);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$block = $this->Blocks->patchEntity($block, $this->request->getData());
+			$this->Authorization->authorize($block);
 			if ($this->Blocks->save($block)) {
 				$this->Flash->success(__('The block has been saved.'));
 
@@ -81,6 +90,7 @@ class BlocksController extends AppController
 	public function delete($id = null) {
 		$this->request->allowMethod(['post', 'delete']);
 		$block = $this->Blocks->get($id);
+		$this->Authorization->authorize($block);
 		if ($this->Blocks->delete($block)) {
 			$this->Flash->success(__('The block has been deleted.'));
 		} else {
