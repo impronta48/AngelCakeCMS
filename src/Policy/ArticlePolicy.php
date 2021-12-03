@@ -107,4 +107,22 @@ class ArticlePolicy implements BeforePolicyInterface
         }
         return false;
     }
+
+        /**
+     * Check if $user can manage attachments of Article
+     *
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Article $article
+     * @return bool
+     */
+    public function canMoveAttachment(IdentityInterface $user, Article $article)
+    {
+        if (in_array($user->group_id, [1,2,3,6,9])) {
+            if (!is_null($article)) {
+                return $this->canEdit($user, $article);
+            }
+            return true;
+        }
+        return false;
+    }
 }
