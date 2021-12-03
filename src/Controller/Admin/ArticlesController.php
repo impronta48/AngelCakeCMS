@@ -47,7 +47,7 @@ class ArticlesController extends AppController
 			$query->where(['title LIKE' => "%$q%"]);
 		}
 		if (!empty($destination_id)) {
-			$query->where(['destination_id' => $destination_id]);
+			$query->where(['Articles.destination_id' => $destination_id]);
 		}
 
 		$this->Authorization->applyScope($query);
