@@ -197,7 +197,6 @@ class ArticlesController extends AppController
 		$this->request->allowMethod(['post', 'delete']);
 
 		$article = $this->Articles->findById($id)->firstOrFail();
-		$this->Authorization->authorize($article);
 
 		$dest = $this->getDestinationSlug($id);
 		if ($this->Articles->delete($article)) {
@@ -240,7 +239,6 @@ class ArticlesController extends AppController
 		$copied = false;
 		//this is the folder where i need to save
 		$article = $this->Articles->get($id);
-		$this->Authorization->authorize($article, 'upload');
 
 		$f = $article->getPath();
 
@@ -285,7 +283,7 @@ class ArticlesController extends AppController
 	public function removeFile()
 	{
 		$fname = $this->request->getQuery('fname');
-		$this->Authorization->authorize(null, 'upload'); // TODO need an article to enforce perms!
+		$this->Authorization->authorize($fname, 'upload'); // TODO need an article to enforce perms!
 
 		if (!empty($fname)) {
 			$fname = rtrim(WWW_ROOT, DS) . $fname;
@@ -306,7 +304,8 @@ class ArticlesController extends AppController
 
 	private function moveAttachments($old_dest, $new_dest, $id)
 	{
-		$this->Authorization->authorize(null, 'upload'); // TODO need an article to enforce perms!
+		$article = $this->Articles->get($id);
+		$path = $article->getPath();
 		$this->loadModel('Destinations');
 		if ($old_dest > 0) {
 			$od = $this->Destinations->findById($old_dest)->first();
@@ -320,8 +319,6 @@ class ArticlesController extends AppController
 				$new_dest_name = $nd->slug;
 			}
 		}
-		$article = $this->Articles->get($id);
-		$path = $article->getPath();
 
 		return @rename($path . $old_dest_name . DS . $id, $path . $new_dest_name . DS . $id);
 	}
