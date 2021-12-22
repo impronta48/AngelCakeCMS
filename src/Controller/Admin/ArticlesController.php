@@ -197,6 +197,7 @@ class ArticlesController extends AppController
 		$this->request->allowMethod(['post', 'delete']);
 
 		$article = $this->Articles->findById($id)->firstOrFail();
+		$this->Authorization->authorize($article);
 
 		$dest = $this->getDestinationSlug($id);
 		if ($this->Articles->delete($article)) {
