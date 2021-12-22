@@ -89,7 +89,7 @@ class ArticlesController extends AppController
     if ($destination_id) {
       //dd($destination_id);
       $destinations = $this->Articles->Destinations->find()
-        ->select('name', 'slug')
+        ->select(['name', 'slug'])
         ->where(['Destinations.id IN' => $destination_id])
         ->toList();
 
