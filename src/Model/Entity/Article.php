@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Lib\AttachmentManager;
 use Cake\Collection\Collection;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
@@ -19,7 +20,7 @@ class Article extends Entity
 	'id' => false,
 	];
 
-	protected $_virtual = ['image', 'copertina', 'gallery', 'allegati'];
+	protected $_virtual = ['image', 'copertina', 'galleria', 'allegati'];
 
 	protected function _getTagString() {
 		if (isset($this->_fields['tag_string'])) {
@@ -53,85 +54,45 @@ class Article extends Entity
 		return Router::url('/') . $sitedir . '/articles/';
 	}
 
-	private function getDestinationSlug() {
+	function getDestinationSlug() {
 		if (!empty($this->destination_id)) {
 			$destinations = TableRegistry::getTableLocator()->get('Destinations');
 
 			return $destinations->findById($this->destination_id)->first()->slug . DS;
 		} else {
-			return null;
+			return 'null';
 		}
 	}
 
 	public function _getImage() {
 		$img = $this->_getCopertina();
 		if (!empty($img)) return $img;
-		$img = $this->_getGallery();
+		$img = $this->_getGalleria();
 		if (!empty($img)) return $img[0];
     	return Router::url(Configure::read('default-image', null));
 	}
 
 	public function _getCopertina() {
-	  //$files = Cache::read("percorsi_first_image_$id", 'img');
-	  //if ($files)
-	  //{
-	  //  return $files;
-	  //}
-		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');
-		$fullDir = Text::insert($fullDirTemplate, [
-		'sitedir' => Configure::read('sitedir'),
-		'model' => strtolower($this->getSource()),
-		'destination' => $this->getDestinationSlug(),
-		'id' => $this->id,
-		'field' => 'copertina',
-		]);
-		$fullDir = str_replace('//', '/', $fullDir);
-		$dir = new Folder(WWW_ROOT . $fullDir);
-		$files = $dir->find(".*\.(jpg|jpeg|png|gif|webp)", true);
-	  /*Controllo*/
-		if (!$files) {
-			return Router::url(Configure::read('default-image', null));
-		}
-
-		$result = Router::url(str_replace(' ', '%20', $fullDir . $files[0]));
-	  //Cache::write("percorsi_first_image_$id", $result, 'img');
-		return $result;
+		return $this->getFieldFiles('copertina', 'jpg|jpeg|gif|png|webp', true);
 	}
 
 	public function _getAllegati() {
-		return $this->getFieldFiles('files', 'pdf|doc|xls|ppt|odt|docx|odp');
+		return $this->getFieldFiles('allegati', 'pdf|doc|xls|ppt|odt|docx|odp|kml');
 	}
 
-	public function _getGallery() {
+	public function _getGalleria() {
 		return $this->getFieldFiles('galleria', 'jpg|jpeg|gif|png|webp');
 	}
 
-	private function getFieldFiles($fieldDir, $allowed_extensions) {
-	  //uso una cache per non leggere sul disco ogni volta
-	  //$files = Cache::read("percorsi_gallery_$id", 'img');
-	  // if ($files)
-	  //  {
-	  //  return $files;
-	  // }
-		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');
-		$fullDir = Text::insert($fullDirTemplate, [
-		'sitedir' => Configure::read('sitedir'),
-		'model' => strtolower($this->getSource()),
-		'destination' => $this->getDestinationSlug(),
-		'id' => $this->id,
-		'field' => $fieldDir,
-		]);
-		$dir = new Folder(WWW_ROOT . $fullDir);
-		$files = $dir->find(".*\.($allowed_extensions)", true);
-	  /*Controllo se è vuoto*/
-		if (!$files) {
-		  //Cache::write("percorsi_gallery_$id", [], 'img');
-			return [];
-		}
-
-	  //Aggiungo a tutti gli elementi il path assoluto
-		$files = preg_filter('/^/', Router::Url(str_replace(' ', '%20', $fullDir)), $files);
-	  //Cache::write("percorsi_gallery_$id", $files, 'img');
-		return $files;
+	private function getFieldFiles($fieldDir, $allowed_extensions, $firstonly = false, $default = false) {
+		return AttachmentManager::getFile(
+			$this->getSource(),
+			$this->getDestinationSlug(),
+			$this->id,
+			$fieldDir,
+			$allowed_extensions,
+			$firstonly,
+			$default
+		);
 	}
 }

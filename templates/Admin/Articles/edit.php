@@ -23,86 +23,75 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
   ?>
 
   <?php $path = "/images{$article->copertina}?w=180&h=180&fit=crop"; ?>
-  <b-card header="Copertina">
-    <b-row>
-      <b-col>
-        <b-img thumbnail fluid src="<?= $path ?>"></b-img>
-      </b-col>
-    </b-row>
-    <template #footer>
-      <b-row>
 
-        <?php if (isset($article->copertina)) : ?>
-          <b-col cols="9">
-            <b-form-file placeholder="Scegli un'immagine oppure trascinala qui..." drop-placeholder="Trascina qui un'immagine" id="newcopertina" name="newcopertina" accept="image/*"></b-form-file>
-            <span class="small">Massima dimensione dell'immagine: <?= ini_get("upload_max_filesize") ?>B</span>
-          </b-col>
-          <b-col cols="3">
-            <a href="<?= Cake\Routing\Router::url(['controller' => 'Articles', 'action' => 'remove_file', '?' => ['fname' => $article->copertina]]) ?>" title="Elimina" class="btn btn-danger btn-sm">
-              Elimina Copertina
-            </a>
-          </b-col>
-        <?php endif; ?>
-      </b-row>
-    </template>
+  <b-card header="Copertina">
+    <?= $this->element(
+      'upload',
+      [
+        'model' => 'Articles',
+        'field' => 'copertina',
+        'multiple' => false,
+        'temp' => $new ? true : false,
+        'filetype' => 'image/*',
+      ] + ($new ? [] : [
+        'destination' => $article->destination ? $article->destination->slug : 'null',
+        'files' => [ $article->copertina ],
+        'id' => $article->id,
+      ])
+    ); ?>
+
+    <div class="card-footer">
+      <span class="small">Massima dimensione dell'immagine: <?= ini_get("upload_max_filesize") ?>B</span>
+    </div>
   </b-card>
-  <br>
 
   <?php echo $this->Form->control('body', ['label' => 'Corpo Articolo', 'class' => 'editor']); ?>
 
   <?php echo $this->Form->control('destination_id', ['empty' => '---']);  ?>
 
-  <div class="card card-info">
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-image"></i> Immagini associate a questo articolo</h5>
-      <?php if (0 && isset($article->gallery)) : ?>
-        <?php echo $this->element('img-gallery-vue', [
-          'images' => $article->gallery,
-          'id' => $article->id,
-          'canEdit' => true,
-          'canDelete' => true,
-          'small_size' => [180, 180],
-          'large_size' => [-1, -1]
-        ]); ?>
-      <?php endif; ?>
-      <?php echo $this->Form->file('newgallery. ', [
-        'multiple' => 'multiple',
-        'label' => 'Immagini dell\'articolo',
-        'after' => 'In questo campo puoi caricare più immagini, semplicemente selezionandone di più',
-      ]); ?>
-    </div>
+  <b-card header="Immagini associate a questo articolo" header-bg-variant="info" header-text-variant="white">
+    <?= $this->element(
+      'upload',
+      [
+        'model' => 'Articles',
+        'field' => 'galleria',
+        'multiple' => true,
+        'temp' => $new ? true : false,
+        'filetype' => 'image/*',
+      ] + ($new ? [] : [
+        'destination' => $article->destination ? $article->destination->slug : 'null',
+        'files' => $article->galleria,
+        'id' => $article->id,
+      ])
+    ); ?>
+
     <div class="card-footer">
       <span class="small">Massima dimensione dell'allegato: <?= ini_get("upload_max_filesize") ?>B</span>
     </div>
-  </div>
+  </b-card>
 
-  <div class="card card-info">
+  <b-card header="File allegati a questo articolo" header-bg-variant="info" header-text-variant="white">
+    <?= $this->element(
+      'upload',
+      [
+        'model' => 'Articles',
+        'field' => 'allegati',
+        'multiple' => true,
+        'temp' => $new ? true : false,
+        'filetype' => '.pdf,.doc,.xls,.ppt,.odt,.docx,.odp,.kml',
+      ] + ($new ? [] : [
+        'destination' => $article->destination ? $article->destination->slug : 'null',
+        'files' => $article->allegati,
+        'id' => $article->id,
+      ])
+    ); ?>
 
-    <div class="card-body">
-      <h5 class="card-title"><i class="bi bi-paperclip"></i> File allegati a questo articolo</h5>
-
-      <?php if (isset($article->allegati)) : ?>
-        <ul>
-          <?php foreach ($article->allegati as $file) : ?>
-            <li>
-              <a href="<?= $file ?>"><i class="bi bi-file-o"></i> <?= basename($file) ?></a>
-              <a href="<?= Cake\Routing\Router::url(['controller' => 'Articles', 'action' => 'remove_file', '?' => ['fname' => $file]]) ?>" title="Elimina" class="btn btn-danger btn-xs">
-                Elimina
-              </a>
-            </li>
-          <?php endforeach; ?>
-        </ul>
-      <?php endif ?>
-      <?php echo $this->Form->file('newallegati. ', [
-        'multiple' => 'multiple',
-        'label' => 'Allegati dell\'articolo',
-        'after' => 'In questo campo puoi caricare più file, semplicemente selezionandone di più',
-      ]); ?>
-    </div>
     <div class="card-footer">
       <span class="small">Massima dimensione dell'allegato: <?= ini_get("upload_max_filesize") ?>B</span>
+      <span class="small">Ammessi file pdf|doc|xls|ppt|odt|docx|odp|kml</span>
     </div>
-  </div>
+  </b-card>
+
   <?= $this->Form->control('published', ['label' => 'Pubblicato']); ?>
   <?= $this->Form->control('archived', ['label' => 'Archiviato']); ?>
   <?= $this->Form->control('promoted', ['label' => 'Promosso in Home Page']); ?>

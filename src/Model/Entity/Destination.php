@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use App\Controller\AttachmentsController;
+use App\Lib\AttachmentManager;
 use Cake\ORM\Entity;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
@@ -56,7 +56,7 @@ class Destination extends Entity
 	}
 
 	public function _getCopertina() {
-		$fullDir = AttachmentsController::getPath('Destinations', $this->slug, $this->id, 'copertina');
+		$fullDir = AttachmentManager::buildPath($this->getSource(), $this->slug, $this->id, 'copertina');
 
 		$dir = new Folder(WWW_ROOT . $fullDir);
 		$files = $dir->find(".*\.(jpg|jpeg|gif|png|webp)", true);

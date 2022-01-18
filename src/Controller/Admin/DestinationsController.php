@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-use App\Controller\AttachmentsController;
+use App\Lib\AttachmentManager;
 use Cake\Routing\Router;
 use Psr\Log\LogLevel;
 use Cake\Event\EventInterface;
@@ -136,9 +136,9 @@ class DestinationsController extends AppController
 					foreach ($upload_session_fields as $ses) {
 						if (!empty($ses)) {
 							$ses = explode('|', $ses);
-							$tmpath = AttachmentsController::getPath('Destinations', 'TEMP', $ses[0], $ses[1]);
+							$tmpath = AttachmentManager::buildPath('Destinations', 'TEMP', $ses[0], $ses[1]);
 							if (is_dir(TMP . $tmpath)) {
-								$finalpath = AttachmentsController::getPath('Destinations', $destination->slug, $destination->id, $ses[1]);
+								$finalpath = AttachmentManager::buildPath('Destinations', $destination->slug, $destination->id, $ses[1]);
 								$dir = new Folder(WWW_ROOT . $finalpath, true);
 								rename(TMP . $tmpath, WWW_ROOT . $finalpath);
 							}

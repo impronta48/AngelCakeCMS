@@ -14,19 +14,19 @@ class ArticlePolicy implements BeforePolicyInterface
 {
     public function before(?IdentityInterface $user, $resource, $action)
     {
-        if ($user->group_id == 1) // is an admin, can do whatever
+        if ($user->group_id == ROLE_ADMIN) // is an admin, can do whatever
             return true;
-        if (!in_array($user->group_id, [1,2,3,6,9])) // is not allowed to edit
+        if (!in_array($user->group_id, ADMIN_ROLES_LIST)) // is not allowed to edit
             return false;
     }
 
     private function canTakeAction(IdentityInterface $user, Article $article)
     {
         if (
-            $user->group_id == 1 || // ADMIN can edit anything
-            $user->group_id == 9 || // EDITOR can edit anything
-            ( isset($article->destination_id) && $user->group_id == 2 && $user->destination_id == $article->destination_id ) || // BAM can only edit in its destination
-            ( isset($article->user_id) && in_array($user->group_id, [3, 6]) && $user->id == $article->user_id ) // Renter/Commerciale can only edit his entries
+            $user->group_id == ROLE_ADMIN || // ADMIN can edit anything
+            $user->group_id == ROLE_EDITOR || // EDITOR can edit anything
+            ( isset($article->destination_id) && $user->group_id == ROLE_BAM && $user->destination_id == $article->destination_id ) || // BAM can only edit in its destination
+            ( isset($article->user_id) && in_array($user->group_id, [ROLE_RENTER, ROLE_COMMERCIALE]) && $user->id == $article->user_id ) // Renter/Commerciale can only edit his entries
         ) {
             return true;
         }
@@ -99,7 +99,7 @@ class ArticlePolicy implements BeforePolicyInterface
      */
     public function canUpload(IdentityInterface $user, Article $article)
     {
-        if (in_array($user->group_id, [1,2,3,6,9])) {
+        if (in_array($user->group_id, ADMIN_ROLES_LIST)) {
             if (!is_null($article)) {
                 return $this->canEdit($user, $article);
             }
@@ -117,7 +117,7 @@ class ArticlePolicy implements BeforePolicyInterface
      */
     public function canMoveAttachment(IdentityInterface $user, Article $article)
     {
-        if (in_array($user->group_id, [1,2,3,6,9])) {
+        if (in_array($user->group_id, ADMIN_ROLES_LIST)) {
             if (!is_null($article)) {
                 return $this->canEdit($user, $article);
             }

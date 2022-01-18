@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use App\Controller\AttachmentsController;
+use App\Lib\AttachmentManager;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
@@ -70,35 +72,6 @@ class ArticlesController extends AppController
 			$this->Authorization->authorize($article);
 
 			if ($this->Articles->save($article)) {
-				//Salvare allegati, copertina e galleria
-				//Salvare allegati, copertina e galleria
-				$error = $article['newcopertina']['error'];
-				if ($error == UPLOAD_ERR_OK) {
-					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'], 'copertina', [$article['newcopertina']], true);
-				} elseif ($error != UPLOAD_ERR_NO_FILE) {
-					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
-				}
-
-				if (isset($article['newgallery'][0]['error'])) {
-					$error = $article['newgallery'][0]['error'];
-					if ($error == UPLOAD_ERR_OK) {
-						//Prima di caricare la galleria non cancello quello che c'è $errorgià
-						$this->uploadFiles($article['id'], 'galleria', $article['newgallery'], false);
-					} elseif ($error != UPLOAD_ERR_NO_FILE) {
-						throw new InternalErrorException($this->phpFileUploadErrors[$error]);
-					}
-				}
-
-				if (isset($article['newallegati'][0]['error'])) {
-					$error = $article['newallegati'][0]['error'];
-					if ($error == UPLOAD_ERR_OK) {
-						$this->uploadFiles($article['id'], 'files', $article['newallegati'], false);
-					} elseif ($error != UPLOAD_ERR_NO_FILE) {
-						throw new InternalErrorException($this->phpFileUploadErrors[$error]);
-					}
-				}
-
 				$this->Flash->success(__('Your article has been saved.'));
 				Cache::clear('_cake_routes_');
 				return $this->redirect(['prefix' => false, 'action' => 'view', $article->slug]);
@@ -112,15 +85,16 @@ class ArticlesController extends AppController
 		$tags = $this->Articles->Tags->find('list');
 		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
 		$destinations = $this->Articles->Destinations->find('list');
+		$new = true;
 		$this->set('user', $this->request->getAttribute('identity')->getIdentifier());
-		$this->set(compact('article', 'tags', 'users', 'destinations'));
+		$this->set(compact('new', 'article', 'tags', 'users', 'destinations'));
 	}
 
 	public function edit($id)
 	{
 		$article = $this->Articles
 			->findById($id)
-			->contain('Tags')
+			->contain(['Tags', 'Destinations'])
 			->firstOrFail();
 
 		$this->Authorization->authorize($article);
@@ -134,6 +108,11 @@ class ArticlesController extends AppController
 		//dd($article);
 
 		if ($this->request->is(['post', 'put'])) {
+
+			$old_copertina = [$article->copertina];
+			$old_galleria = $article->galleria;
+			$old_allegati = $article->allegati;
+
 			$this->Articles->patchEntity($article, $this->request->getData());
 
 			$this->Authorization->authorize($article);
@@ -144,42 +123,17 @@ class ArticlesController extends AppController
 
 				//Se hai cambiato destination devo spostare gli allegati nella cartella giusta
 				if ($old_destination != $article->destination_id) {
-					if ($this->moveAttachments($old_destination, $article->destination_id, $id)) {
+					if (
+						AttachmentManager::moveAllFiles($old_copertina, $article->getSource(), $article->getDestinationSlug(), $article->id, 'copertina') &&
+						AttachmentManager::moveAllFiles($old_galleria, $article->getSource(), $article->getDestinationSlug(), $article->id, 'galleria') &&
+						AttachmentManager::moveAllFiles($old_allegati, $article->getSource(), $article->getDestinationSlug(), $article->id, 'allegati')
+					) {
 						$this->log("Allegati articolo $id spostati con successo dalla cartella {$old_destination} a {$article->destination_id}", 'info');
 					} else {
 						$this->log("Impossibile spostare gli allegati articolo $id dalla cartella {$old_destination} a {$article->destination_id}", 'error');
 					}
 				}
 
-				//Salvare allegati, copertina e galleria
-				$error = $article['newcopertina']['error'];
-				if ($error == UPLOAD_ERR_OK) {
-					//Prima di caricare la copertina devo cancellare quello che c'è, quindi l'ultimo parametro è TRUE
-					$this->uploadFiles($article['id'], 'copertina', [$article['newcopertina']], true);
-				} elseif ($error != UPLOAD_ERR_NO_FILE) {
-					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
-				}
-
-				$error = $article['newgallery'][0]['error'];
-				if ($error == UPLOAD_ERR_OK) {
-					//Prima di caricare la galleria non cancello quello che c'è $errorgià
-					$this->uploadFiles($article['id'], 'galleria', $article['newgallery'], false);
-				} elseif ($error != UPLOAD_ERR_NO_FILE) {
-					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
-				}
-
-				$error = $article['newallegati'][0]['error'];
-				//dd($error);
-				//dd($article['newallegati'][0]['error']==UPLOAD_ERR_INI_SIZE);
-				if ($error == UPLOAD_ERR_OK) {
-					$this->uploadFiles($article['id'], 'files', $article['newallegati'], false);
-					$this->Flash->success(__('Salvato con successo'));
-				} elseif ($error == UPLOAD_ERR_INI_SIZE) {
-					$this->Flash->error(__('Dimensione massima superata'));
-				} elseif ($error != UPLOAD_ERR_NO_FILE) {
-					throw new InternalErrorException($this->phpFileUploadErrors[$error]);
-				}
-				//return $this->redirect(['action'=>'view', $article->slug]);
 			} else {
 				$this->Flash->error(__('Unable to update your article.'));
 			}
@@ -188,8 +142,9 @@ class ArticlesController extends AppController
 		$tags = $this->Articles->Tags->find('list');
 		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
 		$destinations = $this->Articles->Destinations->find('list');
+		$new = false;
 		$this->set('user', $this->request->getAttribute('identity'));
-		$this->set(compact('article', 'tags', 'users', 'destinations'));
+		$this->set(compact('new', 'article', 'tags', 'users', 'destinations'));
 	}
 
 	public function delete($id)
@@ -232,135 +187,6 @@ class ArticlesController extends AppController
 			return $destinations->findById($a->destination_id)->first()->slug . DS;
 		} else {
 			return null;
-		}
-	}
-
-	private function uploadFiles($id, $fieldDir, $fnames, $deleteBefore)
-	{
-		$copied = false;
-		//this is the folder where i need to save
-		$article = $this->Articles->get($id);
-
-		$f = $article->getPath();
-
-		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');
-		$save_dir = Text::insert($fullDirTemplate, [
-			'sitedir' => Configure::read('sitedir'),
-			'model' => strtolower($article->getSource()),
-			'destination' => $this->getDestinationSlug($id),
-			'id' => $id,
-			'field' => $fieldDir,
-		]);
-
-		//check if $save_dir exists, if not create it
-		$folder = new Folder(WWW_ROOT . $save_dir, true, 0777);
-		if ($deleteBefore) {
-			if ($folder->delete()) {
-				// Successfully deleted foo and its nested folders
-				$folder = new Folder(WWW_ROOT . $save_dir, true, 0777);
-			}
-		}
-		//debug($folder);
-		$e  = $folder->errors();
-		if (!empty($e)) { //$save_dir is a relative path so it is checked relatively to current working directory
-			$this->Flash->error("Si è verificato un errore nella creazione della directory. Ripetere l'operazione - " . $e);
-
-			return;
-		}
-		foreach ($fnames as $fname) {
-			$name_on_server = basename($fname["name"]);
-			$copied = move_uploaded_file($fname['tmp_name'], WWW_ROOT . $save_dir . DS . $name_on_server);
-		}
-
-		//Se non riesco a spostare nella cartella giusta, esco
-		if (!$copied) {
-			$toReturn['error'] = 'Si e\' verificato un problema nella creazione dell\'immagine.
-				Ripetere l\'inserimento';
-
-			return $toReturn;
-		}
-	}
-
-	public function removeFile()
-	{
-		$fname = $this->request->getQuery('fname');
-		$this->Authorization->authorize($fname, 'upload'); // TODO need an article to enforce perms!
-
-		if (!empty($fname)) {
-			$fname = rtrim(WWW_ROOT, DS) . $fname;
-			if (file_exists($fname)) {
-				$ip = $_SERVER['REMOTE_ADDR'];
-				//TODO: devo cancellare lo stesso nome file anche in tutte le altre cartelle figlie
-
-				unlink($fname);
-				$this->log("eliminato il file $fname da $ip");
-			} else {
-				$this->Flash->error('Il file da eliminare è inesitente:' . $fname);
-			}
-		}
-		$this->redirect(Router::url($this->referer(), true));
-	}
-
-	//Quando cambio destination ad un articolo devo spostarea anche gli allegati da una cartella all'altra.
-
-	private function moveAttachments($old_dest, $new_dest, $id)
-	{
-		$article = $this->Articles->get($id);
-		$path = $article->getPath();
-		$this->loadModel('Destinations');
-		if ($old_dest > 0) {
-			$od = $this->Destinations->findById($old_dest)->first();
-			if (!empty($od)) {
-				$old_dest_name = $od->slug;
-			}
-		}
-		if ($new_dest > 0) {
-			$nd = $this->Destinations->findById($new_dest)->first();
-			if (!empty($nd)) {
-				$new_dest_name = $nd->slug;
-			}
-		}
-
-		return @rename($path . $old_dest_name . DS . $id, $path . $new_dest_name . DS . $id);
-	}
-
-	public function uploadImage()
-	{
-		$r = $this->request->getData();
-		$this->Authorization->authorize(null, 'upload'); // TODO need an article to enforce perms!
-
-		//Salvo le immagini di ckeditor
-		$error = $r['upload']['error'];
-		if ($error == UPLOAD_ERR_OK) {
-			$fname = $r['upload'];
-			$fullDirTemplate = ':sitedir/img';
-			$save_dir = Text::insert($fullDirTemplate, [
-				'sitedir' => Configure::read('sitedir'),
-			]);
-			$name_on_server = basename($fname["name"]);
-			$dest_fname = WWW_ROOT . $save_dir . DS . $name_on_server;
-			$copied = move_uploaded_file($fname['tmp_name'], $dest_fname);
-			//Se non riesco a spostare nella cartella giusta, esco
-			if (!$copied) {
-				$toReturn['error'] = 'Si e\' verificato un problema nella creazione dell\'immagine.
-				Ripetere l\'inserimento';
-
-				return $toReturn;
-			}
-			$msg = [
-				"uploaded" =>  true,
-				"url" =>  "/$save_dir/$name_on_server",
-			];
-			$this->set([
-				'data' => $msg,
-				'_serialize' => 'data',
-			]);
-			$this->RequestHandler->renderAs($this, 'json');
-			//$this->set('msg', $msg);
-			//$this->viewBuilder()->setOption('serialize', ['msg']);
-		} elseif ($error != UPLOAD_ERR_NO_FILE) {
-			$phpFileUploadErrors = Configure::read('phpFileUploadErrors');
-			throw new InternalErrorException($phpFileUploadErrors[$error]);
 		}
 	}
 

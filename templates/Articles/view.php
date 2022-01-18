@@ -55,7 +55,7 @@ if (empty($article->description)) {
     <div class="row">
       <div class="col-lg-9 col-md-8 col-xs-12 blog-details-content">
         <div class="single-blog-list">
-          <div class="image"><img src="<?= $article->copertina ?>" alt="<?= $article->title ?>" class="img-responsive img-rounded"></div>
+          <div class="image"><img src="<?= $article->image ?>" alt="<?= $article->title ?>" class="img-responsive img-rounded"></div>
           <ul class="post-info">
             <li>Ultimo Aggiornamento: <?= $article->modified ?></li>
           </ul>
@@ -69,7 +69,7 @@ if (empty($article->description)) {
                 ==============================================
                 -->
         <div class="our-gallery section-margin-top">
-          <?= $this->element('img-gallery', ['images' => $article->gallery]); ?>
+          <?= $this->element('img-gallery', ['images' => $article->galleria]); ?>
         </div> <!-- /.our-gallery -->
 
         <div class="share-content">
