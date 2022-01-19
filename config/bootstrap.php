@@ -72,6 +72,14 @@ use Cake\Database\Type;
 //         ->toServer();
 // }
 
+
+/*
+ * Define default auth roles (just admin)
+ */
+define('ROLE_ADMIN', 1);
+define('ROLE_USER', 5);
+define('ADMIN_ROLES_LIST', [1]);
+
 /*
  * Read configuration file and inject configuration into various
  * CakePHP classes.
