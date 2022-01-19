@@ -56,16 +56,20 @@ class AppController extends Controller
     //$this->loadComponent('FormProtection');
 
     $this->loadComponent('Authorization.Authorization');
+    $this->loadComponent('Authentication.Authentication');
+
+		$user = $this->request->getAttribute('identity');
+    $this->set('auth', $user);
+
     //This way i load a different layout and I request authentication just for admin/
     if ($this->request->getParam('prefix') === 'Admin') {
-      $this->loadComponent('Authentication.Authentication');
-		  $user = $this->request->getAttribute('identity');
 		  if (! $user || !in_array($user->group_id, [1, 2, 3, 4, 9])) { // kinda raw, there's probably a nicer way, TODO
 		  	$this->redirect('/');
 		  } else {
         $this->viewBuilder()->setLayout('admin');
       }
     } else {
+      $this->Authentication->allowUnauthenticated(['index', 'view', 'display', 'login', 'logout', 'options']);
       $this->Authorization->skipAuthorization();
     }
   }
