@@ -46,7 +46,7 @@ Vue.component('file-uploader', {
                 uploadMultiple: this.multiple,
                 // withCredentials: true,
                 addRemoveLinks: true,
-                url: `/attachments/upload/${this.model}/${this.destination}/${this.id}/${this.field}` + (this.temporary ? '/temp' : ''),
+                url: `/admin/attachments/upload/${this.model}/${this.destination}/${this.id}/${this.field}` + (this.temporary ? '/temp' : ''),
                 resizeWidth: this.convert ? 5000 : undefined, // This should give jpegs of appropriate size
                 resizeMimeType: this.convert ? 'image/jpeg' : undefined,
                 maxFilesize: null, // PHP will handle in AttachmentsController
@@ -58,7 +58,7 @@ Vue.component('file-uploader', {
     },
     methods: {
         getDeleteUrl(file) {
-            return `/attachments/remove/${this.model}/${this.destination}/${this.id}/${this.field}/${file.name}` + (this.temporary ? '/temp' : '')
+            return `/admin/attachments/remove/${this.model}/${this.destination}/${this.id}/${this.field}/${file.name}` + (this.temporary ? '/temp' : '')
         }
     }
 });
