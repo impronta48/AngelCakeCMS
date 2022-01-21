@@ -7,20 +7,62 @@ msgstr "Destinations"
 msgid "Percorso"
 msgstr "Route"
 
+msgid "Mappa"
+msgstr "Map"
+
+msgid "Noleggia ora"
+msgstr "Rent now"
+
+msgid "E-bike usate"
+msgstr "Used e-bikes"
+
+msgid "Chi siamo"
+msgstr "About us"
+
+msgid "Contatti"
+msgstr "Contacts"
+
+msgid "Per le aziende"
+msgstr "For Companies"
+
+msgid "Altri link"
+msgstr "More links"
+
 msgid "Percorsi"
 msgstr "Routes"
 
 msgid "Dove vuoi andare?"
 msgstr "Where are you going?"
 
-msgid "Vicino a te"
-msgstr "Nearby"
-
 msgid "Attività in evidenza"
 msgstr "Suggested activities"
 
 msgid "Punti di Noleggio"
 msgstr "Rental Points"
+
+msgid "Agriturismi, bar, ristoranti e produttori"
+msgstr "Bar, restaurants and local producers"
+
+msgid "Come diventare BikeHotel BikeSquare"
+msgstr "How to become a BikeSquare BikeHotel"
+
+msgid "Noleggiatore"
+msgstr "Renter"
+
+msgid "Come aprire un punto di noleggio e-bike?"
+msgstr "How to open an ebike rental point?"
+
+msgid "Produttore di bici"
+msgstr "E-bike manufacturers"
+
+msgid "Territorio, PA, Consorzio"
+msgstr "Territory, Government"
+
+msgid "Tour Operator, blogger e Ciclo Guide"
+msgstr "Tour Operator, blogger, Cycling-Guide"
+
+msgid "Galleria Fotografica"
+msgstr "Photo Gallery"
 
 msgid "In queste località è possibile <b>noleggiare una e-bike</b> oppure fare un'esperienza sul territorio."
 msgstr "In these destinations you can <b>rent an e-bike</b> or have an experience like a local."
@@ -30,3 +72,27 @@ msgstr "E-bike rental in {0}, experiences and bike hotels in {1}"
 
 msgid "Noleggio Bici - E-bike Rental {0} | Bike Tour"
 msgstr "E-bike Rental {0} | Bike Tour"
+
+msgid "Informazioni"
+msgstr "Information"
+
+msgid "A partire da"
+msgstr "Starting from"
+
+msgid "a persona"
+msgstr "per person"
+
+msgid "Richiedi tour personalizzato"
+msgstr "Request customized tour"
+
+msgid "Verifica disponibilità ebike"
+msgstr "Verify ebike availability"
+
+msgid "Acquista un buono regalo"
+msgstr "Buy a gift card"
+
+msgid "Trovi questo percorso sull'App BikeSquare con il codice"
+msgstr "You can find this route on the BikeSquare app with code"
+
+msgid "Si parte da"
+msgstr "Departure from"
