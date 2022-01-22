@@ -214,6 +214,15 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     // $middlewareQueue->add(new RequestAuthorizationMiddleware());
 
     // Add your middlewares here
+    if (Configure::read('debug')) {
+      // Disable authz for debugkit
+      $middlewareQueue->add(function ($req, $res, $next) {
+        if ($req->getParam('plugin') === 'DebugKit') {
+          $req->getAttribute('authorization')->skipAuthorization();
+        }
+        return $next($req, $res);
+      });
+    }
     //->add(new LocaleSelectorMiddleware());
 
     return $middlewareQueue;

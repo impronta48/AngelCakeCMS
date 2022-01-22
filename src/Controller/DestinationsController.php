@@ -19,6 +19,11 @@ use Cake\Http\Exception\NotFoundException;
 class DestinationsController extends AppController
 {
 
+  	public function initialize(): void {
+      parent::initialize();
+      $this->Authentication->allowUnauthenticated(['prenota','index','experience','activities','tours','addioNubilato','rent','view','count','prezzi']);
+    }
+
   public $paginate = [
     'limit' => 50,
   ];
@@ -65,20 +70,20 @@ class DestinationsController extends AppController
     }
 
     //Creo un array dai nomiseo
-    if (isset($destination->nomiseo)){
-    $nomiseo = explode(',', $destination->nomiseo);
-    //Cerco l'elemento che contiene il mio nomeseo
-    foreach ($nomiseo as $n) {
-      if (stripos($n, $nomeseo) > 0) {
-        $nomeseo = $n;
+    if (isset($destination->nomiseo)) {
+      $nomiseo = explode(',', $destination->nomiseo);
+      //Cerco l'elemento che contiene il mio nomeseo
+      foreach ($nomiseo as $n) {
+        if (stripos($n, $nomeseo) > 0) {
+          $nomeseo = $n;
+        }
       }
+    } else {
+      $nomeseo = $destination->name;
     }
-   } else {
-     $nomeseo = $destination->name;
-   }
 
     $this->set('nomeseo', $nomeseo);
-    
+
     $this->set('canonical',  $nomeseo_slug);
     $this->set('destination', $destination);
 
@@ -101,8 +106,8 @@ class DestinationsController extends AppController
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
     $query = $this->Destinations->find()
-              ->contain(['Articles'])
-              ->where(['published' => true]);
+      ->contain(['Articles'])
+      ->where(['published' => true]);
 
     $random = $this->request->getQuery('random');
     if (!empty($random)) {
@@ -275,7 +280,7 @@ class DestinationsController extends AppController
         'tipo_id' => 2,
       ])->toArray();
     $this->set('percorsi', $percorsi);
-    
+
     $destinations = $this->Destinations->find('all')->toArray();
     $this->set('destinations', $destinations);
   }
