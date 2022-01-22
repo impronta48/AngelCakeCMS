@@ -67,4 +67,9 @@ class DestinationPolicy implements BeforePolicyInterface
     {
         return true; // everybody can see a Destination
     }
+
+    public function canPrenota(IdentityInterface $user, Destination $destination)
+    {
+        return true;
+    }
 }
