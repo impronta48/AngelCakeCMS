@@ -55,7 +55,7 @@ class PagesController extends AppController
 
 		$destination = $this->request->getQuery('destination');
 		if (!empty($destination)) {
-			$this->set('destination_name', ucfirst($destination));
+			$this->set('destination_name', ucfirst(h($destination)));
 		}
 
 		if (!empty($path[0])) {
