@@ -11,56 +11,35 @@
     <xhtml:link 
                rel="alternate"
                hreflang="it"
-               href="<?php echo Router::url('/', true); ?>"/>
+               href="<?php echo Router::url('/ita', true); ?>"/>
     <xhtml:link 
                rel="alternate"
                hreflang="en"
-               href="<?php echo Router::url('/en', true); ?>"/>
+               href="<?php echo Router::url('/eng', true); ?>"/>
 
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc><?php echo Router::url('/portfolio', true); ?></loc>
+    <loc><?php echo Router::url('/pages/contact', true); ?></loc>
     <xhtml:link 
                rel="alternate"
                hreflang="it"
-               href="<?php echo Router::url('/portfolio', true); ?>"/>
+               href="<?php echo Router::url('/ita/pages/contact', true); ?>"/>
     <xhtml:link 
                rel="alternate"
                hreflang="en"
-               href="<?php echo Router::url('/en/portfolio', true); ?>"/>
+               href="<?php echo Router::url('/eng/pages/contact', true); ?>"/>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc><?php echo Router::url('/contact', true); ?></loc>
-    <xhtml:link 
-               rel="alternate"
-               hreflang="it"
-               href="<?php echo Router::url('/contact', true); ?>"/>
-    <xhtml:link 
-               rel="alternate"
-               hreflang="en"
-               href="<?php echo Router::url('/en/contact', true); ?>"/>
+    <loc>https://b2b.bikesquare.eu/blog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc><?php echo Router::url('/blog', true); ?></loc>
-    <xhtml:link 
-               rel="alternate"
-               hreflang="it"
-               href="<?php echo Router::url('/blog', true); ?>"/>
-    <xhtml:link 
-               rel="alternate"
-               hreflang="en"
-               href="<?php echo Router::url('/en/blog', true); ?>"/>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc><?php echo Router::url('/marketplace', true); ?></loc>
+    <loc>https://b2b.bikesquare.eu/blog/try-and-buy-ebike-usate</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -87,7 +66,7 @@
 
 <?php foreach ($articles as $a): ?>    
     <url>
-        <loc><?= Router::url($a['slug'], true) ?></loc>
+        <loc><?= Router::url($a->slug, true) ?></loc>
         <lastmod><?php echo $this->Time->toAtom($a['modified']) ?></lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
