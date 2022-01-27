@@ -61,7 +61,7 @@ class DestinationsController extends AppController
         ])
         ->first();
     } else {
-      $nomeseo = $destination->name;
+      $nomeseo = $destination->preposition . ' ' . $destination->name;
       $nomeseo_slug = $destination->slug;
     }
 
@@ -70,7 +70,7 @@ class DestinationsController extends AppController
     }
 
     //Creo un array dai nomiseo
-    if (isset($destination->nomiseo)) {
+    if (isset($destination->nomiseo) && !empty($destination->nomiseo)) {
       $nomiseo = explode(',', $destination->nomiseo);
       //Cerco l'elemento che contiene il mio nomeseo
       foreach ($nomiseo as $n) {
@@ -79,7 +79,7 @@ class DestinationsController extends AppController
         }
       }
     } else {
-      $nomeseo = $destination->name;
+      $nomeseo = $destination->preposition . ' ' . $destination->name;
     }
 
     $this->set('nomeseo', $nomeseo);
