@@ -25,16 +25,20 @@ class DestinationsCell extends Cell
 	 * @return void
 	 */
 	public function initialize(): void {
+        $this->loadModel('Destinations');
 	}
 
 	private function make_destination_list()
 	{
-        $this->loadModel('Destinations');
         $destionations = $this->Destinations
             ->find()
             ->select(['name', 'slug', 'id'])
             ->order(['name']);
 		return $destionations;
+	}
+
+	public function fromId($destination_id) {
+		return $this->Destinations->findById($destination_id)->firstOrFail();
 	}
 
 	/**
