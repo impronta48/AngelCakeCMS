@@ -23,7 +23,7 @@ use Cake\Core\Configure;
           ],
           [
             'escape' => false,
-            'class' => 'btn btn-lg btn-block text-uppercase btn-outline-primary'
+            'class' => 'btn btn-lg btn-block text-uppercase btn-primary'
           ]
         ); ?>
       </div>
