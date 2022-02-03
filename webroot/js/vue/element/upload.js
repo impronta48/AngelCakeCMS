@@ -47,7 +47,7 @@ Vue.component('file-uploader', {
                 // withCredentials: true,
                 addRemoveLinks: true,
                 url: `/admin/attachments/upload/${this.model}/${this.destination}/${this.id}/${this.field}` + (this.temporary ? '/temp' : ''),
-                resizeWidth: this.convert ? 5000 : undefined, // This should give jpegs of appropriate size
+                resizeWidth: this.convert ? 2000 : undefined, // This should give jpegs of appropriate size
                 resizeMimeType: this.convert ? 'image/jpeg' : undefined,
                 maxFilesize: null, // PHP will handle in AttachmentsController
                 thumbnailHeight: 300,
