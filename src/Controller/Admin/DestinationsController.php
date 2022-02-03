@@ -91,20 +91,8 @@ class DestinationsController extends AppController
 	 */
 	public function add()
 	{
-		$destination = $this->Destinations->newEmptyEntity();
-		$this->Authorization->authorize($destination);
-
-		if ($this->request->is('post')) {
-			$destination = $this->Destinations->patchEntity($destination, $this->request->getData());
-			$this->Authorization->authorize($destination);
-			if ($this->Destinations->save($destination)) {
-				$this->Flash->success(__('The destination has been saved.'));
-
-				$this->redirect(Router::url($this->referer(), true));
-			}
-			$this->Flash->error(__('The destination could not be saved. Please, try again.'));
-		}
-		$this->set(compact('destination'));
+    	$this->edit();
+    	$this->viewBuilder()->setTemplate('edit');
 	}
 
 	/**
