@@ -69,7 +69,7 @@ class UsersController extends AppController
 
       $user = $this->Users->patchEntity($user, $this->request->getData());
       $user->username = $user->gmail;
-      $user->password = 'IMPOSSIBILE' . rand(0, 12345);
+      $user->password = 'asd'; // 'IMPOSSIBILE' . rand(0, 12345);
 
       $this->Authorization->authorize($user);
 
@@ -82,7 +82,7 @@ class UsersController extends AppController
     } else {
       $this->Authorization->skipAuthorization();
     }
-    $destinations = $this->Users->Destinations->find('list');
+    $destinations = $this->Users->Destinations->find('list', ['limit' => 100, 'order' => 'name']);
     $this->set(compact('user', 'destinations'));
   }
 
@@ -109,7 +109,7 @@ class UsersController extends AppController
       }
       $this->Flash->error(__('The user could not be saved. Please, try again.'));
     }
-    $destinations = $this->Users->Destinations->find('list');
+    $destinations = $this->Users->Destinations->find('list', ['limit' => 100, 'order' => 'name']);
     $this->set(compact('user', 'destinations'));
   }
 
