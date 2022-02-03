@@ -101,13 +101,20 @@ class DestinationsController extends AppController
   public function index()
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
-    $desired_columns = ['id', 'name', 'slug', 'nazione_id', 'regione', 'nomiseo', 'published', 'published', 'created', 'modified'];
+    $desired_columns = [
+      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified'
+    ];
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
     $query = $this->Destinations->find()
       ->contain(['Articles'])
       ->where(['published' => true]);
+
+    $specific_id = $this->request->getQuery('id');
+    if (!empty($specific_id)) {
+      $query->where(['id' => $specific_id]);
+    }
 
     $random = $this->request->getQuery('random');
     if (!empty($random)) {
