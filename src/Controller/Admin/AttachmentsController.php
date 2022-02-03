@@ -24,13 +24,15 @@ class AttachmentsController extends AppController
   private function authorize($comp_model, $id) {
 		$entity_table = TableRegistry::getTableLocator()->get($comp_model);
     $entity = null;
+    $action = 'edit';
     if (is_numeric($id)) {
 		  $entity = $entity_table->findById($id)->first();
     }
     if (empty($entity)) {
       $entity = $entity_table->newEntity(['id' => $id]);
+      $action = 'add';
     }
-    $this->Authorization->authorize($entity, 'edit');
+    $this->Authorization->authorize($entity, $action);
   }
 
   function move($comp_model, $destination, $id, $field, $fname) {
