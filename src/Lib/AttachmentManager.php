@@ -150,10 +150,11 @@ class AttachmentManager
 		return true;
 	}
 
-	static function renameFile($from, $to, $fname)
+	static function renameFile($from, $to, $fname, $new_fname = null)
 	{
+		if (is_null($new_fname)) $new_fname = $fname;
 		self::makeFolder($to);
-		return rename($from . DS . $fname, $to . DS . $fname);
+		return rename($from . DS . $fname, $to . DS . $new_fname);
 	}
 
 	static function putFile($files, $model, $destination, $id, $field, $temporary = false, $deleteBefore = false)

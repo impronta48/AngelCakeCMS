@@ -21,14 +21,22 @@ use \Error;
 class AttachmentsController extends AppController
 {
 
-  private function authorize($model, $id) {
-		$entity_table = TableRegistry::getTableLocator()->get(ucfirst($model));
-		$entity = $entity_table->findById($id)->firstOrFail();
+  private function authorize($comp_model, $id) {
+		$entity_table = TableRegistry::getTableLocator()->get($comp_model);
+    $entity = null;
+    if (is_numeric($id)) {
+		  $entity = $entity_table->findById($id)->first();
+    }
+    if (empty($entity)) {
+      $entity = $entity_table->newEntity(['id' => $id]);
+    }
     $this->Authorization->authorize($entity, 'edit');
   }
 
-  function move($model, $destination, $id, $field, $fname) {
-    $this->authorize($model, $id);
+  function move($comp_model, $destination, $id, $field, $fname) {
+    $this->authorize($comp_model, $id);
+    $tmp = explode('.', $comp_model, 2);
+    $model = end($tmp);
     $old_path = AttachmentManager::buildPath($model, $destination, $id, $field);
 
     $new_model = $this->request->getQuery('model') ?: $model;
@@ -39,10 +47,10 @@ class AttachmentsController extends AppController
     $this->authorize($new_model, $new_id);
     $new_path = AttachmentManager::buildPath($new_model, $new_destination, $new_id, $new_field);
 
-    AttachmentManager::renameFile($old_path . DS . $fname, $new_path . DS . $new_fname);
+    AttachmentManager::renameFile($old_path, $new_path, $fname, $new_fname);
   }
 
-  function upload($model, $destination, $id, $field, $temporary = false, $deleteBefore = false)
+  function upload($comp_model, $destination, $id, $field, $temporary = false, $deleteBefore = false)
   {
     $this->viewBuilder()->setOption('serialize', true);
     $this->RequestHandler->renderAs($this, 'json');
@@ -53,7 +61,9 @@ class AttachmentsController extends AppController
       return;
     }
 
-    $this->authorize($model, $id);
+    $this->authorize($comp_model, $id);
+    $tmp = explode('.', $comp_model, 2);
+    $model = end($tmp);
 
     $files = $this->request->getUploadedFiles();
 
@@ -67,9 +77,11 @@ class AttachmentsController extends AppController
     } 
   }
 
-  function remove($model, $destination, $id, $field, $name, $temporary = false)
+  function remove($comp_model, $destination, $id, $field, $name, $temporary = false)
   {
-    $this->authorize($model, $id);
+    $this->authorize($comp_model, $id);
+    $tmp = explode('.', $comp_model, 2);
+    $model = end($tmp);
 
     $this->viewBuilder()->setOption('serialize', true);
     $this->RequestHandler->renderAs($this, 'json');
