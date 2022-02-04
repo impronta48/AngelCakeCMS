@@ -18,7 +18,7 @@ class SitemapsController extends AppController
 		parent::initialize();
 		$this->modelClass = false;
 		$this->loadComponent('RequestHandler');
-	//$this->Authentication->allowUnauthenticated(['index']);
+		$this->Authentication->allowUnauthenticated(['index']);
 	}
 
 	public function index() {

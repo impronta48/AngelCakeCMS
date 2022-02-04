@@ -33,13 +33,8 @@ class DestinationsController extends AppController
     return;
     if ($destination) {
       $this->Cookie->write('Destination.id', $destination->id, false, '7 days');
-      $this->Session->write('Destination.id', $destination->id);
-      $this->Session->write('Destination.name', $destination->name);
-      $this->Session->write('Destination.slug', $destination->slug);
-      $this->Session->write('Destination.copertina', $destination->copertina);
     } else {
       $this->Cookie->delete('Destination');
-      $this->Session->delete('Destination');
     }
   }
 
@@ -101,7 +96,7 @@ class DestinationsController extends AppController
   public function index()
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
-    $desired_columns = ['id', 'name', 'slug', 'nazione_id', 'regione', 'nomiseo', 'published', 'published', 'created', 'modified'];
+    $desired_columns = ['id', 'name', 'slug', 'nazione_id', 'regione', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso'];
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
