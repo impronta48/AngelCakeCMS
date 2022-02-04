@@ -150,9 +150,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
   $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
 
   $builder->scope('/sitemap', function (RouteBuilder $builder) {
-    $builder->setExtensions(['xml']);
-    $builder->connect('/', ['plugin'=> false, 'controller' => 'Sitemaps', 'action' => 'index']);
-    $builder->connect('/root', ['controller' => 'Sitemaps', 'action' => 'view']);
+    $builder->connect('/', ['plugin' => false, 'controller' => 'Sitemaps', 'action' => 'index']);
+    $builder->connect('/root', ['plugin' => false, 'controller' => 'Sitemaps', 'action' => 'index']);
   });
 
   // $builder->connect('/sitemap',

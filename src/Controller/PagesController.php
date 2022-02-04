@@ -53,6 +53,11 @@ class PagesController extends AppController
 		}
 		$page = $subpage = null;
 
+		$destination = $this->request->getQuery('destination');
+		if (!empty($destination)) {
+			$this->set('destination_name', ucfirst(h($destination)));
+		}
+
 		if (!empty($path[0])) {
 			$page = $path[0];
 		}

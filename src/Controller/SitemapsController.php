@@ -22,6 +22,8 @@ class SitemapsController extends AppController
 	}
 
 	public function index() {
+        $this->RequestHandler->renderAs($this, 'xml');
+
 		$s = new StaticModel();
 		$static = $s->findAll();
 

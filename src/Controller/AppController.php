@@ -76,15 +76,27 @@ class AppController extends Controller
 
   public function beforeRender(\Cake\Event\EventInterface $event)
   {
-    // if (strpos($this->request->getRequestTarget(), '/en') !== false) {
-    //   I18n::setLocale('en');
-    // } elseif (strpos($this->request->getRequestTarget(), '/es') !== false) {
-    //   I18n::setLocale('es');
-    // }
-    // $this->set('locale',  substr(I18n::getLocale(), 0, 2));
+    $locale = I18n::getLocale();
+    $this->set('lang', $locale);
 
-    $this->set('lang', I18n::getLocale());
+    $test_path = APP . DS;
 
+    $plugin = $this->getPlugin();
+
+    if (!is_null($plugin)) {
+      $test_path .= 'plugins' . DS . $plugin . DS;
+    }
+
+    $test_path .= 'templates' . DS;
+
+    $template = $this->viewBuilder()->getTemplate();
+    $template_path = $this->viewBuilder()->getTemplatePath();
+
+    $test_path .= $template_path . DS;
+
+    if (file_exists($test_path . $locale . DS . $template)) {
+      $this->viewBuilder()->setTemplatePath($template_path . DS . $locale);
+    }
 
     if (Configure::check('theme')) {
       $this->viewBuilder()->setTheme(Configure::read('theme'));

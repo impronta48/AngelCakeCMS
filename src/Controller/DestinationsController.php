@@ -56,7 +56,7 @@ class DestinationsController extends AppController
         ])
         ->first();
     } else {
-      $nomeseo = $destination->name;
+      $nomeseo = $destination->preposition . ' ' . $destination->name;
       $nomeseo_slug = $destination->slug;
     }
 
@@ -65,7 +65,7 @@ class DestinationsController extends AppController
     }
 
     //Creo un array dai nomiseo
-    if (isset($destination->nomiseo)) {
+    if (isset($destination->nomiseo) && !empty($destination->nomiseo)) {
       $nomiseo = explode(',', $destination->nomiseo);
       //Cerco l'elemento che contiene il mio nomeseo
       foreach ($nomiseo as $n) {
@@ -74,7 +74,7 @@ class DestinationsController extends AppController
         }
       }
     } else {
-      $nomeseo = $destination->name;
+      $nomeseo = $destination->preposition . ' ' . $destination->name;
     }
 
     $this->set('nomeseo', $nomeseo);
@@ -96,13 +96,24 @@ class DestinationsController extends AppController
   public function index()
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
+<<<<<<< HEAD
     $desired_columns = ['id', 'name', 'slug', 'nazione_id', 'regione', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso'];
+=======
+    $desired_columns = [
+      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified'
+    ];
+>>>>>>> 6ed23103512f05042088735bb008eec8a376b4c0
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
     $query = $this->Destinations->find()
       ->contain(['Articles'])
       ->where(['published' => true]);
+
+    $specific_id = $this->request->getQuery('id');
+    if (!empty($specific_id)) {
+      $query->where(['id' => $specific_id]);
+    }
 
     $random = $this->request->getQuery('random');
     if (!empty($random)) {
