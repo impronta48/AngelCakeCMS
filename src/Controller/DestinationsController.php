@@ -96,13 +96,9 @@ class DestinationsController extends AppController
   public function index()
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
-<<<<<<< HEAD
-    $desired_columns = ['id', 'name', 'slug', 'nazione_id', 'regione', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso'];
-=======
     $desired_columns = [
-      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified'
+      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso'
     ];
->>>>>>> 6ed23103512f05042088735bb008eec8a376b4c0
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
