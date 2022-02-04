@@ -146,13 +146,14 @@ Cache::setConfig('_cake_model_', [
  * Duration will be set to '+2 seconds' in bootstrap.php when debug = true
  */
 Cache::setConfig('_cake_routes_', [
-  // 'className' => MemcachedEngine::class,
-  'serialize' => true,
-  //'prefix' => 'angelcake_routes_' . Configure::read('sitedir') . '_',
   'className' => FileEngine::class,
-  'path' =>  CACHE . Configure::read('sitedir') . DS . 'routes' . DS,
+  //'className' => MemcachedEngine::class,
+  'prefix' =>  Configure::read('sitedir') . '_cake_routes_',
+  'path' => CACHE . Configure::read('sitedir') . DS . 'routes' . DS,
   'serialize' => 'php',
-  'duration' => '+1 week',
+  'compress' => false, // [optional] compress data in Memcache (slower, but uses less memory)
+  'duration' => '+1 years',
+  'url' => env('CACHE_CAKEROUTES_URL', null),
 ]);
 /*
  * Configure images cache.
@@ -322,7 +323,7 @@ $api_whitelist = Configure::read('api-whitelist');
 if (isset($_SERVER['HTTP_ORIGIN']) && (empty($api_whitelist) || in_array($_SERVER['HTTP_ORIGIN'], $api_whitelist))) {
   header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
 } else {
-  header('Access-Control-Allow-Origin:');
+  header('Access-Control-Allow-Origin: * ');
 }
 
 if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
