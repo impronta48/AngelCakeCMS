@@ -11,24 +11,15 @@ $contr = strtolower($this->request->getParam('controller'));
       <b-nav-item active href="<?= Router::url(['prefix' => 'Admin', 'controller' => $contr, 'action' => 'edit', $event->id]) ?>">
         Edit
       </b-nav-item>
-    <?php else : ?>
-      <b-nav-item active href="<?= Router::url(['prefix' => 'Admin', 'controller' => $contr, 'action' => 'add']) ?>">
-        Add
-      </b-nav-item>
-    <?php endif ?>
-    <?php if (isset($event->id)) : ?>
       <b-nav-item>
         <?= $this->Form->postLink(__('Delete'), ['prefix' => 'Admin', 'controller' => $contr, 'action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id)]) ?>
       </b-nav-item>
-    <?php endif ?>
-
-    <?php if (isset($event->slug)) : ?>
-      <b-nav-item href="<?= Router::url(['prefix' => false, 'action' => 'view', $event->slug, 'target' => 'preview']) ?>">
-        View
-      </b-nav-item>
-    <?php elseif (isset($event->id)) : ?>
       <b-nav-item href="<?= Router::url(['prefix' => false, 'action' => 'view', $event->id, 'target' => 'preview']) ?>">
         View
+      </b-nav-item>
+    <?php else : ?>
+      <b-nav-item active href="<?= Router::url(['prefix' => 'Admin', 'controller' => $contr, 'action' => 'add']) ?>">
+        Add
       </b-nav-item>
     <?php endif ?>
 
