@@ -35,19 +35,7 @@ $this->element('v-admin-extra-main-menu'); ?>
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <?php
-          $arr = $this->request->getAttribute('params');
-          unset($arr['lang']);
-        ?>
-        <?php foreach (Configure::read('I18n.languages') as $lang) : ?>
-          <?php $route = $lang != Configure::read('App.language') ? array_merge(['lang' => $lang], $arr) : $arr ; ?>
-          <b-nav-item href="<?= Router::reverse($route) ?>">
-            <?php $path = substr($lang, 0, 2) ?>
-            <?= $this->Html->image("flags/{$path}.png") ?>
-          </b-nav-item>
-        <?php endforeach; ?>
         <b-nav-item href="/" target="preview">
-
           <?= __('Anteprima sito') ?>
           <b-icon-globe></b-icon-globe>
         </b-nav-item>
