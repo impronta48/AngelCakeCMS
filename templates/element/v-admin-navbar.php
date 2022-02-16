@@ -37,7 +37,7 @@ $contr = strtolower($this->request->getParam('controller'));
     ?>
     <?php foreach (Configure::read('I18n.languages') as $lang) : ?>
       <?php $route = $lang != Configure::read('App.language') ? array_merge(['lang' => $lang], $arr) : $arr ; ?>
-      <b-nav-item <?= $lang == I18n::getLocale() ? 'active' : '' ?> href="<?= Router::reverse($route) ?>">
+      <b-nav-item <?= $lang == I18n::getLocale() ? 'active' : '' ?> href="<?= Router::reverse($route) ?>" title="Traduci in <?= $lang ?>">
         <?php $path = substr($lang, 0, 2) ?>
         <?= $this->Html->image("flags/{$path}.png") ?>
       </b-nav-item>
