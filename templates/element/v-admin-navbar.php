@@ -1,6 +1,8 @@
 <?php
 
 use \Cake\Routing\Router;
+use \Cake\Core\Configure;
+use \Cake\I18n\I18n;
 
 $contr = strtolower($this->request->getParam('controller'));
 ?>
@@ -27,5 +29,18 @@ $contr = strtolower($this->request->getParam('controller'));
       List
     </b-nav-item>
 
+    <b-nav-item disabled class="ml-auto"></b-nav-item>
+
+    <?php
+      $arr = $this->request->getAttribute('params');
+      unset($arr['lang']);
+    ?>
+    <?php foreach (Configure::read('I18n.languages') as $lang) : ?>
+      <?php $route = $lang != Configure::read('App.language') ? array_merge(['lang' => $lang], $arr) : $arr ; ?>
+      <b-nav-item <?= $lang == I18n::getLocale() ? 'active' : '' ?> href="<?= Router::reverse($route) ?>" title="Traduci in <?= $lang ?>">
+        <?php $path = substr($lang, 0, 2) ?>
+        <?= $this->Html->image("flags/{$path}.png") ?>
+      </b-nav-item>
+    <?php endforeach; ?>
   </b-nav>
 </div>
