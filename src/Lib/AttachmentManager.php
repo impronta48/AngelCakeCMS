@@ -93,7 +93,7 @@ class AttachmentManager
 		$fullDir = Text::insert($fullDirTemplate, [
 			'sitedir' => Configure::read('sitedir'),
 			'model' => strtolower($model),
-			'destination' => $destination,
+			'destination' => strtolower($destination),
 			'id' => $id,
 			'field' => $field,
 		]);
