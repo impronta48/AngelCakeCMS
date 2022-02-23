@@ -33,6 +33,13 @@ class SitemapsController extends AppController
 			  ->order(['modified' => 'desc'])
 			  ->all();
 
-		$this->set(compact('static', 'articles'));
+		$destinations = TableRegistry::getTableLocator()->get('Destinations')->find()
+			  ->select(['id', 'name', 'slug'])
+			  ->where(['published' => true])
+			  ->order(['name' => 'asc'])
+			  ->all();
+
+		// $this->viewBuilder()->disableAutoLayout();
+		$this->set(compact('static', 'articles', 'destinations'));
 	}
 }
