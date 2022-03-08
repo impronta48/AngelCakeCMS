@@ -17,7 +17,7 @@
         "dereuromark/cakephp-tags": "^1.1",
         "erusev/parsedown": "^1.7",
         "friendsofcake/bootstrap-ui": "^3",
-        "google/apiclient": "^2",
+        "google/apiclient": "^2.0",
         "hkod/frontmatter": "^1",
         "intervention/imagecache": "^2.4",
         "ishanvyas22/asset-mix": "^1.3",
