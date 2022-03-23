@@ -142,6 +142,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, templates/Pages/home.php)...
      */
+
+  $builder->connect('/tlogin', ['plugin' => 'Ebike2021', 'controller' => 'Users', 'action' => 'telegram_login']);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home']);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['routeClass' => I18nRoute::class]);
@@ -214,3 +216,10 @@ $routes->scope('/', function (RouteBuilder $builder) { // Last, build generic fa
  * });
  * ```
  */
+
+/*
+ $routes->plugin('Ebike2021', ['path' => 'ebike'], function (RouteBuilder $routes) {
+   $routes->connect('/users');
+ });
+ */
+
