@@ -78,7 +78,6 @@ class DestinationsController extends AppController
     }
 
     $this->set('nomeseo', $nomeseo);
-
     $this->set('canonical',  $nomeseo_slug);
     $this->set('destination', $destination);
 
@@ -141,6 +140,9 @@ class DestinationsController extends AppController
       $query->limit($limit);
     }
 
+    $prezzi = $this->request->getQuery('prezzi');
+    $this->set(compact('prezzi'));
+    
     $count = $this->request->getQuery('count');
     if (!empty($count)) {
       $count = $query->count();
@@ -235,14 +237,14 @@ class DestinationsController extends AppController
   public function prezzi($nomeseo = null)
   {
     if (empty($nomeseo)) {
-      $nomeseo = $this->request->query('destination');
+      $nomeseo = $this->request->getQuery('destination');
     }
     if (empty($nomeseo)) {
-      $this->redirect(['controller' => 'pages', 'action' => 'display', 'mappa']);
+      return $this->redirect(['controller' => 'Destinations', 'action' => 'index', '?' => ['prezzi' => true]]);
     }
-    $destination = $this->get_seo_destination_name($nomeseo);
-    // $this->Destinations->recursive = -1;
-    $this->destination_in_session($destination);
+    $destination = $this->get_seo_destination_name($nomeseo);  
+    $this->set(compact($destination));
+    
     // tipi di bici disponibili
     $this->loadModel('Cyclomap.Tipibici');
     $tipibici = $this->Tipibici->find(

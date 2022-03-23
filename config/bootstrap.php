@@ -143,10 +143,10 @@ Cache::setConfig('_cake_routes_', [
   //'className' => MemcachedEngine::class,
   'prefix' =>  Configure::read('sitedir') . '_cake_routes_',
   'path' => CACHE . Configure::read('sitedir') . DS . 'routes' . DS,
-  'serialize' => 'php',
+  //'serialize' => 'php',
   'compress' => false, // [optional] compress data in Memcache (slower, but uses less memory)
   'duration' => '+1 years',
-  'url' => env('CACHE_CAKEROUTES_URL', null),
+  //'url' => env('CACHE_CAKEROUTES_URL', null),
 ]);
 /*
  * Configure images cache.
