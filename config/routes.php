@@ -143,12 +143,12 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * to use (in this case, templates/Pages/home.php)...
      */
 
-  $builder->connect('/tlogin', ['plugin' => 'Ebike2021', 'controller' => 'Users', 'action' => 'telegram_login']);
+  $builder->connect('/tlogin', ['plugin' => 'Cyclomap', 'controller' => 'Users', 'action' => 'tlogin']);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home']);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
-  $builder->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['routeClass' => I18nRoute::class]);
+  //$builder->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
 
   $builder->scope('/sitemap', function (RouteBuilder $builder) {
@@ -217,9 +217,8 @@ $routes->scope('/', function (RouteBuilder $builder) { // Last, build generic fa
  * ```
  */
 
-/*
- $routes->plugin('Ebike2021', ['path' => 'ebike'], function (RouteBuilder $routes) {
-   $routes->connect('/users');
+/*  $routes->plugin('Ebike2021', ['path' => 'ebike'], function (RouteBuilder $routes) {
+   $routes->connect('/tlogin', ['controller' => 'Users', 'action' => 'tlogin']);
  });
- */
 
+ */
