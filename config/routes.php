@@ -114,7 +114,12 @@ Router::scope('/images', function ($routes) {
   $routes->connect('/*');
 });
 
-
+//Se nel file di configurazione ho specificato customRoutes, allora
+  //importo extra-routes.php nella cartella sites/nomesito/
+  $er = Configure::read('ExtraRoutes');
+  if ($er) {
+    include_once conf_path() . DS .  'extra-routes.php';
+  }
 
 
 $routes->scope('/', function (RouteBuilder $builder) {
@@ -130,12 +135,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
   //$builder->applyMiddleware('csrf');
   $builder->setExtensions(['xls', 'json', 'xml']);
 
-  //Se nel file di configurazione ho specificato customRoutes, allora
-  //importo extra-routes.php nella cartella sites/nomesito/
-  $er = Configure::read('ExtraRoutes');
-  if ($er) {
-    include_once conf_path() . DS .  'extra-routes.php';
-  }
+  
 
   /*
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -143,13 +143,14 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * to use (in this case, templates/Pages/home.php)...
      */
 
-  $builder->connect('/tlogin', ['plugin' => 'Cyclomap', 'controller' => 'Users', 'action' => 'tlogin']);
+  //$builder->connect('/tlogin', ['plugin' => 'Cyclomap', 'controller' => 'Users', 'action' => 'tlogin']);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home']);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
   //$builder->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+  
 
   $builder->scope('/sitemap', function (RouteBuilder $builder) {
     $builder->connect('/', ['plugin' => false, 'controller' => 'Sitemaps', 'action' => 'index']);
@@ -183,6 +184,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
   // $builder->fallbacks(\ADmad\I18n\Routing\Route\I18nRoute::class); // TODO: readd this, manually route everything
   // $builder->fallbacks(DashedRoute::class);
+
+  
 });
 
 $routes->prefix('Admin', function (RouteBuilder $routes) { // Admin routes
