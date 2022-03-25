@@ -19,6 +19,7 @@
         "friendsofcake/bootstrap-ui": "^3",
         "google/apiclient": "^2.0",
         "hkod/frontmatter": "^1",
+        "impronta48/ibmwatson": "^1.0",
         "intervention/imagecache": "^2.4",
         "ishanvyas22/asset-mix": "^1.3",
         "josbeir/cakephp-filesystem": "^2.0",
