@@ -457,3 +457,6 @@ msgstr "For Companies"
 
 msgid "Che cosa incontrerai lungo il percorso"
 msgid "What do you find along the route"
+
+msgid "Buono Regalo"
+msgid "Gift Card"
