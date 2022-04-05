@@ -33,6 +33,7 @@ class DestinationsTable extends Table
 			'fields' => [
 				'nomiseo', 'title',
 			],
+			'referenceName' => 'Destination', //Importante per garantire la compatibilità con cake2
 			'defaultLocale' => 'ita',
 			// 'allowEmptyTranslations' => false,
 		]);

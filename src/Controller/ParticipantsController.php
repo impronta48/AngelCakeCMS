@@ -23,6 +23,13 @@ class ParticipantsController extends AppController
 	'contain' => ['Events'],
 	];
 
+	public function initialize(): void
+	{
+		parent::initialize();
+
+		$this->loadComponent('Paginator');
+		$this->Authentication->allowUnauthenticated(['add','payment','thankyou']);
+	}
 	/**
 	 * Add method
 	 *

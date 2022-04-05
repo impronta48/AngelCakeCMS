@@ -10,3 +10,4 @@ msgid ""
 msgstr ""
 "Se il link non viene mostrato correttamente, per favore copia il seguente "
 "indirizzo nel tuo browser web {0}"
+

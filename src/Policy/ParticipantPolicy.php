@@ -29,7 +29,7 @@ class ParticipantPolicy implements BeforePolicyInterface
      */
     public function canAdd(IdentityInterface $user, Participant $participant)
     {
-        return false;
+        return true;
     }
 
     /**
