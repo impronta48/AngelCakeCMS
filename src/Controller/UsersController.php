@@ -17,7 +17,7 @@ class UsersController extends AppController
   {
     parent::beforeFilter($event);
     $this->loadComponent('Authentication.Authentication');
-    $this->Authentication->allowUnauthenticated(['login']);
+    $this->Authentication->allowUnauthenticated(['login','old']);
   }
 
   public function login()
