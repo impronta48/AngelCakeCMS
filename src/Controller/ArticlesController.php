@@ -16,7 +16,7 @@ class ArticlesController extends AppController
     parent::initialize();
 
     $this->loadComponent('Paginator');
-    //$this->Authentication->allowUnauthenticated(['getList','index','view']);
+    $this->Authentication->allowUnauthenticated(['getList','index','view','search']);
   }
 
   public function view($slug = null)
