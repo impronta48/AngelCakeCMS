@@ -69,8 +69,10 @@ class DestinationsController extends AppController
       $nomiseo = explode(',', $destination->nomiseo);
       //Cerco l'elemento che contiene il mio nomeseo
       foreach ($nomiseo as $n) {
-        if (stripos($n, $nomeseo) > 0) {
+        $n = trim($n);
+        if (stripos($n, $nomeseo) !== false) {
           $nomeseo = $n;
+          break;
         }
       }
     } else {
