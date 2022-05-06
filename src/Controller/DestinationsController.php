@@ -47,6 +47,7 @@ class DestinationsController extends AppController
     }
 
     if (empty($destination)) {
+      //TODO: Attenzione se il nomeseo contiene un apostrofo non funziona (150 errori!)
       $nomeseo_slug = Text::slug($nomeseo);
       $nomeseo = str_replace('-', ' ', $nomeseo);
       $destination = $this->Destinations->find()
