@@ -50,9 +50,9 @@ Vue.component('file-uploader', {
                 resizeWidth: this.convert ? 2000 : undefined, // This should give jpegs of appropriate size
                 resizeMimeType: this.convert ? 'image/jpeg' : undefined,
                 maxFilesize: null, // PHP will handle in AttachmentsController
-                thumbnailHeight: 300,
-                thumbnailWidth: 150,
-                thumbnailMethod: 'crop',
+                thumbnailHeight: 200,
+                thumbnailWidth: 200,
+                thumbnailMethod: 'contain',
             }
         }
     },

@@ -1,6 +1,7 @@
 <!doctype html>
 
 <?php
+
 use Cake\Core\Configure;
 ?>
 
@@ -42,6 +43,7 @@ use Cake\Core\Configure;
       </div>
 
       <div class="v-cloak--hidden">
+        <div class="spinner" v-if="loading"></div>
         <!-- Parts that will be visible After compiled your HTML -->
         <?= $this->element('v-admin-header'); ?>
         <main role="main" class="container">

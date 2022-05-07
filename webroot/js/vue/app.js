@@ -4,6 +4,7 @@ var app = new Vue({
         return {
             form: {},
             showMobile: false,
+            loading: false,
         }
     },
     methods: {
