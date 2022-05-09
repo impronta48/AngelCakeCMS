@@ -60,7 +60,7 @@ class Article extends Entity
 
 			return $destinations->findById($this->destination_id)->first()->slug . DS;
 		} else {
-			return 'null';
+			return '';
 		}
 	}
 

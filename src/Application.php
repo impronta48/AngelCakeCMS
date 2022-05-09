@@ -43,6 +43,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use ADmad\SocialAuth\Middleware\SocialAuthMiddleware;
 use Authorization\Middleware\RequestAuthorizationMiddleware;
 use App\Policy\RequestPolicy;
+use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\ServerRequest;
 
 /**
@@ -213,6 +214,11 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     ]));
     // $middlewareQueue->add(new RequestAuthorizationMiddleware());
 
+    $middlewareQueue->add(new EncryptedCookieMiddleware(
+      ['secrets', 'protected'],
+      "PASSWORDmoltoDifficile1234"
+    ));
+    
     // Add your middlewares here
     if (Configure::read('debug')) {
       // Disable authz for debugkit
@@ -270,7 +276,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     ]);
 
     $fields = [
-      IdentifierInterface::CREDENTIAL_USERNAME => 'email',
+      IdentifierInterface::CREDENTIAL_USERNAME => 'username',
       IdentifierInterface::CREDENTIAL_PASSWORD => 'password'
     ];
     // Load the authenticators. Session should be first.
@@ -287,6 +293,12 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
     // Load identifiers
     $service->loadIdentifier('Authentication.Password', compact('fields'));
+    
+    // If the user is on the login page, check for a cookie as well.
+    $service->loadAuthenticator('Authentication.Cookie', [
+      'fields' => $fields,
+      'loginUrl' => '/users/login',
+    ]);
 
     return $service;
   }
