@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Model\StaticModel;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+use Cake\I18n\I18n;
 
 /**
  * Static Controller
@@ -54,7 +55,14 @@ class StaticController extends AppController
 		$this->set('files', $risult);
 		$this->viewBuilder()->setOption('serialize', ['files']);
 
-	  //Se la pagina è di tipo blog, uso un template specifico
+		$languages = Configure::read('I18n.languages');
+			//Se il primo elemento è la lingua lo butto
+			if (in_array($path[0], $languages)) {
+				I18n::setLocale($path[0]);
+				array_shift($path);
+			}
+
+		//Se la pagina è di tipo blog, uso un template specifico
 		if ($path[0] == 'blog' || (isset($path[1]) && $path[1] == 'blog')) {
 			$this->render('index/blog');
 		}
@@ -97,7 +105,8 @@ class StaticController extends AppController
 		if (strpos($path[0], '/')) {
 			$path = explode('/', $path[0]);
 		  //Se il primo elemento è la lingua lo butto
-			if (array_key_exists($path[0], $languages)) {
+			if (in_array($path[0], $languages)) {				
+				I18n::setLocale($path[0]);
 				array_shift($path);
 			}
 		}
