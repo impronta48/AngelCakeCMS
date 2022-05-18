@@ -79,17 +79,19 @@ class Static2articlesCommand extends Command
 
 				if ($this->Articles->save($article)) {
 				  //La copertina va spostata da static/img a /articles/article-id/copertina
-					$r['dati']['copertina'] = ltrim($r['dati']['copertina'], '/');
-					$oldCopertina = WWW_ROOT . $r['dati']['copertina'];
-					$b = basename($oldCopertina);
-					if (file_exists($oldCopertina)) {
-						if (strlen($path)) {
-								$newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/$path/{$article->id}/copertina/";
-						} else {
-							  $newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/{$article->id}/copertina/";
+					if (!empty($r['dati']['copertina'])){
+						$r['dati']['copertina'] = ltrim($r['dati']['copertina'], '/');
+						$oldCopertina = WWW_ROOT . $r['dati']['copertina'];
+						$b = basename($oldCopertina);
+						if (file_exists($oldCopertina) && isset($path)) {
+							if (strlen($path)) {
+									$newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/$path/{$article->id}/copertina/";
+							} else {
+								$newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/{$article->id}/copertina/";
+							}
+							$f = new Folder($newCopertina, true);
+							rename($oldCopertina, $newCopertina . $b);
 						}
-						$f = new Folder($newCopertina, true);
-						rename($oldCopertina, $newCopertina . $b);
 					}
 				}
 			}
