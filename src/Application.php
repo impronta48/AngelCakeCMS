@@ -207,6 +207,16 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
     $middlewareQueue->add(new AuthenticationMiddleware($this));
     $middlewareQueue->add(new AuthorizationMiddleware($this, [
+      'unauthorizedHandler' => [
+        'className' => 'CustomRedirect', // <--- see here
+        'url' => '/users/login',
+        'queryParam' => 'redirectUrl',
+        'exceptions' => [
+          MissingIdentityException::class,
+          ForbiddenException::class
+        ],
+        'custom_param' => true,
+      ],
       // 'requireAuthorizationCheck' => false,
       // 'identityDecorator' => function ($auth, $user) {
       //   return $user->setAuthorization($auth);

@@ -14,9 +14,9 @@ class BlockPolicy implements BeforePolicyInterface
 {
     public function before(?IdentityInterface $user, $resource, $action)
     {
-        if ($user->group_id == 1) // is an admin, can do whatever
+        if ($user->group_id == ROLE_ADMIN) // is an admin, can do whatever
             return true;
-        if (!in_array($user->group_id, [1,2,3,6,9])) // is not allowed to edit
+        if (!in_array($user->group_id, [ROLE_ADMIN, ROLE_BAM, ROLE_EON, ROLE_EDITOR, ROLE_RENTER, ROLE_EON_PLUS, ROLE_COMMERCIALE])) // is not allowed to edit
             return false;
     }
 
