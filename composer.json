@@ -51,7 +51,8 @@
             "Bossolasco\\": "plugins/Bossolasco/src/",
             "Yepp\\": "plugins/Yepp/src/",
             "Cribyoo\\": "plugins/Cribyoo/src/",
-            "Cyclomap\\": "plugins/Cyclomap/src/"
+            "Cyclomap\\": "plugins/Cyclomap/src/",
+            "TelegramLogin\\": "plugins/TelegramLogin/src/"
         }
     },
     "autoload-dev": {
@@ -75,7 +76,11 @@
     },
     "prefer-stable": true,
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "cakephp/plugin-installer": true
+        }
     },
     "minimum-stability": "dev"
 }

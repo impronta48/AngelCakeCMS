@@ -13,7 +13,7 @@ class UsersTablePolicy
 {
     public function scopeIndex(IdentityInterface $user, $query)
     {
-        if ($user->group_id == 1) return $query; // Admin can see everything
+        if ($user->group_id == ROLE_ADMIN) return $query; // Admin can see everything
         return $query->where(['Users.id' => $user->id]);
     }
 }

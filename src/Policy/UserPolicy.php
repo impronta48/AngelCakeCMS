@@ -14,9 +14,9 @@ class UserPolicy implements BeforePolicyInterface
 {
     public function before($user, $resource, $action)
     {
-        if ($user->group_id == 1) // is an admin, can do whatever
+        if ($user->group_id == ROLE_ADMIN) // is an admin, can do whatever
             return true;
-        if (!in_array($user->group_id, [1,2,3,6,9])) // is not allowed to edit
+        if (!in_array($user->group_id, [ROLE_ADMIN])) // is not allowed to edit
             return false;
     }
 

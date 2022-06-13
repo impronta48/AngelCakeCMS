@@ -13,8 +13,8 @@ class DestinationsTablePolicy
 {
     public function scopeIndex(IdentityInterface $user, $query)
     {
-        if ($user->group_id == 1 || $user->group_id == 9) return $query; // Admin and Editor can see everything
-        if ($user->group_id == 2) return $query->where(['Destinations.id' => $user->destination_id]); // BAM can see its destination
+        if ($user->group_id == ROLE_ADMIN || $user->group_id == ROLE_EDITOR) return $query; // Admin and Editor can see everything
+        if ($user->group_id == ROLE_BAM) return $query->where(['Destinations.id' => $user->destination_id]); // BAM can see its destination
         return $query->where(['Destination.id IS' => null]); // Jank way to filter them all out
     }
 }

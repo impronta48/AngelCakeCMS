@@ -13,7 +13,7 @@ class EventsTablePolicy
 {
     public function scopeIndex(IdentityInterface $user, $query)
     {
-        if ($user->group_id == 1 || $user->group_id == 9) return $query; // Admin and Editor can see everything
+        if ($user->group_id == ROLE_ADMIN || $user->group_id == ROLE_EDITOR) return $query; // Admin and Editor can see everything
         return $query->where(['Block.id IS' => null]); // cheap trick
     }
 }
