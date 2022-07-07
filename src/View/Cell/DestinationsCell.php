@@ -30,11 +30,11 @@ class DestinationsCell extends Cell
 
 	private function make_destination_list()
 	{
-        $destionations = $this->Destinations
-            ->find()
-            ->select(['name', 'slug', 'id'])
-            ->order(['name']);
-		return $destionations;
+		$destinations = $this->Destinations
+			->find()
+			->select(['name', 'slug', 'id', 'regione'])			
+			->order(['name']);
+		return $destinations;
 	}
 
 	public function fromId($destination_id) {
@@ -46,8 +46,14 @@ class DestinationsCell extends Cell
 	 *
 	 * @return void
 	 */
-	public function display() {
-        $this->set('destinations', $this->make_destination_list());
+	public function display($levels = null) {
+		$d = $this->make_destination_list();
+		//Se c'è il livello, filtra
+		if (is_array($levels)){
+			$d->where(['level IN' => $levels]);			
+		}
+
+		$this->set('destinations',$d); 
 	}
 
 	/**
