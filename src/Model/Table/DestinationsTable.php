@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Cache\Cache;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -48,6 +49,11 @@ class DestinationsTable extends Table
 			'foreignKey' => 'destination_id',
 		]);
 		$this->hasMany('Articles');
+	}
+
+	public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
+	{
+		Cache::clear('_cake_routes_');
 	}
 
 	/**

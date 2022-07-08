@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -31,6 +32,8 @@ class ArticlesTable extends Table
 		} elseif (!$entity->renewSlug) {
 			$entity->slug = $entity->getOriginal('slug');
 		}
+
+		Cache::clear('_cake_routes_');
 	}
 
 	public function validationDefault(Validator $validator): \Cake\Validation\Validator {
