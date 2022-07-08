@@ -254,7 +254,10 @@ class DestinationsController extends AppController
       'all',
       [
         'recursive' => -1,
-        'conditions' => ['destination_id' => $destination->id],
+        'conditions' => [
+          'destination_id' => $destination->id, 
+          'published' => 1,
+        ],
         'order' => 'tariffa_intera ASC'
       ]
     )->toArray();
@@ -265,7 +268,8 @@ class DestinationsController extends AppController
     $addon_list = $this->Addon->find('all', [
       'recursive' => -1,
       'conditions' => [
-        'destination_id' => $destination->id
+        'destination_id' => $destination->id,
+        'published' => 1,
       ],
       'order' => ['name'],
     ])->toArray();
