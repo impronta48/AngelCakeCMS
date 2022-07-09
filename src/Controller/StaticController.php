@@ -28,7 +28,7 @@ class StaticController extends AppController
 		parent::initialize();
 		$this->modelClass = false;
 		$this->loadComponent('RequestHandler');
-	  //$this->Authentication->allowUnauthenticated(['index','view']);
+	  	$this->Authentication->allowUnauthenticated(['index','view']);
 
 	  //Imposto la cartella dove si trovano le immagini statiche
 		$sitedir = Configure::read('sitedir');

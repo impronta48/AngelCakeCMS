@@ -67,6 +67,7 @@ use Cake\Core\Configure;
   <?= $this->Html->script('node_modules/bootstrap-vue/dist/bootstrap-vue-icons.min.js') ?>
   <?= $this->Html->script('ckeditor/ckeditor') ?>
   <?= $this->Html->script('node_modules/ckeditor4-vue/dist/ckeditor') ?>
+  <?= $this->Html->script('node_modules/axios/dist/axios.min.js') ?>
 
   <?= $this->fetch('script') ?>
   <?= $this->element('v-autoload')  //Carica automaticamente lo script /theme/js/vue/{Controller}/{action}.js

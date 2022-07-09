@@ -60,11 +60,13 @@ class StaticController extends AppController
 		$files = $dir->read(true);
 		$this->set('files', $files);
 		$this->set('path', $path);
+		$this->Authorization->skipAuthorization();
 	}
 
   //Legge una cartella remota di webDav e aggiorna la cartella static del sito corrente
 
 	public function getRemote() {
+		$this->Authorization->skipAuthorization();
 		$sitedir = Configure::read('sitedir');
 		$localFolder = WWW_ROOT . $sitedir . DS . 'static';
 		$remoteFolder = Configure::read('rclone.staticFolder');
@@ -88,6 +90,7 @@ class StaticController extends AppController
 	}
 
 	public function edit(...$fname) {
+		$this->Authorization->skipAuthorization();
 		$sitedir = Configure::read('sitedir');
 		$fnameStr = $this->StaticModel->combina_path($fname);
 		$absoluteFname = WWW_ROOT . $sitedir . DS . 'static/' . $fnameStr;
@@ -117,6 +120,7 @@ class StaticController extends AppController
 	}
 
 	public function delete(...$fname) {
+		$this->Authorization->skipAuthorization();
 		if ($this->StaticModel->delete($fname)) {
 			$this->Flash->success('Pagina statica eliminata con successo');
 			array_pop($fname);
@@ -130,6 +134,7 @@ class StaticController extends AppController
 	}
 
 	public function add(...$path) {
+		$this->Authorization->skipAuthorization();
 		$sitedir = Configure::read('sitedir');
 		$pathStr = $this->StaticModel->combina_path($path);
 		$this->set('path', $path);
