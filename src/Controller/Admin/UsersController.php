@@ -29,8 +29,13 @@ class UsersController extends AppController
    */
   public function index()
   {
+    $roles = ADMIN_ROLES_LIST ?? [];
     $query = $this->Users->find()
               ->contain(['Destinations']);
+
+    if (count($roles)) {
+      $query->where(['group_id IN' => $roles]);
+    }            
 
     $this->Authorization->applyScope($query);
 

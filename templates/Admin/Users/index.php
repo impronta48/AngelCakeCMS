@@ -15,6 +15,7 @@ use Cake\Core\Configure;
 <table class="table table-striped mt-3">
   <thead>
     <th>Account Gmail</th>
+    <th>Username</th>
     <th>Gruppo</th>
     <th>Destination</th>
     <th>Azioni</th>
@@ -23,6 +24,7 @@ use Cake\Core\Configure;
   <?php foreach ($users as $u) : ?>
     <tr>
       <td><?= $u->gmail ?></td>
+      <td><?= $u->username ?></td>
       <td><?= Configure::read('groups')[$u->group_id] ?></td>
       <td><?= empty($u->destination) ? '*' : $u->destination->name ?></td>
       <td class="actions">
