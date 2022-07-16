@@ -25,7 +25,7 @@ class SitemapsController extends AppController
         $this->RequestHandler->renderAs($this, 'xml');
 
 		$s = new StaticModel();
-		$static = $s->findAll();
+ 		$static = $s->findAll();
 
 		$articles = TableRegistry::getTableLocator()->get('Articles')->find()
 			  ->select(['id','slug','modified'])
