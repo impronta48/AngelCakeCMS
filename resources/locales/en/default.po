@@ -1,0 +1,462 @@
+msgid "Destinazione"
+msgstr "Destination"
+
+msgid "Destinazioni"
+msgstr "Destinations"
+
+msgid "Percorso"
+msgstr "Route"
+
+msgid "Mappa"
+msgstr "Map"
+
+msgid "Noleggia ora"
+msgstr "Rent now"
+
+msgid "E-bike usate"
+msgstr "Used e-bikes"
+
+msgid "Chi siamo"
+msgstr "About us"
+
+msgid "Contatti"
+msgstr "Contacts"
+
+msgid "Per le aziende"
+msgstr "For Companies"
+
+msgid "Altri link"
+msgstr "More links"
+
+msgid "Percorsi"
+msgstr "Routes"
+
+msgid "Dove vuoi andare?"
+msgstr "Where are you going?"
+
+msgid "Attività in evidenza"
+msgstr "Suggested activities"
+
+msgid "Punti di Noleggio"
+msgstr "Rental Points"
+
+msgid "Agriturismi, bar, ristoranti e produttori"
+msgstr "Bar, restaurants and local producers"
+
+msgid "Come diventare BikeHotel BikeSquare"
+msgstr "How to become a BikeSquare BikeHotel"
+
+msgid "Noleggiatore"
+msgstr "Renter"
+
+msgid "Come aprire un punto di noleggio e-bike?"
+msgstr "How to open an ebike rental point?"
+
+msgid "Produttore di bici"
+msgstr "E-bike manufacturers"
+
+msgid "Territorio, PA, Consorzio"
+msgstr "Territory, Government"
+
+msgid "Tour Operator, blogger e Ciclo Guide"
+msgstr "Tour Operator, blogger, Cycling-Guide"
+
+msgid "Galleria Fotografica"
+msgstr "Photo Gallery"
+
+msgid "In queste località è possibile <b>noleggiare una e-bike</b> oppure fare un'esperienza sul territorio."
+msgstr "In these destinations you can <b>rent an e-bike</b> or have an experience like a local."
+
+msgid "Noleggio e-bike in {0}, esperienze e bike hotel in {1}"
+msgstr "E-bike rental in {0}, experiences and bike hotels in {1}"
+
+msgid "Noleggio Bici - E-bike Rental {0} | Bike Tour"
+msgstr "E-bike Rental {0} | Bike Tour"
+
+msgid "Informazioni"
+msgstr "Information"
+
+msgid "A partire da"
+msgstr "Starting from"
+
+msgid "a persona"
+msgstr "per person"
+
+msgid "Richiedi tour personalizzato"
+msgstr "Request customized tour"
+
+msgid "Verifica disponibilità ebike"
+msgstr "Verify ebike availability"
+
+msgid "Acquista un buono regalo"
+msgstr "Buy a gift card"
+
+msgid "Trovi questo percorso sull'App BikeSquare con il codice"
+msgstr "You can find this route on the BikeSquare app with code"
+
+msgid "Si parte da"
+msgstr "Departure from"
+
+#: Destinations/addio_nubilato.php:49
+msgid "Addio al Nubilato"
+msgstr "Hen Party"
+
+#: Destinations/experience.php:43
+msgid "Esperienze"
+msgstr "Experiences"
+
+#: Destinations/index.php:7
+#: element/footer.php:11
+#: element/mobile-menu.php:39
+#: element/navbar-primary.php:23
+msgid "Destinazioni"
+msgstr "Destinations"
+
+#: Destinations/index.php:8
+msgid "In queste località è possibile <b>noleggiare una e-bike</b> oppure fare un'esperienza sul territorio."
+msgstr "In these locations it's possible to <b>rent an e-bike</b> or to have an experience on the territory"
+
+#: Destinations/index.php:27
+#: Destinations/index.php:31
+msgid "Noleggio e-bike in {0}, esperienze e bike hotel in {1}"
+msgstr "E-bike rental point in {0}, experiences and bike hotel in {1}"
+
+#: Destinations/prezzi.php:38
+#: Destinations/prezzi.php:39
+#: Destinations/prezzi.php:40
+msgid "chiedi"
+msgstr "ask"
+
+#: Destinations/prezzi.php:61
+msgid "Prezzi per il noleggio di ebike"
+msgstr "E-bike rental prices"
+
+#: Destinations/prezzi.php:62
+msgid "I miglior rapporto qualità prezzo per il noleggio e-bike"
+msgstr "The best price/quality rateo for e-bike rentals"
+
+#: Destinations/prezzi.php:68
+msgid "Prezzi"
+msgstr "Prices"
+
+#: Destinations/prezzi.php:80
+msgid "Costo noleggio e-bike"
+msgstr "E-bike rental price"
+
+#: Destinations/prezzi.php:81
+msgid "Dubbi? Leggi le domande frequenti"
+msgstr "Doubts? Read our frequent questions"
+
+#: Destinations/prezzi.php:93
+msgid "Prezzi per il noleggio di"
+msgstr "Prices for rental of"
+
+#: Destinations/prezzi.php:99
+#: Destinations/prezzi.php:135
+msgid "Giornata Intera"
+msgstr "Full day"
+
+#: Destinations/prezzi.php:100
+#: Destinations/prezzi.php:136
+msgid "Mezza Giornata"
+msgstr "Half day"
+
+#: Destinations/prezzi.php:104
+#: Destinations/prezzi.php:140
+msgid "Prenota"
+msgstr "Rent"
+
+#: Destinations/prezzi.php:115
+msgid "Accessori disponibili in questa destinazione"
+msgstr "Available accessories in this destination"
+
+#: Destinations/prezzi.php:164
+msgid "Esperienze tutto compreso in e-bike"
+msgstr "All-inclusive experiences in e-bike"
+
+#: Destinations/prezzi.php:183
+msgid "I nostri suggerimenti per percorsi autoguidati"
+msgstr "Our suggestions for self-guided routes"
+
+#: Destinations/view.php:6
+msgid "Noleggio Bici - E-bike Rental %s | Bike Tour"
+msgstr "Bike Rental - E-bike Rental %s | Bike Tour"
+
+#: Pages/aziende.php:38
+msgid "Viaggi incentive"
+msgstr "Incentive Trips"
+
+#: Pages/aziende.php:55
+msgid "Hotel, B&B, Agriturismi, Bar, Ristoranti"
+msgstr "Hotel, B&B, Farmhouses, Bar, Restaurants"
+
+#: Pages/aziende.php:64
+#: element/footer.php:24
+msgid "Noleggiatore"
+msgstr "Renter"
+
+#: Pages/aziende.php:73
+#: element/footer.php:26
+msgid "Produttore di bici"
+msgstr "Bike producer"
+
+#: Pages/aziende.php:82
+#: element/footer.php:27
+msgid "Territorio, PA, Consorzio"
+msgstr "Territory, Administration"
+
+#: Pages/aziende.php:92
+#: element/footer.php:28
+msgid "Tour Operator, blogger e Ciclo Guide"
+msgstr "Tour Operator, blogger, Cyclo Guide"
+
+#: Pages/aziende.php:114
+msgid "Gestione dei Noleggi"
+msgstr "Rental management"
+
+#: Pages/aziende.php:119
+msgid "Kit GPS"
+msgstr "Kit GPS"
+
+#: Pages/contact.php:40
+#: Poi/view.php:144
+msgid "Indirizzo:"
+msgstr "Address:"
+
+#: Pages/contact.php:48
+msgid "Email:"
+msgstr "Email:"
+
+#: Pages/contact.php:55
+msgid "Social media:"
+msgstr "Social media:"
+
+#: Pages/home.php:22
+msgid "Cosa puoi fare con BikeSquare"
+msgstr "What you can do with BikeSquare"
+
+#: Pages/home.php:45
+msgid "Esperienze tutto compreso"
+msgstr "All-inclusive experiences"
+
+#: Pages/home.php:48
+msgid "Scopri le nostre esperienze tutto compreso"
+msgstr "Discover our all-inclusive experiences"
+
+#: Pages/home.php:69
+msgid "Percorsi top"
+msgstr "Top Routes"
+
+#: Pages/home.php:72
+msgid "Scopri i nostri {0} percorsi"
+msgstr "Discover our {0} routes"
+
+#: Pages/home.php:96
+msgid "I nostri partner"
+msgstr "Our partners"
+
+#: Pages/tour_personalizzato.php:19
+msgid "Tour personalizzato"
+msgstr "Customized tour"
+
+#: Pages/tour_personalizzato.php:21
+msgid "Usa il form qui sotto <br/>per richiedere tour in ebike come lo vuoi tu!"
+msgstr "Use the form below <br/> to request an e-bike tour just like you want it!"
+
+#: Pages/tour_personalizzato.php:26
+#: Percorsi/view.php:158
+msgid "Richiedi tour personalizzato"
+msgstr "Request customized tour"
+
+#: Percorsi/view.php:7
+msgid "percorso e-bike"
+msgstr "e-bike routes"
+
+#: Percorsi/view.php:8
+msgid "percorso autoguidato, ebike, noleggio ebike, ebike rental, percorsi bici, app cicloturismo in"
+msgstr "self-guided route, ebike, ebike rental, bike routes, cycling app in"
+
+#: Percorsi/view.php:44
+#: Poi/view.php:164
+#: element/footer.php:13
+#: element/mobile-menu.php:41
+#: element/navbar-primary.php:25
+msgid "Percorsi"
+msgstr "Routes"
+
+#: Percorsi/view.php:69
+msgid "Trovi questo percorso sull'App BikeSquare con il codice"
+msgstr "You can find this route on BikeSquare App with code"
+
+#: Percorsi/view.php:87
+msgid "Difficoltà"
+msgstr "Difficulty"
+
+#: Percorsi/view.php:119
+msgid "Informazioni"
+msgstr "Informations"
+
+#: Percorsi/view.php:142
+msgid "A partire da"
+msgstr "Starting from"
+
+#: Percorsi/view.php:144
+msgid "a persona"
+msgstr "per person"
+
+#: Percorsi/view.php:151
+msgid "Verifica disponibilità ebike"
+msgstr "Check ebike availability"
+
+#: Percorsi/view.php:165
+msgid "Acquista un buono regalo"
+msgstr "Buy gift card"
+
+#: Percorsi/view.php:174
+msgid "Si parte da"
+msgstr "Starts from"
+
+#: Percorsi/view.php:221
+msgid "Galleria Fotografica"
+msgstr "Photo Gallery"
+
+#: Poi/view.php:61
+msgid "Servizi e Attrazioni"
+msgstr "Services and Attractions"
+
+#: Poi/view.php:115
+msgid "cosa c'è da sapere"
+msgstr "what's to know"
+
+#: Poi/view.php:122
+msgid "Dove si trova"
+msgstr "Where it is"
+
+#: Poi/view.php:129
+msgid "Foto"
+msgstr "Photo"
+
+#: Poi/view.php:139
+msgid "mappa a schermo intero"
+msgstr "full-screen map"
+
+#: Poi/view.php:167
+msgid "I percorsi che passano da questo punto:"
+msgstr "Routes passing through this point:"
+
+#: element/app-card.php:9
+msgid "Scarica <br /> la nostra app"
+msgstr "Download <br/> our app"
+
+#: element/app-card.php:11
+msgid "Vuoi vedere i percorsi proposti da BikeSquare? Non vuoi perderti con la bici e vuoi essere sicuro di fare la strada giusta?"
+msgstr "Want to see BikeSquare suggested routes? Do you want to navigate yourself and be sure you're on the right road?"
+
+#: element/app-card.php:13
+msgid "Con l'APP BikeSquare puoi scegliere il percorso, visualizzarlo per avere un'anticipazione di ciò che vedrai, ma soprattutto potrai usare la funzionalità navigatore per essere sicuro di non perderti mentre pedali. Sull'APP trovi inoltre i punti di interesse, gli hotel, i ristoranti, i musei e le cantine amici della bici (elettrica). In questi punti sarai sicuro di essere accolto con simpatia e avrai modo di conoscere da vicino chi abita e lavora sul luogo che hai scelto di visitare. Le bici elettriche di BikeSquare sono dotate di un supporto da manubrio per poter usare il navigatore con semplicità mentre si pedala."
+msgstr "With BikeSquare APP you can choose and visualize a route, to prepare for what you will see, but most importantly to use navigator functionalities and be sure to never get lost while you ride. On the APP you can find, besides interesting points, hotels, restaurants, museums and cellars (electric) bike friendly. In these points you can rest assured that you will be welcomed and there will be much to learn about the place you chose to visit. BikeSquare e-bikes are all equipped with a phone holder to easily use the navigator while riding."
+
+#: element/b2b.php:8
+msgid "Entra nel network Bikesquare"
+msgstr "Join BikeSquare network"
+
+#: element/b2b.php:11
+msgid "Vai al sito B2B Bikesquare"
+msgstr "Go to BikeSquare B2B site"
+
+#: element/b2b.php:23
+msgid "Noleggiatori"
+msgstr "Renters"
+
+#: element/b2b.php:32
+msgid "Produttori di e-bike"
+msgstr "E-bike producers"
+
+#: element/b2b.php:50
+msgid "Territorio"
+msgstr "Territory"
+
+#: element/footer.php:12
+#: element/mobile-menu.php:40
+#: element/navbar-primary.php:24
+msgid "Mappa"
+msgstr "Map"
+
+#: element/footer.php:16
+#: element/mobile-menu.php:53
+#: element/navbar-primary.php:30
+msgid "Noleggia ora"
+msgstr "Rent now"
+
+#: element/footer.php:22
+msgid "Agriturismi, bar, ristoranti e produttori"
+msgstr "Farmhouses, bars, restaurants and producers"
+
+#: element/footer.php:23
+msgid "Come diventare BikeHotel BikeSquare"
+msgstr "How to become a BikeHotel BikeSquare"
+
+#: element/footer.php:25
+msgid "Come aprire un punto di noleggio e-bike?"
+msgstr "How to open an e-bike rental point?"
+
+#: element/footer.php:32
+msgid "Altri link"
+msgstr "More links"
+
+#: element/footer.php:34
+#: element/navbar-secondary.php:12
+msgid "Chi siamo"
+msgstr "Who we are"
+
+#: element/footer.php:37
+#: element/navbar-secondary.php:13
+msgid "Contatti"
+msgstr "Contacts"
+
+#: element/hero-section.php:6
+msgid "Scopri l'Italia e <br /> l'Europa in e-bike"
+msgstr "Discover Italy and <br/> Europe in e-bike"
+
+#: element/hero-section.php:13
+msgid "Dove"
+msgstr "Where"
+
+#: element/hero-section.php:17
+#: element/hero-section.php:27
+#: element/hero-section.php:74
+#: element/hero-section.php:85
+msgid "Digita la località"
+msgstr "Type where to go"
+
+#: element/hero-section.php:32
+msgid "Attività"
+msgstr "Activities"
+
+#: element/hero-section.php:43
+#: element/hero-section.php:59
+msgid "Caricamento..."
+msgstr "Loading..."
+
+#: element/hero-section.php:48
+msgid "Destinazione"
+msgstr "Destination"
+
+#: element/hero-section.php:67
+msgid "Cerca"
+msgstr "Search"
+
+#: element/mobile-menu.php:43
+#: element/navbar-primary.php:27
+msgid "Ebike usate"
+msgstr "Used e-bikes"
+
+#: element/navbar-secondary.php:16
+msgid "Per le aziende"
+msgstr "For Companies"
+
+msgid "Che cosa incontrerai lungo il percorso"
+msgstr "What do you find along the route"
+
+msgid "Buono Regalo"
+msgstr "Gift Card"

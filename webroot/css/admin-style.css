@@ -1,0 +1,131 @@
+.bottom-footer {
+    background-color: #aaaaaa;
+    padding: 1em;
+    box-shadow: 10px 0px 20px grey;
+}
+
+.icona {
+    width: 100px;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+
+
+/* Not required for template or sticky footer method. */
+
+body>.container {
+    padding: 60px 15px 0;
+}
+
+code {
+    font-size: 80%;
+}
+
+.v-admin-navbar {
+    margin: 1em 0;
+    width: 100%;
+}
+
+[v-cloak] .v-cloak--block {
+    display: block;
+}
+
+[v-cloak] .v-cloak--inline {
+    display: inline;
+}
+
+[v-cloak] .v-cloak--inlineBlock {
+    display: inline-block;
+}
+
+[v-cloak] .v-cloak--hidden {
+    display: none;
+}
+
+[v-cloak] .v-cloak--invisible {
+    visibility: hidden;
+}
+
+.v-cloak--block,
+.v-cloak--inline,
+.v-cloak--inlineBlock {
+    display: none;
+}
+
+
+/* from https://tobiasahlin.com/spinkit/ */
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    background-color: orangered;
+    margin: 300px auto;
+    -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+    animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+    0% {
+        -webkit-transform: perspective(120px)
+    }
+    50% {
+        -webkit-transform: perspective(120px) rotateY(180deg)
+    }
+    100% {
+        -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg)
+    }
+}
+
+@keyframes sk-rotateplane {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+    }
+    50% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+    }
+    100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+}
+
+.card {
+    margin: 1em 0;
+}
+
+td.actions {
+    min-width: 10em;
+}
+
+td.actions .btn {
+    padding: 1px;
+}
+
+.bg-info {
+    background-color: #691010 !important;
+}
+
+.mini-icon {
+    max-width: 1em;
+}
+
+fieldset {
+  border: 1px groove  #ec641a !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  -webkit-box-shadow:  0px 0px 0px 0px #000;
+          box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend {
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  text-align: left !important;
+  width:inherit; /* Or auto */
+  padding:0 10px; /* To give a bit of padding on the left and right */
+  border-bottom:none;
+}
