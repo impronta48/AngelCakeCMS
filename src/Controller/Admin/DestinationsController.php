@@ -30,14 +30,20 @@ class DestinationsController extends AppController
 
 	public function index()
 	{
+		
 		$query = $this->Destinations->find()
 			->contain(['Articles']);
-
+		//Se mi hai passato dei parametri in query filtro su quelli
+		$q = $this->request->getQuery('q');
+		if (!empty($q)) {
+			$query->where(['name LIKE' => "%$q%"]);
+		}
+		
 		$this->Authorization->applyScope($query);
 
 		$destinations = $this->paginate($query);
 
-		$this->set(compact('destinations'));
+		$this->set(compact('destinations','q'));
 	}
 
 	/**
