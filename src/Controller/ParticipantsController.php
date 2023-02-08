@@ -30,7 +30,7 @@ class ParticipantsController extends AppController
 		parent::initialize();
 
 		$this->loadComponent('Paginator');
-		$this->Authentication->allowUnauthenticated(['add','payment','thankyou']);
+		$this->Authentication->allowUnauthenticated(['add','payment','thankyou','thankyousatispay']);
 	}
 	/**
 	 * Add method
