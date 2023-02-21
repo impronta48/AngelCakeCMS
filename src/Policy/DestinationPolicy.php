@@ -16,8 +16,11 @@ class DestinationPolicy implements BeforePolicyInterface
     {
         if ($user->group_id == ROLE_ADMIN) // is an admin, can do whatever
             return true;
-        if (!in_array($user->group_id, [ROLE_ADMIN, ROLE_EDITOR])) // is not allowed to edit
-            return false;
+        if ($user->group_id == ROLE_EDITOR && 
+                ($user->destination_id == $resource->id || $user->destination_id == null)) // is an admin, can do whatever
+            return true;
+            
+        return false;
     }
 
     /**
