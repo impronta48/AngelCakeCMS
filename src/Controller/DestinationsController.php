@@ -119,9 +119,8 @@ class DestinationsController extends AppController
     ];
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
-
+    
     $query = $this->Destinations->find()
-      ->contain(['Articles'])
       ->where(['published' => true]);
 
     $specific_id = $this->request->getQuery('id');
@@ -151,7 +150,8 @@ class DestinationsController extends AppController
         $query->select($columns);
       }
     } else {
-      $query->select($select_columns);
+      $query->select($select_columns)
+            ->contain(['Articles']);
     }
 
     $limit = $this->request->getQuery('limit');
