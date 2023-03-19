@@ -81,7 +81,7 @@ Router::scope('/images', function ($routes) {
       'source' => WWW_ROOT,
 
       // Path or League\Flysystem adapter instance to write cached images to.
-      'cache' => CACHE, // WWW_ROOT  . 'cache',
+      'cache' => CACHE . Configure::read('sitedir'), // WWW_ROOT  . 'cache',
 
       // URL part to be omitted from source path. Defaults to "/images/"
       // http://glide.thephpleague.com/1.0/config/source-and-cache/#set-a-base-url
