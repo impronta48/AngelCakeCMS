@@ -52,8 +52,15 @@ Cache::setConfig('_cake_routes_', [
   'className' => FileEngine::class,  
   'path' => CACHE . Configure::read('sitedir') . DS . 'routes' . DS,
   'duration' => '+20 days',
+  'serialize' => 'json',
   //'url' => env('CACHE_CAKEROUTES_URL', null),
 ]);
+/* Cache::setConfig('_cake_routes_', [
+  'className' => MemcachedEngine::class,  
+  'duration' => '+20 days',
+  'serialize' => 'php',
+  //'url' => env('CACHE_CAKEROUTES_URL', null),
+]); */
 /*
  * Configure images cache.
  */

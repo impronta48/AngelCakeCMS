@@ -126,7 +126,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
       // caching in production could improve performance. For that when
       // creating the middleware instance specify the cache config name by
       // using it's second constructor argument:
-      // ->add(new RoutingMiddleware($this))
+      //->add(new RoutingMiddleware($this))
       ->add(new RoutingMiddleware($this, '_cake_routes_'))
 
       // Needed to specify locale associations, because we're using 3 letter locales (non-default)
