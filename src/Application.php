@@ -45,6 +45,7 @@ use Authorization\Middleware\RequestAuthorizationMiddleware;
 use App\Policy\RequestPolicy;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\ServerRequest;
+use Fetzi\ServerTiming\ServerTimingMiddleware;
 
 /**
  * Application setup class.
@@ -228,8 +229,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     $middlewareQueue->add(new EncryptedCookieMiddleware(
       ['secrets', 'protected'],
       "PASSWORDmoltoDifficile1234"
-    ));
-    
+    ));    
+
     // Add your middlewares here
     if (Configure::read('debug')) {
       // Disable authz for debugkit

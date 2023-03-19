@@ -49,13 +49,9 @@ Cache::setConfig('_cake_model_', [
  * Duration will be set to '+2 seconds' in bootstrap.php when debug = true
  */
 Cache::setConfig('_cake_routes_', [
-  'className' => FileEngine::class,
-  //'className' => MemcachedEngine::class,
-  'prefix' =>  Configure::read('sitedir') . '_cake_routes_',
+  'className' => FileEngine::class,  
   'path' => CACHE . Configure::read('sitedir') . DS . 'routes' . DS,
-  //'serialize' => 'php',
-  'compress' => false, // [optional] compress data in Memcache (slower, but uses less memory)
-  'duration' => '+1 years',
+  'duration' => '+20 days',
   //'url' => env('CACHE_CAKEROUTES_URL', null),
 ]);
 /*
