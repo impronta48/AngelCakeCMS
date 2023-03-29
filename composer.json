@@ -16,7 +16,6 @@
         "cakephp/plugin-installer": "^1.2",
         "dereuromark/cakephp-tags": "^1.1",
         "erusev/parsedown": "^1.7",
-        "fetzi/server-timing": "^1.0",
         "friendsofcake/bootstrap-ui": "^3",
         "google/apiclient": "^2.0",
         "hkod/frontmatter": "^1",

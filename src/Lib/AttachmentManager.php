@@ -45,14 +45,30 @@ class AttachmentManager
 	{
 		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');
 
-		$save_dir = Text::insert($fullDirTemplate, [
+		/* 		$save_dir = Text::insert($fullDirTemplate, [
 			'sitedir' => Configure::read('sitedir'),
 			'model' => empty($model) ? 'attachments' : strtolower($model),
 			'destination' => empty($destination) ? 'none' : strtolower($destination),
 			'id' => empty($id) ? -1 : $id,
 			'field' => empty($field) ? 'dropzone' : $field,
-		]);
+		]); */
 
+		$save_dir = str_replace([
+			':sitedir', 
+			':model', 
+			':destination', 
+			':id', 
+			':field', 			
+			],
+			[
+				Configure::read('sitedir'),
+				empty($model) ? 'attachments' : strtolower($model),
+				empty($destination) ? 'none' : strtolower($destination),
+				empty($id) ? -1 : $id,
+				empty($field) ? 'dropzone' : $field,	
+			], 
+			$fullDirTemplate);
+		
 		// TODO do this in a nicer way!
 		$save_dir = str_replace("//", "/", $save_dir);
 		$save_dir = str_replace("cyclomap.", "", $save_dir);
