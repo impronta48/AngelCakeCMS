@@ -63,7 +63,7 @@ class AttachmentManager
 			[
 				Configure::read('sitedir'),
 				empty($model) ? 'attachments' : strtolower($model),
-				empty($destination) ? 'none' : strtolower($destination),
+				empty($destination)  || ($destination == "null") ? 'none' : strtolower($destination),
 				empty($id) ? -1 : $id,
 				empty($field) ? 'dropzone' : $field,	
 			], 
