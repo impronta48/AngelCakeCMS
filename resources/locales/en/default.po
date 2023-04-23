@@ -460,3 +460,10 @@ msgstr "What do you find along the route"
 
 msgid "Buono Regalo"
 msgstr "Gift Card"
+
+msgid "Prenota una e-bike, scegli la destinazione"
+msgstr "Choose a destination then book an e-bike"
+
+msgid "Per prima cosa scegli dove vuoi pedalare"
+msgstr "First of all, you choose where you want to pedal"
+

@@ -312,17 +312,22 @@ class DestinationsController extends AppController
     $destinations = $this->Destinations->find('all')->toArray();
     $this->set('destinations', $destinations);
   }
-
-  //Un semplice wrapper per l'iframe di prenota.bikesquare.eu
+  
   public function prenota($destination = null)
   {
-    $this->set('destination', $destination);
-  }
+    $existing_columns = $this->Destinations->getSchema()->columns();
+    $desired_columns = [
+      'id', 'name', 'slug', 'nazione_id', 'regione', 'published',
+    ];
+    $destinations = $this->Destinations->find()
+      ->select($desired_columns)
+      ->order(['name'])
+      ->where(['published' => true]);
+    if ($destination) {
+      $destinations->where(['slug' => $destination]);
+    }
 
-  //Un semplice wrapper per l'iframe di prenota.bikesquare.eu
-  public function prenota2($destination = null)
-  {
-    $this->set('destination', $destination);
+    $this->set('destinations', $destinations);
   }
 
   /**
