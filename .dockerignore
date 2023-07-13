@@ -1,4 +1,9 @@
 Dockerfile
 .dockerignore
 npm-debug.log
+webroot/bikesquare
+config/sites/l.grab.bikesquare.eu
+env.sample
+/config/.env
+/config/.env.example
 

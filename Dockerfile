@@ -20,8 +20,8 @@ RUN apt-get update --allow-releaseinfo-change \
     && apt-get install -y libicu-dev \
     && apt-get install -y zlib1g-dev \
     && pecl install memcached \
-    && docker-php-ext-install xml intl ext-gd \
-    && docker-php-ext-enable memcached xml intl ext-gd \
+    && docker-php-ext-install xml intl \
+    && docker-php-ext-enable memcached xml intl \
     && apt-get install -y default-libmysqlclient-dev \
     && docker-php-ext-install mysqli pdo_mysql
 
@@ -56,7 +56,7 @@ RUN chown -R www-data:www-data .
 
 RUN a2enmod rewrite
 
-WORKDIR /var/www/html/webroot/
+# WORKDIR /var/www/html/webroot/
 #COPY --chown=www-data . .
 # FROM node:16.14-alpine as build-stage
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
@@ -80,5 +80,12 @@ RUN npm install -g @vue/cli
 # COPY . .
 # RUN apk add --no-cache git
 # FROM registry:5000/php7-ext
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
+
+# Install Xdebug 2.9.8 compatible with PHP 7.4
+RUN pecl install xdebug-3.1.6 && \
+    docker-php-ext-enable xdebug
+
+COPY /docker/php/conf.d/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini  
+COPY /docker/php/conf.d/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
+RUN rm ./webroot/ebike2021
+RUN ln -s /var/www/html/plugins/Ebike2021/webroot/ ./webroot/ebike2021

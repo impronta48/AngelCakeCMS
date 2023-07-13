@@ -51,3 +51,6 @@ webpack.mix.js
 package.json
 package-lock.json 
 node_modules
+
+##docker
+env.sample
