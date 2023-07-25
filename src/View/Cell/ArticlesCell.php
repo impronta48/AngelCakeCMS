@@ -35,7 +35,7 @@ class ArticlesCell extends Cell
 	 */
 	public function display($articles = []) {
 		$a = $this->Articles->find()
-			->where(['slug IN' => $articles])
+			->where(['slug IN' => $articles])			
 			->toArray();
 		
 		$this->set('articles',$a); 
