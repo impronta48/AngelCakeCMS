@@ -151,8 +151,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
   $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
   
   $builder->scope('/sitemap', function (RouteBuilder $builder) {
-    $builder->connect('/', ['plugin' => false, 'controller' => 'Sitemaps', 'action' => 'index']);
-    $builder->connect('/root', ['plugin' => false, 'controller' => 'Sitemaps', 'action' => 'index']);
+    $builder->connect('/', ['plugin' => false, 'controller' => false, 'action' => 'index']);    
   }); 
 
   /*
