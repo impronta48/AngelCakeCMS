@@ -150,17 +150,10 @@ $routes->scope('/', function (RouteBuilder $builder) {
   //$builder->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
   
-
   $builder->scope('/sitemap', function (RouteBuilder $builder) {
     $builder->connect('/', ['plugin' => false, 'controller' => 'Sitemaps', 'action' => 'index']);
     $builder->connect('/root', ['plugin' => false, 'controller' => 'Sitemaps', 'action' => 'index']);
-  });
-
-  // $builder->connect('/sitemap',
-  //   ['controller' => 'Sitemaps', 'action' => 'index'],
-  //   ['routeClass' => \ADmad\I18n\Routing\Route\I18nRoute::class],
-  // );
-
+  }); 
 
   /*
      * ...and connect the rest of 'Pages' controller's URLs.
