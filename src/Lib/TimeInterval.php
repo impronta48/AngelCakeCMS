@@ -66,8 +66,10 @@ class TimeInterval
 	{
 		$this->carry(); // just in case
 		$date_fmt = 'P';
-		if ($this->days > 0) $date_fmt .= "{$this->days}D";
-		$date_fmt .= 'T';
+		if ($this->days > 0) $date_fmt .= "{$this->days}D";		
+		if (($this->hours > 0) || ($this->minutes > 0) || ($this->seconds > 0)) {
+			$date_fmt .= 'T';
+		}
 		if ($this->hours > 0) $date_fmt .= "{$this->hours}H";
 		if ($this->minutes > 0) $date_fmt .= "{$this->minutes}M";
 		if ($this->seconds > 0) $date_fmt .= "{$this->seconds}S";

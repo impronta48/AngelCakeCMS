@@ -26,7 +26,7 @@ class ContactsController extends AppController
       $d = $this->request->getData();
 
       //honeypot
-      if ($d['admin_email'] != '') {
+      if (isset($d['admin_email']) && $d['admin_email'] != '') {
         return;
       }
 
