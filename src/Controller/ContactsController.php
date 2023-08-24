@@ -30,6 +30,15 @@ class ContactsController extends AppController
         return;
       }
 
+      //next
+      $referer = $this->referer();
+      if (isset($d['_next']) && $d['_next'] != '') {
+        $referer = $d['_next'];
+      } 
+      if (empty($referer)) {
+        $referer = Router::url('/');
+      } 
+
       if (!filter_var($destination, FILTER_VALIDATE_EMAIL)) {
         throw new Exception("Email del sito non valida");
       }
@@ -55,10 +64,6 @@ class ContactsController extends AppController
         ->deliver($msg);
 
       $this->Flash->success('Grazie, ti risponderemo al più presto.');
-      $referer = $this->referer();
-      if (empty($referer)) {
-        $referer = Router::url('/');
-      } 
       $this->set(compact('referer'));
     }
   }
