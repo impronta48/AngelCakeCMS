@@ -31,7 +31,7 @@ class ContactsController extends AppController
       }
 
       //next
-      $referer = $this->referer();
+      $referer = $this->request->referer();
       if (isset($d['_next']) && $d['_next'] != '') {
         $referer = $d['_next'];
       } 
