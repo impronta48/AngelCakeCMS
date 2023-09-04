@@ -7,9 +7,7 @@ use App\Model\StaticModel;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\I18n;
-use DOMDocument;
-use GuzzleHttp\Client;
-use GuzzleHttp\RequestOptions;
+
 
 /**
  * Static Controller
@@ -29,9 +27,8 @@ class StaticController extends AppController
 
 	public function initialize(): void {
 		parent::initialize();
-		$this->modelClass = false;
 		$this->loadComponent('RequestHandler');
-	  	$this->Authentication->allowUnauthenticated(['index','view','get', 'getWebdav']);
+	  	$this->Authentication->allowUnauthenticated(['index','view','get']);
 
 	  //Imposto la cartella dove si trovano le immagini statiche
 		$sitedir = Configure::read('sitedir');
@@ -142,104 +139,6 @@ class StaticController extends AppController
 		$this->view($fname);
 	}
 
-	public function getWebdav(){
-		$risultato = null;
-
-		if ($this->request->is('post')) {
-		
-		// Set the webdav server details
-		$webdav_server = Configure::read('Webdav.server');
-		$webdav_username = Configure::read('Webdav.username');
-		$webdav_password = Configure::read('Webdav.password');
-
-		// La cartella da cui leggere è 
-		// https://cloud.mobilitysquare.eu/remote.php/dav/files/sito.bikesquare/
-		// Set the directory path to download files from
-		$webdav_directory = Configure::read('Webdav.remoteFolder');
-		/* * Attenzione: assicurarsi che l'indirizzo del server sia indicato come
-           * https://{server}/remote.php/dav/files/{user}/
-           * e non solo come https://server/
-		*/
-		$webdav_server = "$webdav_server/remote.php/dav/files/$webdav_username";
-		$local_folder = WWW_ROOT . $this->staticFilesPath;
-
-		// Create a new Guzzle client
-		$client = new Client([
-			'base_uri' => $webdav_server,
-			'auth' => [$webdav_username, $webdav_password],
-		]);
-
-		$risultato = "Connessione al server $webdav_server: OK\n";
-
-		// Send a PROPFIND request to the server to get the list of files
-		$response = $client->request('PROPFIND', $webdav_server . $webdav_directory, [
-			RequestOptions::BODY => '<?xml version="1.0" encoding="UTF-8" ?><propfind xmlns="DAV:"><prop><getlastmodified/></prop></propfind>',
-			RequestOptions::HEADERS => [
-				'Content-Type' => 'application/xml',
-			],
-		]);
-
-		// Parse the XML response
-		$res = (string) $response->getBody();		
-		// Parse the XML response using DOMDocument
-		$dom = new DOMDocument();
-		$dom->loadXML($res);
-		
-		// Loop through each file and directory and download files if they're newer than the local files
-		foreach ($dom->getElementsByTagNameNS('DAV:', 'response') as $item) {
-			$href = $item->getElementsByTagNameNS('DAV:', 'href')->item(0)->nodeValue;
-			
-			// Check if the item is a file or directory
-			if (substr($href, -1) !== '/') {
-				// The item is a file
-
-				$filename = basename($href);
-				$file_url = Configure::read('Webdav.server') . $href;
-				$filename = $local_folder . basename($href);
-
-				// Get the last modified time of the remote file
-				$last_modified_remote = strtotime($item->getElementsByTagNameNS('DAV:', 'getlastmodified')->item(0)->nodeValue);
-
-				// Check if the local file exists and get its last modified time
-				if (file_exists($filename)) {
-					$last_modified_local = filemtime($filename);
-				} else {
-					$last_modified_local = 0; // Set to 0 if the file doesn't exist locally
-				}
-
-				// Download the file if it's newer than the local file
-				if ($last_modified_remote > $last_modified_local) {
-					// Download the file using Guzzle
-					$response = $client->request('GET', $file_url);
-
-					// Save the downloaded file to disk
-					file_put_contents($filename, $response->getBody());
-
-					$risultato .= "Downloaded updated file: " . $filename . "\n";
-				} else {
-					$risultato .= "Skipping file: " . $filename . "\n";
-				}
-			} else {
-				// The item is a directory
-				// Get the directory path relative to the webdav root directory				
-				// the path i get from webdav is like this
-				// /remote.php/dav/files/sito.bikesquare/sito-b2b/_drafts/
-				// i need to remove the first part
-				// /remote.php/dav/files/sito.bikesquare/sito-b2b/
-				// which is "/remote.php/dav/files/$user/$webdav_directory/" 
-				$relative_dir_path = str_replace("/remote.php/dav/files/{$webdav_username}{$webdav_directory}", "", $href);		
-
-				// Recursively create the directory on disk if it doesn't exist
-				if (!file_exists("{$local_folder}{$relative_dir_path}")) {
-					mkdir("{$local_folder}{$relative_dir_path}", 0777, true);
-					$risultato .= "Created directory: " . $relative_dir_path . "\n";
-				} else {
-					$risultato .= "Skipping directory: " . $relative_dir_path . "\n";
-				}
-			}
-			}	 //if is post
-		}		
-		$this->set('risultato', $risultato);
-	}
+	
 
 }
