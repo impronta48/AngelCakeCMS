@@ -6,7 +6,7 @@ var app = new Vue({
             loading: false,
             spinning: false,
             progress: 0,
-            max: 100,
+            max: 0,
             current_action: "Importazione da NextCloud ...",
             stop: false,
         }
@@ -31,8 +31,11 @@ var app = new Vue({
                     if (this.stop)   return;
                     const e = res[index];
                     this.progress++;
+                    if (this.progress > this.max) this.max = this.progress + this.max;
+                    console.log("progress", this.progress);
                     if (e.action == "list"){
                         //scarico ricorsivamente    
+                        console.log("len", res.length);
                         console.log("scarico ricorsivamente", e.descr);
                         this.current_action = `Scarico ricorsivamente ${e.descr}`;
                         await this.runList(e.file_url);
