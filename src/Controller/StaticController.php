@@ -7,7 +7,7 @@ use App\Model\StaticModel;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\I18n;
-
+use PSpell\Config;
 
 /**
  * Static Controller
@@ -85,7 +85,8 @@ class StaticController extends AppController
 		if (!empty($path[1])) {
 			$subpage = $path[1];
 		}
-		$this->set(compact('page', 'subpage'));
+		$keywords = Configure::read('keywords');
+		$this->set(compact('page', 'subpage','keywords'));
 
 	  //verifico che il file esista
 		$fname = $sitedir . DS . 'static' . DS . $name . '.md';
@@ -101,7 +102,7 @@ class StaticController extends AppController
 			$this->set($variabile, $dati[$variabile]);
 			$vs[] = $variabile;
 		}
-
+		
 	   $this->viewBuilder()->setOption('serialize', $vs);
 
 	  //Se il path[0] contiene una slash devo fare una separazione in pezzi

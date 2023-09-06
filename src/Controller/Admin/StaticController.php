@@ -25,7 +25,12 @@ class StaticController extends AppController
 
 	private $staticImgPath;
 	private $staticFilesPath;
-	private $StaticModel;	
+	private $StaticModel;
+	private $client;		//The WebDav Client object (Guzzle))
+	private $webdav_server;
+	private $webdav_username;
+	private $webdav_directory;
+	private $local_folder;
 
 	public function initialize(): void
 	{
@@ -67,39 +72,78 @@ class StaticController extends AppController
 		$this->Authorization->skipAuthorization();
 	}
 
+	private function openWebdav()
+	{
+		// Set the webdav server details
+		$this->webdav_server = Configure::read('Webdav.server');
+		$this->webdav_username = Configure::read('Webdav.username');
+		$webdav_password = Configure::read('Webdav.password');
+
+		// La cartella da cui leggere è 
+		// https://cloud.mobilitysquare.eu/remote.php/dav/files/sito.bikesquare/
+		// Set the directory path to download files from
+		$this->webdav_directory = Configure::read('Webdav.remoteFolder');
+		/* * Attenzione: assicurarsi che l'indirizzo del server sia indicato come
+           * https://{server}/remote.php/dav/files/{user}/
+           * e non solo come https://server/
+		*/
+		$this->webdav_server = "$this->webdav_server/remote.php/dav/files/$this->webdav_username";
+		$this->local_folder = WWW_ROOT . $this->staticFilesPath;
+
+		// Create a new Guzzle client
+		$this->client = new Client([
+			'base_uri' => $this->webdav_server,
+			'auth' => [$this->webdav_username, $webdav_password],
+		]);
+	}
+
 	public function getWebdav()
 	{
 		$risultato = null;
 		$this->Authorization->skipAuthorization();
+		$this->openWebdav();
 
-		if ($this->request->is('post')) {
+		$data = $this->request->input('json_decode',true);
 
-			// Set the webdav server details
-			$webdav_server = Configure::read('Webdav.server');
-			$webdav_username = Configure::read('Webdav.username');
-			$webdav_password = Configure::read('Webdav.password');
+		$filename = $data['filename'];
+		$file_url = $data['file_url'];
+		$last_modified_remote = $data['last_modified_remote'];
 
-			// La cartella da cui leggere è 
-			// https://cloud.mobilitysquare.eu/remote.php/dav/files/sito.bikesquare/
-			// Set the directory path to download files from
-			$webdav_directory = Configure::read('Webdav.remoteFolder');
-			/* * Attenzione: assicurarsi che l'indirizzo del server sia indicato come
-           * https://{server}/remote.php/dav/files/{user}/
-           * e non solo come https://server/
-		*/
-			$webdav_server = "$webdav_server/remote.php/dav/files/$webdav_username";
-			$local_folder = WWW_ROOT . $this->staticFilesPath;
+		// Download the file using Guzzle
+		$response = $this->client->request('GET', $file_url);
 
-			// Create a new Guzzle client
-			$client = new Client([
-				'base_uri' => $webdav_server,
-				'auth' => [$webdav_username, $webdav_password],
-			]);
+		// Save the downloaded file to disk
+		file_put_contents($filename, $response->getBody());
 
-			$risultato = "Connessione al server $webdav_server: OK\n";
+		//Set the $last_modified_remote as the file modification time using touch
+		touch($filename, $last_modified_remote);
+
+		$risultato .= "Downloaded updated file: " . $filename . "\n";
+		$this->log("Downloaded updated file: " . $filename, 'debug');
+		$this->set('risultato', $risultato);
+		$this->set('_serialize', 'risultato');
+	}
+
+	//Restituisce una lista di file e cartelle in formato JSON per sync i dati
+	//Origin deve essere relativo alla root sia per il locale che per il remoto
+	//quindi se ho blog --> webdav/sito-b2b/blog 
+	//se ho eng/blog --> webdav/sito-b2b/eng/blog
+	public function listWebdav()
+	{		
+		$this->Authorization->skipAuthorization();
+		$risultato = [];
+		
+		if ($this->request->is(['json']) && $this->request->is(['post'])) {
+
+			//Leggo il valore del post
+			$data = $this->request->input('json_decode', true);
+			$origin = $data['origin'] ?? '';
+
+			$this->openWebdav();
+			$this->local_folder = $this->local_folder . $origin;
 
 			// Send a PROPFIND request to the server to get the list of files
-			$response = $client->request('PROPFIND', $webdav_server . $webdav_directory, [
+			$response = $this->client->request('PROPFIND', $this->webdav_server . $this->webdav_directory . $origin, [
 				RequestOptions::BODY => '<?xml version="1.0" encoding="UTF-8" ?><propfind xmlns="DAV:"><prop><getlastmodified/></prop></propfind>',
 				RequestOptions::HEADERS => [
 					'Content-Type' => 'application/xml',
@@ -112,9 +156,14 @@ class StaticController extends AppController
 			$dom = new DOMDocument();
 			$dom->loadXML($res);
 
+			$risultato[]['descr'] = "File list retrieved: OK";
+
 			// Loop through each file and directory and download files if they're newer than the local files
 			foreach ($dom->getElementsByTagNameNS('DAV:', 'response') as $item) {
 				$href = $item->getElementsByTagNameNS('DAV:', 'href')->item(0)->nodeValue;
+
+				// Get the last modified time of the remote file
+				$last_modified_remote = strtotime($item->getElementsByTagNameNS('DAV:', 'getlastmodified')->item(0)->nodeValue);
 
 				// Check if the item is a file or directory
 				if (substr($href, -1) !== '/') {
@@ -122,10 +171,7 @@ class StaticController extends AppController
 
 					$filename = basename($href);
 					$file_url = Configure::read('Webdav.server') . $href;
-					$filename = $local_folder . basename($href);
-
-					// Get the last modified time of the remote file
-					$last_modified_remote = strtotime($item->getElementsByTagNameNS('DAV:', 'getlastmodified')->item(0)->nodeValue);
+					$filename = $this->local_folder  . basename($href);
 
 					// Check if the local file exists and get its last modified time
 					if (file_exists($filename)) {
@@ -136,15 +182,24 @@ class StaticController extends AppController
 
 					// Download the file if it's newer than the local file
 					if ($last_modified_remote > $last_modified_local) {
-						// Download the file using Guzzle
-						$response = $client->request('GET', $file_url);
 
-						// Save the downloaded file to disk
-						file_put_contents($filename, $response->getBody());
-
-						$risultato .= "Downloaded updated file: " . $filename . "\n";
+						$risultato[] = [
+							'action' => 'get',
+							'descr' => "File to be downloaded: $filename",
+							'filename' => $filename,
+							'file_url' => $file_url,
+							'last_modified_remote' => $last_modified_remote,
+							'last_modified_local' => $last_modified_local,
+						];
 					} else {
-						$risultato .= "Skipping file: " . $filename . "\n";
+						$risultato[] = [
+							'action' => 'skip',
+							'descr' => "File ignored: $filename",
+							'filename' => $filename,
+							'file_url' => $file_url,
+							'last_modified_remote' => $last_modified_remote,
+							'last_modified_local' => $last_modified_local,
+						];
 					}
 				} else {
 					// The item is a directory
@@ -154,20 +209,41 @@ class StaticController extends AppController
 					// i need to remove the first part
 					// /remote.php/dav/files/sito.bikesquare/sito-b2b/
 					// which is "/remote.php/dav/files/$user/$webdav_directory/" 
-					$relative_dir_path = str_replace("/remote.php/dav/files/{$webdav_username}{$webdav_directory}", "", $href);
+					$relative_dir_path = str_replace("/remote.php/dav/files/{$this->webdav_username}{$this->webdav_directory}{$origin}", "", $href);
 
 					// Recursively create the directory on disk if it doesn't exist
-					if (!file_exists("{$local_folder}{$relative_dir_path}")) {
-						mkdir("{$local_folder}{$relative_dir_path}", 0777, true);
-						$risultato .= "Created directory: " . $relative_dir_path . "\n";
+					if (!file_exists("{$this->local_folder}{$relative_dir_path}")) {
+						mkdir("{$this->local_folder}{$relative_dir_path}", 0777, true);
+						$risultato[]['descr'] =  "Created directory: " . $relative_dir_path . "\n";
+						$this->log("Created directory: " . $relative_dir_path, 'debug');
+						//Set the $last_modified_remote as the file modification time using touch
+						touch("{$this->local_folder}{$relative_dir_path}", $last_modified_remote);
 					} else {
-						$risultato .= "Skipping directory: " . $relative_dir_path . "\n";
+						$risultato[]['descr'] =  "Skipping directory: " . $relative_dir_path . "\n";
+						$this->log("Skipping directory: " . $relative_dir_path, 'debug');
+					}
+
+					if ($relative_dir_path) {						
+						$relative_dir_path = str_replace("/remote.php/dav/files/{$this->webdav_username}{$this->webdav_directory}", "", $href);
+						$this->log("Going Recursive: " . $relative_dir_path, 'debug');
+						//Nella risposta di webdav trovo la cartella stessa, devo ignorarla
+						if ($relative_dir_path != $origin . "/" ) {
+							// $this->listWebdav($relative_dir_path); // non chiamo subito la ricorsione perchè è troppo lento faccio fare al chiamante
+							$risultato[] = [
+								'action' => 'list',
+								'file_url' => $relative_dir_path,
+								'descr' => "Going Recursive: $relative_dir_path",
+								'recursive' => $relative_dir_path,
+							];
+						}
 					}
 				}
-			}	 //if is post
+			}	 //if is json
 		}
 		$this->set('risultato', $risultato);
+		$this->set('_serialize', 'risultato');
 	}
+
 
 	public function edit(...$fname)
 	{
