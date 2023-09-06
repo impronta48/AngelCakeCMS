@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use App\Model\StaticModel;
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use DOMDocument;
@@ -118,6 +119,7 @@ class StaticController extends AppController
 		//Set the $last_modified_remote as the file modification time using touch
 		touch($filename, $last_modified_remote);
 
+		Cache::clear();
 		$risultato .= "Downloaded updated file: " . $filename . "\n";
 		$this->log("Downloaded updated file: " . $filename, 'debug');
 		$this->set('risultato', $risultato);
@@ -218,6 +220,7 @@ class StaticController extends AppController
 						$this->log("Created directory: " . $relative_dir_path, 'debug');
 						//Set the $last_modified_remote as the file modification time using touch
 						touch("{$this->local_folder}{$relative_dir_path}", $last_modified_remote);
+						Cache::clear();
 					} else {
 						$risultato[]['descr'] =  "Skipping directory: " . $relative_dir_path . "\n";
 						$this->log("Skipping directory: " . $relative_dir_path, 'debug');
