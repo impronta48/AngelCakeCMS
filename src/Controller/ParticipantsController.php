@@ -68,8 +68,11 @@ class ParticipantsController extends AppController
 					}
 
 				  //Mando una mail di notifica
-					$n = new iscrizioneOkNotification($participant, $event);
-					$n->toMail();
+				  if( isset($participant['email'])){
+						$n = new iscrizioneOkNotification($participant, $event);
+						$n->toMail();
+				  }
+					
 				} else {
 					$message = __("Ci dev'essere qualche errore, per favore controlla i messaggi e riprova a salvare.");
 					$responseData = ['message' => $message, 'success' => false];
