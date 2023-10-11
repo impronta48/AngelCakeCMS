@@ -122,25 +122,15 @@ Router::scope('/images', function ($routes) {
 
 
 $routes->scope('/', function (RouteBuilder $builder) {
-  // Register scoped middleware for in scopes.
-  /* $builder->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-        'httponly' => true,
-    ])); */
-
-  /*
-     * Apply a middleware to the current route scope.
-     * Requires middleware to be registered through `Application::routes()` with `registerMiddleware()`
-     */
-  //$builder->applyMiddleware('csrf');
   $builder->setExtensions(['xls', 'json', 'xml']);
-
-  
 
   /*
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, templates/Pages/home.php)...
      */
+  $builder->connect('/sitemap', ['plugin' => null, 'controller' => 'Sitemaps', 'action' => 'index']);    
+
 
   //$builder->connect('/tlogin', ['plugin' => 'Cyclomap', 'controller' => 'Users', 'action' => 'tlogin']);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home'], ['routeClass' => I18nRoute::class]);
@@ -149,10 +139,6 @@ $routes->scope('/', function (RouteBuilder $builder) {
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
   //$builder->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
-  
-  $builder->scope('/sitemap', function (RouteBuilder $builder) {
-    $builder->connect('/', ['plugin' => false, 'controller' => false, 'action' => 'index']);    
-  }); 
 
   /*
      * ...and connect the rest of 'Pages' controller's URLs.
