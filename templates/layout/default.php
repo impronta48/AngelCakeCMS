@@ -5,7 +5,7 @@
   <?= $this->Html->charset() ?>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+  <link rel="icon" href="/cuneo/favicon.ico">
 
   <title><?= $this->fetch('title') ?></title>
 
