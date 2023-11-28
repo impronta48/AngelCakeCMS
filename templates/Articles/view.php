@@ -56,9 +56,9 @@ if (empty($article->description)) {
       <div class="col-lg-9 col-md-8 col-xs-12 blog-details-content">
         <div class="single-blog-list">
           <div class="image"><img src="<?= $article->image ?>" alt="<?= $article->title ?>" class="img-responsive img-rounded"></div>
-          <ul class="post-info">
-            <li>Ultimo Aggiornamento: <?= $article->modified ?></li>
-          </ul>
+          
+            <span class="text-muted small mt-3">Ultimo Aggiornamento: <?= $article->modified ?></span>
+          
           <h1><?= h($article->title) ?></h1>
           <?= preg_replace('/font.+?;/', "", preg_replace("#<font[^>]*>#is", '', $article->body)); ?>
         </div> <!-- /.single-blog-list -->
