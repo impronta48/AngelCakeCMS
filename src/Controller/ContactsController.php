@@ -16,7 +16,7 @@ class ContactsController extends AppController
   public function initialize(): void
   {
     parent::initialize();
-    //$this->Authentication->allowUnauthenticated(['index']);
+    $this->Authentication->allowUnauthenticated(['index']);
   }
 
   public function index($destination)
@@ -36,7 +36,7 @@ class ContactsController extends AppController
         $referer = $d['_next'];
       } 
       if (empty($referer)) {
-        $referer = Router::url('/');
+        $referer = Router::url('/', true);
       } 
 
       if (!filter_var($destination, FILTER_VALIDATE_EMAIL)) {
@@ -51,12 +51,20 @@ class ContactsController extends AppController
       $mailer = new Mailer('default');
       $sender = Configure::read('MailAdmin');
       if (empty($sender)) {
-        $sender = ['info@impronta48.it' => 'iMpronta - WebFORM'];
+        $sender = ['info@mobilitysquare.eu' => 'MobilitySquare - Messaggio dal Sito Web'];
       }
       $msg = "Hai ricevuto un messaggio dal sito: " . env("SERVER_NAME") . "\n\r";
       foreach ($d as $k => $m) {
-        $msg .= "$k: $m \n\r";
+        if (is_array($m)) {
+          $msg .=json_encode($m) . "\n\r";
+          
+        }
+       else {
+            $msg .= "<b>$k</b>: $m \n\r";
+        }       
       }
+
+      $msg = nl2br($msg);
       $mailer->setFrom($sender)
         ->setReplyTo($d['_replyto'])
         ->setTo($destination)
