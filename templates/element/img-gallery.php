@@ -1,13 +1,13 @@
-<div class="gallery-wrapper box-layout">
-  <div class="row">
+<?php $this->Html->script("/js/node_modules/spotlight.js/dist/spotlight.bundle.js", ['block' => 'script']); ?>
+
+<div class="row">
+  <div class="col">
     <?php foreach ($images as $img) : ?>
-      <div class="col-md-3 col-xs-6 m-3">
-        <div class="gallery-image-wrapper">
-          <div class="image">
-            <b-img thumbnail fluid src="<?= "/images/$img?w=500&h=300&fit=crop&fm=webp" ?>">
-          </div>
-        </div> <!-- /.gallery-image-wrapper -->
-      </div> <!-- /.col- -->
+
+      <a class="spotlight" href="<?= "/images/$img?w=1042&fm=webp" ?>">
+        <img src="<?= "/images/$img?h=150&w=150&fit=crop&fm=webp" ?>" class="img-thumbnail img-fluid">
+      </a>
+
     <?php endforeach ?>
-  </div> <!-- /.row -->
-</div> <!-- /.gallery-wrapper -->
+  </div> <!-- /.col- -->
+</div> <!-- /.row -->
