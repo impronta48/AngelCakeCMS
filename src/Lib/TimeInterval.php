@@ -55,10 +55,10 @@ class TimeInterval
 	{
 		// TODO singular/plural and localization
 		$fmt = '';
-		if ($this->days > 0) $fmt .= "%d giorni ";
-		if ($this->hours > 0) $fmt .= "%h ore ";
-		if ($this->minutes > 0) $fmt .= "%i minuti ";
-		if ($this->seconds > 0) $fmt .= "%s secondi ";
+		if ($this->days > 0) $fmt .= "%d giorn".($this->days > 1 ? "i" : "o")." ";
+		if ($this->hours > 0) $fmt .= "%h or".($this->hours > 1 ? "e" : "a")." ";
+		if ($this->minutes > 0) $fmt .= "%i minut".($this->minutes > 1 ? "i" : "o")." ";
+		if ($this->seconds > 0) $fmt .= "%s second".($this->seconds > 1 ? "i" : "o")." ";
 		return $this->format($fmt);
 	}
 

@@ -24,7 +24,6 @@ use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Cookie\CookieInterface;
 use Cake\I18n\I18n;
-use Cake\Log\Log;
 use DateTime;
 
 /**
@@ -92,12 +91,6 @@ class AppController extends Controller
     }
 
    
-  }
-
-  public function beforeFilter(\Cake\Event\EventInterface $event)
-  {
-    parent::beforeFilter($event);
-    Log::write('debug', $this->request->here());
   }
 
   public function beforeRender(\Cake\Event\EventInterface $event)
