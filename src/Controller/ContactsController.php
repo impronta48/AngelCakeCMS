@@ -66,6 +66,7 @@ class ContactsController extends AppController
 
       $msg = nl2br($msg);
       $mailer->setFrom($sender)
+        ->setEmailFormat('html')
         ->setReplyTo($d['_replyto'])
         ->setTo($destination)
         ->setSubject('Messaggio dal Web')
