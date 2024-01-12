@@ -68,7 +68,7 @@ class ContactsController extends AppController
       $mailer->setFrom($sender)
         ->setReplyTo($d['_replyto'])
         ->setTo($destination)
-        ->setSubject('Messaggio dal Web')
+        ->setSubject(isset($d['_subject']) ? $d['_subject'] : 'Messaggio dal Web')
         ->deliver($msg);
 
       $this->Flash->success('Grazie, ti risponderemo al più presto.');
