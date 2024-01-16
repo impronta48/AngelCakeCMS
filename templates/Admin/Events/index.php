@@ -34,6 +34,7 @@
           <th><?= $this->Paginator->sort('max_pax', 'Max Pax'); ?></th>
           <th><?= $this->Paginator->sort('place', 'Luogo'); ?></th>
           <th><?= $this->Paginator->sort('destination_id', 'Destination'); ?></th>
+          <th><?= $this->Paginator->sort('percorso_id', 'Percorso'); ?></th>
           <th><?= $this->Paginator->sort('start_time', 'Inizio'); ?></th>
           <th><?= $this->Paginator->sort('end_time', 'Fine'); ?></th>
           <th class="actions"></th>
@@ -53,12 +54,19 @@
                 --
               <?php endif; ?>
             </td>
+            <td>
+              <?php if ($event->percorso) : ?>
+                <?= $event->percorso->title ?>
+              <?php else : ?>
+                --
+              <?php endif; ?>
+            </td>
             <td><?= h($event->start_time) ?></td>
             <td><?= h($event->end_time) ?></td>
             <td class="actions">
               <?= $this->Html->link('', ['action' => 'view', $event->id], ['title' => __('View'), 'class' => 'btn btn-default btn btn-default bi bi-eye']) ?>
               <?= $this->Html->link('', ['action' => 'edit', $event->id], ['title' => __('Edit'), 'class' => 'btn btn-default btn btn-default bi bi-pencil']) ?>
-              <?= $this->Html->link('', ['prefix' => false, 'action' => 'subscribe', $event->slug], ['title' => __('Subscribe'), 'class' => 'btn btn-default btn btn-default bi bi-users']) ?>
+              <?= $this->Html->link('', ['prefix' => false, 'action' => 'subscribe', $event->id], ['title' => __('Subscribe'), 'class' => 'btn btn-default btn btn-default bi bi-funnel']) ?>
               <?= $this->Form->postLink('', ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
             </td>
           </tr>

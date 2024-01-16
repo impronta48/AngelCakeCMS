@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Event Entity
@@ -25,6 +26,7 @@ use Cake\ORM\Entity;
  */
 class Event extends Entity
 {
+	use LocatorAwareTrait;
 
 	/**
 	 * Fields that can be mass assigned using newEmptyEntity() or patchEntity().
@@ -50,5 +52,8 @@ class Event extends Entity
 	'user' => true,
 	'slug' => true,
 	'cost' => true,
+	'percorso_id' => true,
+	'percorso' => true,
+	'cost' => true
 	];
 }
