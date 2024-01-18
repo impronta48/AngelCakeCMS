@@ -44,6 +44,9 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
     <div class="card-footer">
       <span class="small">Massima dimensione dell'immagine: <?= ini_get("upload_max_filesize") ?>B</span>
     </div>
+    <?= $this->element('copertina_bkg_pos', [
+        'entity' => $article
+      ]);?>
   </b-card>
 
   <?php echo $this->Form->control('body', ['label' => 'Corpo Articolo', 'class' => 'editor']); ?>

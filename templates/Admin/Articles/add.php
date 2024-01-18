@@ -16,6 +16,9 @@
           'label' => 'Immagine di copertina',
           'after' => 'In questo campo puoi caricare una sola immagine',
         ]); ?>
+        <?= $this->element('copertina_bkg_pos', [
+          'entity' => $article
+        ]);?>
       </div>
       <div class="card-footer">
         <span class="small">Massima dimensione dell'immagine: <?= ini_get("upload_max_filesize") ?>B</span>
