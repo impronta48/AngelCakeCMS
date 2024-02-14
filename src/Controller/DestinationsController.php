@@ -20,13 +20,13 @@ use Cake\Http\Exception\NotFoundException;
 class DestinationsController extends AppController
 {
 
-  	public function initialize(): void {
-      parent::initialize();
-      $this->Authentication->allowUnauthenticated(['prenota','index','experience','activities','tours','addioNubilato','rent','view','count','prezzi']);
-    }
+  public function initialize(): void {
+    parent::initialize();
+    $this->Authentication->allowUnauthenticated(['prenota','index','experience','activities','tours','addioNubilato','rent','view','count','prezzi']);
+  }
 
   public $paginate = [
-    'limit' => 50,
+    'limit' => 52,
   ];
 
   public function destination_in_session($destination = null)
