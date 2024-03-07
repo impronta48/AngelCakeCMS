@@ -64,7 +64,7 @@ if (Configure::check('plugins')) {
   }
 }
 
-Router::scope('/images', function ($routes) {
+$routes->scope('/images', function ($routes) {
   $routes->registerMiddleware('glide', new \ADmad\Glide\Middleware\GlideMiddleware([
     // Run this filter only for URLs starting with specified string. Default null.
     // Setting this option is required only if you want to setup the middleware

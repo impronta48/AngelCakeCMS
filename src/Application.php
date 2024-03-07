@@ -110,7 +110,14 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
    */
   public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
   {
-
+    //Convert I18Languages array to the required format
+    $languages = Configure::read('I18n.languages');
+    $res_lang = [];
+    foreach ($languages as $key => $l) {
+      $res_lang[$l] = [
+        'locale'  => $l,
+      ];
+    }
     $middlewareQueue
       // Catch any exceptions in the lower layers,
       // and make an error page/response
@@ -133,16 +140,13 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
       ->add(new \ADmad\I18n\Middleware\I18nMiddleware([
         // If `true` will attempt to get matching languges in "languages" list based
         // on browser locale and redirect to that when going to site root.
-        // 'detectLanguage' => true,
+        'detectLanguage' => true,
         // Default language for app. If language detection is disabled or no
         // matching language is found redirect to this language
         'defaultLanguage' => 'ita',
         // Languages available in app. The keys should match the language prefix used
         // in URLs. Based on the language the locale will be also set.
-        'languages' => [
-          'eng' => ['locale' => 'eng'],
-          'ita' => ['locale' => 'ita'],
-        ],
+        'languages' => $languages,
       ]));
 
     // Be sure to add SocialAuthMiddleware after RoutingMiddleware

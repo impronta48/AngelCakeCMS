@@ -263,7 +263,7 @@ class DestinationsController extends AppController
       return $this->redirect(['controller' => 'Destinations', 'action' => 'index', '?' => ['prezzi' => true]]);
     }
     $destination = $this->get_seo_destination_name($nomeseo);  
-    $this->set(compact($destination));
+    $this->set(compact('destination'));
     
     // tipi di bici disponibili
     $this->loadModel('Cyclomap.Tipibici');
