@@ -1,10 +1,12 @@
 <!doctype html>
 
 <?php
+
 use Cake\Core\Configure;
 ?>
 
 <html lang="<?= Configure::read('App.language') ?>">
+
 <head>
   <?= $this->Html->charset() ?>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -61,12 +63,13 @@ use Cake\Core\Configure;
 
   <?= $this->element('v-autoload-import')  //Carica automaticamente vue da browser 
   ?>
-  <?= $this->fetch('script') ?>
-  <?= $this->element('v-autoload')  //Carica automaticamente lo script /theme/js/vue/{Controller}/{action}.js
-  ?>
   <?= $this->Html->script('ckeditor/ckeditor') ?>
   <?= $this->Html->script('node_modules/ckeditor4-vue/dist/ckeditor') ?>
-  <?= $this->Html->script('add-ckeditor.js') ?>
+
+  <?= $this->element('v-autoload')  //Carica automaticamente lo script /theme/js/vue/{Controller}/{action}.js
+  ?>
+  <?= $this->fetch('script') ?>
+
 </body>
 
 </html>
