@@ -1,12 +1,10 @@
 <!doctype html>
 
 <?php
-
 use Cake\Core\Configure;
 ?>
 
 <html lang="<?= Configure::read('App.language') ?>">
-
 <head>
   <?= $this->Html->charset() ?>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +16,7 @@ use Cake\Core\Configure;
   <!-- Bootstrap core CSS -->
   <?= $this->Html->css('/js/node_modules/bootstrap/dist/css/bootstrap.min') ?>
   <?= $this->Html->css('/js/node_modules/bootstrap-vue/dist/bootstrap-vue.css') ?>
-  <?= $this->Html->css('/js/node_modules//bootstrap-icons/font/bootstrap-icons.css') ?>
+  <?= $this->Html->css('/js/node_modules/bootstrap-icons/font/bootstrap-icons.css') ?>
 
   <!-- Load polyfills to support older browsers -->
   <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
@@ -28,8 +26,6 @@ use Cake\Core\Configure;
 
   <?= $this->fetch('meta') ?>
   <?= $this->fetch('css') ?>
-
-
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -70,9 +66,7 @@ use Cake\Core\Configure;
   ?>
   <?= $this->Html->script('ckeditor/ckeditor') ?>
   <?= $this->Html->script('node_modules/ckeditor4-vue/dist/ckeditor') ?>
-
   <?= $this->Html->script('add-ckeditor.js') ?>
-
 </body>
 
 </html>
