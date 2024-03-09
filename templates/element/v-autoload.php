@@ -1,8 +1,10 @@
 <?php
 $v = $this->fetch('vue');
+$p = $this->request->getParam('prefix') ? $this->request->getParam('prefix') . '/' : '';
+
 if ($v === "mix") {
-  if ($this->request->getParam('action') !== "display") {
-    $vue_name = "mix/" . $this->request->getParam('controller') . '/' . $this->request->getParam('action');
+  if ($this->request->getParam('action') !== "display") {    
+    $vue_name = "mix/" . $p. $this->request->getParam('controller') . '/' . $this->request->getParam('action');
   } else {
     $pageName = $this->request->getParam('pass.0');
     //Se il nome pagina contiene un punto allora il primo pezzo è il nome del plugin
@@ -11,11 +13,11 @@ if ($v === "mix") {
       $this->plugin = $pageName[0];
       $pageName = $pageName[1];
     }
-    $vue_name = "mix/" . $this->request->getParam('controller') . '/' . $pageName;
+    $vue_name = "mix/" . $p . $this->request->getParam('controller') . '/' . $pageName;
   }
   
 } else if (empty($v)) {
-  $vue_name = "vue/" . $this->request->getParam('controller') . '/' . $this->request->getParam('action');
+  $vue_name = "vue/" . $p. $this->request->getParam('controller') . '/' . $this->request->getParam('action');
 } else {
   $vue_name = "vue/$v";
 }
