@@ -13,6 +13,11 @@ Cache::setConfig('default', [
   'className' => FileEngine::class,
   'path' => CACHE . Configure::read('sitedir') . DS,
 ]);
+Cache::setConfig('long', [
+  'className' => FileEngine::class,
+  'path' => CACHE . Configure::read('sitedir') . DS,
+  'duration' => '+1 months',
+]);
 Cache::setConfig('static', [
   'className' => FileEngine::class,
   'path' => CACHE . Configure::read('sitedir') . DS . 'static' . DS,

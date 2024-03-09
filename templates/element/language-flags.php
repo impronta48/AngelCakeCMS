@@ -1,7 +1,17 @@
-<div class="pull-right">
-                           <div class="pull-right hidden-xs">
-                                <?= $this->Html->image('it.png',['alt'=>'Italiano','width'=>'16','class'=>'img-responsive flag']); ?>
-                                <?= $this->Html->image('en.png',['alt'=>'English','width'=>'16px','class'=>'img-responsive flag','url' => ['controller'=>'#']]); ?>
-                                <?= $this->Html->image('de.png',['alt'=>'Deutsch','width'=>'16px','class'=>'img-responsive flag','url' => ['controller'=>'#']]); ?>
-                            </div><!-- End .lo-icons -->
-                        </div><!-- End .pull-right -->
+<?php
+
+use Cake\Core\Configure;
+use Cake\Routing\Router;
+?>
+
+<?php $url = Router::reverseToArray($this->request); ?>
+<?php foreach (Configure::read('I18n.languages') as $lang) : ?>
+    <li class="m-0">
+        <?php $url['lang'] = $lang;
+        unset($url['?']); ?>
+        <a class="pr-2" href="<?= Router::url($url) ?>">
+            <?php $path = substr($lang, 0, 2) ?>
+            <?= $this->Html->image("flags/{$path}.png", ['alt' => $path]) ?>
+        </a>
+    </li>
+<?php endforeach; ?>
