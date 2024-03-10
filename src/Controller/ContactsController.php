@@ -43,7 +43,7 @@ class ContactsController extends AppController
         throw new Exception("Email del sito non valida");
       }
 
-      if (!filter_var($d['_replyto'], FILTER_VALIDATE_EMAIL) && !empty($d['_replyto'])) {
+      if (isset($d['_replyto']) && !filter_var($d['_replyto'], FILTER_VALIDATE_EMAIL) && !empty($d['_replyto'])) {
         return $this->Flash->error('Email destinatario non valida.');
         //throw new Exception("Email destinatario non valida");
       }
@@ -66,9 +66,13 @@ class ContactsController extends AppController
 
       $msg = nl2br($msg);
       $mailer->setFrom($sender)
-        ->setEmailFormat('html')
-        ->setReplyTo($d['_replyto'])
-        ->setTo($destination)
+        ->setEmailFormat('html');
+
+      if (isset($d['_replyto']) && !empty($d['_replyto'])) {
+        $mailer->setReplyTo($d['_replyto']);
+      }
+      
+      $mailer->setTo($destination)
         ->setSubject(isset($d['_subject']) ? $d['_subject'] : 'Messaggio dal Web')
         ->deliver($msg);
 
