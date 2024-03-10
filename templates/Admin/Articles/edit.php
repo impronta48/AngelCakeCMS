@@ -1,10 +1,5 @@
 <?php
-
 use Cake\Core\Configure;
-
-// TODO is jquery needed? Can we just get rid of this?
-echo $this->Html->script('jquery-1.10.2.min', ['block' => true]);
-echo $this->Html->script('jquery-ui.min', ['block' => true]);
 
 $this->assign('title', 'Article Edit: ' . $article->title); ?>
 <?php $sitedir = Configure::read('sitedir'); ?>

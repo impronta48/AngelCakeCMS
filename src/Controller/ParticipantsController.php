@@ -40,13 +40,19 @@ class ParticipantsController extends AppController
 	public function add() {
 		$participant = $this->Participants->newEmptyEntity();
 		if ($this->request->is('post')) {
-			if (isset($this->request->getData()['referal'])) {
-				$referal = $this->request->getData()['referal'];
+			$d = $d;
+			if (isset($d['referal'])) {
+				$referal = $d['referal'];
 			} else {
 				$referal = $this->referer();
 			}
 
-			$participant = $this->Participants->patchEntity($participant, $this->request->getData());
+			//honeypot
+			if (isset($d['admin_email']) && $d['admin_email'] != '') {
+				return;
+			}
+
+			$participant = $this->Participants->patchEntity($participant, $d);
 
 		  //Se siete troppi ti rimando indietro
 			if ($this->Participants->checkMaxPax($participant)) {
