@@ -24,7 +24,6 @@
 
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Cake\Core\Configure;
 use ADmad\I18n\Routing\Route\I18nRoute;
 
@@ -53,7 +52,7 @@ $routes->setRouteClass(DashedRoute::class);
 
 //Metto questo qui, così capisce che se l'estensione e json voglio il risultato in questo formato
 //TODO: In realtà in cake4 devo copiare anche alla riga 65 se no se lo perde! massimoi - 26/3/20
-Router::extensions(['xls', 'json']);
+$routes->setExtensions(['xls', 'json']);
 
 if (Configure::check('plugins')) {
   $plugins = Configure::read('AngelCake.plugins');
@@ -131,13 +130,10 @@ $routes->scope('/', function (RouteBuilder $builder) {
      */
   $builder->connect('/sitemap', ['plugin' => null, 'controller' => 'Sitemaps', 'action' => 'index']);    
 
-
-  //$builder->connect('/tlogin', ['plugin' => 'Cyclomap', 'controller' => 'Users', 'action' => 'tlogin']);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home']);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
-  //$builder->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
 
   /*
