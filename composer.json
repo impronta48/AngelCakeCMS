@@ -48,6 +48,7 @@
             "App\\": "src/",
             "Notifications\\": "plugins/Notifications/src/",
             "Moma\\": "plugins/Moma/src/",
+            "Ebike2021\\": "plugins/Ebike2021/src/",
             "Mirafiori\\": "plugins/Mirafiori/src/",
             "Bossolasco\\": "plugins/Bossolasco/src/",
             "Yepp\\": "plugins/Yepp/src/",

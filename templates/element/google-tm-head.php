@@ -1,27 +1,60 @@
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js?customize=1&tracking=1&thirdparty=1&always=1&refreshPage=1&privacyPage=<?= urlencode($privacy_url) ?>"></script>
-<?php if (isset($_COOKIE['cookiebar']) && $_COOKIE['cookiebar'] == "CookieAllowed") : ?>
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start':
+<script>
+    window.dataLayer = window.dataLayer || [];
 
-                    new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('consent', 'default', {
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500,
+    });
+    dataLayer.push({
+        'gtm.start': new Date().getTime(),
+        'event': 'gtm.js'
+    });
+</script>
 
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
 
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js?customize=1&tracking=1&thirdparty=1&always=1&privacyPage=<?= urlencode($privacy_url) ?>"></script>
 
-        })(window, document, 'script', 'dataLayer', "<?= $id ?>");
-    </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?= $id ?>"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
 
-    <!-- End Google Tag Manager -->
-<?php endif; ?>
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', <?= $id ?>);
+</script>
+
+<!-- End Google Tag Manager -->
+
+<!-- Consent Manager, as esplained here https://developers.google.com/tag-platform/tag-manager/templates/consent-apis -->
+<script>
+    // Array of callbacks to be executed when consent changes
+    const consentListeners = [];
+
+    /**
+     *   Called from GTM template to set callback to be executed when user consent is provided.
+     *   @param {function} Callback to execute on user consent
+     */
+    window.addConsentListenerExample = (callback) => {
+        consentListeners.push(callback);
+    };
+
+    /**
+     *   Called when user grants/denies consent.
+     *   @param {Object} Object containing user consent settings.
+     */
+    const cookiebarConsent = (consent) => {
+        consentListeners.forEach((callback) => {
+            callback(consent);
+        });
+    };
+</script>
