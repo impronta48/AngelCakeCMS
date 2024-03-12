@@ -61,8 +61,6 @@ use Cake\Core\Configure;
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
 
-  <?= $this->element('v-autoload-import')  //Carica automaticamente vue da browser 
-  ?>
   <?= $this->Html->script('ckeditor/ckeditor') ?>
   <?= $this->Html->script('node_modules/ckeditor4-vue/dist/ckeditor') ?>
 

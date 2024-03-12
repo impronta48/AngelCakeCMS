@@ -1,5 +1,23 @@
 <?php
+
+use Cake\Core\Configure;
+
 $v = $this->fetch('vue');
+$d = Configure::read('debug');
+
+// Carico le librerie statiche
+if ($d) {
+  echo $this->Html->script("node_modules/vue/dist/vue.js");
+  echo $this->Html->script("node_modules/bootstrap-vue/dist/bootstrap-vue.js");
+} else {
+  echo $this->Html->script("node_modules/vue/dist/vue.min.js");
+  echo $this->Html->script("node_modules/bootstrap-vue/dist/bootstrap-vue.min.js");
+}
+
+echo $this->Html->script('node_modules/bootstrap-vue/dist/bootstrap-vue-icons.min.js');
+echo $this->Html->script('node_modules/axios/dist/axios.min');
+
+// Carico l'asset mix
 $p = $this->request->getParam('prefix') ? $this->request->getParam('prefix') . '/' : '';
 
 if ($v === "mix") {
