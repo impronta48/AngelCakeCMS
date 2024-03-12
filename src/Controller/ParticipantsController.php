@@ -40,7 +40,7 @@ class ParticipantsController extends AppController
 	public function add() {
 		$participant = $this->Participants->newEmptyEntity();
 		if ($this->request->is('post')) {
-			$d = $d;
+			$d = $this->request->getData();
 			if (isset($d['referal'])) {
 				$referal = $d['referal'];
 			} else {
