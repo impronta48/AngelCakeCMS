@@ -30,7 +30,7 @@
     }
     gtag('js', new Date());
 
-    gtag('config', <?= $id ?>);
+    gtag('config', "<?= $id ?>");
 </script>
 
 <!-- End Google Tag Manager -->
