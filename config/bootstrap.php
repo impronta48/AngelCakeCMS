@@ -251,13 +251,15 @@ $api_whitelist = Configure::read('api-whitelist');
 
 if (isset($_SERVER['HTTP_ORIGIN']) && (empty($api_whitelist) || in_array($_SERVER['HTTP_ORIGIN'], $api_whitelist))) {
   header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+} else if (isset($_SERVER['HTTP_REFERER']) && (empty($api_whitelist) || in_array($_SERVER['HTTP_REFERER'], $api_whitelist))) {
+  header("Access-Control-Allow-Origin: {$_SERVER['HTTP_REFERER']}");
 } else {
   header('Access-Control-Allow-Origin: * ');
 }
 
 if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
   header("Access-Control-Allow-Methods: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']}, OPTIONS");
-} else {
+} else {  
   header('Access-Control-Allow-Methods: *');
 }
 
