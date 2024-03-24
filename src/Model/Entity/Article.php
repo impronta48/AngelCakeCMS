@@ -69,7 +69,7 @@ class Article extends Entity
 		if (!empty($img)) return $img;
 		$img = $this->_getGalleria();
 		if (!empty($img)) return $img[0];
-    	return Router::url(Configure::read('default-image', null));
+    	return Router::url(Configure::read('sitedir')   . Configure::read('default-image', null));
 	}
 
 	public function _getCopertina() {
