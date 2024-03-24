@@ -73,7 +73,11 @@ class Article extends Entity
 	}
 
 	public function _getCopertina() {
-		return $this->getFieldFiles('copertina', 'jpg|jpeg|gif|png|webp', true);
+		$r =  $this->getFieldFiles('copertina', 'jpg|jpeg|gif|png|webp', true);
+		if (empty($r)) {
+			return Router::url(Configure::read('sitedir')   . Configure::read('default-image', null));
+		}
+		return $r;
 	}
 
 	public function _getAllegati() {
