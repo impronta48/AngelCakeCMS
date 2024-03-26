@@ -467,3 +467,80 @@ msgstr "Choose a destination then book an e-bike"
 msgid "Per prima cosa scegli dove vuoi pedalare"
 msgstr "First of all, you choose where you want to pedal"
 
+msgid "Punti di interesse"
+msgstr "Points of Interest"
+
+msgid "Aggiornamenti"
+msgstr "News"
+
+msgid "Strutture Ricettive"
+msgstr "Hospitality"
+
+msgid "Aggiornamenti"
+msgstr "News"
+
+msgid "L'App che ti guida"
+msgstr "The App"
+
+msgid "Bere e Mangiare"
+msgstr "Food and Wine"
+
+msgid "Chiese"
+msgstr "Churches"
+
+msgid "Noleggio attrezzatura"
+msgstr "Equipment rental"
+
+msgid "Da vedere"
+msgstr "To be seen"
+
+msgid "Scarica l'APP"
+msgstr "Download the APP"
+
+msgid "scopri percorsi, strutture, soste, basiliche"
+msgstr "discover routes and point of interest"
+
+msgid "Accessibilità"
+msgstr "Accessibility"
+
+msgid "Informativa Cookie"
+msgstr "Cookies"
+
+msgid "Note Legali"
+msgstr "Legal Terms"
+
+msgid "Cammino dei Grandi Santuari Mariani"
+msgstr "Grand Route of Mary's Sanctuaries"
+
+msgid "Un filo rosso che unisce i principali Santuari dedicati al culto di Maria tra il Veneto e il Trentino Alto Adige attraverso bellissimi paesaggi e riserve naturali"
+msgstr "A red thread linking the main Sanctuaries dedicated to the cult of Mary between Veneto and Trentino Alto Adige through beautiful landscapes and nature reserves"
+
+msgid "Le tappe"
+msgstr "The stages"
+
+msgid "Scopri le tappe"
+msgstr "Discover the stages"
+
+msgid "Sotto trovi alcune delle tappe in evidenza, ma puoi vederle tutte sulla pagina dei"
+msgstr "Below are some of the highlights, but you can see them all on the page of the"
+
+msgid "percorsi"
+msgstr "routes"
+
+msgid "Caratteristiche del percorso"
+msgstr "Characteristics of the route"
+
+msgid "Difficoltà"
+msgstr "Difficulty"
+
+msgid "Tempo Percorrenza"
+msgstr "Route Duration"
+
+msgid "Lunghezza"
+msgstr "Lenght"
+
+msgid "Punti di interesse su questo percorso"
+msgstr "Points of interest along this route"
+
+msgid "Percorsi Collegati"
+msgstr "Routes Passing By"
