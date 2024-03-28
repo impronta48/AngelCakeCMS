@@ -1,5 +1,6 @@
-<?php
-	use \App\Controller\AttachmentsController;
+<?php	
+
+	$this->assign('vue', 'mix');
 	// This is needed, if not set default to 'dropzone'
 
 	if (!isset($field)) {
@@ -27,7 +28,7 @@
 	field="<?= $field ?>"
 	:files='JSON.parse(`<?= isset($files) ? json_encode($existingImages) : "[]" ?>`)'
 	model="<?= isset($model) ? $model : 'Attachments' ?>"
-	destination="<?= isset($destination) ? $destination : 'TEMP' ?>"
+	destination="<?= isset($destination->slug) ? $destination->slug : 'TEMP' ?>"
 	id="<?= isset($id) ? $id : uniqid() ?>"
 	:multiple="<?= isset($multiple) && $multiple ? 'true' : 'false' ?>"
 	:temporary="<?= isset($temp) && $temp ? 'true' : 'false' ?>"
@@ -36,6 +37,4 @@
 ></file-uploader>
 
 <?= $this->Html->css('/js/node_modules/vue2-dropzone/dist/vue2Dropzone.min.css', ['block' => true]); ?>
-<?= $this->Html->script('node_modules/axios/dist/axios.min.js', ['block' => true]) ?>
 <?= $this->Html->script('/js/node_modules/vue2-dropzone/dist/vue2Dropzone.js', ['block' => true]); ?>
-<?= $this->Html->script('vue/element/upload.js', ['block' => true]); ?>

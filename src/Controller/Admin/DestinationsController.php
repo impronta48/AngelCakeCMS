@@ -97,6 +97,7 @@ class DestinationsController extends AppController
 	 */
 	public function add()
 	{
+		$this->set('new', true);
     	$this->edit();
     	$this->viewBuilder()->setTemplate('edit');
 	}

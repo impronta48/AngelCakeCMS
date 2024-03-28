@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-use App\Controller\AttachmentsController;
 use App\Lib\AttachmentManager;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\Http\Exception\InternalErrorException;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
-use Cake\Utility\Text;
 use elFinder;
 use elFinderConnector;
 

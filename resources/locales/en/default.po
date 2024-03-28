@@ -132,7 +132,7 @@ msgid "Prezzi per il noleggio di ebike"
 msgstr "E-bike rental prices"
 
 #: Destinations/prezzi.php:62
-msgid "I miglior rapporto qualità prezzo per il noleggio e-bike"
+msgid "Il miglior rapporto qualità prezzo per il noleggio e-bike"
 msgstr "The best price/quality rateo for e-bike rentals"
 
 #: Destinations/prezzi.php:68

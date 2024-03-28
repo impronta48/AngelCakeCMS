@@ -1,5 +1,6 @@
 <?php $this->assign('title', 'Aggiungi Articolo'); ?>
-
+<?php $this->assign('vue', 'mix'); // Needed because this page is also rendered by `add` 
+?>
 <div class="container" id="article">
   <?= $this->element('v-admin-navbar', ['event' => $article]); ?>
   <br>
@@ -18,7 +19,7 @@
         ]); ?>
         <?= $this->element('copertina_bkg_pos', [
           'entity' => $article
-        ]);?>
+        ]); ?>
       </div>
       <div class="card-footer">
         <span class="small">Massima dimensione dell'immagine: <?= ini_get("upload_max_filesize") ?>B</span>
@@ -31,9 +32,6 @@
   </fieldset>
 
   <div class="card card-info">
-
-
-
     <div class="card-body">
       <h3 class="card-title"><i class="bi bi-image"></i> Immagini associate a questo articolo</h3>
       <?php echo $this->Form->file('newgallery. ', [

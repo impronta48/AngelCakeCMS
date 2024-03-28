@@ -1,8 +1,10 @@
 <?php
+
 use Cake\Core\Configure;
 
 $this->assign('title', 'Article Edit: ' . $article->title); ?>
 <?php $sitedir = Configure::read('sitedir'); ?>
+<?php $this->assign('vue', 'mix'); // Needed because this page is also rendered by `add` ?> 
 
 <div class="container">
   <?= $this->element('v-admin-navbar', ['event' => $article]); ?>
@@ -31,7 +33,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
         'filetype' => 'image/*',
       ] + ($new ? [] : [
         'destination' => $article->destination ? $article->destination->slug : 'null',
-        'files' => [ $article->copertina ],
+        'files' => [$article->copertina],
         'id' => $article->id,
       ])
     ); ?>
@@ -40,8 +42,8 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
       <span class="small">Massima dimensione dell'immagine: <?= ini_get("upload_max_filesize") ?>B</span>
     </div>
     <?= $this->element('copertina_bkg_pos', [
-        'entity' => $article
-      ]);?>
+      'entity' => $article
+    ]); ?>
   </b-card>
 
   <?php echo $this->Form->control('body', ['label' => 'Corpo Articolo', 'class' => 'editor']); ?>
