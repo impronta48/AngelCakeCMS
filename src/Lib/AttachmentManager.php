@@ -173,7 +173,7 @@ class AttachmentManager
 		return rename($from . DS . $fname, $to . DS . $new_fname);
 	}
 
-	static function putFile($files, $model, $destination, $id, $field, $temporary = false, $deleteBefore = false)
+	static function 		putFile($files, $model, $destination, $id, $field, $temporary = false, $deleteBefore = false)
 	{
 		$results = [];
 

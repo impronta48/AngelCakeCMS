@@ -12,13 +12,17 @@
 	if (isset($files)) {
 		foreach ($files as $img) {
 			if (!empty($img)) {
+				//Strip trailing slash
+				$img = rtrim($img, '/');				
 				$fname = basename($img);
-				$existingImages[] = [
-					'name' => $fname,
-					'size' => filesize(WWW_ROOT . $img),
-					'thumbnail_url' => "/images/$img?w=200&h=200&fit=crop", // TODO non-image files cannot be previewed by glide!
-					'raw_url' => $img,
-				];
+				if (file_exists(WWW_ROOT . $img)){
+					$existingImages[] = [
+						'name' => $fname,
+						'size' => filesize(WWW_ROOT . $img),
+						'thumbnail_url' => "/images/$img?w=200&h=200&fit=crop", // TODO non-image files cannot be previewed by glide!
+						'raw_url' => $img,
+					];
+				}
 			}
 		}
 	}
@@ -28,7 +32,7 @@
 	field="<?= $field ?>"
 	:files='JSON.parse(`<?= isset($files) ? json_encode($existingImages) : "[]" ?>`)'
 	model="<?= isset($model) ? $model : 'Attachments' ?>"
-	destination="<?= isset($destination->slug) ? $destination->slug : 'TEMP' ?>"
+	destination="<?= isset($destination->slug) ? $destination->slug : 'null' ?>"
 	id="<?= isset($id) ? $id : uniqid() ?>"
 	:multiple="<?= isset($multiple) && $multiple ? 'true' : 'false' ?>"
 	:temporary="<?= isset($temp) && $temp ? 'true' : 'false' ?>"

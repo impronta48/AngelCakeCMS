@@ -544,3 +544,6 @@ msgstr "Points of interest along this route"
 
 msgid "Percorsi Collegati"
 msgstr "Routes Passing By"
+
+msgid "Punto di noleggio e-bike a {0}"
+msgstr "e-bike rental point in {0}"

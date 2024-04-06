@@ -60,12 +60,6 @@ Cache::setConfig('_cake_routes_', [
   'serialize' => 'json',
   //'url' => env('CACHE_CAKEROUTES_URL', null),
 ]);
-/* Cache::setConfig('_cake_routes_', [
-  'className' => MemcachedEngine::class,  
-  'duration' => '+20 days',
-  'serialize' => 'php',
-  //'url' => env('CACHE_CAKEROUTES_URL', null),
-]); */
 /*
  * Configure images cache.
  */
