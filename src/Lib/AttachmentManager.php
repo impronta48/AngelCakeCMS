@@ -44,15 +44,7 @@ class AttachmentManager
 	static function buildPath($model, $destination, $id, $field = '', $fname = '')
 	{
 		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');
-
-		/* 		$save_dir = Text::insert($fullDirTemplate, [
-			'sitedir' => Configure::read('sitedir'),
-			'model' => empty($model) ? 'attachments' : strtolower($model),
-			'destination' => empty($destination) ? 'none' : strtolower($destination),
-			'id' => empty($id) ? -1 : $id,
-			'field' => empty($field) ? 'dropzone' : $field,
-		]); */
-
+		
 		$save_dir = str_replace([
 			':sitedir', 
 			':model', 
@@ -64,8 +56,8 @@ class AttachmentManager
 				Configure::read('sitedir'),
 				empty($model) ? 'attachments' : strtolower($model),
 				empty($destination)  || ($destination == "null") ? 'none' : strtolower($destination),
-				empty($id) ? -1 : $id,
-				empty($field) ? 'dropzone' : $field,	
+				empty($id) ? '' : $id,
+				empty($field) ? '' : $field,	
 			], 
 			$fullDirTemplate);
 		
@@ -166,6 +158,31 @@ class AttachmentManager
 		return true;
 	}
 
+	static function moveChangeDestination($model, $id, $from_slug, $to_slug ){
+		$from_path = WWW_ROOT . self::buildPath($model, $from_slug, $id, null, null);
+		$dest_folder = WWW_ROOT . self::buildPath($model, $to_slug, null, null, null);
+		$dest_folder = rtrim($dest_folder, "/");
+
+		//Devo cambiare la umask per consetire a mkdir di avere i permessi di scrittura
+		//https://stackoverflow.com/questions/7878784/php-mkdir-permissions
+		//Prima controllo se la cartella esiste, se non esiste la creo
+		if (!file_exists($dest_folder)){
+			$old = umask(0);
+			mkdir($dest_folder, 0777, true);
+			umask($old); 
+		}
+
+		$to_path = WWW_ROOT . self::buildPath($model, $to_slug, $id, null, null);
+		$from_path = rtrim($from_path,"/");
+		$to_path = rtrim($to_path,"/");
+		
+		$cmd = "mv $from_path $dest_folder";
+
+		exec($cmd, $output, $return_val);
+
+		return $return_val;	
+	}
+
 	static function renameFile($from, $to, $fname, $new_fname = null)
 	{
 		if (is_null($new_fname)) $new_fname = $fname;
@@ -173,7 +190,7 @@ class AttachmentManager
 		return rename($from . DS . $fname, $to . DS . $new_fname);
 	}
 
-	static function 		putFile($files, $model, $destination, $id, $field, $temporary = false, $deleteBefore = false)
+	static function putFile($files, $model, $destination, $id, $field, $temporary = false, $deleteBefore = false)
 	{
 		$results = [];
 
@@ -227,6 +244,12 @@ class AttachmentManager
 				//TODO: devo cancellare lo stesso nome file anche in tutte le altre cartelle figlie
 
 				unlink($fname);
+
+				//devo cancellare anche la cache di glide
+				$d = CACHE . Configure::read('sitedir') . DS . "glide" . DS . $save_dir;
+				$cmd = sprintf("rm -rf %s", escapeshellarg($d));
+				exec($cmd, $output, $return_val);
+
 				$results['log'] = "eliminato il file $fname da $ip";
 				$results['removed'] = 'OK';
 			} else {

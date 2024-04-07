@@ -32,7 +32,7 @@
 	field="<?= $field ?>"
 	:files='JSON.parse(`<?= isset($files) ? json_encode($existingImages) : "[]" ?>`)'
 	model="<?= isset($model) ? $model : 'Attachments' ?>"
-	destination="<?= isset($destination->slug) ? $destination->slug : 'null' ?>"
+ 	destination="<?= isset($destination->slug) ? $destination->slug : 'null' ?>"
 	id="<?= isset($id) ? $id : uniqid() ?>"
 	:multiple="<?= isset($multiple) && $multiple ? 'true' : 'false' ?>"
 	:temporary="<?= isset($temp) && $temp ? 'true' : 'false' ?>"

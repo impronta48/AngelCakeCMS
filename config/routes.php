@@ -80,7 +80,7 @@ $routes->scope('/images', function ($routes) {
       'source' => WWW_ROOT,
 
       // Path or League\Flysystem adapter instance to write cached images to.
-      'cache' => CACHE . Configure::read('sitedir'), // WWW_ROOT  . 'cache',
+      'cache' => CACHE . Configure::read('sitedir') . DS . "glide" , // WWW_ROOT  . 'cache',
 
       // URL part to be omitted from source path. Defaults to "/images/"
       // http://glide.thephpleague.com/1.0/config/source-and-cache/#set-a-base-url
@@ -90,6 +90,11 @@ $routes->scope('/images', function ($routes) {
       // \ADmad\Glide\Responses\PsrResponseFactory() will be used.
       // http://glide.thephpleague.com/1.0/config/responses/
       'response' => null,
+
+      //https://glide.thephpleague.com/2.0/config/setup/
+      'defaults' => [
+        'q' => 90,        
+      ],
     ],
 
     // http://glide.thephpleague.com/1.0/config/security/

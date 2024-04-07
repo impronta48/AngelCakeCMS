@@ -1,6 +1,8 @@
 <?php $this->assign('title', 'Aggiungi Articolo'); ?>
 <?php $this->assign('vue', 'mix'); // Needed because this page is also rendered by `add` 
 ?>
+<?php $new = !isset($article->id); ?>
+
 <div class="container" id="article">
   <?= $this->element('v-admin-navbar', ['event' => $article]); ?>
   <br>
@@ -13,10 +15,20 @@
 
       <div class="card-body">
         <h3 class="card-title"><i class="bi bi-image"></i> Immagine di copertina</h3>
-        <?php echo $this->Form->file('newcopertina', [
-          'label' => 'Immagine di copertina',
-          'after' => 'In questo campo puoi caricare una sola immagine',
-        ]); ?>
+        <?= $this->element(
+          'upload',
+          [
+            'model' => 'Articles',
+            'field' => 'newcopertina',
+            'multiple' => false,
+            'temp' => $new ? true : false,
+            'filetype' => 'image/*',
+          ] + ($new ? [] : [
+            'destination' => $article->destination ? $article->destination->slug : 'null',
+            'files' => [$article->copertina],
+            'id' => $article->id,
+          ])
+        ); ?>
         <?= $this->element('copertina_bkg_pos', [
           'entity' => $article
         ]); ?>

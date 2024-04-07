@@ -32,7 +32,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
         'temp' => $new ? true : false,
         'filetype' => 'image/*',
       ] + ($new ? [] : [
-        'destination' => $article->destination ? $article->destination->slug : 'null',
+        'destination' => $article->destination ? $article->destination : 'null',
         'files' => [$article->copertina],
         'id' => $article->id,
       ])
@@ -60,7 +60,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
         'temp' => $new ? true : false,
         'filetype' => 'image/*',
       ] + ($new ? [] : [
-        'destination' => $article->destination ? $article->destination->slug : 'null',
+        'destination' => isset($article->destination) ? $article->destination : 'null',
         'files' => $article->galleria,
         'id' => $article->id,
       ])
@@ -81,7 +81,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
         'temp' => $new ? true : false,
         'filetype' => '.pdf,.doc,.xls,.ppt,.odt,.docx,.odp,.kml',
       ] + ($new ? [] : [
-        'destination' => $article->destination ? $article->destination->slug : 'null',
+        'destination' => $article->destination ? $article->destination : 'null',
         'files' => $article->allegati,
         'id' => $article->id,
       ])

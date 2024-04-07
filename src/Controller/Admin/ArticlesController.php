@@ -97,8 +97,10 @@ class ArticlesController extends AppController
 
 		if ($article->destination_id == null) {
 			$old_destination = 0;
+			$old_destination_slug = 'null';
 		} else {
 			$old_destination = $article->destination_id;
+			$old_destination_slug = $article->destination->slug; 
 		}
 
 		//dd($article);
@@ -112,18 +114,20 @@ class ArticlesController extends AppController
 			$this->Articles->patchEntity($article, $this->request->getData());
 
 			$this->Authorization->authorize($article);
-
+			
 			if ($this->Articles->save($article)) {
+				//Devo rileggerlo perchè se no non ho la destinaition associata
+				$article = $this->Articles
+					->findById($id)
+					->contain(['Destinations'])
+					->firstOrFail();
 				//Importante questo è necessario altrimenti non si aggiorna la route cache
 				Cache::clear('_cake_routes_');
 
 				//Se hai cambiato destination devo spostare gli allegati nella cartella giusta
 				if ($old_destination != $article->destination_id) {
-					if (
-						AttachmentManager::moveAllFiles($old_copertina, $article->getSource(), $article->getDestinationSlug(), $article->id, 'copertina') &&
-						AttachmentManager::moveAllFiles($old_galleria, $article->getSource(), $article->getDestinationSlug(), $article->id, 'galleria') &&
-						AttachmentManager::moveAllFiles($old_allegati, $article->getSource(), $article->getDestinationSlug(), $article->id, 'allegati')
-					) {
+					if (AttachmentManager::moveChangeDestination('Articles', $id, $old_destination_slug, $article->destination->slug))
+					{
 						$this->log("Allegati articolo $id spostati con successo dalla cartella {$old_destination} a {$article->destination_id}", 'info');
 					} else {
 						$this->log("Impossibile spostare gli allegati articolo $id dalla cartella {$old_destination} a {$article->destination_id}", 'error');
@@ -137,11 +141,11 @@ class ArticlesController extends AppController
 		// Get a list of tags.
 		$tags = $this->Articles->Tags->find('list');
 		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
-		$destinations = $this->Articles->Destinations->find('list');
+		$destinations = $this->Articles->Destinations->find('list', ['order' => 'slug']);
 		$new = false;
 		$this->set('user', $this->request->getAttribute('identity'));
 		$this->set(compact('new', 'article', 'tags', 'users', 'destinations'));
-	}
+	}	
 
 	public function delete($id)
 	{

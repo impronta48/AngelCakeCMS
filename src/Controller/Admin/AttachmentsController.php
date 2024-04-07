@@ -89,7 +89,7 @@ class AttachmentsController extends AppController
     $this->RequestHandler->renderAs($this, 'json');
 
     $res = AttachmentManager::popFile($model, $destination, $id, $field, $name, $temporary);
-
+    
     $this->set($res);
 
     if (isset($res['error'])) {
