@@ -12,6 +12,7 @@ use Cake\Cache\Engine\MemcachedEngine;
 Cache::setConfig('default', [
   'className' => FileEngine::class,
   'path' => CACHE . Configure::read('sitedir') . DS,
+  'groups' => ['poi', 'percorsi','destinations']
 ]);
 Cache::setConfig('long', [
   'className' => FileEngine::class,
