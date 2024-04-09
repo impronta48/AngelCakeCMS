@@ -95,6 +95,7 @@ class ParticipantsController extends AppController
 			} else {
 				if ($responseData['success']) {
 					$this->Flash->success($message);
+					return $this->redirect($referal);
 				} else {
 					$this->Flash->error($message);
 				}
