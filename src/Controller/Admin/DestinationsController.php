@@ -158,8 +158,7 @@ class DestinationsController extends AppController
 	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
 	 */
 	public function delete($id = null)
-	{
-		$this->request->allowMethod(['post', 'delete']);
+	{		
 		$destination = $this->Destinations->get($id);
 		$this->Authorization->authorize($destination);
 
