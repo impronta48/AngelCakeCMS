@@ -10,6 +10,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use elFinder;
 use elFinderConnector;
 
@@ -226,5 +227,25 @@ class ArticlesController extends AppController
 		$this->autoRender = false;
 		$connector = new elFinderConnector(new elFinder($opts));
 		$connector->run();
+	}
+
+
+	public function removeFile()
+	{
+		$fname = $this->request->getQuery('fname');
+
+		if (!empty($fname)) {
+			$fname = rtrim(WWW_ROOT, DS) . $fname;
+			if (file_exists($fname)) {
+				$ip = $_SERVER['REMOTE_ADDR'];
+				//TODO: devo cancellare lo stesso nome file anche in tutte le altre cartelle figlie
+
+				unlink($fname);
+				$this->log("eliminato il file $fname da $ip");
+			} else {
+				$this->Flash->error('Il file da eliminare è inesitente:' . $fname);
+			}
+		}
+		$this->redirect(Router::url($this->referer(), true));
 	}
 }
