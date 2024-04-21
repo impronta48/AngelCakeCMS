@@ -79,8 +79,22 @@ class AttachmentsController extends AppController
     } 
   }
 
-  function remove($comp_model, $destination, $id, $field, $name, $temporary = false)
+  function remove()
   {
+    
+    //allow post and delete
+    $this->request->allowMethod(['post', 'delete']);
+
+    //get json data
+    $data = $this->request->input('json_decode', true);
+    $data = $data['data'];
+    $comp_model = $data['model'];
+    $id = $data['id'];
+    $field = $data['field'];
+    $name = $data['file'];
+    $temporary = $data['temporary'];
+    $destination = $data['destination'];
+
     $this->authorize($comp_model, $id);
     $tmp = explode('.', $comp_model, 2);
     $model = end($tmp);

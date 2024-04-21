@@ -35,7 +35,15 @@ export default {
             dropzoneOptions: {
                 removedfile: async function (file) {
                     try {
-                        await axios.get(_this.getDeleteUrl(file));
+                        let data = {
+                            'file': file.name,
+                            'model': _this.model,
+                            'destination': _this.destination,
+                            'id': _this.id,
+                            'field': _this.field,
+                            'temporary': _this.temporary,                            
+                        }
+                        await axios.post(_this.getDeleteUrl(), { data: data });
                         // I don't know why this part below works or what it does exactly. Why do we need _ref?
                         var _ref;
                         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
@@ -60,8 +68,8 @@ export default {
         }
     },
     methods: {
-        getDeleteUrl(file) {
-            return `/admin/attachments/remove/${this.model}/${this.destination}/${this.id}/${this.field}/${file.name}` + (this.temporary ? '/temp' : '')
+        getDeleteUrl() {
+            return '/admin/attachments/remove';
         }
     }
 }

@@ -234,8 +234,6 @@ class AttachmentManager
 	{
 		$results = [];
 
-		$name = self::replaceExtension($name);
-
 		$save_dir = self::buildPath($model, $destination, $id, $field);
 		if (!empty($save_dir)) {
 			$fname = rtrim(($temporary ? TMP : WWW_ROOT) . $save_dir . $name);
