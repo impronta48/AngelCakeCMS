@@ -8,6 +8,7 @@ var app = new Vue({
     data() {
         return {
 			loading: false,
+			saveAutoTrans: false,
 		}
     },
     async mounted() {
@@ -21,4 +22,17 @@ var app = new Vue({
 			});
 		}
 	},
+	methods: {
+		async saveAndAutomaticallyTranslate(event) {
+			let response = await this.$bvModal.msgBoxConfirm("L'operazione comporterà la sovrascrittura di traduzioni già presenti. Sei sicuro di voler procedere?")
+			console.log(response)
+			let clickedButton = event.target.name
+			console.log(clickedButton)
+			if (response && event.target.name == 'save-auto') {
+				this.saveAutoTrans = true
+				await this.$nextTick()
+				this.$refs.form.submit()				
+			}
+		}
+	}
 });

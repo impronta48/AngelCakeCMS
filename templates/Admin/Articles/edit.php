@@ -1,6 +1,7 @@
 <?php
 
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 $this->assign('title', 'Article Edit: ' . $article->title); ?>
 <?php $sitedir = Configure::read('sitedir'); ?>
@@ -12,7 +13,8 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
 
   <?= $this->Form->create($article, [
     'type' => 'file',
-    'class' => 'form'
+    'class' => 'form', 
+    'ref' => 'form',
   ]); ?>
 
   <?php echo $this->Form->control('title'); ?>
@@ -116,6 +118,23 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
   </div>
 
   <?= $this->Form->hidden('id'); ?>
-  <?= $this->Form->button(__("Save")); ?>
+  
+  <?= $this->Form->button(__('Salva'), ['name' => 'save']) ?>
+  <?php if (I18n::getLocale() == 'ita') : ?>
+    <b-button @click="saveAndAutomaticallyTranslate" name="save-and-translate">
+      <?= __('Salva e Traduci manualmente') ?>
+      <?= $this->Html->image("flags/en.png", ["alt" => "traduci in Inglese manualmente"]) ?>
+    </b-button>
+
+    <!-- Tasto per salvare e tradurre automagicamente -->
+    <b-button @click="saveAndAutomaticallyTranslate" name="save-auto">
+      <?= __('Traduci automaticamente') ?>
+      <?= $this->Html->image("flags/en.png", ["alt" => "traduci in Inglese automaticamente"]) ?>
+    </b-button>
+  <?php endif ?>
+  <input v-if="saveAutoTrans" type="hidden" name="save-and-autotranslate" v-model="saveAutoTrans"></input>
+
+  <?= $this->Form->button(__('Salva e Visualizza'), ['name' => 'save-and-view']) ?>
+  
   <?= $this->Form->end() ?>
 </div>

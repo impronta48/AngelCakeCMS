@@ -21,9 +21,15 @@ class ArticlesController extends AppController
 
   public function view($slug = null)
   {
-    $article = $this->Articles->findBySlug($slug)
+    if (is_numeric($slug)){
+      $article = $this->Articles->findById($slug)
       ->contain(['Tags', 'Destinations'])
       ->firstOrFail();
+    } else {
+      $article = $this->Articles->findBySlug($slug)
+      ->contain(['Tags', 'Destinations'])
+      ->firstOrFail();
+    }
     $this->set(compact('article'));
     $this->set('user', $this->request->getAttribute('identity'));
     $this->viewBuilder()->setOption('serialize', ['article']);
