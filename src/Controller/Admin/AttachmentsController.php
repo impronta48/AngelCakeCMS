@@ -83,7 +83,7 @@ class AttachmentsController extends AppController
   {
     
     //allow post and delete
-    $this->request->allowMethod(['post', 'delete']);
+    //$this->request->allowMethod(['post', 'delete']);
 
     //get json data
     $data = $this->request->input('json_decode', true);
