@@ -53,7 +53,7 @@ class ContactsController extends AppController
       if (empty($sender)) {
         $sender = ['info@mobilitysquare.eu' => 'MobilitySquare - Messaggio dal Sito Web'];
       }
-      $msg = "Hai ricevuto un messaggio dal sito: " . env("SERVER_NAME") . "\n\r";
+      $msg = "Hai ricevuto un messaggio dal sito: " . env("HTTP_REFERER") . "\n\r";
       foreach ($d as $k => $m) {
         if (is_array($m)) {
           $msg .=json_encode($m) . "\n\r";
@@ -66,7 +66,7 @@ class ContactsController extends AppController
 
       $msg = nl2br($msg);
       $mailer->setFrom($sender)
-        ->setEmailFormat('html');
+        ->setEmailFormat('both');
 
       if (isset($d['_replyto']) && !empty($d['_replyto'])) {
         $mailer->setReplyTo($d['_replyto']);
