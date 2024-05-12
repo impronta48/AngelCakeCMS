@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Core\Configure;
+use Cake\Mailer\Email;
 use Cake\Mailer\Mailer;
 use Cake\Routing\Router;
 use Exception;
@@ -16,7 +17,7 @@ class ContactsController extends AppController
   public function initialize(): void
   {
     parent::initialize();
-    $this->Authentication->allowUnauthenticated(['index']);
+    $this->Authentication->allowUnauthenticated(['index','test']);
   }
 
   public function index($destination)
@@ -80,4 +81,6 @@ class ContactsController extends AppController
       $this->set(compact('referer'));
     }
   }
+
+
 }
