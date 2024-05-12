@@ -28,7 +28,7 @@ use Cake\I18n\I18n;
             'temp' => $new ? true : false,
             'filetype' => 'image/*',
           ] + ($new ? [] : [
-            'destination' => $article->destination ? $article->destination->slug : 'null',
+            'destination' => $article->destination ? $article->destination : 'null',
             'files' => [$article->copertina],
             'id' => $article->id,
           ])
