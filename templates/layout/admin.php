@@ -63,6 +63,7 @@ use Cake\Core\Configure;
 
   <?= $this->Html->script('ckeditor/ckeditor') ?>
   <?= $this->Html->script('node_modules/ckeditor4-vue/dist/ckeditor') ?>
+  
   <?= $this->element('v-autoload')  //Carica automaticamente lo script /theme/js/vue/{Controller}/{action}.js
   ?>
   <?= $this->fetch('script') ?>
