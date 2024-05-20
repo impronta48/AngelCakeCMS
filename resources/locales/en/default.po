@@ -438,10 +438,6 @@ msgstr "Activities"
 msgid "Caricamento..."
 msgstr "Loading..."
 
-#: element/hero-section.php:48
-msgid "Destinazione"
-msgstr "Destination"
-
 #: element/hero-section.php:67
 msgid "Cerca"
 msgstr "Search"
@@ -450,10 +446,6 @@ msgstr "Search"
 #: element/navbar-primary.php:27
 msgid "Ebike usate"
 msgstr "Used e-bikes"
-
-#: element/navbar-secondary.php:16
-msgid "Per le aziende"
-msgstr "For Companies"
 
 msgid "Che cosa incontrerai lungo il percorso"
 msgstr "What do you find along the route"
@@ -530,9 +522,6 @@ msgstr "routes"
 msgid "Caratteristiche del percorso"
 msgstr "Characteristics of the route"
 
-msgid "Difficoltà"
-msgstr "Difficulty"
-
 msgid "Tempo Percorrenza"
 msgstr "Route Duration"
 
@@ -607,4 +596,99 @@ msgstr "Our favourite experiences"
 
 msgid "Lasciati ispirare"
 msgstr "Let us inspire you"
+
+msgid "Dettagli"
+msgstr "More"
+
+msgid "Scopri le nostre"
+msgstr "Discover our"
+
+msgid "proposte"
+msgstr "proposals"
+
+msgid "Creiamo valore viaggiando insieme"
+msgstr "We create value travelling together"
+
+msgid "A noi piace viaggiare con Cribyoo!"
+msgstr "We like travelling with Cribyoo!"
+
+msgid "Recensioni e testimonianze"
+msgstr "Reviews and Testimonials"
+
+msgid "Turismo Responsabile & Sostenibile"
+msgstr "sustainable & Responsible Tourism"
+
+msgid "Esplora l'Italia con Cribyoo"
+msgstr "Explore Italy with Cribyoo"
+
+msgid "Esplora"
+msgstr "Explore"
+
+msgid "In autonomia con la nostra app"
+msgstr "Independently with our app"
+
+msgid "Esperienze outdoor"
+msgstr "Outdoor experiences"
+
+msgid "Rilassati e divertiti, pensiamo a tutto noi"
+msgstr "Relax and have fun, we take care of everything"
+
+msgid "Esplora nuovi percorsi"
+msgstr "Explore new paths"
+
+msgid "Scarica la app e scopri la natura con semplicità"
+msgstr "Download the app and discover nature with ease"
+
+msgid "Turismo scolastico"
+msgstr "School tourism"
+
+msgid "Educazione ambientale per le scuole"
+msgstr "Environmental education for schools"
+
+msgid "Citizen Science"
+msgstr "Citizen Science"
+
+msgid "Diventa il protagonista della ricerca scientifica"
+msgstr "Become the protagonist of scientific research"
+
+msgid "Cosa abbiamo in partenza?"
+msgstr "What do we have departing?"
+
+msgid "Unisciti al gruppo Cribyoo, parti!"
+msgstr "Join the Cribyoo group, let's go!"
+
+msgid "Solo per noi bambini"
+msgstr "Just for us kids"
+
+msgid "Viaggi ed esperienze creati su misura accompagnati da guide ed educatori"
+msgstr "Custom-made trips and experiences accompanied by guides and educators"
+
+
+msgid "Trekking, kayak, bici, barca a vela, sci, multi sport"
+msgstr "Trekking, kayak, bike, sailing, skiing, multi-sport"
+
+msgid "intervento cofinanziato da P.O.R. FESR Liguria 2014-2020"
+msgstr "intervention co-financed by P.O.R. FESR Liguria 2014-2020"
+
+msgid "B2B"
+msgstr "B2B"
+
+msgid "Sede"
+msgstr "Headquarters"
+
+msgid "Non ci sono"
+msgstr "There are no"
+
+msgid "percorsi in questa categoria"
+msgstr "routes in this category"
+
+msgid "Filtra"
+msgstr "Filter"
+
+msgid "Vicino a te"
+msgstr "Near you"
+
+msgid "Ricerca"
+msgstr "Search"
+
 
