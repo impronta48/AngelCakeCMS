@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\FrozenTime;
+use Cake\Log\Log;
 use Exception;
 use Satispay\Model\Entity\Satispay;
 
@@ -49,7 +50,9 @@ class ParticipantsController extends AppController
 
 			//honeypot
 			if (isset($d['admin_email']) && $d['admin_email'] != '') {
-				return;
+				Log::info("Tentativo di spam da {$d['admin_email']} - {$_SERVER['REMOTE_ADDR']} ", 'spam');
+				$this->redirect("/");
+				exit;
 			}
 
 			$participant = $this->Participants->patchEntity($participant, $d);
