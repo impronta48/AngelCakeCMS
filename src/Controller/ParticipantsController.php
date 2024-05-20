@@ -50,7 +50,7 @@ class ParticipantsController extends AppController
 
 			//honeypot
 			if (isset($d['admin_email']) && $d['admin_email'] != '') {
-				Log::info("Tentativo di spam da {$d['admin_email']} - {$_SERVER['REMOTE_ADDR']} ", 'spam');
+				Log::write("spam","Tentativo di spam da {$d['admin_email']} - {$_SERVER['REMOTE_ADDR']} ");
 				$this->redirect("/");
 				exit;
 			}
