@@ -586,3 +586,25 @@ msgstr "Starting soon"
 
 msgid "Nessun evento disponibile"
 msgstr "No event available"
+
+msgid "si parte!"
+msgstr "let's go!"
+
+msgid "Scegli la tua attività preferita nella natura"
+msgstr "Choose your favourite activity in the nature"
+
+msgid "costruiamo insieme un'esperienza divertente, responsabile e sostenibile"
+msgstr "let's build together an amusing, responsible and sustainable experience"
+
+msgid "Da non perdere"
+msgstr "not to be missed"
+
+msgid "Scopri"
+msgstr "Discover"
+
+msgid "Le nostre esperienze preferite"
+msgstr "Our favourite experiences"
+
+msgid "Lasciati ispirare"
+msgstr "Let us inspire you"
+
