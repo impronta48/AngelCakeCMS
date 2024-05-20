@@ -547,3 +547,42 @@ msgstr "Routes Passing By"
 
 msgid "Punto di noleggio e-bike a {0}"
 msgstr "e-bike rental point in {0}"
+
+msgid "Viaggi"
+msgstr "Travels"
+
+msgid "In Partenza"
+msgstr "Starting Soon"
+
+msgid "Scuola"
+msgstr "School"
+
+msgid "Corsi"
+msgstr "Courses"
+
+msgid "INIZIA IL TUO VIAGGIO DA QUI"
+msgstr "START YOUR JOURNEY FROM HERE"
+
+msgid "Lasciati ispirare dalle nostre proposte..."
+msgstr "Let yourself be inspired by our suggestions..."
+
+msgid "Iscriviti alla Newsletter"
+msgstr "Subscribe to the Newsletter"
+
+msgid "Iscriviti al Canale Telegram"
+msgstr "Subscribe to the Telegram Channel"
+
+msgid "Servizi"
+msgstr "Services"
+
+msgid "Noleggio"
+msgstr "Rental"
+
+msgid "Organizzazione Eventi"
+msgstr "Event Organization"
+
+msgid "In partenza"
+msgstr "Starting soon"
+
+msgid "Nessun evento disponibile"
+msgstr "No event available"

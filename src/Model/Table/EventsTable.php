@@ -50,9 +50,10 @@ class EventsTable extends Table
 		$this->belongsTo('Users', [
 			'foreignKey' => 'user_id',
 		]);
-		$this->belongsTo('Percorsi', [
+		//Devo commentare questa relazione perchè non è detto che cyclomap sia presente
+		/*$this->belongsTo('Cyclomap.Percorsi', [
 			'foreignKey' => 'percorso_id',
-		]);
+		]);*/
 
 		$this->hasMany('Participants');
 	}
