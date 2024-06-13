@@ -3,14 +3,13 @@ CKEDITOR.dtd.$removeEmpty.i = 0;
 CKEDITOR.dtd.$removeEmpty['span'] = false;
 CKEDITOR.editorConfig = function(config) {
     config.height = '70vh';
-    //config.extraPlugins = 'widget,lineutils,uploadimage';
-    config.extraPlugins = 'youtube';
+    config.extraPlugins = 'widget,lineutils,uploadimage';
     config.contentsCss = [
         '//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
         '/js/node_modules/bootstrap/dist/css/bootstrap.min.css',
     ];
     config.allowedContent = true;
-    /* config.toolbarGroups = [
+    config.toolbarGroups = [
         { name: 'document', groups: ['mode', 'document', 'doctools'] },
         { name: 'clipboard', groups: ['clipboard', 'undo'] },
         { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
@@ -25,21 +24,9 @@ CKEDITOR.editorConfig = function(config) {
         { name: 'tools', groups: ['tools'] },
         { name: 'others', groups: ['others'] },
         { name: 'about', groups: ['about'] }
-    ]; */
-    config.toolbarGroups = [        
-        { name: 'clipboard', groups: ['clipboard', 'undo'] },
-        { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
-        { name: 'links', groups: ['links'] },
-        '/',
-        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-        { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'paragraph'] },
-        '/',
-        { name: 'styles', groups: ['styles'] },
-        { name: 'insert', items: [ ] },
-
     ];
 
-    config.removeButtons = 'Save,NewPage,ExportPdf,Preview,Print,SelectAll,Form,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Smiley,SpecialChar,PageBreak,Font,Maximize,About,Flash,Styles,Size';
+    config.removeButtons = 'Save,NewPage,ExportPdf,Preview,Print,SelectAll,Form,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Smiley,SpecialChar,PageBreak,Font,Format,Maximize,About,Flash';
 
     //Configurazioni per elFinder
     //config.filebrowserBrowseUrl = '#';
