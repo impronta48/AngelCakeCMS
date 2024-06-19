@@ -691,4 +691,6 @@ msgstr "Near you"
 msgid "Ricerca"
 msgstr "Search"
 
+msgid "Tutte le destinazioni"
+msgstr "All destinations"
 
