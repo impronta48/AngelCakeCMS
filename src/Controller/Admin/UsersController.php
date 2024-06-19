@@ -74,8 +74,7 @@ class UsersController extends AppController
 
       $user = $this->Users->patchEntity($user, $this->request->getData());
       $user->username = $user->gmail;
-      $user->password = 'asd'; // 'IMPOSSIBILE' . rand(0, 12345);
-
+      $user->password = 'IMPOSSIBILE' . rand(0, 12345);      
       $this->Authorization->authorize($user);
 
       if ($this->Users->save($user)) {
