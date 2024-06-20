@@ -2,17 +2,17 @@
 
 ### Inbox
 
-- [ ] verificare i centrodi dei percorsi a caso
-- [ ] cambiare fumetto su linea percorso
-- [ ] fare la linea selezionata con il bordino bianco
 - [ ] correzione pagina edit categorie
-- [ ] scelta sfondo mappa (topo, open, cyclo)
 - [ ] migliorare icona "sono qui" (usare quella di rent?)
 - [ ] mostrare l'altimetria nel percorso
 - [ ] mettere un link a destra dello slider che dica [mostra tutti]
-
 - [ ] mettere dei colori furbi per i percorsi che sono nella stessa destination
+- [ ] rendere parametrico (settings.php) percorso style
 
+#### Gold Silver Bronze
+- [ ] pagina destinations/index -> gold silver bronze
+- [ ] mappa - >gold silver bronze (usare una class ed un css)
+- [ ] fare spiegazione dei livelli di servizio per il pubblico
 
 ### Migliorie  (nice to have)
 - [ ] far saltare il pin quando faccio clic
@@ -22,12 +22,15 @@
 - [ ] mettere degli skeleton mentre si carica la legenda
 - [ ] ordinare le categorie per priorità (es: punti di noleggio per primi)
 - [ ] mettere un contatore che mostra quanti elementi ci sono (poi, percorsi, etc)
+- [ ] aggiungere la funzione "pulisci KML" allo script fix_percorsi_coords
+- [ ] aggiungere la funziona calcola altimetrica (google, osm?) allo script fix_percorsi_coords /https://openrouteservice.org/
+- [ ] aggiungere la funziona crea gpx allo script fix_percorsi_coords
+- [ ] file un tiles cache su nginx invece di php
 
 ### Doing
-- [ ] passare all'url le categorie selezionate in legenda
-
-
-
+- [ ] scelta sfondo mappa (topo, open, cyclo)
+    - [ ] rendere parametrico da settings
+    
 
 ### Done
 - [x] quando apro destinations mostrare contenuti saggi a sinistra
@@ -48,7 +51,14 @@
 - [x] clic su poi apre anche fumetto su mappa
 - [x] quando apro un fumetto porta la pagina alla mappa
 - [x] clic su percorso in slider mostra su mappa
+- [x] passare all'url le categorie selezionate in legenda
+- [x] verificare i centrodi dei percorsi a caso
+- [x] fare la linea selezionata più spessa
+- [x] aprire fumetto su click sul percorso
+- [x] cambiare fumetto su linea percorso
 
 ## Idee
 - [ ] Valutare integrazione di google pay
 - [ ] usare un altro geocoder (cineca?)
+- [ ] aggiungere una funzionalità di routing per biciclette usando b-router ( --> mobility48)
+- [ ] Tiles offline per l'app https://docs.protomaps.com/pmtiles/leaflet
