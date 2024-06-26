@@ -68,7 +68,8 @@ if (!empty($this->plugin) && file_exists(ROOT . "/plugins/{$this->plugin}/webroo
   }
 } else if (file_exists(WWW_ROOT . $css_path)) {
   if ($v === "mix") {
-    echo $this->AssetMix->css($vue_name);
+    echo $this->Html->css($vue_name);
+    //echo $this->AssetMix->css($vue_name);
 
   } else {
     echo $this->Html->css($vue_name);

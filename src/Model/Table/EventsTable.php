@@ -8,6 +8,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Exception;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 /**
  * Events Model
@@ -50,10 +51,14 @@ class EventsTable extends Table
 		$this->belongsTo('Users', [
 			'foreignKey' => 'user_id',
 		]);
+
+
 		//Devo commentare questa relazione perchè non è detto che cyclomap sia presente
-		/*$this->belongsTo('Cyclomap.Percorsi', [
-			'foreignKey' => 'percorso_id',
-		]);*/
+		if (Plugin::isLoaded('Cyclomap')) {
+			$this->belongsTo('Cyclomap.Percorsi', [
+				'foreignKey' => 'percorso_id',
+			]);
+		}
 
 		$this->hasMany('Participants');
 	}
