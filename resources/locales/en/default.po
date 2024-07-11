@@ -694,3 +694,15 @@ msgstr "Search"
 msgid "Tutte le destinazioni"
 msgstr "All destinations"
 
+msgid "Gratis"
+msgstr "Free"
+
+msgid "su richiesta"
+msgstr "on request"
+
+msgid "persona"
+msgstr "person"
+
+
+msgid "a partire da"
+msgstr "starting from"
