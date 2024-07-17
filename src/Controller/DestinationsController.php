@@ -26,7 +26,7 @@ class DestinationsController extends AppController
   }
 
   public $paginate = [
-    'limit' => 52,
+    'limit' => 60,
   ];
 
   public function destination_in_session($destination = null)
@@ -115,7 +115,7 @@ class DestinationsController extends AppController
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
     $desired_columns = [
-      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso'
+      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso', 'level'
     ];
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
@@ -170,7 +170,7 @@ class DestinationsController extends AppController
     } else {
       $ckey = 'destinations-' . md5(serialize($this->request->getQuery()));
       if (!$this->request->is('json')) {        
-          $destinations = $this->paginate($query->cache($ckey));
+        $destinations = $this->paginate($query->cache($ckey));
       } else {
         $destinations = $query->cache($ckey);
       }

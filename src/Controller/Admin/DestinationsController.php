@@ -30,7 +30,6 @@ class DestinationsController extends AppController
 
 	public function index()
 	{
-		
 		$query = $this->Destinations->find()
 			->contain(['Articles']);
 		//Se mi hai passato dei parametri in query filtro su quelli
