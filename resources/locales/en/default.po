@@ -711,7 +711,7 @@ msgstr "starting from"
 msgid "Che cosa incontrerai lungo il percorso"
 msgstr "What you find along the route"
 
-msgid "Le Destinazioni Gold offrono il meglio dell'offerta BikeSquare per chi ama la bicicletta elettrica. Qui troverai i migliori servizi di noleggio e-bike, le esperienze più interessanti e gli hotel più attrezzati per i cicloturisti. I servizi minimi garantiti sono: <b>recupero in emergenza</b>, <b>consegne</b>, <b>parntership con bike hotel</b>, <b>percorsi e esperienze</b>. Una destinazione è Gold se almeno uno dei suoi noleggiatori è Gold."
+msgid "Le Destinazioni Gold offrono il meglio dell'offerta BikeSquare per chi ama la bicicletta elettrica. Qui troverai i migliori servizi di noleggio e-bike, le esperienze più interessanti e gli hotel più attrezzati per i cicloturisti. I servizi minimi garantiti sono: <b>recupero in emergenza</b>, <b>consegne</b>, <b>partnership con bike hotel</b>, <b>percorsi e esperienze</b>. Una destinazione è Gold se almeno uno dei suoi noleggiatori è Gold."
 msgstr "Gold Destinations offer the best of BikeSquare for e-bike lovers. Here you will find the best e-bike rental services, the most interesting experiences and the most equipped hotels for cyclists. The minimum guaranteed services are: <b>emergency recovery</b>, <b>deliveries</b>, <b>partnership with bike hotels</b>, <b>routes and experiences</b>. A destination is Gold if at least one of its renters is Gold."
 
 msgid "Le Destinazioni Silver offrono un servizio BikeSquare quasi completo, mancherà qualche elemento, ma puoi aspettarti un'esperienza molto buona."

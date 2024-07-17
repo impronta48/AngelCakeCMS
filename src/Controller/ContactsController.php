@@ -66,12 +66,17 @@ class ContactsController extends AppController
       }
 
       $msg = nl2br($msg);
+      if (empty($msg)) {
+        $this->set(compact('referer'));
+        return $this->Flash->error('Messaggio vuoto.');
+      }
+
       $mailer->setFrom($sender)
         ->setEmailFormat('both');
 
       if (isset($d['_replyto']) && !empty($d['_replyto'])) {
         $mailer->setReplyTo($d['_replyto']);
-      }
+      } 
       
       $mailer->setTo($destination)
         ->setSubject(isset($d['_subject']) ? $d['_subject'] : 'Messaggio dal Web')
