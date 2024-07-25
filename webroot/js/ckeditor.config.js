@@ -9,7 +9,9 @@ CKEDITOR.editorConfig = function(config) {
         '/js/node_modules/bootstrap/dist/css/bootstrap.min.css',
     ];
     config.allowedContent = true;
+    config.format_tags = 'p;h2;h3;h4;h5;h6;div';
     config.toolbarGroups = [
+        { name: 'styles'}, 
         { name: 'document', groups: ['mode', 'document', 'doctools'] },
         { name: 'clipboard', groups: ['clipboard', 'undo'] },
         { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
@@ -19,14 +21,15 @@ CKEDITOR.editorConfig = function(config) {
         { name: 'insert', groups: ['insert'] },
         '/',
         { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
-        { name: 'styles', groups: ['styles'] },
-        { name: 'colors', groups: ['colors'] },
         { name: 'tools', groups: ['tools'] },
         { name: 'others', groups: ['others'] },
         { name: 'about', groups: ['about'] }
     ];
 
-    config.removeButtons = 'Save,NewPage,ExportPdf,Preview,Print,SelectAll,Form,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Smiley,SpecialChar,PageBreak,Font,Format,Maximize,About,Flash';
+    // Set the most common block elements.
+	
+    config.stylesSet = 'my_styles';
+    config.removeButtons = 'Styles,FontSize,Font,Save,NewPage,ExportPdf,Preview,Print,SelectAll,Form,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Smiley,SpecialChar,PageBreak,Font,Maximize,About,Flash';
 
     //Configurazioni per elFinder
     //config.filebrowserBrowseUrl = '#';
