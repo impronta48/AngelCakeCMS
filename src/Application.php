@@ -43,6 +43,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use ADmad\SocialAuth\Middleware\SocialAuthMiddleware;
 use Authorization\Middleware\RequestAuthorizationMiddleware;
 use App\Policy\RequestPolicy;
+use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\ServerRequest;
 use Fetzi\ServerTiming\ServerTimingMiddleware;
@@ -246,6 +247,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
       });
     }
     //->add(new LocaleSelectorMiddleware());
+    
+    //Serve per parsare le richieste POST in formato json
+    //https://book.cakephp.org/5/en/development/rest.html#parsing-request-bodies
+    $middlewareQueue->add(new BodyParserMiddleware());
 
     return $middlewareQueue;
   }

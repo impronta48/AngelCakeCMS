@@ -292,7 +292,7 @@ class DestinationsController extends AppController
     ])->toArray();
     $this->set('addons', $addon_list);
 
-    $this->loadModel('Cyclomap.Percorsi');
+   /*  $this->loadModel('Cyclomap.Percorsi');
     $esperienze = $this->Percorsi->find()
       ->where([
         'destination_id' => $destination->id,
@@ -307,7 +307,7 @@ class DestinationsController extends AppController
         'published' => 1,
         'tipo_id' => 2,
       ])->toArray();
-    $this->set('percorsi', $percorsi);
+    $this->set('percorsi', $percorsi); */
 
     $destinations = $this->Destinations->find('all')->toArray();
     $this->set('destinations', $destinations);
