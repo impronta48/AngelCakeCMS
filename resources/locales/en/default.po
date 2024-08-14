@@ -737,3 +737,6 @@ msgstr "Silver Destination"
 
 msgid "Destinazione Bronze"
 msgstr "Bronze Destination"
+
+msgid "Categoria"
+msgstr "Category"
