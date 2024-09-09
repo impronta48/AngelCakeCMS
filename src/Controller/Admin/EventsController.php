@@ -59,9 +59,9 @@ class EventsController extends AppController
 				$event->cost = $percorso->a_partire_da_prezzo;
 			}
 		}
-
-	  //Necessario per questo https://discourse.cakephp.org/t/patchentity-set-date-field-to-null/7361/3
-		TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
+		//Massimoi - lo spegno perchè fa casino con il datetime di firefox
+	  	//Necessario per questo https://discourse.cakephp.org/t/patchentity-set-date-field-to-null/7361/3
+		//TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
 		if ($this->request->is('post')) {
 			$event = $this->Events->patchEntity($event, $this->request->getData());
 			$this->Authorization->authorize($event);
