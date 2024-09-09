@@ -18,8 +18,8 @@
         'empty' => '--',
         'disabled' => !empty($percorso_id)
       ]);
-      echo $this->Form->control('start_time');
-      echo $this->Form->control('end_time');
+      echo $this->Form->control('start_time', ['type'=> 'datetime']);
+      echo $this->Form->control('end_time', ['type'=> 'datetime']);
       echo $this->Form->control('min_year');
       echo $this->Form->control('max_year');
       echo $this->Form->control('slug');

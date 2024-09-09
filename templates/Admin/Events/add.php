@@ -16,14 +16,17 @@
       'empty' => '--',
       'disabled' => !empty($percorso_id)
     ]);
-    echo $this->Form->control('start_time');
-    echo $this->Form->control('end_time');
+    echo $this->Form->control('start_time', ['type'=> 'datetime']);
+    echo $this->Form->control('end_time', ['type'=> 'datetime']);
     echo $this->Form->control('min_year');
     echo $this->Form->control('max_year');
     echo $this->Form->control('slug');
     echo $this->Form->control('user_id', ['options' => $users]);
     echo $this->Form->control('cost', ['label' => 'Costo (*)', 'readonly' => !empty($percorso_id)]);
     ?>
+  </fieldset>
+  <fieldset>
+    <legend>Data ora di inizio e fine dell'evento</legend>
   </fieldset>
   <div>
     <small style="color:red">(*) Se viene selezionato un percorso il campo viene sovrascritto in automatico con il valore del percorso</small>

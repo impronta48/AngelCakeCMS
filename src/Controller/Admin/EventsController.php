@@ -109,8 +109,9 @@ class EventsController extends AppController
 			'contain' => [],
 		]);
 		$this->Authorization->authorize($event);
-	  //Necessario per questo https://discourse.cakephp.org/t/patchentity-set-date-field-to-null/7361/3
-		TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd\'T\'HH:mm:ss');
+		//Massimoi - lo spegno perchè fa casino con il datetime di firefox
+	  	//Necessario per questo https://discourse.cakephp.org/t/patchentity-set-date-field-to-null/7361/3
+		//TypeFactory::build('datetime')->useLocaleParser()->setLocaleFormat('yyyy-MM-dd HH:mm');
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$event = $this->Events->patchEntity($event, $this->request->getData());
@@ -122,8 +123,13 @@ class EventsController extends AppController
 					return $this->redirect(['controller' => 'percorsi', 'action' => 'edit', $percorso_id]);
 				}
 				return $this->redirect(['action' => 'index']);
+			} else {
+				//log error message
+				$e = json_encode($event->getErrors());
+				$this->log($e, 'error');	
+				$this->Flash->error(__('The event could not be saved. Please, try again.'));
 			}
-			$this->Flash->error(__('The event could not be saved. Please, try again.'));
+			
 		}
 		$destinations = $this->destinationsList();
 		$percorsi_evento = $this->percorsiEventoList();
