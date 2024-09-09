@@ -8,7 +8,7 @@
     <?php
     echo $this->Form->control('title', ['label' => 'Titolo (*)', 'readonly' => !empty($percorso_id)]);
     echo $this->Form->control('description', ['label' => 'Descrizione (*)', 'id' => 'editor', 'readonly' => !empty($percorso_id)]);
-    echo $this->Form->control('max_pax');
+    echo $this->Form->control('max_pax',['label' => 'Numero massimo di partecipanti (se vuoto nessun limite)']);
     echo $this->Form->control('place', ['label' => 'Luogo (*)', 'readonly' => !empty($percorso_id)]);
     echo $this->Form->control('destination_id', ['label' => 'Destinazione (*)', 'options' => $destinations, 'disabled' => !empty($percorso_id)]);
     echo $this->Form->control('percorso_id', [
@@ -18,8 +18,8 @@
     ]);
     echo $this->Form->control('start_time', ['type'=> 'datetime']);
     echo $this->Form->control('end_time', ['type'=> 'datetime']);
-    echo $this->Form->control('min_year');
-    echo $this->Form->control('max_year');
+    echo $this->Form->control('min_year',['label' => 'Età minima dei partecipanti (se vuoto nessun limite)']);
+    echo $this->Form->control('max_year',['label' => 'Età massima dei partecipanti (se vuoto nessun limite)']);
     echo $this->Form->control('slug');
     echo $this->Form->control('user_id', ['options' => $users]);
     echo $this->Form->control('cost', ['label' => 'Costo (*)', 'readonly' => !empty($percorso_id)]);
