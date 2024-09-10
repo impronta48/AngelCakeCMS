@@ -1,0 +1,46 @@
+{
+    "name": "impronta48/ibmwatson",
+    "description": "PHP SDK to get translations from IBM Watson"  ,
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["php", "ibm", "watson", "translation", "machine translation"],
+    "homepage": "https://github.com/impronta48",
+
+    "authors": [
+        {
+            "name":"Massimo INFUNTI",
+            "role":"Author",
+            "homepage":"https://github.com/impronta48"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",        
+        "guzzlehttp/guzzle": ">6.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "cakephp/cakephp-codesniffer": "^3.0",
+        "phpstan/phpstan": "^0.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "impronta48\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "impronta48\\Test\\": "tests/"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@test",
+            "@phpstan",
+            "@cs-check"
+        ],
+        "test": "phpunit --colors=always",
+        "phpstan": "phpstan analyse --no-progress -c phpstan.neon -l 4 src",
+        "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests",
+        "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests"
+    }
+}
