@@ -694,7 +694,7 @@ msgstr "Search"
 msgid "Tutte le destinazioni"
 msgstr "All destinations"
 
-msgid "Gratis"
+msgid "Gratuito"
 msgstr "Free"
 
 msgid "su richiesta"
@@ -740,3 +740,30 @@ msgstr "Bronze Destination"
 
 msgid "Categoria"
 msgstr "Category"
+
+msgid "Quota di partecipazione su richiesta"
+msgstr "Participation fee on request"
+
+msgid "Durata"
+msgstr "Duration"
+
+msgid "Si parte da"
+msgstr "Departure from"
+
+msgid "Scopri di più"
+msgstr "Discover more"
+
+
+##Localizzazione dell'offetto TimeInterval fatto da alessandro
+##Usando https://book.cakephp.org/3/en/core-libraries/internationalization-and-localization.html#plurals
+msgid "ora_e"
+msgstr "{0,plural,=0{} =1{1 hour} other{{1} hours}}"
+
+msgid "giorno_i"
+msgstr "{0,plural,=0{} =1{1 day} other{{1} days}}"
+
+msgid "minuto_i"
+msgstr "{0,plural,=0{} =1{1 minute} other{{1} minutes}}"
+
+msgid "secondo_i"
+msgstr "{0,plural,=0{} =1{1 second} other{{1} seconds}}"

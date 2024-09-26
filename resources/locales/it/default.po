@@ -11,3 +11,16 @@ msgstr ""
 "Se il link non viene mostrato correttamente, per favore copia il seguente "
 "indirizzo nel tuo browser web {0}"
 
+##Localizzazione dell'offetto TimeInterval fatto da alessandro
+##Usando https://book.cakephp.org/3/en/core-libraries/internationalization-and-localization.html#plurals
+msgid "ora_e"
+msgstr "{0,plural,=0{} =1{1 ora} other{{1} ore}}"
+
+msgid "giorno_i"
+msgstr "{0,plural,=0{} =1{1 giorno} other{{1} giorni}}"
+
+msgid "minuto_i"
+msgstr "{0,plural,=0{} =1{1 minuto} other{{1} minuti}}"
+
+msgid "secondo_i"
+msgstr "{0,plural,=0{} =1{1 secondo} other{{1} secondi}}"

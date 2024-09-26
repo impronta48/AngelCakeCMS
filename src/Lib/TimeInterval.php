@@ -52,13 +52,13 @@ class TimeInterval
 	}
 
 	public function min_format() : string
-	{
-		// TODO singular/plural and localization
+	{		
 		$fmt = '';
-		if ($this->days > 0) $fmt .= "%d giorn".($this->days > 1 ? "i" : "o")." ";
-		if ($this->hours > 0) $fmt .= "%h or".($this->hours > 1 ? "e" : "a")." ";
-		if ($this->minutes > 0) $fmt .= "%i minut".($this->minutes > 1 ? "i" : "o")." ";
-		if ($this->seconds > 0) $fmt .= "%s second".($this->seconds > 1 ? "i" : "o")." ";
+		
+		if ($this->days > 0) $fmt .= __("giorno_i", [$this->days,$this->days]) . " ";
+		if ($this->hours > 0) $fmt .= __("ora_e", [$this->hours,$this->hours]) ." ";
+		if ($this->minutes > 0) $fmt .= __("minuto_i", [$this->minutes,$this->minutes])." ";
+		if ($this->seconds > 0) $fmt .= __("secondo_i", [$this->seconds, $this->seconds])." ";
 		return $this->format($fmt);
 	}
 
