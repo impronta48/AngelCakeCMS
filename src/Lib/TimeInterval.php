@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Lib;
 
+use PhpParser\Node\Stmt\TryCatch;
 
 class TimeInterval
 {
@@ -73,7 +74,11 @@ class TimeInterval
 		if ($this->hours > 0) $date_fmt .= "{$this->hours}H";
 		if ($this->minutes > 0) $date_fmt .= "{$this->minutes}M";
 		if ($this->seconds > 0) $date_fmt .= "{$this->seconds}S";
-		$interval = new \DateInterval($date_fmt);
-		return $interval->format($fmt);
+		try {
+			$interval = new \DateInterval($date_fmt);
+			return $interval->format($fmt);
+		} catch (\Exception $e) {
+			return "---";
+		}
 	}
 }
