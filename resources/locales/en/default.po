@@ -770,3 +770,6 @@ msgstr "{0,plural,=0{} =1{1 second} other{{1} seconds}}"
 
 msgid "Scarica la traccia KML"
 msgstr "Download KML track"
+
+msgid "Percorsi collegati o tappe"
+msgstr "Connected routes or stages"
