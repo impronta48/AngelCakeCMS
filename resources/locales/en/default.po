@@ -773,3 +773,9 @@ msgstr "Download KML track"
 
 msgid "Percorsi collegati o tappe"
 msgstr "Connected routes or stages"
+
+msgid "Prodotti e servizi"
+msgstr "Products and services"
+
+msgid "Vuoi saperne di più?"
+msgstr "Want to know more?"
