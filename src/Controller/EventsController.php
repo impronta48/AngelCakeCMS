@@ -39,13 +39,13 @@ class EventsController extends AppController
   }
 
   //Metodo per far iscrivere gli utenti ad un evento
-  public function subscribe($slug)
+  public function subscribe($id)
   {
-    $event = $this->Events->findBySlug($slug)
+    $event = $this->Events->findById($id)
       ->firstOrFail();
 
     $siti = $this->Events->Destinations->find('list', [
-      'conditions' => ['published' => 1, 'chiuso' => 0],
+      'conditions' => ['published' => 1/*, 'chiuso' => 0*/],
       'order' => 'Name',
     ]);
     $this->set('siti', $siti);

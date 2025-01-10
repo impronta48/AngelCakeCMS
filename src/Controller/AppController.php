@@ -98,12 +98,12 @@ class AppController extends Controller
     $locale = I18n::getLocale();
     $this->set('lang', $locale);
 
-    $test_path = APP . DS;
+    $test_path = APP ;
 
     $plugin = $this->getPlugin();
 
     if (!is_null($plugin)) {
-      $test_path .= 'plugins' . DS . $plugin . DS;
+      $test_path .= 'plugins' . DS . $plugin ;
     }
 
     $test_path .= 'templates' . DS;

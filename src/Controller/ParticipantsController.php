@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\FrozenTime;
+use Cake\Log\Log;
 use Exception;
 use Satispay\Model\Entity\Satispay;
 
@@ -40,13 +41,21 @@ class ParticipantsController extends AppController
 	public function add() {
 		$participant = $this->Participants->newEmptyEntity();
 		if ($this->request->is('post')) {
-			if (isset($this->request->getData()['referal'])) {
-				$referal = $this->request->getData()['referal'];
+			$d = $this->request->getData();
+			if (isset($d['referal'])) {
+				$referal = $d['referal'];
 			} else {
 				$referal = $this->referer();
 			}
 
-			$participant = $this->Participants->patchEntity($participant, $this->request->getData());
+			//honeypot
+			if (isset($d['admin_email']) && $d['admin_email'] != '') {
+				Log::write(LOG_INFO,"Tentativo di spam da {$d['admin_email']} - IP:{$_SERVER['REMOTE_ADDR']} - REFERRER: {$_SERVER['HTTP_REFERER']} ", "spam");
+				$this->redirect("/");
+				exit;
+			}
+
+			$participant = $this->Participants->patchEntity($participant, $d);
 
 		  //Se siete troppi ti rimando indietro
 			if ($this->Participants->checkMaxPax($participant)) {
@@ -68,8 +77,11 @@ class ParticipantsController extends AppController
 					}
 
 				  //Mando una mail di notifica
-					$n = new iscrizioneOkNotification($participant, $event);
-					$n->toMail();
+				  if( isset($participant['email'])){
+						$n = new iscrizioneOkNotification($participant, $event);
+						$n->toMail();
+				  }
+					
 				} else {
 					$message = __("Ci dev'essere qualche errore, per favore controlla i messaggi e riprova a salvare.");
 					$responseData = ['message' => $message, 'success' => false];
@@ -86,6 +98,7 @@ class ParticipantsController extends AppController
 			} else {
 				if ($responseData['success']) {
 					$this->Flash->success($message);
+					return $this->redirect($referal);
 				} else {
 					$this->Flash->error($message);
 				}

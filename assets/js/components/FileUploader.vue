@@ -1,13 +1,15 @@
-Vue.component('file-uploader', {
+<template>
+    <div>
+        <input v-if="temporary" type="hidden" :name="'upload_session_id[' + field + ']'" :value="id + '|' + field">
+        <vue-dropzone ref="dropzoneInstance" :id="field" :options="dropzoneOptions"></vue-dropzone>
+    </div>
+</template>
+
+<script>
+export default {
     components: {
         'vue-dropzone': window.vue2Dropzone,
     },
-    template: `
-        <div>
-            <input v-if="temporary" type="hidden" :name="'upload_session_id['+field+']'" :value="id+'|'+field">
-            <vue-dropzone ref="dropzoneInstance" :id="field" :options="dropzoneOptions"></vue-dropzone>
-        </div>
-    `,
     props: {
         field: String,
         files: Array,
@@ -21,18 +23,27 @@ Vue.component('file-uploader', {
         convert: Boolean,
     },
     async mounted() {
-        for (f in this.files) {
+        
+        for (let f in this.files) {
             let img = this.files[f];
             this.$refs.dropzoneInstance.manuallyAddFile(img, img.thumbnail_url);
         }
     },
-    data: function() {
+    data: function () {
         let _this = this;
         return {
             dropzoneOptions: {
-                removedfile: async function(file) {
+                removedfile: async function (file) {
                     try {
-                        await axios.get(_this.getDeleteUrl(file));
+                        let data = {
+                            'file': file.name,
+                            'model': _this.model,
+                            'destination': _this.destination,
+                            'id': _this.id,
+                            'field': _this.field,
+                            'temporary': _this.temporary,                            
+                        }
+                        await axios.post(_this.getDeleteUrl(), { data: data });
                         // I don't know why this part below works or what it does exactly. Why do we need _ref?
                         var _ref;
                         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
@@ -57,8 +68,9 @@ Vue.component('file-uploader', {
         }
     },
     methods: {
-        getDeleteUrl(file) {
-            return `/admin/attachments/remove/${this.model}/${this.destination}/${this.id}/${this.field}/${file.name}` + (this.temporary ? '/temp' : '')
+        getDeleteUrl() {
+            return '/admin/attachments/remove';
         }
     }
-});
+}
+</script>

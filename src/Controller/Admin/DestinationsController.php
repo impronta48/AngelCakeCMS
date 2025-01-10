@@ -30,7 +30,6 @@ class DestinationsController extends AppController
 
 	public function index()
 	{
-		
 		$query = $this->Destinations->find()
 			->contain(['Articles']);
 		//Se mi hai passato dei parametri in query filtro su quelli
@@ -97,6 +96,7 @@ class DestinationsController extends AppController
 	 */
 	public function add()
 	{
+		$this->set('new', true);
     	$this->edit();
     	$this->viewBuilder()->setTemplate('edit');
 	}
@@ -157,8 +157,7 @@ class DestinationsController extends AppController
 	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
 	 */
 	public function delete($id = null)
-	{
-		$this->request->allowMethod(['post', 'delete']);
+	{		
 		$destination = $this->Destinations->get($id);
 		$this->Authorization->authorize($destination);
 

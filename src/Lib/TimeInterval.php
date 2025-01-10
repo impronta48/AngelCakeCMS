@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Lib;
 
+use PhpParser\Node\Stmt\TryCatch;
 
 class TimeInterval
 {
@@ -52,13 +53,13 @@ class TimeInterval
 	}
 
 	public function min_format() : string
-	{
-		// TODO singular/plural and localization
+	{		
 		$fmt = '';
-		if ($this->days > 0) $fmt .= "%d giorni ";
-		if ($this->hours > 0) $fmt .= "%h ore ";
-		if ($this->minutes > 0) $fmt .= "%i minuti ";
-		if ($this->seconds > 0) $fmt .= "%s secondi ";
+		
+		if ($this->days > 0) $fmt .= __("giorno_i", [$this->days,$this->days]) . " ";
+		if ($this->hours > 0) $fmt .= __("ora_e", [$this->hours,$this->hours]) ." ";
+		if ($this->minutes > 0) $fmt .= __("minuto_i", [$this->minutes,$this->minutes])." ";
+		if ($this->seconds > 0) $fmt .= __("secondo_i", [$this->seconds, $this->seconds])." ";
 		return $this->format($fmt);
 	}
 
@@ -66,12 +67,18 @@ class TimeInterval
 	{
 		$this->carry(); // just in case
 		$date_fmt = 'P';
-		if ($this->days > 0) $date_fmt .= "{$this->days}D";
-		$date_fmt .= 'T';
+		if ($this->days > 0) $date_fmt .= "{$this->days}D";		
+		if (($this->hours > 0) || ($this->minutes > 0) || ($this->seconds > 0)) {
+			$date_fmt .= 'T';
+		}
 		if ($this->hours > 0) $date_fmt .= "{$this->hours}H";
 		if ($this->minutes > 0) $date_fmt .= "{$this->minutes}M";
 		if ($this->seconds > 0) $date_fmt .= "{$this->seconds}S";
-		$interval = new \DateInterval($date_fmt);
-		return $interval->format($fmt);
+		try {
+			$interval = new \DateInterval($date_fmt);
+			return $interval->format($fmt);
+		} catch (\Exception $e) {
+			return "---";
+		}
 	}
 }

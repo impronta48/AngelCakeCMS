@@ -11,6 +11,7 @@ $prevPath = $basePath;
 $this->assign('title', "$pathStr - Static File Manager");
 ?>
 <h1>File Statici</h1>
+<a href="<?= Router::url(['action'=> 'listWebdav']) ?>" class="btn btn-primary float-right m-1"><i class="bi bi-cloud"></i> Importa aggioramenti da NextCloud</a>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">

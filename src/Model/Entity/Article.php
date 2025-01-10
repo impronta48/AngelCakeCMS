@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Text;
+use impronta48\IBMWatson;
 
 class Article extends Entity
 {
@@ -69,11 +70,15 @@ class Article extends Entity
 		if (!empty($img)) return $img;
 		$img = $this->_getGalleria();
 		if (!empty($img)) return $img[0];
-    	return Router::url(Configure::read('default-image', null));
+    	return Router::url(Configure::read('sitedir')   . Configure::read('default-image', null));
 	}
 
 	public function _getCopertina() {
-		return $this->getFieldFiles('copertina', 'jpg|jpeg|gif|png|webp', true);
+		$r =  $this->getFieldFiles('copertina', 'jpg|jpeg|gif|png|webp', true);
+		if (empty($r)) {
+			return Router::url(Configure::read('sitedir')   . Configure::read('default-image', null));
+		}
+		return $r;
 	}
 
 	public function _getAllegati() {
@@ -94,5 +99,36 @@ class Article extends Entity
 			$firstonly,
 			$default
 		);
+	}
+
+	public function autoTranslate($field, $author_id){
+		$apiKey = Configure::read('IBMWatson.LANGUAGE_TRANSLATOR_APIKEY');
+		$url = Configure::read('IBMWatson.LANGUAGE_TRANSLATOR_URL');
+		$w = new IBMWatson($apiKey, $url);
+	
+		$history = TableRegistry::getTableLocator()->get('AutoTranslationHistory');
+	
+		if (!empty($this->{$field})) {
+		  $translateInput = html_entity_decode($this->{$field});
+		  $resJson = $w->translateSentence($translateInput, 'it', 'en');
+		  $res = json_decode($resJson);
+		  $this->{$field} = $res->translations[0]->translation;
+		  // traduzione ottenuta, salva nella history
+		  $historyLog = $history->newEmptyEntity();
+		  $historyLog->context = 'Article->'.$field;
+		  $historyLog->source = $translateInput;
+		  $historyLog->translation = $this->{$field};
+		  $historyLog->user_id = $author_id;
+		  $history->save($historyLog);
+		}
+	  }
+
+	  
+	public function autoTranslateAll($author_id){
+		$fields = ['title', 'body'];
+		foreach($fields as $field) {
+		  $this->autoTranslate($field, $author_id);
+		}
+		return $this;
 	}
 }

@@ -1,13 +1,11 @@
 <?php
 
 use Cake\Core\Configure;
-
-// TODO is jquery needed? Can we just get rid of this?
-echo $this->Html->script('jquery-1.10.2.min', ['block' => true]);
-echo $this->Html->script('jquery-ui.min', ['block' => true]);
+use Cake\I18n\I18n;
 
 $this->assign('title', 'Article Edit: ' . $article->title); ?>
 <?php $sitedir = Configure::read('sitedir'); ?>
+<?php $this->assign('vue', 'mix'); // Needed because this page is also rendered by `add` ?> 
 
 <div class="container">
   <?= $this->element('v-admin-navbar', ['event' => $article]); ?>
@@ -15,7 +13,8 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
 
   <?= $this->Form->create($article, [
     'type' => 'file',
-    'class' => 'form'
+    'class' => 'form', 
+    'ref' => 'form',
   ]); ?>
 
   <?php echo $this->Form->control('title'); ?>
@@ -35,8 +34,8 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
         'temp' => $new ? true : false,
         'filetype' => 'image/*',
       ] + ($new ? [] : [
-        'destination' => $article->destination ? $article->destination->slug : 'null',
-        'files' => [ $article->copertina ],
+        'destination' => $article->destination ? $article->destination : 'null',
+        'files' => [$article->copertina],
         'id' => $article->id,
       ])
     ); ?>
@@ -44,6 +43,9 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
     <div class="card-footer">
       <span class="small">Massima dimensione dell'immagine: <?= ini_get("upload_max_filesize") ?>B</span>
     </div>
+    <?= $this->element('copertina_bkg_pos', [
+      'entity' => $article
+    ]); ?>
   </b-card>
 
   <?php echo $this->Form->control('body', ['label' => 'Corpo Articolo', 'class' => 'editor']); ?>
@@ -60,7 +62,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
         'temp' => $new ? true : false,
         'filetype' => 'image/*',
       ] + ($new ? [] : [
-        'destination' => $article->destination ? $article->destination->slug : 'null',
+        'destination' => isset($article->destination) ? $article->destination : 'null',
         'files' => $article->galleria,
         'id' => $article->id,
       ])
@@ -81,7 +83,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
         'temp' => $new ? true : false,
         'filetype' => '.pdf,.doc,.xls,.ppt,.odt,.docx,.odp,.kml',
       ] + ($new ? [] : [
-        'destination' => $article->destination ? $article->destination->slug : 'null',
+        'destination' => $article->destination ? $article->destination : 'null',
         'files' => $article->allegati,
         'id' => $article->id,
       ])
@@ -116,6 +118,23 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
   </div>
 
   <?= $this->Form->hidden('id'); ?>
-  <?= $this->Form->button(__("Save")); ?>
+  
+  <?= $this->Form->button(__('Salva'), ['name' => 'save']) ?>
+  <?php if (I18n::getLocale() == 'ita') : ?>
+    <b-button @click="saveAndAutomaticallyTranslate" name="save-and-translate">
+      <?= __('Salva e Traduci manualmente') ?>
+      <?= $this->Html->image("flags/en.png", ["alt" => "traduci in Inglese manualmente"]) ?>
+    </b-button>
+
+    <!-- Tasto per salvare e tradurre automagicamente -->
+    <b-button @click="saveAndAutomaticallyTranslate" name="save-auto">
+      <?= __('Traduci automaticamente') ?>
+      <?= $this->Html->image("flags/en.png", ["alt" => "traduci in Inglese automaticamente"]) ?>
+    </b-button>
+  <?php endif ?>
+  <input v-if="saveAutoTrans" type="hidden" name="save-and-autotranslate" v-model="saveAutoTrans"></input>
+
+  <?= $this->Form->button(__('Salva e Visualizza'), ['name' => 'save-and-view']) ?>
+  
   <?= $this->Form->end() ?>
 </div>

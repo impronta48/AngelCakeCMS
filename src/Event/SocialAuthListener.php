@@ -24,7 +24,7 @@ class SocialAuthListener implements EventListenerInterface
     public function implementedEvents(): array
     {
         return [
-            SocialAuthMiddleware::EVENT_AFTER_IDENTIFY => 'afterIdentify',
+            //SocialAuthMiddleware::EVENT_AFTER_IDENTIFY => 'afterIdentify',
             // SocialAuthMiddleware::EVENT_BEFORE_REDIRECT => 'beforeRedirect',
             // Uncomment below if you want to use the event listener to return
             // an entity for a new user instead of directly using `createUser()` table method.

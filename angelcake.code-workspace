@@ -8,6 +8,9 @@
     "files.watcherExclude": {
       "**/webroot/**": true,
       "vendor/**": true
-    }
+    },
+    "frontMatter.framework.id": "nuxt",
+    "frontMatter.content.publicFolder": "static",
+    "frontMatter.preview.host": "http://localhost:3000"
   }
 }

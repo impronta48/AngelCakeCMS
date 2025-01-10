@@ -20,13 +20,13 @@ use Cake\Http\Exception\NotFoundException;
 class DestinationsController extends AppController
 {
 
-  	public function initialize(): void {
-      parent::initialize();
-      $this->Authentication->allowUnauthenticated(['prenota','index','experience','activities','tours','addioNubilato','rent','view','count','prezzi']);
-    }
+  public function initialize(): void {
+    parent::initialize();
+    $this->Authentication->allowUnauthenticated(['prenota','index','experience','activities','tours','addioNubilato','rent','view','count','prezzi']);
+  }
 
   public $paginate = [
-    'limit' => 50,
+    'limit' => 60,
   ];
 
   public function destination_in_session($destination = null)
@@ -115,7 +115,7 @@ class DestinationsController extends AppController
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
     $desired_columns = [
-      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso'
+      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso', 'level'
     ];
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
@@ -170,7 +170,7 @@ class DestinationsController extends AppController
     } else {
       $ckey = 'destinations-' . md5(serialize($this->request->getQuery()));
       if (!$this->request->is('json')) {        
-          $destinations = $this->paginate($query->cache($ckey));
+        $destinations = $this->paginate($query->cache($ckey));
       } else {
         $destinations = $query->cache($ckey);
       }
@@ -263,7 +263,7 @@ class DestinationsController extends AppController
       return $this->redirect(['controller' => 'Destinations', 'action' => 'index', '?' => ['prezzi' => true]]);
     }
     $destination = $this->get_seo_destination_name($nomeseo);  
-    $this->set(compact($destination));
+    $this->set(compact('destination'));
     
     // tipi di bici disponibili
     $this->loadModel('Cyclomap.Tipibici');
@@ -292,7 +292,7 @@ class DestinationsController extends AppController
     ])->toArray();
     $this->set('addons', $addon_list);
 
-    $this->loadModel('Cyclomap.Percorsi');
+   /*  $this->loadModel('Cyclomap.Percorsi');
     $esperienze = $this->Percorsi->find()
       ->where([
         'destination_id' => $destination->id,
@@ -307,7 +307,7 @@ class DestinationsController extends AppController
         'published' => 1,
         'tipo_id' => 2,
       ])->toArray();
-    $this->set('percorsi', $percorsi);
+    $this->set('percorsi', $percorsi); */
 
     $destinations = $this->Destinations->find('all')->toArray();
     $this->set('destinations', $destinations);

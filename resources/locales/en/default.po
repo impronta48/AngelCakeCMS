@@ -132,7 +132,7 @@ msgid "Prezzi per il noleggio di ebike"
 msgstr "E-bike rental prices"
 
 #: Destinations/prezzi.php:62
-msgid "I miglior rapporto qualità prezzo per il noleggio e-bike"
+msgid "Il miglior rapporto qualità prezzo per il noleggio e-bike"
 msgstr "The best price/quality rateo for e-bike rentals"
 
 #: Destinations/prezzi.php:68
@@ -438,10 +438,6 @@ msgstr "Activities"
 msgid "Caricamento..."
 msgstr "Loading..."
 
-#: element/hero-section.php:48
-msgid "Destinazione"
-msgstr "Destination"
-
 #: element/hero-section.php:67
 msgid "Cerca"
 msgstr "Search"
@@ -450,10 +446,6 @@ msgstr "Search"
 #: element/navbar-primary.php:27
 msgid "Ebike usate"
 msgstr "Used e-bikes"
-
-#: element/navbar-secondary.php:16
-msgid "Per le aziende"
-msgstr "For Companies"
 
 msgid "Che cosa incontrerai lungo il percorso"
 msgstr "What do you find along the route"
@@ -467,3 +459,323 @@ msgstr "Choose a destination then book an e-bike"
 msgid "Per prima cosa scegli dove vuoi pedalare"
 msgstr "First of all, you choose where you want to pedal"
 
+msgid "Punti di interesse"
+msgstr "Points of Interest"
+
+msgid "Aggiornamenti"
+msgstr "News"
+
+msgid "Strutture Ricettive"
+msgstr "Hospitality"
+
+msgid "Aggiornamenti"
+msgstr "News"
+
+msgid "L'App che ti guida"
+msgstr "The App"
+
+msgid "Bere e Mangiare"
+msgstr "Food and Wine"
+
+msgid "Chiese"
+msgstr "Churches"
+
+msgid "Noleggio attrezzatura"
+msgstr "Equipment rental"
+
+msgid "Da vedere"
+msgstr "To be seen"
+
+msgid "Scarica l'APP"
+msgstr "Download the APP"
+
+msgid "scopri percorsi, strutture, soste, basiliche"
+msgstr "discover routes and point of interest"
+
+msgid "Accessibilità"
+msgstr "Accessibility"
+
+msgid "Informativa Cookie"
+msgstr "Cookies"
+
+msgid "Note Legali"
+msgstr "Legal Terms"
+
+msgid "Cammino dei Grandi Santuari Mariani"
+msgstr "Grand Route of Mary's Sanctuaries"
+
+msgid "Un filo rosso che unisce i principali Santuari dedicati al culto di Maria tra il Veneto e il Trentino Alto Adige attraverso bellissimi paesaggi e riserve naturali"
+msgstr "A red thread linking the main Sanctuaries dedicated to the cult of Mary between Veneto and Trentino Alto Adige through beautiful landscapes and nature reserves"
+
+msgid "Le tappe"
+msgstr "The stages"
+
+msgid "Scopri le tappe"
+msgstr "Discover the stages"
+
+msgid "Sotto trovi alcune delle tappe in evidenza, ma puoi vederle tutte sulla pagina dei"
+msgstr "Below are some of the highlights, but you can see them all on the page of the"
+
+msgid "percorsi"
+msgstr "routes"
+
+msgid "Caratteristiche del percorso"
+msgstr "Characteristics of the route"
+
+msgid "Tempo Percorrenza"
+msgstr "Route Duration"
+
+msgid "Lunghezza"
+msgstr "Lenght"
+
+msgid "Punti di interesse su questo percorso"
+msgstr "Points of interest along this route"
+
+msgid "Percorsi Collegati"
+msgstr "Routes Passing By"
+
+msgid "Punto di noleggio e-bike a {0}"
+msgstr "e-bike rental point in {0}"
+
+msgid "Viaggi"
+msgstr "Travels"
+
+msgid "In Partenza"
+msgstr "Starting Soon"
+
+msgid "Scuola"
+msgstr "School"
+
+msgid "Corsi"
+msgstr "Courses"
+
+msgid "INIZIA IL TUO VIAGGIO DA QUI"
+msgstr "START YOUR JOURNEY FROM HERE"
+
+msgid "Lasciati ispirare dalle nostre proposte..."
+msgstr "Let yourself be inspired by our suggestions..."
+
+msgid "Iscriviti alla Newsletter"
+msgstr "Subscribe to the Newsletter"
+
+msgid "Iscriviti al Canale Telegram"
+msgstr "Subscribe to the Telegram Channel"
+
+msgid "Servizi"
+msgstr "Services"
+
+msgid "Noleggio"
+msgstr "Rental"
+
+msgid "Organizzazione Eventi"
+msgstr "Event Organization"
+
+msgid "In partenza"
+msgstr "Starting soon"
+
+msgid "Nessun evento disponibile"
+msgstr "No event available"
+
+msgid "si parte!"
+msgstr "let's go!"
+
+msgid "Scegli la tua attività preferita nella natura"
+msgstr "Choose your favourite activity in the nature"
+
+msgid "costruiamo insieme un'esperienza divertente, responsabile e sostenibile"
+msgstr "let's build together an amusing, responsible and sustainable experience"
+
+msgid "Da non perdere"
+msgstr "not to be missed"
+
+msgid "Scopri"
+msgstr "Discover"
+
+msgid "Le nostre esperienze preferite"
+msgstr "Our favourite experiences"
+
+msgid "Lasciati ispirare"
+msgstr "Let us inspire you"
+
+msgid "Dettagli"
+msgstr "More"
+
+msgid "Scopri le nostre"
+msgstr "Discover our"
+
+msgid "proposte"
+msgstr "proposals"
+
+msgid "Creiamo valore viaggiando insieme"
+msgstr "We create value travelling together"
+
+msgid "A noi piace viaggiare con Cribyoo!"
+msgstr "We like travelling with Cribyoo!"
+
+msgid "Recensioni e testimonianze"
+msgstr "Reviews and Testimonials"
+
+msgid "Turismo Responsabile & Sostenibile"
+msgstr "sustainable & Responsible Tourism"
+
+msgid "Esplora l'Italia con Cribyoo"
+msgstr "Explore Italy with Cribyoo"
+
+msgid "Esplora"
+msgstr "Explore"
+
+msgid "In autonomia con la nostra app"
+msgstr "Independently with our app"
+
+msgid "Esperienze outdoor"
+msgstr "Outdoor experiences"
+
+msgid "Rilassati e divertiti, pensiamo a tutto noi"
+msgstr "Relax and have fun, we take care of everything"
+
+msgid "Esplora nuovi percorsi"
+msgstr "Explore new paths"
+
+msgid "Scarica la app e scopri la natura con semplicità"
+msgstr "Download the app and discover nature with ease"
+
+msgid "Turismo scolastico"
+msgstr "School tourism"
+
+msgid "Educazione ambientale per le scuole"
+msgstr "Environmental education for schools"
+
+msgid "Citizen Science"
+msgstr "Citizen Science"
+
+msgid "Diventa il protagonista della ricerca scientifica"
+msgstr "Become the protagonist of scientific research"
+
+msgid "Cosa abbiamo in partenza?"
+msgstr "What do we have departing?"
+
+msgid "Unisciti al gruppo Cribyoo, parti!"
+msgstr "Join the Cribyoo group, let's go!"
+
+msgid "Solo per noi bambini"
+msgstr "Just for us kids"
+
+msgid "Viaggi ed esperienze creati su misura accompagnati da guide ed educatori"
+msgstr "Custom-made trips and experiences accompanied by guides and educators"
+
+
+msgid "Trekking, kayak, bici, barca a vela, sci, multi sport"
+msgstr "Trekking, kayak, bike, sailing, skiing, multi-sport"
+
+msgid "intervento cofinanziato da P.O.R. FESR Liguria 2014-2020"
+msgstr "intervention co-financed by P.O.R. FESR Liguria 2014-2020"
+
+msgid "B2B"
+msgstr "B2B"
+
+msgid "Sede"
+msgstr "Headquarters"
+
+msgid "Non ci sono"
+msgstr "There are no"
+
+msgid "percorsi in questa categoria"
+msgstr "routes in this category"
+
+msgid "Filtra"
+msgstr "Filter"
+
+msgid "Vicino a Te"
+msgstr "Near you"
+
+msgid "Ricerca"
+msgstr "Search"
+
+msgid "Tutte le destinazioni"
+msgstr "All destinations"
+
+msgid "Gratuito"
+msgstr "Free"
+
+msgid "su richiesta"
+msgstr "on request"
+
+msgid "persona"
+msgstr "person"
+
+
+msgid "a partire da"
+msgstr "starting from"
+
+
+msgid "Che cosa incontrerai lungo il percorso"
+msgstr "What you find along the route"
+
+msgid "Le Destinazioni Gold offrono il meglio dell'offerta BikeSquare per chi ama la bicicletta elettrica. Qui troverai i migliori servizi di noleggio e-bike, le esperienze più interessanti e gli hotel più attrezzati per i cicloturisti. I servizi minimi garantiti sono: <b>recupero in emergenza</b>, <b>consegne</b>, <b>partnership con bike hotel</b>, <b>percorsi e esperienze</b>. Una destinazione è Gold se almeno uno dei suoi noleggiatori è Gold."
+msgstr "Gold Destinations offer the best of BikeSquare for e-bike lovers. Here you will find the best e-bike rental services, the most interesting experiences and the most equipped hotels for cyclists. The minimum guaranteed services are: <b>emergency recovery</b>, <b>deliveries</b>, <b>partnership with bike hotels</b>, <b>routes and experiences</b>. A destination is Gold if at least one of its renters is Gold."
+
+msgid "Le Destinazioni Silver offrono un servizio BikeSquare quasi completo, mancherà qualche elemento, ma puoi aspettarti un'esperienza molto buona."
+msgstr "Silver Destinations offer an almost complete BikeSquare service, some elements may be missing, but you can expect a very good experience."
+
+msgid "Le destinazioni Bronze sono quelle che offrono un servizio base, ma che non hanno ancora raggiunto il livello di servizio di BikeSquare. Può darsi che non offrano la consegna, oppure i servizi per i bambini.<br> Può darsi che non ci sia ancora un noleggiatore, ma solo i percorsi, quindi puoi fare un'esperienza con la tua bici e l'<a href=\"/app\">APP gratuita di BikeSquare</a>."
+msgstr "Bronze destinations are those that offer a basic service, but have not yet reached the BikeSquare service level. It may be that they do not offer delivery, or services for children.<br> It may be that there is not yet a renter, but only the routes, so you can have an experience with your bike and the <a href=\"/app\">free BikeSquare APP</a>."
+
+msgid "Destinazioni Gold"
+msgstr "Gold Destinations"
+
+msgid "Destinazioni Silver"
+msgstr "Silver Destinations"
+
+msgid "Destinazioni Bronze"
+msgstr "Bronze Destinations"
+
+msgid "Destinazione Gold"
+msgstr "Gold Destination"
+
+msgid "Destinazione Silver"
+msgstr "Silver Destination"
+
+msgid "Destinazione Bronze"
+msgstr "Bronze Destination"
+
+msgid "Categoria"
+msgstr "Category"
+
+msgid "Quota di partecipazione su richiesta"
+msgstr "Participation fee on request"
+
+msgid "Durata"
+msgstr "Duration"
+
+msgid "Si parte da"
+msgstr "Departure from"
+
+msgid "Scopri di più"
+msgstr "Discover more"
+
+
+##Localizzazione dell'offetto TimeInterval fatto da alessandro
+##Usando https://book.cakephp.org/3/en/core-libraries/internationalization-and-localization.html#plurals
+msgid "ora_e"
+msgstr "{0,plural,=0{} =1{1 hour} other{{1} hours}}"
+
+msgid "giorno_i"
+msgstr "{0,plural,=0{} =1{1 day} other{{1} days}}"
+
+msgid "minuto_i"
+msgstr "{0,plural,=0{} =1{1 minute} other{{1} minutes}}"
+
+msgid "secondo_i"
+msgstr "{0,plural,=0{} =1{1 second} other{{1} seconds}}"
+
+msgid "Scarica la traccia KML"
+msgstr "Download KML track"
+
+msgid "Percorsi collegati o tappe"
+msgstr "Connected routes or stages"
+
+msgid "Prodotti e servizi"
+msgstr "Products and services"
+
+msgid "Vuoi saperne di più?"
+msgstr "Want to know more?"

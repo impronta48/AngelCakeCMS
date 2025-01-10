@@ -3,13 +3,15 @@ CKEDITOR.dtd.$removeEmpty.i = 0;
 CKEDITOR.dtd.$removeEmpty['span'] = false;
 CKEDITOR.editorConfig = function(config) {
     config.height = '70vh';
-    //config.extraPlugins = 'widget,lineutils,uploadimage';
+    config.extraPlugins = 'widget,lineutils,uploadimage';
     config.contentsCss = [
         '//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
         '/js/node_modules/bootstrap/dist/css/bootstrap.min.css',
     ];
     config.allowedContent = true;
-    /* config.toolbarGroups = [
+    config.format_tags = 'p;h2;h3;h4;h5;h6;div';
+    config.toolbarGroups = [
+        { name: 'styles'}, 
         { name: 'document', groups: ['mode', 'document', 'doctools'] },
         { name: 'clipboard', groups: ['clipboard', 'undo'] },
         { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
@@ -19,24 +21,15 @@ CKEDITOR.editorConfig = function(config) {
         { name: 'insert', groups: ['insert'] },
         '/',
         { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
-        { name: 'styles', groups: ['styles'] },
-        { name: 'colors', groups: ['colors'] },
         { name: 'tools', groups: ['tools'] },
         { name: 'others', groups: ['others'] },
         { name: 'about', groups: ['about'] }
-    ]; */
-    config.toolbarGroups = [        
-        { name: 'clipboard', groups: ['clipboard', 'undo'] },
-        { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
-        { name: 'links', groups: ['links'] },
-        '/',
-        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-        { name: 'paragraph', groups: ['list', 'indent', 'align', 'paragraph'] },
-        '/',
-        { name: 'styles', groups: ['styles'] },
     ];
 
-    config.removeButtons = 'Save,NewPage,ExportPdf,Preview,Print,SelectAll,Form,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Smiley,SpecialChar,PageBreak,Font,Maximize,About,Flash,Styles,Size';
+    // Set the most common block elements.
+	
+    config.stylesSet = 'my_styles';
+    config.removeButtons = 'Styles,FontSize,Font,Save,NewPage,ExportPdf,Preview,Print,SelectAll,Form,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,Smiley,SpecialChar,PageBreak,Font,Maximize,About,Flash';
 
     //Configurazioni per elFinder
     //config.filebrowserBrowseUrl = '#';

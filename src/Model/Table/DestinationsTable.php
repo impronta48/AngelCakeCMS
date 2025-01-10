@@ -32,7 +32,7 @@ class DestinationsTable extends Table
 	public function initialize(array $config): void {
 		$this->addBehavior('Translate', [
 			'fields' => [
-				'nomiseo', 'title',
+				'nomiseo', 'title', 'name', 'descrizione',
 			],
 			'referenceName' => 'Destination', //Importante per garantire la compatibilità con cake2
 			'defaultLocale' => 'ita',

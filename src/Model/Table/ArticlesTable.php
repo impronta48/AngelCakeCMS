@@ -18,7 +18,14 @@ class ArticlesTable extends Table
 		$this->belongsTo('Destinations');
 		$this->hasOne('Projects');
 		$this->belongsToMany('Tags');
-	  //$this->addBehavior('Tags.Tag', ['taggedCounter' => false]);
+		//$this->addBehavior('Tags.Tag', ['taggedCounter' => false]);
+		$this->addBehavior('Translate', [
+			'fields' => [
+				'title', 'body',
+			],
+			'referenceName' => 'Article', //Importante per garantire la compatibilità con cake2
+			'defaultLocale' => 'ita',
+		]);
 	}
 
 	public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options) {

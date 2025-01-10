@@ -7,6 +7,7 @@ use App\Model\StaticModel;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\I18n;
+use PSpell\Config;
 
 /**
  * Static Controller
@@ -19,22 +20,22 @@ class StaticController extends AppController
 {
 
 	private $staticImgPath;
-
 	private $StaticModel;
+	private $staticFilesPath;
 
   //Necessario per gestire la risposta in json della view
 
 	public function initialize(): void {
 		parent::initialize();
-		$this->modelClass = false;
 		$this->loadComponent('RequestHandler');
-	  	$this->Authentication->allowUnauthenticated(['index','view']);
+	  	$this->Authentication->allowUnauthenticated(['index','view','get']);
 
 	  //Imposto la cartella dove si trovano le immagini statiche
 		$sitedir = Configure::read('sitedir');
 		$this->staticImgPath = "/$sitedir/static/img/";
 		$this->set('staticImgPath', $this->staticImgPath);
 		$this->StaticModel = new StaticModel();
+		$this->staticFilesPath = $sitedir . DS . 'static' . DS ;
 	}
 
 	/**
@@ -42,14 +43,14 @@ class StaticController extends AppController
 	 *
 	 * @return \Cake\Http\Response|void
 	 */
-	public function index(...$path) {
-		$sitedir = Configure::read('sitedir');
-		$name = $sitedir . DS . 'static' . DS . $this->StaticModel->combina_path($path);
+	public function index(...$path) {		
+		$name = $this->staticFilesPath . $this->StaticModel->combina_path($path);
 
 		$limit = $this->request->getQuery('limit');
 		if (empty($limit)) {
 			$limit = 100;
 		}
+
 		$risult = $this->StaticModel->find($name, $limit);
 
 		$this->set('files', $risult);
@@ -84,7 +85,8 @@ class StaticController extends AppController
 		if (!empty($path[1])) {
 			$subpage = $path[1];
 		}
-		$this->set(compact('page', 'subpage'));
+		$keywords = Configure::read('keywords');
+		$this->set(compact('page', 'subpage','keywords'));
 
 	  //verifico che il file esista
 		$fname = $sitedir . DS . 'static' . DS . $name . '.md';
@@ -95,9 +97,13 @@ class StaticController extends AppController
 	  //Ciclo su tutte le variabili e le passo alla view
 		$dati = $this->StaticModel->leggi_file_md($fname);
 		$k = array_keys($dati);
+		$vs = [];
 		foreach ($k as $variabile) {
 			$this->set($variabile, $dati[$variabile]);
+			$vs[] = $variabile;
 		}
+		
+	   $this->viewBuilder()->setOption('serialize', $vs);
 
 	  //Se il path[0] contiene una slash devo fare una separazione in pezzi
 	  //Massimoi - 2020-01-20 Problema introdotto con la gestione particolare dei path
@@ -117,4 +123,23 @@ class StaticController extends AppController
 			$this->render($path[0]);
 		}
 	}
+
+	//Restituisce l'articolo specifico per il blog il cui nome è contenuto nella variabile $param 
+	//del di configurazione che si trova in static
+	//In questo modo gli utenti posso cambiare facilmente il nome dell'articolo toccando il file config.ini
+	public function get($param){
+		//Apro il file di configurazione
+		$config = parse_ini_file($this->staticFilesPath . 'config.ini');
+		//Cerco la variabile che si chiama $param
+		if (isset($config[$param])){
+			$fname  = $config[$param];
+		} else { //Se la variabile non c'è prendo il primo file che trovo
+			$fname = $this->StaticModel->find("blog", 1);
+		}		
+		//Altrimenti chiamo la funzione view con il nome del file contenuto nella variabile
+		$this->view($fname);
+	}
+
+	
+
 }

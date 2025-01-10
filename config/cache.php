@@ -12,6 +12,12 @@ use Cake\Cache\Engine\MemcachedEngine;
 Cache::setConfig('default', [
   'className' => FileEngine::class,
   'path' => CACHE . Configure::read('sitedir') . DS,
+  'groups' => ['poi', 'percorsi','destinations']
+]);
+Cache::setConfig('long', [
+  'className' => FileEngine::class,
+  'path' => CACHE . Configure::read('sitedir') . DS,
+  'duration' => '+1 months',
 ]);
 Cache::setConfig('static', [
   'className' => FileEngine::class,
@@ -55,12 +61,6 @@ Cache::setConfig('_cake_routes_', [
   'serialize' => 'json',
   //'url' => env('CACHE_CAKEROUTES_URL', null),
 ]);
-/* Cache::setConfig('_cake_routes_', [
-  'className' => MemcachedEngine::class,  
-  'duration' => '+20 days',
-  'serialize' => 'php',
-  //'url' => env('CACHE_CAKEROUTES_URL', null),
-]); */
 /*
  * Configure images cache.
  */

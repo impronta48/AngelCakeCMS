@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-use App\Controller\AttachmentsController;
 use App\Lib\AttachmentManager;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\Http\Exception\InternalErrorException;
+use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use Cake\Utility\Text;
 use elFinder;
 use elFinderConnector;
 
@@ -63,52 +61,41 @@ class ArticlesController extends AppController
 
 	public function add()
 	{
-		$article = $this->Articles->newEmptyEntity();
-		if ($this->request->is('post')) {
-			$article = $this->Articles->patchEntity($article, $this->request->getData());
-
-			$article->user_id = $this->Authentication->getIdentity()->getIdentifier();
-
-			$this->Authorization->authorize($article);
-
-			if ($this->Articles->save($article)) {
-				$this->Flash->success(__('Your article has been saved.'));
-				Cache::clear('_cake_routes_');
-				return $this->redirect(['prefix' => false, 'action' => 'view', $article->slug]);
-			}
-			$this->Flash->error(__('Unable to add your article'));
-			//dd($article->getErrors());
-		} else {
-			$this->Authorization->skipAuthorization();
-		}
-
-		$tags = $this->Articles->Tags->find('list');
-		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
-		$destinations = $this->Articles->Destinations->find('list');
-		$new = true;
-		$this->set('user', $this->request->getAttribute('identity')->getIdentifier());
-		$this->set(compact('new', 'article', 'tags', 'users', 'destinations'));
+		$this->set('new', true);
+		$this->edit();
+		$this->viewBuilder()->setTemplate('edit');
 	}
 
-	public function edit($id)
+	public function edit($id = null)
 	{
-		$article = $this->Articles
-			->findById($id)
-			->contain(['Tags', 'Destinations'])
-			->firstOrFail();
+		$user = $this->request->getAttribute('identity');
 
-		$this->Authorization->authorize($article);
-
+		if ($id) {
+			$article = $this->Articles
+				->findById($id)
+				->contain(['Tags', 'Destinations'])
+				->firstOrFail();
+			
+		 	$this->Authorization->authorize($article, 'edit');
+		} else {
+			$article = $this->Articles->newEmptyEntity();
+			$article->user_id = $user->id;
+			$this->Authorization->authorize($article, 'add');
+		}
+		
 		if ($article->destination_id == null) {
 			$old_destination = 0;
+			$old_destination_slug = 'null';
 		} else {
 			$old_destination = $article->destination_id;
+			$old_destination_slug = $article->destination->slug;
 		}
 
 		//dd($article);
+		$new = $article->isNew();
 
 		if ($this->request->is(['post', 'put'])) {
-
+			$data = $this->request->getData();
 			$old_copertina = [$article->copertina];
 			$old_galleria = $article->galleria;
 			$old_allegati = $article->allegati;
@@ -118,22 +105,50 @@ class ArticlesController extends AppController
 			$this->Authorization->authorize($article);
 
 			if ($this->Articles->save($article)) {
+				//Devo rileggerlo perchè se no non ho la destinaition associata				
+				$article = $this->Articles
+					->findById($article->id)
+					->contain(['Destinations'])
+					->firstOrFail();
 				//Importante questo è necessario altrimenti non si aggiorna la route cache
 				Cache::clear('_cake_routes_');
 
+				$upload_session_fields = $this->request->getData('upload_session_id');
+				if ($new && !empty($upload_session_fields)) {
+					foreach ($upload_session_fields as $ses) {
+						if (!empty($ses)) {
+							$ses = explode('|', $ses);
+							$tmpath = AttachmentManager::buildPath('Articles', null, $ses[0], $ses[1]);
+							if (is_dir(TMP . $tmpath)) {
+								$finalpath = AttachmentManager::buildPath('Articles', $article->destination->slug, $article->id, $ses[1]);
+								$dir = new Folder(WWW_ROOT . $finalpath, true);
+								rename(TMP . $tmpath, WWW_ROOT . $finalpath);
+							}
+						}
+					}
+				}
+
 				//Se hai cambiato destination devo spostare gli allegati nella cartella giusta
 				if ($old_destination != $article->destination_id) {
-					if (
-						AttachmentManager::moveAllFiles($old_copertina, $article->getSource(), $article->getDestinationSlug(), $article->id, 'copertina') &&
-						AttachmentManager::moveAllFiles($old_galleria, $article->getSource(), $article->getDestinationSlug(), $article->id, 'galleria') &&
-						AttachmentManager::moveAllFiles($old_allegati, $article->getSource(), $article->getDestinationSlug(), $article->id, 'allegati')
-					) {
+					if (AttachmentManager::moveChangeDestination('Articles', $id, $old_destination_slug, $article->destination->slug)) {
 						$this->log("Allegati articolo $id spostati con successo dalla cartella {$old_destination} a {$article->destination_id}", 'info');
 					} else {
 						$this->log("Impossibile spostare gli allegati articolo $id dalla cartella {$old_destination} a {$article->destination_id}", 'error');
 					}
 				}
 
+				if (isset($data['save'])){
+					return $this->redirect(['action' => 'edit', $article->id]);
+				  } else if (isset($data['save-and-translate'])) {
+					return $this->redirect(['lang' => 'eng', 'action' => 'edit', $article->id]); # TODO: magari se in eng riportare in ita?
+				  } else if (isset($data['save-and-view'])) {
+					return $this->redirect(['prefix' => false, 'action' => 'view', $article->id]);
+				  } else if (isset($data['save-and-autotranslate'])) {
+					$article_translated = $article->autoTranslateAll($user->id);
+					I18n::setLocale('eng');
+					$this->Articles->save($article_translated);
+					return $this->redirect(['lang' => 'eng', 'action' => 'edit', $article->id]);          
+				  }
 			} else {
 				$this->Flash->error(__('Unable to update your article.'));
 			}
@@ -141,8 +156,7 @@ class ArticlesController extends AppController
 		// Get a list of tags.
 		$tags = $this->Articles->Tags->find('list');
 		$users = $this->Articles->Users->find('list', ['keyField' => 'id', 'valueField' => 'username']);
-		$destinations = $this->Articles->Destinations->find('list');
-		$new = false;
+		$destinations = $this->Articles->Destinations->find('list', ['order' => 'slug']);
 		$this->set('user', $this->request->getAttribute('identity'));
 		$this->set(compact('new', 'article', 'tags', 'users', 'destinations'));
 	}
@@ -226,5 +240,25 @@ class ArticlesController extends AppController
 		$this->autoRender = false;
 		$connector = new elFinderConnector(new elFinder($opts));
 		$connector->run();
+	}
+
+
+	public function removeFile()
+	{
+		$fname = $this->request->getQuery('fname');
+
+		if (!empty($fname)) {
+			$fname = rtrim(WWW_ROOT, DS) . $fname;
+			if (file_exists($fname)) {
+				$ip = $_SERVER['REMOTE_ADDR'];
+				//TODO: devo cancellare lo stesso nome file anche in tutte le altre cartelle figlie
+
+				unlink($fname);
+				$this->log("eliminato il file $fname da $ip");
+			} else {
+				$this->Flash->error('Il file da eliminare è inesitente:' . $fname);
+			}
+		}
+		$this->redirect(Router::url($this->referer(), true));
 	}
 }

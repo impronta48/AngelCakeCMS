@@ -44,7 +44,6 @@ nbproject/*
 # Sass preprocessor
 .sass-cache/
 
-
 # Asset MIX         #
 #####################
 webpack.mix.js 
@@ -54,3 +53,4 @@ node_modules
 
 ##docker
 env.sample
+*.lock
