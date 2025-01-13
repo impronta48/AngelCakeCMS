@@ -6,4 +6,18 @@ config/sites/l.grab.bikesquare.eu
 env.sample
 /config/.env
 /config/.env.example
-
+/tmp
+/logs
+docker-compose.yml
+/webroot/bikesquare
+/webroot/chiampo
+/webroot/cyclomap
+/webroot/ebike2021
+/webroot/valdaso
+/plugins/Cribyoo
+# /plugins/Cyclomap
+/plugins/Ebike2021
+# /plugins/Notifications
+# /plugins/Satispay
+/plugins/TelegramLogin
+node_modules
