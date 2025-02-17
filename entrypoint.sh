@@ -20,4 +20,7 @@
 #     npm run dev
 # fi
 # Keep the container running
-tail -f /dev/null
+# tail -f /dev/null
+chmod -R 777 /var/www/html/tmp
+chmod -R 777 /var/www/html/logs 
+apache2-foreground

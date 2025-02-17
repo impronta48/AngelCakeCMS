@@ -5,7 +5,7 @@ services:
     working_dir: /var/www/html/
     network_mode: "host"
     # ports:
-    #   - '80:80'
+    #   - 8084:80
     volumes:
       - type: bind
         source: .
@@ -14,16 +14,16 @@ services:
       # - /home/vue/node_modules
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
     # command: 'npm run serve'
-    stdin_open: true
-    tty: true
-    environment:
-      - HOST=0.0.0.0
-      - NODE_ENV=development
-      # - CHOKIDAR_USEPOLLING=true
-      # - CHOKIDAR_INTERVAL=1000
-      - WDS_SOCKET_HOST=127.0.0.1 #for windows
-      - CHOKIDAR_USEPOLLING=true #for windows
-      - WATCHPACK_POLLING=true #for windows
+    # stdin_open: true
+    # tty: true
+    # environment:
+    #   - HOST=0.0.0.0
+    #   - NODE_ENV=development
+    #   # - CHOKIDAR_USEPOLLING=true
+    #   # - CHOKIDAR_INTERVAL=1000
+    #   - WDS_SOCKET_HOST=127.0.0.1 #for windows
+    #   - CHOKIDAR_USEPOLLING=true #for windows
+    #   - WATCHPACK_POLLING=true #for windows
     # command: "npm run dev"
     entrypoint: ["/bin/sh", "/var/www/html/entrypoint.sh"]
 networks:

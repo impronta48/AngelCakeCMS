@@ -12,7 +12,7 @@ sudo service apache2 stop
 # Run container
 ```bash
 docker run --rm --network="host" --env-file ./config/.env -d angelcake-valdaso:latest
-docker run --rm -p 80:80 -p 8080:8080 --env-file ./config/.env -d angelcake-valdaso:latest
+docker run --rm -p 8080:80 -d angelcake-valdaso:latest
 docker run --rm --network="host" -d angelcakes:latest
 ```
 # Stop UFW
