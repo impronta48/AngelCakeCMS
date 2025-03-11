@@ -101,6 +101,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
       }
     }
       $this->addPlugin('Satispay');
+      $this->addPlugin('Reviews');
   }
 
   /**

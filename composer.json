@@ -56,7 +56,8 @@
             "Cribyoo\\": "plugins/Cribyoo/src/",
             "Cyclomap\\": "plugins/Cyclomap/src/",
             "TelegramLogin\\": "plugins/TelegramLogin/src/",
-            "Satispay\\": "plugins/Satispay/src/"
+            "Satispay\\": "plugins/Satispay/src/",
+            "Reviews\\": "plugins/Reviews/src/"
         }
     },
     "autoload-dev": {
@@ -64,7 +65,8 @@
             "App\\Test\\": "tests/",
             "Cake\\Test\\": "vendor/cakephp/cakephp/tests/",
             "Cyclomap\\Test\\": "plugins/Cyclomap/tests/",
-            "Satispay\\Test\\": "plugins/Satispay/tests/"
+            "Satispay\\Test\\": "plugins/Satispay/tests/",
+            "Reviews\\Test\\": "plugins/Reviews/tests/"
         }
     },
     "scripts": {
