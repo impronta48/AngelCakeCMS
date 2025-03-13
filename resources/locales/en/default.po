@@ -468,6 +468,24 @@ msgstr "News"
 msgid "Strutture Ricettive"
 msgstr "Hospitality"
 
+msgid "La WebAPP che ti guida"
+msgstr "The WebAPP that guides you"
+
+msgid "Scarica la Web APP Valdaso Outdoor e scopri percorsi trekking, percorsi ciclabili, strutture ricettive e molto altro."
+msgstr "Download the Valdaso Outdoor Web APP and discover trekking routes, cycling routes, accommodations, and much more."
+
+msgid "Immergiti nella Valdaso, dai Monti Sibillini fino al mare"
+msgstr "Immerse yourself in Valdaso, from the Sibillini Mountains to the sea"
+
+msgid "Un'oasi di tranquillità, ideale per chi ama la natura, il silenzio e i tempi rilassati. Pedala e cammina nel verde, scopri borghi autentici, assapora la cucina locale: vivi un'esperienza outdoor indimenticabile"
+msgstr "An oasis of tranquility, ideal for those who love nature, silence, and relaxed times. Ride and walk in the green, discover authentic villages, savor local cuisine: live an unforgettable outdoor experience"
+
+msgid "A PIEDI"
+msgstr "ON FOOT"
+
+msgid "IN BICI"
+msgstr "BY BIKE"
+
 msgid "Aggiornamenti"
 msgstr "News"
 
@@ -779,3 +797,4 @@ msgstr "Products and services"
 
 msgid "Vuoi saperne di più?"
 msgstr "Want to know more?"
+
