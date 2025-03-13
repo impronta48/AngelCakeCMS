@@ -798,3 +798,11 @@ msgstr "Products and services"
 msgid "Vuoi saperne di più?"
 msgstr "Want to know more?"
 
+msgid "Consulenza e innovazione"
+msgstr "Consulting and innovation"
+
+msgid "Portale Turistico"
+msgstr "Tourist Portal"
+
+msgid "Vendita e-bike"
+msgstr "E-bike sales"
