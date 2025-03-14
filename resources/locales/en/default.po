@@ -857,3 +857,9 @@ msgstr "Privacy"
 
 msgid "Regione Marche"
 msgstr "Marche Region"
+
+msgid "Tutti i percorsi"
+msgstr "All routes"
+
+msgid "Legenda"
+msgstr "Legend"

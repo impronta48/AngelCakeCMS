@@ -1260,3 +1260,9 @@ msgstr "Datenschutz"
 
 msgid "Regione Marche"
 msgstr "Region Marken"
+
+msgid "Tutti i percorsi"
+msgstr "Alle Routen"
+
+msgid "Legenda"
+msgstr "Legende"
