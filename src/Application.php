@@ -47,7 +47,7 @@ use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\ServerRequest;
 use Fetzi\ServerTiming\ServerTimingMiddleware;
-
+ini_set('memory_limit', '256M');
 /**
  * Application setup class.
  *
@@ -78,7 +78,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 		 * Only try to load DebugKit in development mode
 		 * Debug Kit should not be installed on a production system
 		 */
-    //Configure::write('DebugKit.forceEnable', true);
+    Configure::write('DebugKit.forceEnable', true);
     if (Configure::read('debug')) {
       $this->addPlugin('DebugKit');
     }
@@ -101,7 +101,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
       }
     }
       $this->addPlugin('Satispay');
-      $this->addPlugin('Reviews');
+      // $this->addPlugin('Reviews');
   }
 
   /**
@@ -247,6 +247,15 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         return $next($req, $res);
       });
     }
+    // Disable redirect for Reviews plugin
+    $middlewareQueue->add(function ($req, $res, $next) {
+      if ($req->getParam('plugin') === 'Reviews') {
+        $req->getAttribute('authorization')->skipAuthorization();
+        // autenticazione per Reviews
+        $req = $req->withAttribute('identity', $req->getAttribute('authentication')->getIdentity());
+      }
+      return $next($req, $res);
+    });
     //->add(new LocaleSelectorMiddleware());
     
     //Serve per parsare le richieste POST in formato json
