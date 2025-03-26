@@ -7,6 +7,9 @@ msgstr "Destinations"
 msgid "Percorso"
 msgstr "Route"
 
+msgid "Punti di Interesse"
+msgstr "Points of Interest"
+
 msgid "Mappa"
 msgstr "Map"
 
@@ -292,6 +295,14 @@ msgstr "You can find this route on BikeSquare App with code"
 msgid "Difficoltà"
 msgstr "Difficulty"
 
+#: Percorsi/view.php:87
+msgid "Facile"
+msgstr "Easy"
+
+#: Percorsi/view.php:87
+msgid "Difficile"
+msgstr "Hard"
+
 #: Percorsi/view.php:119
 msgid "Informazioni"
 msgstr "Informations"
@@ -471,8 +482,8 @@ msgstr "Hospitality"
 msgid "La WebAPP che ti guida"
 msgstr "The WebAPP that guides you"
 
-msgid "Scarica la Web APP Valdaso Outdoor e scopri percorsi trekking, percorsi ciclabili, strutture ricettive e molto altro."
-msgstr "Download the Valdaso Outdoor Web APP and discover trekking routes, cycling routes, accommodations, and much more."
+msgid "Scarica la Web APP  Valdaso  e scopri percorsi trekking, percorsi ciclabili, strutture ricettive e molto altro."
+msgstr "Download the Outdoor Valdaso Web APP and discover trekking routes, cycling routes, accommodations, and much more."
 
 msgid "Immergiti nella Valdaso, dai Monti Sibillini fino al mare"
 msgstr "Immerse yourself in Valdaso, from the Sibillini Mountains to the sea"
@@ -806,3 +817,75 @@ msgstr "Tourist Portal"
 
 msgid "Vendita e-bike"
 msgstr "E-bike sales"
+
+## Valdaso
+msgid "Scopri i percorsi"
+msgstr "Discover the paths"
+
+msgid "Sotto trovi alcuni dei percorsi in evidenza, ma puoi vederli tutte sulla pagina dei"
+msgstr "Below you can find some of the highlighted paths, but you can see them all on the page of the"
+
+msgid "La WebAPP che ti guida"
+msgstr "The WebAPP that guides you"
+
+msgid "Scarica la Web APP Valdaso Outdoor e scopri percorsi trekking, percorsi ciclabili, strutture ricettive e molto altro."
+msgstr "Download the Valdaso Outdoor Web APP and discover trekking routes, cycling paths, accommodations, and much more."
+
+msgid "Percorsi"
+msgstr "Routes"
+
+msgid "Da vedere"
+msgstr "Must-see"
+
+msgid "Strutture Ricettive"
+msgstr "Accommodations"
+
+msgid "Bere e Mangiare"
+msgstr "Food and Drink"
+
+msgid "WebApp"
+msgstr "WebApp"
+
+msgid "Play Store"
+msgstr "Play Store"
+
+msgid "Apple Store"
+msgstr "Apple Store"
+
+msgid "Immergiti nella Valdaso, dai Monti Sibillini fino al mare"
+msgstr "Immerse yourself in Valdaso, from the Sibillini Mountains to the sea"
+
+msgid "Un'oasi di tranquillità, ideale per chi ama la natura, il silenzio e i tempi rilassati. Pedala e cammina nel verde, scopri borghi autentici, assapora la cucina locale: vivi un'esperienza outdoor indimenticabile"
+msgstr "An oasis of tranquility, ideal for those who love nature, silence, and a relaxed pace. Cycle and walk in the greenery, discover authentic villages, savor local cuisine: live an unforgettable outdoor experience"
+
+msgid "A PIEDI"
+msgstr "ON FOOT"
+
+msgid "IN BICI"
+msgstr "BY BIKE"
+
+msgid "Logo Valdaso Outdoor"
+msgstr "Valdaso Outdoor Logo"
+
+msgid "Esplora il territorio della Valdaso<br> a Piedi o in Bicicletta."
+msgstr "Explore the Valdaso area<br> on Foot or by Bicycle."
+
+msgid "Responsabile del progetto GAL Piceno Leader"
+msgstr "Project Manager GAL Piceno Leader"
+
+msgid "Sede legale Via Episcopio, 8 - Montalto delle Marche(AP)<br>
+info@galpiceno.it - picenoleader@per.it"
+msgstr "Registered office Via Episcopio, 8 - Montalto delle Marche(AP)<br>
+info@galpiceno.it - picenoleader@per.it"
+
+msgid "Privacy"
+msgstr "Privacy"
+
+msgid "Regione Marche"
+msgstr "Marche Region"
+
+msgid "Tutti i percorsi"
+msgstr "All routes"
+
+msgid "Legenda"
+msgstr "Legend"
