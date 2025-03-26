@@ -47,7 +47,7 @@ use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\ServerRequest;
 use Fetzi\ServerTiming\ServerTimingMiddleware;
-ini_set('memory_limit', '256M');
+ini_set('memory_limit', '300M');
 /**
  * Application setup class.
  *

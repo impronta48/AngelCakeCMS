@@ -53,4 +53,13 @@ class UsersController extends AppController
     }
     $this->set('user', $user);
   }
+  // reviews for a specific user
+  public function reviews($id)
+  {
+    $user = $this->Users->get($id, [
+      'contain' => ['Reviews'],
+    ]);
+    $this->set(compact('user'));
+    $this->viewBuilder()->setOption('serialize', 'user');
+  }
 }

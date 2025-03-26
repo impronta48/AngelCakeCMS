@@ -63,6 +63,10 @@ class UsersTable extends Table
       'foreignKey' => 'user_id',
     ]);
     $this->belongsTo('Destinations');
+    // reviews
+    $this->hasMany('Reviews', [
+      'foreignKey' => 'user_id',
+    ]);
   }
 
   /**
