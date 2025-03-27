@@ -18,6 +18,7 @@
         "erusev/parsedown": "^1.7",
         "friendsofcake/bootstrap-ui": "^3",
         "google/apiclient": "^2.0",
+        "google/cloud-storage": "^1.47",
         "hkod/frontmatter": "^1",
         "impronta48/ibmwatson": "^1.0",
         "intervention/imagecache": "^2.4",
@@ -57,7 +58,8 @@
             "Cyclomap\\": "plugins/Cyclomap/src/",
             "TelegramLogin\\": "plugins/TelegramLogin/src/",
             "Satispay\\": "plugins/Satispay/src/",
-            "Reviews\\": "plugins/Reviews/src/"
+            "Reviews\\": "plugins/Reviews/src/",
+            "Favorites\\": "plugins/Favorites/src/"
         }
     },
     "autoload-dev": {
@@ -66,7 +68,8 @@
             "Cake\\Test\\": "vendor/cakephp/cakephp/tests/",
             "Cyclomap\\Test\\": "plugins/Cyclomap/tests/",
             "Satispay\\Test\\": "plugins/Satispay/tests/",
-            "Reviews\\Test\\": "plugins/Reviews/tests/"
+            "Reviews\\Test\\": "plugins/Reviews/tests/",
+            "Favorites\\Test\\": "plugins/Favorites/tests/"
         }
     },
     "scripts": {
