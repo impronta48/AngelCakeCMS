@@ -139,10 +139,10 @@ class DestinationsController extends AppController
 						}
 					}
 				}
-				$this->Flash->success(__('The percorso has been saved.'));
-				return $this->redirect(['prefix' => false, 'action' => 'view', $destination->id]);
+				$this->Flash->success(__('The Destination has been saved.'));
+				return $this->redirect(['prefix' => 'false', 'controller' => 'Destinations', 'action' => 'view', $destination->id]);
 			}
-			$this->Flash->error(__('The percorso could not be saved. Please, try again.'));
+			$this->Flash->error(__('The Destination could not be saved. Please, try again.'));
 		}
 
 		$this->set('destination', $destination);
