@@ -40,7 +40,7 @@ class DestinationsController extends AppController
   }
 
   private function get_seo_destination_name($nomeseo = null)
-  {
+  {    
     $only = $this->request->getQuery('only');
     if (!empty($only)){
       $only = explode(",",$only);
