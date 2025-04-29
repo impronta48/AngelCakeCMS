@@ -96,6 +96,19 @@ class DestinationsController extends AppController
       $nomeseo = $destination->preposition . ' ' . $destination->name;
     }
 
+    //Forzo e-tab in modo da cancellare la cache
+    $lastModified = $destination->modified->getTimestamp();
+    $etag = md5($lastModified . '-' . $destination->id);
+
+    header("ETag: \"$etag\"");
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified) . " GMT");
+
+    // Verifica ETag del client
+    if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && @trim($_SERVER['HTTP_IF_NONE_MATCH']) === "\"$etag\"") {
+      header("HTTP/1.1 304 Not Modified");
+      exit;
+    }
+
     $this->set('nomeseo', $nomeseo);
     $this->set('canonical',  $nomeseo_slug);
     $this->set('destination', $destination);
