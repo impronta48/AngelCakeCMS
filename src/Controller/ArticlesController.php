@@ -16,20 +16,32 @@ class ArticlesController extends AppController
     parent::initialize();
 
     $this->loadComponent('Paginator');
-    $this->Authentication->allowUnauthenticated(['getList','index','view','search']);
+    $this->Authentication->allowUnauthenticated(['getList', 'index', 'view', 'search']);
   }
 
   public function view($slug = null)
   {
-    if (is_numeric($slug)){
+    if (is_numeric($slug)) {
       $article = $this->Articles->findById($slug)
-      ->contain(['Tags', 'Destinations'])
-      ->firstOrFail();
+        ->contain(['Tags', 'Destinations'])
+        ->firstOrFail();
     } else {
       $article = $this->Articles->findBySlug($slug)
-      ->contain(['Tags', 'Destinations'])
-      ->firstOrFail();
+        ->contain(['Tags', 'Destinations'])
+        ->firstOrFail();
     }
+    $lastModified = $article->modified->getTimestamp();
+    $etag = md5($lastModified . '-' . $article->id);
+
+    header("ETag: \"$etag\"");
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified) . " GMT");
+
+    // Verifica ETag del client
+    if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && @trim($_SERVER['HTTP_IF_NONE_MATCH']) === "\"$etag\"") {
+      header("HTTP/1.1 304 Not Modified");
+      exit;
+    }
+
     $this->set(compact('article'));
     $this->set('user', $this->request->getAttribute('identity'));
     $this->viewBuilder()->setOption('serialize', ['article']);
