@@ -97,7 +97,7 @@ class DestinationsController extends AppController
     }
 
     //Forzo e-tab in modo da cancellare la cache
-    $lastModified = $destination->modified->getTimestamp();
+    $lastModified = $destination->modified ? $destination->modified->getTimestamp() : time();
     $etag = md5($lastModified . '-' . $destination->id);
 
     header("ETag: \"$etag\"");
