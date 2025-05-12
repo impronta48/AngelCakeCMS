@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Cache\Cache;
-use Cake\View\Exception\MissingTemplateException;
-use Psr\Log\LogLevel;
 use Cake\Utility\Text;
 use Cake\Http\Exception\NotFoundException;
 
@@ -20,9 +17,10 @@ use Cake\Http\Exception\NotFoundException;
 class DestinationsController extends AppController
 {
 
-  public function initialize(): void {
+  public function initialize(): void
+  {
     parent::initialize();
-    $this->Authentication->allowUnauthenticated(['prenota','index','experience','activities','tours','addioNubilato','rent','view','count','prezzi']);
+    $this->Authentication->allowUnauthenticated(['prenota', 'index', 'experience', 'activities', 'tours', 'addioNubilato', 'rent', 'view', 'count', 'prezzi']);
   }
 
   public $paginate = [
@@ -40,18 +38,18 @@ class DestinationsController extends AppController
   }
 
   private function get_seo_destination_name($nomeseo = null)
-  {    
+  {
     $only = $this->request->getQuery('only');
-    if (!empty($only)){
-      $only = explode(",",$only);
+    if (!empty($only)) {
+      $only = explode(",", $only);
     }
 
     if (is_numeric($nomeseo)) {
       $destination = $this->Destinations->findByIdAndPublished($nomeseo, 1);
-      if ($only){
+      if ($only) {
         $destination->select($only);
       }
-                    
+
       $destination = $destination->first();
     } else {
       $destination = $this->Destinations->findBySlugAndPublished($nomeseo, 1);
@@ -128,11 +126,26 @@ class DestinationsController extends AppController
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
     $desired_columns = [
-      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso', 'level'
+      'id',
+      'name',
+      'slug',
+      'preposition',
+      'nazione_id',
+      'regione',
+      'lat',
+      'lon',
+      'description',
+      'nomiseo',
+      'published',
+      'published',
+      'created',
+      'modified',
+      'chiuso',
+      'level'
     ];
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
-    
+
     $query = $this->Destinations->find()
       ->where(['published' => true]);
 
@@ -164,7 +177,7 @@ class DestinationsController extends AppController
       }
     } else {
       $query->select($select_columns)
-            ->contain(['Articles']);
+        ->contain(['Articles']);
     }
 
     $limit = $this->request->getQuery('limit');
@@ -174,7 +187,7 @@ class DestinationsController extends AppController
 
     $prezzi = $this->request->getQuery('prezzi');
     $this->set(compact('prezzi'));
-    
+
     $count = $this->request->getQuery('count');
     if (!empty($count)) {
       $count = $query->count();
@@ -182,7 +195,7 @@ class DestinationsController extends AppController
       $this->viewBuilder()->setOption('serialize', 'count');
     } else {
       $ckey = 'destinations-' . md5(serialize($this->request->getQuery()));
-      if (!$this->request->is('json')) {        
+      if (!$this->request->is('json')) {
         $destinations = $this->paginate($query->cache($ckey));
       } else {
         $destinations = $query->cache($ckey);
@@ -254,7 +267,7 @@ class DestinationsController extends AppController
     $this->get_seo_destination_name($nomeseo);
     $this->viewBuilder()->setOption('serialize', 'destination');
   }
-  
+
   public function count()
   {
     $this->Destinations->recursive = -1;
@@ -275,9 +288,9 @@ class DestinationsController extends AppController
     if (empty($nomeseo)) {
       return $this->redirect(['controller' => 'Destinations', 'action' => 'index', '?' => ['prezzi' => true]]);
     }
-    $destination = $this->get_seo_destination_name($nomeseo);  
+    $destination = $this->get_seo_destination_name($nomeseo);
     $this->set(compact('destination'));
-    
+
     // tipi di bici disponibili
     $this->loadModel('Cyclomap.Tipibici');
     $tipibici = $this->Tipibici->find(
@@ -285,7 +298,7 @@ class DestinationsController extends AppController
       [
         'recursive' => -1,
         'conditions' => [
-          'destination_id' => $destination->id, 
+          'destination_id' => $destination->id,
           'published' => 1,
         ],
         'order' => 'tariffa_intera ASC'
@@ -305,7 +318,7 @@ class DestinationsController extends AppController
     ])->toArray();
     $this->set('addons', $addon_list);
 
-   /*  $this->loadModel('Cyclomap.Percorsi');
+    /*  $this->loadModel('Cyclomap.Percorsi');
     $esperienze = $this->Percorsi->find()
       ->where([
         'destination_id' => $destination->id,
@@ -325,12 +338,17 @@ class DestinationsController extends AppController
     $destinations = $this->Destinations->find('all')->toArray();
     $this->set('destinations', $destinations);
   }
-  
+
   public function prenota($destination = null)
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
     $desired_columns = [
-      'id', 'name', 'slug', 'nazione_id', 'regione', 'published',
+      'id',
+      'name',
+      'slug',
+      'nazione_id',
+      'regione',
+      'published',
     ];
     $destinations = $this->Destinations->find()
       ->select($desired_columns)
