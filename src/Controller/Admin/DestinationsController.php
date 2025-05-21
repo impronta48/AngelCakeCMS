@@ -37,12 +37,12 @@ class DestinationsController extends AppController
 		if (!empty($q)) {
 			$query->where(['name LIKE' => "%$q%"]);
 		}
-		
+
 		$this->Authorization->applyScope($query);
 
 		$destinations = $this->paginate($query);
 
-		$this->set(compact('destinations','q'));
+		$this->set(compact('destinations', 'q'));
 	}
 
 	/**
@@ -97,8 +97,8 @@ class DestinationsController extends AppController
 	public function add()
 	{
 		$this->set('new', true);
-    	$this->edit();
-    	$this->viewBuilder()->setTemplate('edit');
+		$this->edit();
+		$this->viewBuilder()->setTemplate('edit');
 	}
 
 	/**
@@ -140,7 +140,7 @@ class DestinationsController extends AppController
 					}
 				}
 				$this->Flash->success(__('The Destination has been saved.'));
-				return $this->redirect(['prefix' => 'false', 'controller' => 'Destinations', 'action' => 'view', $destination->id]);
+				return $this->redirect(['prefix' => false, 'controller' => 'Destinations', 'action' => 'view', $destination->id]);
 			}
 			$this->Flash->error(__('The Destination could not be saved. Please, try again.'));
 		}
@@ -157,7 +157,7 @@ class DestinationsController extends AppController
 	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
 	 */
 	public function delete($id = null)
-	{		
+	{
 		$destination = $this->Destinations->get($id);
 		$this->Authorization->authorize($destination);
 
