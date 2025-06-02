@@ -4,8 +4,14 @@
     "homepage": "https://impronta48.it/cakephp",
     "type": "project",
     "license": "MIT",
+    "repositories": [
+        {
+            "url": "https://github.com/impronta48/geojson-converter.git",
+            "type": "vcs"
+        }
+    ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=8.2",
         "admad/cakephp-glide": "^4",
         "admad/cakephp-i18n": "^2.1",
         "admad/cakephp-social-auth": "^1.0",
@@ -25,6 +31,7 @@
         "josbeir/cakephp-filesystem": "^2.0",
         "laminas/laminas-diactoros": "^2.13",
         "league/flysystem-webdav": "^1.0",
+        "lraveri/geojson-converter": "dev-main",
         "mobiledetect/mobiledetectlib": "^2.8",
         "phpoffice/phpspreadsheet": "^1.15",
         "satispay/gbusiness-api-php-sdk": "^1.3",
