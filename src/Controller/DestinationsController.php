@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Cake\Utility\Text;
 use Cake\Http\Exception\NotFoundException;
+use Cake\I18n\I18n;
 
 /**
  * Destinations Controller
@@ -96,7 +97,8 @@ class DestinationsController extends AppController
 
     //Forzo e-tab in modo da cancellare la cache
     $lastModified = $destination->modified ? $destination->modified->getTimestamp() : time();
-    $etag = md5($lastModified . '-' . $destination->id);
+    $locale = I18n::getLocale();
+    $etag = md5($lastModified . '-' . $destination->id . '-' . $locale);
 
     header("ETag: \"$etag\"");
     header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified) . " GMT");
