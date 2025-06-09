@@ -102,6 +102,7 @@ class DestinationsController extends AppController
 
     header("ETag: \"$etag\"");
     header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified) . " GMT");
+    $this->response = $this->response->withHeader('Vary', 'Accept-Language');
 
     // Verifica ETag del client
     if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && @trim($_SERVER['HTTP_IF_NONE_MATCH']) === "\"$etag\"") {
