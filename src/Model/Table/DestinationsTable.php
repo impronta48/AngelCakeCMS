@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -29,10 +30,15 @@ class DestinationsTable extends Table
 	 * @param array $config The configuration for the Table.
 	 * @return void
 	 */
-	public function initialize(array $config): void {
+	public function initialize(array $config): void
+	{
 		$this->addBehavior('Translate', [
 			'fields' => [
-				'nomiseo', 'title', 'name', 'descrizione',
+				'nomiseo',
+				'title',
+				'name',
+				'descrizione',
+				'preposition'
 			],
 			'referenceName' => 'Destination', //Importante per garantire la compatibilità con cake2
 			'defaultLocale' => 'ita',
@@ -62,7 +68,8 @@ class DestinationsTable extends Table
 	 * @param \Cake\Validation\Validator $validator Validator instance.
 	 * @return \Cake\Validation\Validator
 	 */
-	public function validationDefault(Validator $validator): \Cake\Validation\Validator {
+	public function validationDefault(Validator $validator): \Cake\Validation\Validator
+	{
 		$validator
 			->integer('id')
 			->allowEmpty('id', 'create');

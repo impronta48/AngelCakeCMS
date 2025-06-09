@@ -80,7 +80,7 @@ $routes->scope('/images', function ($routes) {
       'source' => WWW_ROOT,
 
       // Path or League\Flysystem adapter instance to write cached images to.
-      'cache' => CACHE . Configure::read('sitedir') . DS . "glide" , // WWW_ROOT  . 'cache',
+      'cache' => CACHE . Configure::read('sitedir') . DS . "glide", // WWW_ROOT  . 'cache',
 
       // URL part to be omitted from source path. Defaults to "/images/"
       // http://glide.thephpleague.com/1.0/config/source-and-cache/#set-a-base-url
@@ -93,7 +93,7 @@ $routes->scope('/images', function ($routes) {
 
       //https://glide.thephpleague.com/2.0/config/setup/
       'defaults' => [
-        'q' => 90,        
+        'q' => 90,
       ],
     ],
 
@@ -118,11 +118,11 @@ $routes->scope('/images', function ($routes) {
 });
 
 //Se nel file di configurazione ho specificato customRoutes, allora
-  //importo extra-routes.php nella cartella sites/nomesito/
-  $er = Configure::read('ExtraRoutes');
-  if ($er) {
-    include_once conf_path() . DS .  'extra-routes.php';
-  }
+//importo extra-routes.php nella cartella sites/nomesito/
+$er = Configure::read('ExtraRoutes');
+if ($er) {
+  include_once conf_path() . DS .  'extra-routes.php';
+}
 
 
 $routes->scope('/', function (RouteBuilder $builder) {
@@ -133,7 +133,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, templates/Pages/home.php)...
      */
-  $builder->connect('/sitemap', ['plugin' => null, 'controller' => 'Sitemaps', 'action' => 'index']);    
+  $builder->connect('/sitemap', ['plugin' => null, 'controller' => 'Sitemaps', 'action' => 'index']);
 
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home'], ['routeClass' => I18nRoute::class]);
   $builder->connect('/', ['plugin' => null, 'controller' => 'Pages', 'action' => 'display', 'home']);
@@ -163,7 +163,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
   // $builder->fallbacks(\ADmad\I18n\Routing\Route\I18nRoute::class); // TODO: readd this, manually route everything
   // $builder->fallbacks(DashedRoute::class);
 
-  
+
 });
 
 $routes->prefix('Admin', function (RouteBuilder $routes) { // Admin routes
