@@ -95,7 +95,7 @@ class DestinationsController extends AppController
       $nomeseo = $destination->preposition . ' ' . $destination->name;
     }
 
-    //Forzo e-tab in modo da cancellare la cache
+    //Forzo e-tag in modo da cancellare la cache
     $lastModified = $destination->modified ? $destination->modified->getTimestamp() : time();
     $locale = I18n::getLocale();
     $etag = md5($lastModified . '-' . $destination->id . '-' . $locale);
@@ -197,7 +197,8 @@ class DestinationsController extends AppController
       $this->set('count', $count);
       $this->viewBuilder()->setOption('serialize', 'count');
     } else {
-      $ckey = 'destinations-' . md5(serialize($this->request->getQuery()));
+      $locale = I18n::getLocale();
+      $ckey = $locale . '-destinations-' . md5(serialize($this->request->getQuery()));
       if (!$this->request->is('json')) {
         $destinations = $this->paginate($query->cache($ckey));
       } else {
