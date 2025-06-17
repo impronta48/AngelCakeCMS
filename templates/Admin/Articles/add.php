@@ -2,7 +2,7 @@
 
 use Cake\I18n\I18n;
 
- $this->assign('title', 'Aggiungi Articolo'); ?>
+$this->assign('title', 'Aggiungi Articolo'); ?>
 <?php $this->assign('vue', 'mix'); // Needed because this page is also rendered by `add` 
 ?>
 <?php $new = !isset($article->id); ?>
@@ -46,7 +46,11 @@ use Cake\I18n\I18n;
     echo $this->Form->control('destination_id', ['empty' => '---']);
     ?>
   </fieldset>
-
+  <b-form-row>
+    <b-col>
+      <?= $this->Form->control('tags._ids', ['options' => $tags, 'empty' => '---']); ?>
+    </b-col>
+  </b-form-row>
   <div class="card card-info">
     <div class="card-body">
       <h3 class="card-title"><i class="bi bi-image"></i> Immagini associate a questo articolo</h3>
@@ -84,7 +88,7 @@ use Cake\I18n\I18n;
   <?= $this->Form->control('slider', ['label' => 'Visibile nello Slider']); ?>
   <?= $this->Form->control('modified', ['label' => 'Ultima Modifica', 'type' => 'text', 'format' => 'Y-m-d']); ?>
   <?= $this->Form->control('user_id', ['value' => $user]); ?>
-  
+
   <?= $this->Form->button(__('Salva'), ['name' => 'save']) ?>
   <?php if (I18n::getLocale() == 'ita') : ?>
     <b-button @click="saveAndAutomaticallyTranslate" name="save-and-translate">
@@ -101,7 +105,7 @@ use Cake\I18n\I18n;
   <input v-if="saveAutoTrans" type="hidden" name="save-and-autotranslate" v-model="saveAutoTrans"></input>
 
   <?= $this->Form->button(__('Salva e Visualizza'), ['name' => 'save-and-view']) ?>
-  
+
   <?= $this->Form->end() ?>
 
 </div>
