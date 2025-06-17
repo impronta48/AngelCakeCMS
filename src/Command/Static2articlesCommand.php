@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Command;
@@ -10,21 +11,24 @@ use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
+use Cake\I18n\I18n;
 
 class Static2articlesCommand extends Command
 {
 
 	private $io;
 
-	protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser {
+	protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
+	{
 		$parser->addArgument('folder', [
-		'help' => 'Folder include in webroot/sitedir/static/',
+			'help' => 'Folder include in webroot/sitedir/static/',
 		]);
 
 		return $parser;
 	}
 
-	public function execute(Arguments $args, ConsoleIo $io) {
+	public function execute(Arguments $args, ConsoleIo $io)
+	{
 		$this->io = $io;
 		$folder = $args->getArgument('folder');
 		$sitedir = Configure::read('sitedir');
@@ -48,8 +52,9 @@ class Static2articlesCommand extends Command
 		$io->out('Finito.');
 	}
 
-  //Crea articoli a DB a partre dalle pagine statiche
-	private function creaArticles($risult, $path) {
+	//Crea articoli a DB a partre dalle pagine statiche
+	private function creaArticles($risult, $path)
+	{
 		$destinations['blog'] = 1;
 		$destinations['_portfolio'] = 2;
 
@@ -59,39 +64,49 @@ class Static2articlesCommand extends Command
 			$article->slug = basename($r['dati']['slug']);
 			$this->io->out('Creazione Article : ' . $article->slug);
 
-			$ex = $this->Articles->findBySlug($article->slug)->count();
-			if ($ex == 0) {
-				$article->title = $r['dati']['title'];
-				$article->description = substr($r['dati']['description'], 0, 255);
-				$article->keywords = $r['dati']['keywords'] ?? '';
-				$article->url_canonical = $r['dati']['canonical'] ?? '';
-				$article->body = $r['dati']['body'];
-				$article->modified = $r['dati']['date'];
-				$article->published = true;
-				$article->tag_string = $r['dati']['canonical'] ?? '';
-				$article->user_id = '7aab5817-8f9f-4a34-91b2-3c22a0c6e3d7';
+			$ex = $this->Articles->findBySlug($article->slug)->first();
+			if ($ex) {
+				$this->io->out('Articolo già esistente: ' . $article->slug);
+				$article = $ex;
+			}
 
-				if (isset($destinations[$path])) {
-					$article->destination_id = $destinations[$path];
-				} else {
-					$article->destination_id = null;
-				}
+			$article->title = $r['dati']['title'] ?? $article->slug;
+			$article->description = substr($r['dati']['description'], 0, 255);
+			$article->keywords = $r['dati']['keywords'] ?? '';
+			$article->url_canonical = $r['dati']['canonical'] ?? '';
+			$article->body = $r['dati']['body'];
+			$article->modified = $r['dati']['date'];
+			$article->published = true;
+			$article->tag_string = $r['dati']['canonical'] ?? '';
+			$article->user_id = 87;
 
-				if ($this->Articles->save($article)) {
-				  //La copertina va spostata da static/img a /articles/article-id/copertina
-					if (!empty($r['dati']['copertina'])){
-						$r['dati']['copertina'] = ltrim($r['dati']['copertina'], '/');
-						$oldCopertina = WWW_ROOT . $r['dati']['copertina'];
-						$b = basename($oldCopertina);
-						if (file_exists($oldCopertina) && isset($path)) {
-							if (strlen($path)) {
-									$newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/$path/{$article->id}/copertina/";
-							} else {
-								$newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/{$article->id}/copertina/";
-							}
-							$f = new Folder($newCopertina, true);
-							rename($oldCopertina, $newCopertina . $b);
+			if (isset($destinations[$path])) {
+				$article->destination_id = $destinations[$path];
+			} else {
+				$article->destination_id = null;
+			}
+
+			// Imposta la lingua italiana per l'articolo
+			$this->Articles->setLocale('ita');
+			if (strpos($path, '/eng') !== false) {
+				$this->Articles->setLocale('eng');
+			}
+
+			if ($this->Articles->save($article)) {
+
+				//La copertina va spostata da static/img a /articles/article-id/copertina
+				if (!empty($r['dati']['copertina'])) {
+					$r['dati']['copertina'] = ltrim($r['dati']['copertina'], '/');
+					$oldCopertina = WWW_ROOT . $r['dati']['copertina'];
+					$b = basename($oldCopertina);
+					if (file_exists($oldCopertina) && isset($path)) {
+						if (strlen($path)) {
+							$newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/$path/{$article->id}/copertina/";
+						} else {
+							$newCopertina = WWW_ROOT . Configure::read('sitedir') . "/articles/{$article->id}/copertina/";
 						}
+						$f = new Folder($newCopertina, true);
+						rename($oldCopertina, $newCopertina . $b);
 					}
 				}
 			}
