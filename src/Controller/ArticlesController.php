@@ -102,6 +102,15 @@ class ArticlesController extends AppController
       $query->innerJoinWith('Projects');
     }
 
+    $tag = $this->request->getQuery('tag');
+    if ($tag) {
+      $query->contain(['Tags' => ['fields' => ['id', 'title']]]);
+      $query->innerJoinWith('Tags', function ($q) use ($tag) {
+        return $q->where(['Tags.id IN' => $tag]);
+      });
+    }
+
+
     $destinations = [];
     $destination_id = $this->request->getQuery('destination_id');
     //dd($destination_id);
