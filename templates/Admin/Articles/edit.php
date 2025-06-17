@@ -5,7 +5,8 @@ use Cake\I18n\I18n;
 
 $this->assign('title', 'Article Edit: ' . $article->title); ?>
 <?php $sitedir = Configure::read('sitedir'); ?>
-<?php $this->assign('vue', 'mix'); // Needed because this page is also rendered by `add` ?> 
+<?php $this->assign('vue', 'mix'); // Needed because this page is also rendered by `add` 
+?>
 
 <div class="container">
   <?= $this->element('v-admin-navbar', ['event' => $article]); ?>
@@ -13,7 +14,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
 
   <?= $this->Form->create($article, [
     'type' => 'file',
-    'class' => 'form', 
+    'class' => 'form',
     'ref' => 'form',
   ]); ?>
 
@@ -94,7 +95,11 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
       <span class="small">Ammessi file pdf|doc|xls|ppt|odt|docx|odp|kml</span>
     </div>
   </b-card>
-
+  <b-form-row>
+    <b-col>
+      <?= $this->Form->control('tag_string', ['type' => 'text']); ?>
+    </b-col>
+  </b-form-row>
   <?= $this->Form->control('published', ['label' => 'Pubblicato']); ?>
   <?= $this->Form->control('archived', ['label' => 'Archiviato']); ?>
   <?= $this->Form->control('promoted', ['label' => 'Promosso in Home Page']); ?>
@@ -118,7 +123,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
   </div>
 
   <?= $this->Form->hidden('id'); ?>
-  
+
   <?= $this->Form->button(__('Salva'), ['name' => 'save']) ?>
   <?php if (I18n::getLocale() == 'ita') : ?>
     <b-button @click="saveAndAutomaticallyTranslate" name="save-and-translate">
@@ -135,6 +140,6 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
   <input v-if="saveAutoTrans" type="hidden" name="save-and-autotranslate" v-model="saveAutoTrans"></input>
 
   <?= $this->Form->button(__('Salva e Visualizza'), ['name' => 'save-and-view']) ?>
-  
+
   <?= $this->Form->end() ?>
 </div>

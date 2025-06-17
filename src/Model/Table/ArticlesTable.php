@@ -19,7 +19,10 @@ class ArticlesTable extends Table
 		$this->belongsTo('Users');
 		$this->belongsTo('Destinations');
 		$this->hasOne('Projects');
-		$this->belongsToMany('Tags');
+		$this->belongsToMany('Tags', [
+			'joinTable' => 'articles_tags',
+			'dependent' => true
+		]);
 		//$this->addBehavior('Tags.Tag', ['taggedCounter' => false]);
 		$this->addBehavior('Translate', [
 			'fields' => [

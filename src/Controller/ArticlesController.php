@@ -8,7 +8,7 @@ class ArticlesController extends AppController
 {
 
   public $paginate = [
-    'limit' => 5,
+    'limit' => 12,
   ];
 
   public function initialize(): void
@@ -67,6 +67,7 @@ class ArticlesController extends AppController
   public function index()
   {
     $query = $this->Articles->find()
+      ->contain(['Tags'])
       ->where(['Articles.published' => 1])
       ->order(['Articles.modified DESC']);
 
