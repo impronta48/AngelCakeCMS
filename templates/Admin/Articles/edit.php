@@ -97,7 +97,7 @@ $this->assign('title', 'Article Edit: ' . $article->title); ?>
   </b-card>
   <b-form-row>
     <b-col>
-      <?= $this->Form->control('tag_string', ['type' => 'text']); ?>
+      <?= $this->Form->control('tags._ids', ['options' => $tags]); ?>
     </b-col>
   </b-form-row>
   <?= $this->Form->control('published', ['label' => 'Pubblicato']); ?>
