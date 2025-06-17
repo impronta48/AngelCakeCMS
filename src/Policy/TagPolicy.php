@@ -11,7 +11,7 @@ use Authorization\Policy\BeforePolicyInterface;
 /**
  * User policy
  */
-class TagsPolicy implements BeforePolicyInterface
+class TagPolicy implements BeforePolicyInterface
 {
     public function before($user, $resource, $action)
     {
