@@ -73,7 +73,7 @@ class ArticlesController extends AppController
 
     $promoted = $this->request->getQuery('promoted');
     if ($promoted) {
-      $query->order(['promoted DESC']);
+      $query->where(['promoted' => 1]);
     }
     //Valori ammessi: [0,1,*]
     $archived = $this->request->getQuery('archived');
@@ -85,7 +85,7 @@ class ArticlesController extends AppController
 
     $slider = $this->request->getQuery('slider');
     if ($slider) {
-      $query->order(['slider DESC']);
+      $query->where(['slider' => 1]);
     }
     $month = $this->request->getQuery('month');
     if ($month) {
