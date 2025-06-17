@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Model\StaticModel;
+use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -12,32 +14,34 @@ use Cake\ORM\TableRegistry;
  */
 class SitemapsController extends AppController
 {
-  //Necessario per gestire la risposta in json della view
+	//Necessario per gestire la risposta in json della view
 
-	public function initialize(): void {
+	public function initialize(): void
+	{
 		parent::initialize();
 		$this->modelClass = false;
 		$this->loadComponent('RequestHandler');
 		$this->Authentication->allowUnauthenticated(['index']);
 	}
 
-	public function index() {
-        $this->RequestHandler->renderAs($this, 'xml');
+	public function index()
+	{
+		$this->RequestHandler->renderAs($this, 'xml');
 		set_time_limit(120);
 		$s = new StaticModel();
- 		$static = $s->findAll();
+		$static = $s->findAll();
 
 		$articles = TableRegistry::getTableLocator()->get('Articles')->find()
-			  ->select(['id','slug','modified'])
-			  ->where(['published' => true])
-			  ->order(['modified' => 'desc'])
-			  ->all();
+			->select(['id', 'slug', 'modified'])
+			->where(['published' => true])
+			->order(['modified' => 'desc'])
+			->all();
 
 		$destinations = TableRegistry::getTableLocator()->get('Destinations')->find()
-			  ->select(['id', 'name', 'slug'])
-			  ->where(['published' => true])
-			  ->order(['name' => 'asc'])
-			  ->all();
+			->select(['id', 'name', 'slug'])
+			->where(['published' => true])
+			->order(['name' => 'asc'])
+			->all();
 
 		// $this->viewBuilder()->disableAutoLayout();
 		$this->set(compact('static', 'articles', 'destinations'));
