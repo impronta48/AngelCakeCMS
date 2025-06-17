@@ -174,6 +174,9 @@ $routes->prefix('Admin', function (RouteBuilder $routes) { // Admin routes
   $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'admin']);
   $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index'], ['routeClass' => I18nRoute::class]);
   $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']); // TODO this fixes Poi, Percorsi, Destinations?
+  //$routes->connect('/tags', ['controller' => 'Tags', 'action' => 'index'], ['routeClass' => I18nRoute::class]);
+
+
   $routes->setExtensions(['xls', 'json']);
   // Admin fallbacks
   $routes->fallbacks(I18nRoute::class);
