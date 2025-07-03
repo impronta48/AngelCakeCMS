@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use App\Lib\AttachmentManager;
+use Cake\Cache\Cache;
 use Cake\Routing\Router;
 use Psr\Log\LogLevel;
 use Cake\Event\EventInterface;
@@ -32,6 +33,7 @@ class DestinationsController extends AppController
 	{
 		$query = $this->Destinations->find()
 			->contain(['Articles']);
+
 		//Se mi hai passato dei parametri in query filtro su quelli
 		$q = $this->request->getQuery('q');
 		if (!empty($q)) {
@@ -124,6 +126,7 @@ class DestinationsController extends AppController
 			$this->Authorization->authorize($destination);
 
 			if ($this->Destinations->save($destination)) {
+				Cache::clearAll();
 				$destination = $this->Destinations->get($destination->id);
 				$upload_session_fields = $this->request->getData('upload_session_id');
 				if ($new && !empty($upload_session_fields)) {
