@@ -124,8 +124,9 @@ class DestinationsController extends AppController
 			$data = $this->request->getData();
 			$destination = $this->Destinations->patchEntity($destination, $data);
 			$this->Authorization->authorize($destination);
-			Cache::clearAll();
+
 			if ($this->Destinations->save($destination)) {
+				Cache::clearAll();
 				$destination = $this->Destinations->get($destination->id);
 				$upload_session_fields = $this->request->getData('upload_session_id');
 				if ($new && !empty($upload_session_fields)) {

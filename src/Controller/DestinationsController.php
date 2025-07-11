@@ -191,6 +191,27 @@ class DestinationsController extends AppController
     $prezzi = $this->request->getQuery('prezzi');
     $this->set(compact('prezzi'));
 
+    $recent = $this->Destinations->find()
+      ->order(['modified' => 'DESC'])
+      ->limit(1)
+      ->first();
+
+    //Forzo e-tag in modo da cancellare la cache
+    $lastModified = $recent->modified ? $recent->modified->getTimestamp() : time();
+    $locale = I18n::getLocale();
+    $etag = md5($lastModified . '-' . $locale);
+
+    header("ETag: \"$etag\"");
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified) . " GMT");
+    $this->response = $this->response->withHeader('Vary', 'Accept-Language');
+
+    // Verifica ETag del client
+    if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && @trim($_SERVER['HTTP_IF_NONE_MATCH']) === "\"$etag\"") {
+      header("HTTP/1.1 304 Not Modified");
+      exit;
+    }
+
+
     $count = $this->request->getQuery('count');
     if (!empty($count)) {
       $count = $query->count();
