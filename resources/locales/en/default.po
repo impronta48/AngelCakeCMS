@@ -889,3 +889,84 @@ msgstr "All routes"
 
 msgid "Legenda"
 msgstr "Legend"
+
+msgid "Descrizione"
+msgstr "Description"
+
+msgid "Durata:"
+msgstr "Duration:"
+
+msgid "Lunghezza:"
+msgstr "Length:"
+
+msgid "Periodo dell'anno:"
+msgstr "Season:"
+
+msgid "Età minima:"
+msgstr "Minimum age:"
+
+msgid "Altimetria:"
+msgstr "Altitude:"
+
+msgid "Calorie:"
+msgstr "Calories:"
+
+msgid "Prossime partenze:"
+msgstr "Next departures:"
+
+msgid "La quota comprende"
+msgstr "The price includes"
+
+msgid "Foto"
+msgstr "Photos"
+
+msgid "Posti da scoprire lungo questo percorso"
+msgstr "Places to discover along this route"
+
+msgid "Prenota ora!"
+msgstr "Book now!"
+
+msgid "Nome"
+msgstr "Name"
+
+msgid "Cognome"
+msgstr "Surname"
+
+msgid "Data di Nascita"
+msgstr "Date of Birth"
+
+msgid "Luogo di Nascita"
+msgstr "Place of Birth"
+
+msgid "Città di Residenza"
+msgstr "City of Residence"
+
+msgid "Indirizzo"
+msgstr "Address"
+
+msgid "Data"
+msgstr "Date"
+
+msgid "Autorizzo Cribyoo al trattamento dei dati per le sole comunicazioni legate alla vita associativa"
+msgstr "I authorize Cribyoo to process data only for communications related to association activities"
+
+msgid "Prenota ora"
+msgstr "Book now"
+
+msgid "Richiesta Informazioni"
+msgstr "Information Request"
+
+msgid "Nome e cognome"
+msgstr "Name and surname"
+
+msgid "Tel."
+msgstr "Phone"
+
+msgid "Messaggio"
+msgstr "Message"
+
+msgid "Richiesta prenotazione percorso"
+msgstr "Route booking request"
+
+msgid "Invia"
+msgstr "Send"
