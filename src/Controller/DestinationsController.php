@@ -140,7 +140,6 @@ class DestinationsController extends AppController
       'description',
       'nomiseo',
       'published',
-      'published',  // Sembra duplicato
       'created',
       'modified',
       'chiuso',
