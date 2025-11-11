@@ -351,6 +351,21 @@ msgstr "Photo"
 msgid "mappa a schermo intero"
 msgstr "full-screen map"
 
+msgid "Località"
+msgstr "Location"
+
+msgid "Apertura"
+msgstr "Opens"
+
+msgid "Telefono"
+msgstr "Telephone"
+
+msgid "Sito"
+msgstr "Site"
+
+msgid "anni"
+msgstr "years"
+
 #: Poi/view.php:167
 msgid "I percorsi che passano da questo punto:"
 msgstr "Routes passing through this point:"
@@ -955,6 +970,21 @@ msgstr "I authorize Cribyoo to process data only for communications related to a
 
 msgid "Prenota ora"
 msgstr "Book now"
+
+msgid "Letta l'informativa sopra riportata, esprimo il consenso al trattamento, secondo le modalità indicate, dei miei dati personali per le finalità indicate ai punti a) e b) (finalità relativa alla prestazione contrattuale e di legge)."
+msgstr "Having read the above information, I consent to the processing, according to the methods indicated, of my personal data for the purposes indicated in points a) and b) (purposes related to contractual performance and law)."
+
+msgid "Do il consenso"
+msgstr "I consent"
+
+msgid "Letta l'informativa sopra riportata, esprimo il consenso al trattamento, secondo le modalità indicate, dei miei dati personali per le finalità indicate al punto c) (finalità legate al business e statistiche)."
+msgstr "Having read the above information, I consent to the processing, according to the methods indicated, of my personal data for the purposes indicated in point c) (business and statistical purposes)."
+
+msgid "Nego il consenso"
+msgstr "I deny consent"
+
+msgid "Letta l'informativa sopra riportata, esprimo il consenso al trattamento, secondo le modalità indicate, dei miei dati personali per le finalità indicate al punto d) (finalità di marketing)."
+msgstr "Having read the above information, I consent to the processing, according to the methods indicated, of my personal data for the purposes indicated in point d) (marketing purposes)."
 
 msgid "Richiesta Informazioni"
 msgstr "Information Request"
