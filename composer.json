@@ -8,6 +8,10 @@
         {
             "url": "https://github.com/impronta48/geojson-converter.git",
             "type": "vcs"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/isobutil/angelcake-google-translator.git"
         }
     ],
     "require": {
@@ -25,9 +29,9 @@
         "friendsofcake/bootstrap-ui": "^3",
         "google/apiclient": "^2.0",
         "hkod/frontmatter": "^1",
-        "impronta48/ibmwatson": "^1.0",
         "intervention/imagecache": "^2.4",
         "ishanvyas22/asset-mix": "^1.3",
+        "isobutil/angelcake-google-translator": "*",
         "josbeir/cakephp-filesystem": "^2.0",
         "laminas/laminas-diactoros": "^2.13",
         "league/flysystem-webdav": "^1.0",
