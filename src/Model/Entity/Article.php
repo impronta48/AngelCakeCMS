@@ -10,7 +10,7 @@ use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use impronta48\IBMWatson;
+use isobutil\GoogleTranslate;
 
 class Article extends Entity
 {
@@ -110,17 +110,16 @@ class Article extends Entity
 
 	public function autoTranslate($field, $author_id)
 	{
-		$apiKey = Configure::read('IBMWatson.LANGUAGE_TRANSLATOR_APIKEY');
-		$url = Configure::read('IBMWatson.LANGUAGE_TRANSLATOR_URL');
-		$w = new IBMWatson($apiKey, $url);
+		$apiKey = Configure::read('GoogleTranslate.LANGUAGE_TRANSLATOR_APIKEY');
+	
+		$w = new GoogleTranslate($apiKey);
 
 		$history = TableRegistry::getTableLocator()->get('AutoTranslationHistory');
 
 		if (!empty($this->{$field})) {
 			$translateInput = html_entity_decode($this->{$field});
-			$resJson = $w->translateSentence($translateInput, 'it', 'en');
-			$res = json_decode($resJson);
-			$this->{$field} = $res->translations[0]->translation;
+			$res = $w->translateSentence($translateInput, 'it', 'en');
+			$this->{$field} = $res;
 			// traduzione ottenuta, salva nella history
 			$historyLog = $history->newEmptyEntity();
 			$historyLog->context = 'Article->' . $field;
