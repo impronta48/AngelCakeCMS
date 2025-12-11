@@ -342,6 +342,8 @@ class DestinationsController extends AppController
 
     $destinations = $this->Destinations->find('all')->toArray();
     $this->set('destinations', $destinations);
+    
+    $this->viewBuilder()->setOption('serialize', ['destination', 'tipibici', 'addons', 'destinations']);
   }
 
   public function prenota($destination = null)
@@ -364,6 +366,7 @@ class DestinationsController extends AppController
     }
 
     $this->set('destinations', $destinations);
+    $this->viewBuilder()->setOption('serialize', 'destinations');
   }
 
   /**
