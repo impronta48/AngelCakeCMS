@@ -6,6 +6,8 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Authentication\PasswordHasher\DefaultPasswordHasher;
+use Firebase\JWT\JWT;
+use Cake\Utility\Security;
 
 /**
  * User Entity
@@ -65,4 +67,64 @@ class User extends Entity
     $hasher = new DefaultPasswordHasher();
     return $hasher->hash($password);
   }
+  /**
+     * Generate a refresh token valid for 30 days
+     * @param int $uid User ID
+     * @return string JWT refresh token
+     */
+    public function getRefreshToken($uid)
+    {
+        $expireTime = time() + self::REFRESH_TOKEN_MONTH_LIVE;
+        $alg = 'HS256';
+        $token = JWT::encode([
+            'sub' => $uid,
+            'exp' => $expireTime,
+            'type' => 'refresh'
+        ], Security::getSalt(), $alg);
+
+        return $token;
+    }
+
+    /**
+     * Validate and decode a refresh token
+     * @param string $token JWT refresh token
+     * @return object|null Decoded token data or null if invalid
+     */
+    public static function validateRefreshToken($token)
+    {
+        try {
+            $decoded = JWT::decode($token, new \Firebase\JWT\Key(Security::getSalt(), 'HS256'));
+
+            // Verify it's a refresh token
+            if (!isset($decoded->type) || $decoded->type !== 'refresh') {
+                return null;
+            }
+
+            // Verify token hasn't expired
+            if ($decoded->exp < time()) {
+                return null;
+            }
+
+            return $decoded;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public const TOKEN_HOUR_LIVE = 3600; // 1 hour
+    public const DAY = 86400; // seconds in a day
+    public const REFRESH_TOKEN_MONTH_LIVE = self::DAY * 30;
+
+  public function getToken($uid, $duration = self::TOKEN_HOUR_LIVE)
+    {
+        $expireTime = time() + $duration;
+        $alg = 'HS256'; // Replace with your algorithm
+        $token = JWT::encode([
+            'sub' => $uid,
+            'exp' => $expireTime,
+        ], Security::getSalt(), $alg);
+
+        return $token;
+    }
+
 }

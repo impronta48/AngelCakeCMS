@@ -1,9 +1,12 @@
 {
 	"folders": [
-		{
-			"path": "."
-		}
-	],
+    {
+      "path": "."
+    },
+    {
+      "path": "../crm/crm-cake"
+    }
+  ],
   "settings": {
     "files.watcherExclude": {
       "**/webroot/**": true,

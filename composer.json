@@ -40,7 +40,8 @@
         "phpoffice/phpspreadsheet": "^1.15",
         "satispay/gbusiness-api-php-sdk": "^1.3",
         "studio-42/elfinder": "^2.1",
-        "symfony/yaml": "^5.0"
+        "symfony/yaml": "^5.0",
+        "firebase/php-jwt": "^6.0"
     },
     "require-dev": {
         "cakephp/bake": "^2",
