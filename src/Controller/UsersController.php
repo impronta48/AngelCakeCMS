@@ -71,11 +71,9 @@ class UsersController extends AppController
     $identity = $users->find()->where(['id'=>$userId])->first();
     $response = $this->_returnHttpOnlyCookies($identity, $this->response);
 
-    if (env('APP_ENV') === 'production') {
-      return $this->redirect('/admin');
-    } else {
-      return $this->redirect("cribyoo/admin/viaggi");
-    }
+
+    return $this->redirect('/admin');
+    
 
   }
 
