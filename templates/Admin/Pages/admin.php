@@ -68,6 +68,8 @@ $this->element('v-admin-extra-main-icons'); //Carico le icone extra fornite dal 
         <h4>Tags</h4>
       </a>
     </div>
+
+    
   </div>
 
   <hr>
