@@ -71,10 +71,11 @@ class UsersController extends AppController
     $identity = $users->find()->where(['id'=>$userId])->first();
     $response = $this->_returnHttpOnlyCookies($identity, $this->response);
 
-    if (!$identity->get('group_id'))
-      return $this->redirect('/viaggi/index');
+    if ($identity->get('group_id') == 1)
+      return $this->redirect('/admin');
+      
+    return $this->redirect('/viaggi/index');
 
-    return $this->redirect('/admin');
     
 
   }
