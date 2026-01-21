@@ -149,17 +149,46 @@ class DestinationsController extends AppController
     $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
 
     $query = $this->Destinations->find()
-      ->where(['published' => true]);
+      ->where(['Destinations.published' => true]);
 
     $specific_id = $this->request->getQuery('id');
     if (!empty($specific_id)) {
-      $query->where(['id' => $specific_id]);
+      $query->where(['Destinations.id' => $specific_id]);
     }
+
+    
+ 
+    $percorsi_count = $this->request->getQuery('percorsi_count');
+    if (!empty($percorsi_count)) {
+        $query->select(array_merge($select_columns, [
+          'percorsi_count' => $query->func()->count('Percorsi.id')
+              ]))
+              ->leftJoin(
+                  ['Percorsi' => 'percorsi'],
+                  ['Percorsi.destination_id = Destinations.id', 'Percorsi.published' => 1]
+              )
+              ->group(['Destinations.id']);
+              
+    }
+
+    $slider = $this->request->getQuery('slider');
+    if (!empty($slider)) {
+        $query->select(array_merge($select_columns, [
+        'percorsi_count' => $query->func()->count('Percorsi.id')
+            ]))
+            ->leftJoin(
+                ['Percorsi' => 'percorsi'],
+                ['Percorsi.destination_id = Destinations.id', 'Percorsi.published' => 1]
+            )
+            ->group(['Destinations.id'])
+            ->order(['percorsi_count' => 'DESC']);
+    }
+
 
     $random = $this->request->getQuery('random');
     if (!empty($random)) {
       $query->order('rand()');
-    } else {
+    } else if(empty($slider)) {
       $query->order($order_columns);
     }
 
@@ -198,12 +227,14 @@ class DestinationsController extends AppController
     } else {
       $locale = I18n::getLocale();
       //$ckey = $locale . '-destinations-' . md5(serialize($this->request->getQuery()));
-      if (!$this->request->is('json')) {
+      
+      $all = $this->request->getQuery('all');
+      if (!empty($all)) {
+        //$destinations = $query->all()->cache($ckey);
+        $destinations = $query->all();
+      } else {
         //$destinations = $this->paginate($query->cache($ckey));
         $destinations = $this->paginate($query);
-      } else {
-        //$destinations = $query->cache($ckey);
-        $destinations = $query;
       }
 
       $this->set(compact('destinations'));
