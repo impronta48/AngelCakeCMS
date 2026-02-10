@@ -21,7 +21,7 @@ class DestinationsController extends AppController
   public function initialize(): void
   {
     parent::initialize();
-    $this->Authentication->allowUnauthenticated(['prenota', 'index', 'experience', 'activities', 'tours', 'addioNubilato', 'rent', 'view', 'count', 'prezzi']);
+    $this->Authentication->allowUnauthenticated(['prenota', 'index', 'experience', 'activities', 'tours', 'addioNubilato', 'rent', 'view', 'count', 'prezzi', 'urls']);
   }
 
   public $paginate = [
@@ -413,5 +413,36 @@ class DestinationsController extends AppController
     $this->destination_in_session($destination);
 
     return true; // suppongo che venga sempre invocato via request action
+  }
+
+
+  public function urls()
+  {
+    $destinations = $this->Destinations->find('all', [
+      'conditions' => ['Destinations.published' => true],
+    ]);
+
+    $urls = [];
+    foreach ($destinations as $destination) {
+      $urls[] = [
+        'loc' => "ita/{$destination->slug}",
+        'alternatives' => [
+          [
+            'hreflang' => 'en',
+            'href' => "eng/{$destination->slug}",
+          ],
+          [
+            'hreflang' => 'it',
+            'href' => "ita/{$destination->slug}",
+          ],
+        ],
+        'lastmod' => $destination->modified ? $destination->modified->format('Y-m-d') : null,
+        'changefreq' => 'yearly',
+        'priority' => 0.8,
+      ];
+    }
+
+    $this->set(compact('urls'));
+    $this->viewBuilder()->setOption('serialize', 'urls');
   }
 }
