@@ -457,6 +457,23 @@ class DestinationsController extends AppController
         'changefreq' => 'yearly',
         'priority' => 0.5,
       ];
+
+      $urls[] = [
+        'loc' => "ita/{$destination->slug}/percorsi",
+        'alternatives' => [
+          [
+            'hreflang' => 'en',
+            'href' => "eng/{$destination->slug}/percorsi",
+          ],
+          [
+            'hreflang' => 'it',
+            'href' => "ita/{$destination->slug}/percorsi",
+          ],
+        ],
+        'lastmod' => $destination->modified ? $destination->modified->format('Y-m-d') : null,
+        'changefreq' => 'yearly',
+        'priority' => 0.5,
+      ];
     }
 
     $this->set(compact('urls'));
