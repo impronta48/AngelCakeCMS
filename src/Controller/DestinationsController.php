@@ -7,6 +7,7 @@ namespace App\Controller;
 use Cake\Utility\Text;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\I18n;
+use Cake\ORM\TableRegistry;
 
 /**
  * Destinations Controller
@@ -270,6 +271,7 @@ class DestinationsController extends AppController
       ->limit(10)
       ->toArray();
     $this->set('percorsi', $percorsi);
+    $this->viewBuilder()->setOption('serialize', 'percorsi');
   }
 
   public function tours($nomeseo = null)
@@ -285,6 +287,7 @@ class DestinationsController extends AppController
       ->limit(10)
       ->toArray();
     $this->set('percorsi', $percorsi);
+    $this->viewBuilder()->setOption('serialize', 'percorsi');
   }
 
   public function addioNubilato($nomeseo = null)
@@ -416,67 +419,76 @@ class DestinationsController extends AppController
   }
 
 
-  public function urls()
-  {
-    $destinations = $this->Destinations->find('all', [
-      'conditions' => ['Destinations.published' => true],
-    ]);
+
+public function urls()
+{
+    // 1. Recupero le destinazioni (seleziona i campi necessari per performance)
+    $destinations = $this->Destinations->find('all')
+        ->where(['Destinations.published' => true])
+        ->toArray();
 
     $urls = [];
+
     foreach ($destinations as $destination) {
-      $urls[] = [
-        'loc' => "ita/{$destination->slug}",
-        'alternatives' => [
-          [
-            'hreflang' => 'en',
-            'href' => "eng/{$destination->slug}",
-          ],
-          [
-            'hreflang' => 'it',
-            'href' => "ita/{$destination->slug}",
-          ],
-        ],
-        'lastmod' => $destination->modified ? $destination->modified->format('Y-m-d') : null,
-        'changefreq' => 'yearly',
-        'priority' => 0.8,
-      ];
+        // --- URL BASE DESTINAZIONE ---
+        $this->_addUrl($urls, $destination, "{$destination->slug}", "{$destination->slug}", 0.8);
+        
+        // --- URL PREZZI (con traduzione slug) ---
+        $this->_addUrl($urls, $destination, "{$destination->slug}/prezzi", "{$destination->slug}/prices", 0.5);
+        
+        // --- URL PERCORSI ---
+        $this->_addUrl($urls, $destination, "{$destination->slug}/percorsi", "{$destination->slug}/percorsi", 0.5);
 
-       $urls[] = [
-        'loc' => "ita/{$destination->slug}/prezzi",
-        'alternatives' => [
-          [
-            'hreflang' => 'en',
-            'href' => "eng/{$destination->slug}/prices",
-          ],
-          [
-            'hreflang' => 'it',
-            'href' => "ita/{$destination->slug}/prezzi",
-          ],
-        ],
-        'lastmod' => $destination->modified ? $destination->modified->format('Y-m-d') : null,
-        'changefreq' => 'yearly',
-        'priority' => 0.5,
-      ];
+        // --- GESTIONE NOMI SEO PER DESTINAZIONE ---
+        if (!empty($destination->nomiseo)) {
+            $nomi = explode(',', $destination->nomiseo);
+            
+            foreach ($nomi as $n) {
+                $n = trim($n);
+                if (empty($n)) continue;
 
-      $urls[] = [
-        'loc' => "ita/{$destination->slug}/percorsi",
-        'alternatives' => [
-          [
-            'hreflang' => 'en',
-            'href' => "eng/{$destination->slug}/percorsi",
-          ],
-          [
-            'hreflang' => 'it',
-            'href' => "ita/{$destination->slug}/percorsi",
-          ],
-        ],
-        'lastmod' => $destination->modified ? $destination->modified->format('Y-m-d') : null,
-        'changefreq' => 'yearly',
-        'priority' => 0.5,
-      ];
+                $nomeSeo = strtolower(Text::slug($n));
+
+                // Definiamo i prefissi delle rotte SEO
+                $seoRoutes = [
+                    ['path' => 'rent', 'pri' => 0.8],
+                    ['path' => 'activities', 'pri' => 0.8],
+                    ['path' => 'tours', 'pri' => 0.9],
+                    ['path' => 'addio-nubilato', 'pri' => 0.9],
+                    ['path' => 'experience', 'pri' => 0.8],
+                ];
+
+                foreach ($seoRoutes as $route) {
+                    $urls[] = [
+                        'loc' => "ita/destinations/{$route['path']}/$nomeSeo",
+                        'alternatives' => [
+                            ['hreflang' => 'en', 'href' => "eng/destinations/{$route['path']}/$nomeSeo"],
+                            ['hreflang' => 'it', 'href' => "ita/destinations/{$route['path']}/$nomeSeo"],
+                        ],
+                        'lastmod' => null,
+                        'changefreq' => 'yearly',
+                        'priority' => $route['pri'],
+                    ];
+                }
+            }
+        }
     }
 
-    $this->set(compact('urls'));
-    $this->viewBuilder()->setOption('serialize', 'urls');
-  }
+    return $urls;
+}
+
+
+private function _addUrl(&$urls, $dest, $itPath, $enPath, $priority) {
+    $urls[] = [
+        'loc' => "ita/$itPath",
+        'alternatives' => [
+            ['hreflang' => 'en', 'href' => "eng/$enPath"],
+            ['hreflang' => 'it', 'href' => "ita/$itPath"],
+        ],
+        'lastmod' => $dest->modified ? $dest->modified->format('Y-m-d') : null,
+        'changefreq' => 'yearly',
+        'priority' => $priority,
+    ];
+}
+  
 }
