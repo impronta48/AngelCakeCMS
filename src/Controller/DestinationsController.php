@@ -451,11 +451,11 @@ public function urls()
 
                 // Definiamo i prefissi delle rotte SEO
                 $seoRoutes = [
-                    ['path' => 'rent', 'pri' => 0.8],
+                    ['path' => 'rent', 'pri' => 0.9],
                     ['path' => 'activities', 'pri' => 0.8],
                     ['path' => 'tours', 'pri' => 0.9],
-                    ['path' => 'addio-nubilato', 'pri' => 0.9],
-                    ['path' => 'experience', 'pri' => 0.8],
+                    ['path' => 'addio-nubilato', 'pri' => 0.8],
+                    ['path' => 'experience', 'pri' => 0.9],
                 ];
 
                 foreach ($seoRoutes as $route) {
@@ -474,7 +474,9 @@ public function urls()
         }
     }
 
-    return $urls;
+   
+    $this->set('urls', $urls);
+    $this->viewBuilder()->setOption('serialize', 'urls');
 }
 
 
