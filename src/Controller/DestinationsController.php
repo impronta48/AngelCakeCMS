@@ -442,7 +442,7 @@ public function urls()
         // --- GESTIONE NOMI SEO PER DESTINAZIONE ---
         if (!empty($destination->nomiseo)) {
             $nomi = explode(',', $destination->nomiseo);
-            
+            $nomi[] = $destination->slug;
             foreach ($nomi as $n) {
                 $n = trim($n);
                 if (empty($n)) continue;
