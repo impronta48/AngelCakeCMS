@@ -460,10 +460,10 @@ public function urls()
 
                 foreach ($seoRoutes as $route) {
                     $urls[] = [
-                        'loc' => "ita/destinations/{$route['path']}/$nomeSeo",
+                        'loc' => "/ita/destinations/{$route['path']}/$nomeSeo",
                         'alternatives' => [
-                            ['hreflang' => 'en', 'href' => "eng/destinations/{$route['path']}/$nomeSeo"],
-                            ['hreflang' => 'it', 'href' => "ita/destinations/{$route['path']}/$nomeSeo"],
+                            ['hreflang' => 'en', 'href' => "/eng/destinations/{$route['path']}/$nomeSeo"],
+                            ['hreflang' => 'it', 'href' => "/ita/destinations/{$route['path']}/$nomeSeo"],
                         ],
                         'lastmod' => null,
                         'changefreq' => 'yearly',
@@ -482,10 +482,10 @@ public function urls()
 
 private function _addUrl(&$urls, $dest, $itPath, $enPath, $priority) {
     $urls[] = [
-        'loc' => "ita/$itPath",
+        'loc' => "/ita/$itPath",
         'alternatives' => [
-            ['hreflang' => 'en', 'href' => "eng/$enPath"],
-            ['hreflang' => 'it', 'href' => "ita/$itPath"],
+            ['hreflang' => 'en', 'href' => "/eng/$enPath"],
+            ['hreflang' => 'it', 'href' => "/ita/$itPath"],
         ],
         'lastmod' => $dest->modified ? $dest->modified->format('Y-m-d') : null,
         'changefreq' => 'yearly',
