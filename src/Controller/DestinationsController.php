@@ -220,6 +220,41 @@ class DestinationsController extends AppController
     $prezzi = $this->request->getQuery('prezzi');
     $this->set(compact('prezzi'));
 
+    $hasRenters = $this->request->getQuery('hasRenters');
+    if (!empty($hasRenters)) {
+
+    $destinationsTable = $this->fetchTable('Destinations');
+
+    // 1. Definiamo la subquery 
+    $subquery = $this->fetchTable('CategoriePoi')
+        ->find()
+        ->select(['P.destination_id'])
+        ->innerJoin(['P' => 'poi'], ['P.id = CategoriePoi.poi_id'])
+        ->where([
+            'P.published' => 1,
+            'CategoriePoi.categoria_id' => 3
+        ])
+        ->distinct(['P.destination_id']);
+
+    // 2. Iniziamo la query principale
+    $query = $destinationsTable->find()
+        ->where(['Destinations.published' => 1]);
+
+    // 3. LOGICA DI FILTRO (Forziamo il controllo booleano)
+    // Usiamo filter_var se il dato arriva da un parametro query string (URL)
+    $check = is_bool($hasRenters) ? $hasRenters : filter_var($hasRenters, FILTER_VALIDATE_BOOLEAN);
+
+    if ($check) {
+        // CASO TRUE: ID deve essere presente nella subquery
+        $query->where(['Destinations.id IN' => $subquery]);
+    } else {
+        // CASO FALSE: ID NON deve essere presente nella subquery
+        $query->where(['Destinations.id NOT IN' => $subquery]);
+    }
+
+
+   }
+
     $count = $this->request->getQuery('count');
     if (!empty($count)) {
       $count = $query->count();
@@ -419,10 +454,11 @@ class DestinationsController extends AppController
   }
 
 
-
 public function urls()
 {
-    // 1. Recupero le destinazioni (seleziona i campi necessari per performance)
+    // Recuperiamo il parametro lang (?lang=eng o ?lang=ita)
+    $lang = $this->request->getQuery('lang');
+
     $destinations = $this->Destinations->find('all')
         ->where(['Destinations.published' => true])
         ->toArray();
@@ -431,13 +467,13 @@ public function urls()
 
     foreach ($destinations as $destination) {
         // --- URL BASE DESTINAZIONE ---
-        $this->_addUrl($urls, $destination, "{$destination->slug}", "{$destination->slug}", 0.8);
+        $this->_addUrl($urls, $destination, "{$destination->slug}", "{$destination->slug}", 0.8, $lang);
         
-        // --- URL PREZZI (con traduzione slug) ---
-        $this->_addUrl($urls, $destination, "{$destination->slug}/prezzi", "{$destination->slug}/prices", 0.5);
+        // --- URL PREZZI ---
+        $this->_addUrl($urls, $destination, "{$destination->slug}/prezzi", "{$destination->slug}/prices", 0.5, $lang);
         
         // --- URL PERCORSI ---
-        $this->_addUrl($urls, $destination, "{$destination->slug}/percorsi", "{$destination->slug}/percorsi", 0.5);
+        $this->_addUrl($urls, $destination, "{$destination->slug}/percorsi", "{$destination->slug}/percorsi", 0.5, $lang);
 
         // --- GESTIONE NOMI SEO PER DESTINAZIONE ---
         if (!empty($destination->nomiseo)) {
@@ -447,9 +483,8 @@ public function urls()
                 $n = trim($n);
                 if (empty($n)) continue;
 
-                $nomeSeo = strtolower(Text::slug($n));
+                $nomeSeo = strtolower(\Cake\Utility\Text::slug($n));
 
-                // Definiamo i prefissi delle rotte SEO
                 $seoRoutes = [
                     ['path' => 'rent', 'pri' => 0.9],
                     ['path' => 'activities', 'pri' => 0.8],
@@ -459,38 +494,57 @@ public function urls()
                 ];
 
                 foreach ($seoRoutes as $route) {
-                    $urls[] = [
-                        'loc' => "/ita/destinations/{$route['path']}/$nomeSeo",
-                        'alternatives' => [
-                            ['hreflang' => 'en', 'href' => "/eng/destinations/{$route['path']}/$nomeSeo"],
-                            ['hreflang' => 'it', 'href' => "/ita/destinations/{$route['path']}/$nomeSeo"],
-                        ],
-                        'lastmod' => null,
-                        'changefreq' => 'yearly',
-                        'priority' => $route['pri'],
+                    $itPathSeo = "/ita/destinations/{$route['path']}/$nomeSeo";
+                    $enPathSeo = "/eng/destinations/{$route['path']}/$nomeSeo";
+                    
+                    $alternatives = [
+                        ['hreflang' => 'eng', 'href' => $enPathSeo],
+                        ['hreflang' => 'ita', 'href' => $itPathSeo],
                     ];
+
+                    // Applichiamo il filtro lingua anche alle rotte SEO
+                    if ($lang === 'eng') {
+                        $urls[] = ['loc' => $enPathSeo, 'alternatives' => $alternatives, 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => $route['pri']];
+                    } elseif ($lang === 'ita') {
+                        $urls[] = ['loc' => $itPathSeo, 'alternatives' => $alternatives, 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => $route['pri']];
+                    } else {
+                        $urls[] = ['loc' => $itPathSeo, 'alternatives' => $alternatives, 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => $route['pri']];
+                        $urls[] = ['loc' => $enPathSeo, 'alternatives' => $alternatives, 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => $route['pri']];
+                    }
                 }
             }
         }
     }
 
-   
     $this->set('urls', $urls);
     $this->viewBuilder()->setOption('serialize', 'urls');
 }
 
+// Modificato helper per accettare il parametro $lang
+private function _addUrl(&$urls, $dest, $itPath, $enPath, $priority, $lang = null) {
+    $itFull = "/ita/$itPath";
+    $enFull = "/eng/$enPath";
+    
+    $alternatives = [
+        ['hreflang' => 'eng', 'href' => $enFull],
+        ['hreflang' => 'ita', 'href' => $itFull],
+    ];
 
-private function _addUrl(&$urls, $dest, $itPath, $enPath, $priority) {
-    $urls[] = [
-        'loc' => "/ita/$itPath",
-        'alternatives' => [
-            ['hreflang' => 'en', 'href' => "/eng/$enPath"],
-            ['hreflang' => 'it', 'href' => "/ita/$itPath"],
-        ],
+    $baseData = [
         'lastmod' => $dest->modified ? $dest->modified->format('Y-m-d') : null,
         'changefreq' => 'yearly',
         'priority' => $priority,
+        'alternatives' => $alternatives
     ];
+
+    if ($lang === 'eng') {
+        $urls[] = array_merge($baseData, ['loc' => $enFull]);
+    } elseif ($lang === 'ita') {
+        $urls[] = array_merge($baseData, ['loc' => $itFull]);
+    } else {
+        $urls[] = array_merge($baseData, ['loc' => $itFull]);
+        $urls[] = array_merge($baseData, ['loc' => $enFull]);
+    }
 }
   
 }
