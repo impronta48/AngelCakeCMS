@@ -81,6 +81,25 @@ class DestinationsController extends AppController
       throw new NotFoundException(__('Invalid Destination'));
     }
 
+    // Ritorna il numero di noleggiatori per una data destinazione
+    $hasRenters = $this->request->getQuery('hasRenters');
+    $rentersCount = 0;
+
+    if (!empty($hasRenters)) {
+        // Contiamo i POI di categoria 3 associati a questa destinazione
+        $rentersCount = $this->fetchTable('CategoriePoi')
+            ->find()
+            ->innerJoin(['P' => 'poi'], ['P.id = CategoriePoi.poi_id'])
+            ->where([
+                'P.destination_id' => $destination->id,
+                'P.published' => 1,
+                'CategoriePoi.categoria_id' => 3
+            ])
+            ->count();
+
+            $destination->renters_count = $rentersCount;
+    }
+
     //Creo un array dai nomiseo
     if (isset($destination->nomiseo) && !empty($destination->nomiseo)) {
       $nomiseo = explode(',', $destination->nomiseo);
@@ -220,41 +239,7 @@ class DestinationsController extends AppController
     $prezzi = $this->request->getQuery('prezzi');
     $this->set(compact('prezzi'));
 
-    $hasRenters = $this->request->getQuery('hasRenters');
-    if (!empty($hasRenters)) {
-
-    $destinationsTable = $this->fetchTable('Destinations');
-
-    // 1. Definiamo la subquery 
-    $subquery = $this->fetchTable('CategoriePoi')
-        ->find()
-        ->select(['P.destination_id'])
-        ->innerJoin(['P' => 'poi'], ['P.id = CategoriePoi.poi_id'])
-        ->where([
-            'P.published' => 1,
-            'CategoriePoi.categoria_id' => 3
-        ])
-        ->distinct(['P.destination_id']);
-
-    // 2. Iniziamo la query principale
-    $query = $destinationsTable->find()
-        ->where(['Destinations.published' => 1]);
-
-    // 3. LOGICA DI FILTRO (Forziamo il controllo booleano)
-    // Usiamo filter_var se il dato arriva da un parametro query string (URL)
-    $check = is_bool($hasRenters) ? $hasRenters : filter_var($hasRenters, FILTER_VALIDATE_BOOLEAN);
-
-    if ($check) {
-        // CASO TRUE: ID deve essere presente nella subquery
-        $query->where(['Destinations.id IN' => $subquery]);
-    } else {
-        // CASO FALSE: ID NON deve essere presente nella subquery
-        $query->where(['Destinations.id NOT IN' => $subquery]);
-    }
-
-
-   }
-
+    
     $count = $this->request->getQuery('count');
     if (!empty($count)) {
       $count = $query->count();
