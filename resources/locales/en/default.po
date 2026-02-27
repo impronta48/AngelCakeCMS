@@ -28,6 +28,37 @@ msgstr "Contacts"
 msgid "Per le aziende"
 msgstr "For Companies"
 
+msgid "Restiamo in contatto" 
+msgstr "Keep in touch"
+
+msgid "Scrivici liberamente" 
+msgstr "Feel free to write to us"
+
+msgid "Se hai idee o suggerimenti, lasciaci un messaggio" 
+msgstr "If you have any ideas or suggestions, please leave us a message."
+
+
+msgid "Nome"
+msgstr "Name"
+
+msgid "Indirizzo email"
+msgstr "Email address"
+
+msgid "Numero di Telefono"
+msgstr "Phone number"
+
+msgid "Titolo"
+msgstr "Subject"
+
+msgid "Scrivi qui il tuo messaggio"
+msgstr "Write your message here"
+
+msgid "Scegli la tua avventura preferita"
+msgstr "Choose your favorite adventure" 
+
+msgid "Invia ora"
+msgstr "Send now"
+
 msgid "Altri link"
 msgstr "More links"
 
@@ -591,7 +622,10 @@ msgid "Scuola"
 msgstr "School"
 
 msgid "Corsi"
-msgstr "Courses"
+msgstr "Skills in nature"
+
+msgid "Percorsi formativi per chi lavora con le persone, nel benessere e nei territori."
+msgstr "Training courses for those who work with people, in wellness and in local areas." 
 
 msgid "INIZIA IL TUO VIAGGIO DA QUI"
 msgstr "START YOUR JOURNEY FROM HERE"
@@ -671,6 +705,13 @@ msgstr "Explore Italy with Cribyoo"
 msgid "Esplora"
 msgstr "Explore"
 
+
+msgid "Autonomia"
+msgstr "Self guided"
+
+msgid "In autonomia" 
+msgstr "self guided"
+
 msgid "In autonomia con la nostra app"
 msgstr "Independently with our app"
 
@@ -680,17 +721,20 @@ msgstr "Outdoor experiences"
 msgid "Rilassati e divertiti, pensiamo a tutto noi"
 msgstr "Relax and have fun, we take care of everything"
 
-msgid "Esplora nuovi percorsi"
+msgid "Esplora nuovi itinerari"
 msgstr "Explore new paths"
 
 msgid "Scarica la app e scopri la natura con semplicità"
 msgstr "Download the app and discover nature with ease"
 
-msgid "Turismo scolastico"
-msgstr "School tourism"
+msgid "Organizzazione completa, libertà totale. Tu segui il tuo ritmo, l’app ti accompagna" 
+msgstr "Complete organization, total freedom. You set your own pace, the app accompanies you"
 
-msgid "Educazione ambientale per le scuole"
-msgstr "Environmental education for schools"
+msgid "Outdoor Education"
+msgstr "Outdoor Education"
+
+msgid "Per scuole e gruppi. Percorsi educativi in natura, tra esplorazione, benessere e scienza partecipata."
+msgstr "For schools and groups. Educational programmes in nature, combining exploration, well-being and citizen science."
 
 msgid "Citizen Science"
 msgstr "Citizen Science"
@@ -719,6 +763,22 @@ msgstr "intervention co-financed by P.O.R. FESR Liguria 2014-2020"
 
 msgid "B2B"
 msgstr "B2B"
+
+msgid "Viaggi accompagnati"
+msgstr "Guided trips"
+
+msgid "Viaggi in autonomia"
+msgstr "Self-guided trips"
+
+msgid "Formazione" 
+msgstr "Formation"
+
+msgid "Educazione in natura"
+msgstr "Education in nature "
+
+msgid "Corsi per professionisti"
+msgstr "Courses for professionals"
+
 
 msgid "Sede"
 msgstr "Headquarters"

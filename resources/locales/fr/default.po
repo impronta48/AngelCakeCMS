@@ -1,3 +1,8 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 msgid "Destinazione"
 msgstr "Destination"
 
@@ -23,7 +28,7 @@ msgid "Chi siamo"
 msgstr "Qui sommes-nous"
 
 msgid "Contatti"
-msgstr "Contacts"
+msgstr "Contact"
 
 msgid "Per le aziende"
 msgstr "Pour les entreprises"
@@ -104,9 +109,37 @@ msgstr "Départ depuis"
 msgid "Addio al Nubilato"
 msgstr "Enterrement de vie de jeune fille"
 
+msgid "Itinerari Free"
+msgstr ""
+
 #: Destinations/experience.php:43
 msgid "Esperienze"
 msgstr "Expériences"
+
+msgid "Viaggi accompagnati"
+msgstr "Voyages rando accompagnés"
+
+msgid "Autonomia"
+msgstr "Voyages en libertèe"
+
+msgid "Viaggi in autonomia"
+msgstr "Voyages en libertèe"
+
+msgid "Formazione" 
+msgstr "Formation"
+
+msgid "Educazione in natura" 
+msgstr "Éducation en nature" 
+
+msgid "Corsi per professionisti" 
+msgstr "Formations pour professionnels" 
+
+msgid "Esplora nuovi itinerari"
+msgstr "Explorez de nouveaux itinéraires"
+
+
+msgid "Scarica la app e scopri la natura con semplicità"
+msgstr "Téléchargez l’app et découvrez la nature en toute libertée"
 
 #: Destinations/index.php:7
 #: element/footer.php:11
@@ -293,7 +326,7 @@ msgstr "Vous trouverez cet itinéraire sur l'application BikeSquare avec le code
 
 #: Percorsi/view.php:87
 msgid "Difficoltà"
-msgstr "Difficulté"
+msgstr "Niveau"
 
 #: Percorsi/view.php:87
 msgid "Facile"
@@ -582,25 +615,28 @@ msgid "Viaggi"
 msgstr "Voyages"
 
 msgid "In Partenza"
-msgstr "En partance"
+msgstr "Départs prévus"
 
 msgid "Scuola"
 msgstr "École"
 
-msgid "Corsi"
-msgstr "Cours"
+msgid "Competenze in natura"
+msgstr "Compétences en nature"
+
+msgid "Percorsi formativi per chi lavora con le persone, nel benessere e nei territori."
+msgstr "Parcours de formation pour celles et ceux qui travaillent avec les personnes, dans le bien-être et les territoires." 
 
 msgid "INIZIA IL TUO VIAGGIO DA QUI"
-msgstr "COMMENCEZ VOTRE VOYAGE ICI"
+msgstr "Commencez votre voyage ici"
 
 msgid "Lasciati ispirare dalle nostre proposte..."
-msgstr "Laissez-vous inspirer par nos suggestions..."
+msgstr "Laissez-vous inspirer par nos expériences…"
 
 msgid "Iscriviti alla Newsletter"
-msgstr "Abonnez-vous à la Newsletter"
+msgstr "Inscrivez-vous à la newsletter"
 
 msgid "Iscriviti al Canale Telegram"
-msgstr "Abonnez-vous à la chaîne Telegram"
+msgstr "Rejoignez notre chaîne Telegram"
 
 msgid "Servizi"
 msgstr "Services"
@@ -611,23 +647,32 @@ msgstr "Location"
 msgid "Organizzazione Eventi"
 msgstr "Organisation d'événements"
 
+msgid "Organizzazione completa, libertà totale. Tu segui il tuo ritmo, l’app ti accompagna." 
+msgstr "Organisation complète, zéro souci. Vous suivez votre rythme, l’app vous accompagne"
+
 msgid "Eventi"
 msgstr "Événements"
 
 msgid "In partenza"
-msgstr "En partance"
+msgstr "Départs prévus"
 
 msgid "Nessun evento disponibile"
 msgstr "Aucun événement disponible"
 
 msgid "si parte!"
-msgstr "on y va !"
+msgstr "c’est parti !"
 
 msgid "Scegli la tua attività preferita nella natura"
-msgstr "Choisissez votre activité préférée dans la nature"
+msgstr "Choisissez votre chemin"
+
+msgid "Outdoor Education"
+msgstr "Outdoor Education"
+
+msgid "Per scuole e gruppi. Percorsi educativi in natura, tra esplorazione, benessere e scienza partecipata."
+msgstr "Pour les écoles et les groupes. Parcours éducatifs en nature, exploration, bien-être et science participative."
 
 msgid "costruiamo insieme un'esperienza divertente, responsabile e sostenibile"
-msgstr "construisons ensemble une expérience amusante, responsable et durable"
+msgstr "Construisons ensemble une expérience joyeuse, responsable et durable, au rythme de la nature."
 
 msgid "Da non perdere"
 msgstr "À ne pas manquer"
@@ -636,7 +681,7 @@ msgid "Scopri"
 msgstr "Découvrir"
 
 msgid "Le nostre esperienze preferite"
-msgstr "Nos expériences préférées"
+msgstr "Nos expériences coups de cœur"
 
 msgid "Lasciati ispirare"
 msgstr "Laissez-vous inspirer"
@@ -648,13 +693,13 @@ msgid "Scopri le nostre"
 msgstr "Découvrez nos"
 
 msgid "proposte"
-msgstr "propositions"
+msgstr "expériences"
 
 msgid "Creiamo valore viaggiando insieme"
-msgstr "Nous créons de la valeur en voyageant ensemble"
+msgstr "Voyageons ensemble, et créons du sens"
 
 msgid "A noi piace viaggiare con Cribyoo!"
-msgstr "Nous aimons voyager avec Cribyoo !"
+msgstr "On adore voyager avec Cribyoo !"
 
 msgid "Recensioni e testimonianze"
 msgstr "Avis et témoignages"
@@ -663,7 +708,7 @@ msgid "Turismo Responsabile & Sostenibile"
 msgstr "Tourisme responsable & durable"
 
 msgid "Esplora l'Italia con Cribyoo"
-msgstr "Explorez l'Italie avec Cribyoo"
+msgstr "Partez à la découverte de l’Italie avec Cribyoo"
 
 msgid "Esplora"
 msgstr "Explorer"
@@ -675,13 +720,13 @@ msgid "Esperienze outdoor"
 msgstr "Expériences outdoor"
 
 msgid "Rilassati e divertiti, pensiamo a tutto noi"
-msgstr "Détendez-vous et amusez-vous, nous nous occupons de tout"
+msgstr "Détendez-vous et amusez-vous, on s’occupe de tout"
 
 msgid "Esplora nuovi percorsi"
 msgstr "Explorez de nouveaux itinéraires"
 
 msgid "Scarica la app e scopri la natura con semplicità"
-msgstr "Téléchargez l'application et découvrez la nature en toute simplicité"
+msgstr "Téléchargez l'app et découvrez la nature en toute libertée"
 
 msgid "Turismo scolastico"
 msgstr "Tourisme scolaire"
@@ -708,10 +753,42 @@ msgid "Viaggi ed esperienze creati su misura accompagnati da guide ed educatori"
 msgstr "Voyages et expériences sur mesure accompagnés de guides et d'éducateurs"
 
 msgid "Trekking, kayak, bici, barca a vela, sci, multi sport"
-msgstr "Trekking, kayak, vélo, voile, ski, multi-sport"
+msgstr "Mais aussi en kayak, à vélo, en voile, à ski ou en multisport"
 
 msgid "intervento cofinanziato da P.O.R. FESR Liguria 2014-2020"
-msgstr "intervention cofinancée par P.O.R. FEDER Ligurie 2014-2020"
+msgstr "Intervention cofinancée par le P.O.R. FESR Ligurie 2014-2020"
+
+msgid "Restiamo in contatto" 
+msgstr "Restons en contact"
+
+msgid "Nome"
+msgstr "Nom"
+
+msgid "Indirizzo email"
+msgstr "Adresse e-mail"
+
+msgid "Numero di Telefono"
+msgstr "Numéro de téléphone"
+
+msgid "Titolo"
+msgstr "Sujet"
+
+msgid "Scegli la tua avventura preferita"
+msgstr "Choisissez votre aventure préférée" 
+
+msgid "Scrivi qui il tuo messaggio"
+msgstr "Écrivez votre message ici"
+
+msgid "Invia ora"
+msgstr "Envoyer maintenant"
+
+msgid "Scrivici liberamente" 
+msgstr "Écrivez-nous librement"
+
+
+msgid "Se hai idee o suggerimenti, lasciaci un messaggio" 
+msgstr "Si vous avez des idées ou des suggestions, laissez-nous un message."
+
 
 msgid "B2B"
 msgstr "B2B"
@@ -728,8 +805,11 @@ msgstr "itinéraires dans cette catégorie"
 msgid "Filtra"
 msgstr "Filtrer"
 
+msgid "Filtro"
+msgstr "Filtre"
+
 msgid "Vicino a Te"
-msgstr "Près de vous"
+msgstr "Près de chez vous"
 
 msgid "Ricerca"
 msgstr "Recherche"
@@ -742,6 +822,10 @@ msgstr "Gratuit"
 
 msgid "su richiesta"
 msgstr "sur demande"
+
+msgid "Base nautica"
+msgstr "Base nautique"
+
 
 msgid "persona"
 msgstr "personne"
@@ -783,7 +867,7 @@ msgid "Categoria"
 msgstr "Catégorie"
 
 msgid "Quota di partecipazione su richiesta"
-msgstr "Frais de participation sur demande"
+msgstr "Tarif sur demande"
 
 msgid "Durata"
 msgstr "Durée"
@@ -888,7 +972,7 @@ msgid "Lunghezza:"
 msgstr "Longueur :"
 
 msgid "Periodo dell'anno:"
-msgstr "Saison :"
+msgstr "Période de l’année  :"
 
 msgid "Età minima:"
 msgstr "Âge minimum :"
@@ -920,6 +1004,9 @@ msgstr "Nom"
 msgid "Data di Nascita"
 msgstr "Date de naissance"
 
+msgid "gg/mm/aaaa"
+msgstr "jj/mm/aaaa"
+
 msgid "Luogo di Nascita"
 msgstr "Lieu de naissance"
 
@@ -939,24 +1026,42 @@ msgid "Prenota ora"
 msgstr "Réservez maintenant"
 
 msgid "Letta l'informativa sopra riportata, esprimo il consenso al trattamento, secondo le modalità indicate, dei miei dati personali per le finalità indicate ai punti a) e b) (finalità relativa alla prestazione contrattuale e di legge). *"
-msgstr "Après avoir lu les informations ci-dessus, je consens au traitement, selon les modalités indiquées, de mes données personnelles aux fins indiquées aux points a) et b) (fins relatives à l'exécution contractuelle et légale)."
+msgstr "Après avoir pris connaissance de la notice d’information ci-dessus, je donne mon consentement au traitement, selon les modalités indiquées, de mes données personnelles aux fins mentionnées aux points a) et b) (finalités liées à l’exécution du contrat et aux obligations légales). *"
 
 msgid "Acconsento"
 msgstr "J'accepte"
 
 msgid "Letta l'informativa sopra riportata, esprimo il consenso al trattamento, secondo le modalità indicate, dei miei dati personali per le finalità indicate al punto c) (finalità legate al business e statistiche)."
-msgstr "Après avoir lu les informations ci-dessus, je consens au traitement, selon les modalités indiquées, de mes données personnelles aux fins indiquées au point c) (fins commerciales et statistiques)."
+msgstr "Après avoir pris connaissance de la notice d’information ci-dessus, je donne mon consentement au traitement, selon les modalités indiquées, de mes données personnelles aux fins mentionnées au point c) (finalités liées aux activités commerciales et statistiques)."
 
 msgid "Non acconsento"
 msgstr "Je refuse"
 
 msgid "Letta l'informativa sopra riportata, esprimo il consenso al trattamento, secondo le modalità indicate, dei miei dati personali per le finalità indicate al punto d) (finalità di marketing)."
-msgstr "Après avoir lu les informations ci-dessus, je consens au traitement, selon les modalités indiquées, de mes données personnelles aux fins indiquées au point d) (fins marketing)."
+msgstr "Après avoir pris connaissance de la notice d’information ci-dessus, je donne mon consentement au traitement, selon les modalités indiquées, de mes données personnelles aux fins mentionnées au point d) (finalités marketing)."
 
 msgid "Richiesta Informazioni"
 msgstr "Demande d'informations"
 
 msgid "Nome e cognome"  
+msgstr "Nom et prénom"
+
+msgid "Tel."
+msgstr "Tél."
+
+msgid "Messaggio"
+msgstr "Message"
+
+msgid "Richiesta prenotazione percorso"
+msgstr "Demande de réservation d'itinéraire"
+
+msgid "Invia"
+msgstr "Envoyer"
+
+msgid "Richiesta Informazioni"
+msgstr "Demande d'informations"
+
+msgid "Nome e cognome"
 msgstr "Nom et prénom"
 
 msgid "Tel."
