@@ -842,8 +842,12 @@ msgstr "Gold Destination"
 msgid "Destinazione Silver"
 msgstr "Silver Destination"
 
+
 msgid "Destinazione Bronze"
 msgstr "Bronze Destination"
+
+msgid "Base nautica"
+msgstr "Nautical base" 
 
 msgid "Categoria"
 msgstr "Category"

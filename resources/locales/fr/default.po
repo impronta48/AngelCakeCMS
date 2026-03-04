@@ -117,7 +117,7 @@ msgid "Esperienze"
 msgstr "Expériences"
 
 msgid "Viaggi accompagnati"
-msgstr "Voyages rando accompagnés"
+msgstr "Voyages accompagnés"
 
 msgid "Autonomia"
 msgstr "Voyages en libertèe"
