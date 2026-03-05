@@ -193,15 +193,15 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         </th>
                         <th scope="col" class="text-center text-nowrap">
                             <div class="h4 font-weight-bold mb-0">Basic</div>
-                            <p class="font-weight-light text-muted">39,90€/mese<br>$8/anno</p>
+                            <p class="font-weight-light text-muted">39,90€/mese<br>399€/anno</p>
                         </th>
                         <th scope="col" class="text-center text-nowrap">
                             <div class="h4 font-weight-bold mb-0">Advanced</div>
-                            <p class="font-weight-light text-muted">119€/mese<br>$12/anno</p>
+                            <p class="font-weight-light text-muted">119€/mese<br>1990€/anno</p>
                         </th>
                         <th scope="col" class="text-center text-nowrap">
                             <div class="h4 font-weight-bold mb-0">Franchising</div>
-                            <p class="font-weight-light text-muted">399€/mese<br>$40/anno</p>
+                            <p class="font-weight-light text-muted">399€/mese<br>$4990€/anno</p>
                         </th>
                     </tr>
                 </thead>
