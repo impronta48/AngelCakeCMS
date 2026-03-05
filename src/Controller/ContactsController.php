@@ -22,13 +22,16 @@ class ContactsController extends AppController
 
   public function index($destination)
   {
-    //$this->autoRender = false;
+    $this->autoRender = false;
+    
     if ($this->request->is('post')) {
       $d = $this->request->getData();
 
       //honeypot
       if (isset($d['admin_email']) && $d['admin_email'] != '') {
-        return;
+        return $this->response
+          ->withType('application/json')
+          ->withStringBody(json_encode(['success' => false, 'message' => 'Invalid request']));
       }
 
       //next
@@ -41,12 +44,17 @@ class ContactsController extends AppController
       } 
 
       if (!filter_var($destination, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception("Email del sito non valida");
+        return $this->response
+          ->withType('application/json')
+          ->withStatus(400)
+          ->withStringBody(json_encode(['success' => false, 'message' => 'Email del sito non valida']));
       }
 
       if (isset($d['_replyto']) && !filter_var($d['_replyto'], FILTER_VALIDATE_EMAIL) && !empty($d['_replyto'])) {
-        return $this->Flash->error('Email destinatario non valida.');
-        //throw new Exception("Email destinatario non valida");
+        return $this->response
+          ->withType('application/json')
+          ->withStatus(400)
+          ->withStringBody(json_encode(['success' => false, 'message' => 'Email destinatario non valida']));
       }
 
       $mailer = new Mailer('default');
@@ -57,34 +65,54 @@ class ContactsController extends AppController
       $msg = "Hai ricevuto un messaggio dal sito: " . env("HTTP_REFERER") . "\n\r";
       foreach ($d as $k => $m) {
         if (is_array($m)) {
-          $msg .=json_encode($m) . "\n\r";
-          
-        }
-       else {
-            $msg .= "<b>$k</b>: $m \n\r";
+          $msg .= json_encode($m) . "\n\r";
+        } else {
+          $msg .= "<b>$k</b>: $m \n\r";
         }       
       }
 
       $msg = nl2br($msg);
       if (empty($msg)) {
-        $this->set(compact('referer'));
-        return $this->Flash->error('Messaggio vuoto.');
+        return $this->response
+          ->withType('application/json')
+          ->withStatus(400)
+          ->withStringBody(json_encode(['success' => false, 'message' => 'Messaggio vuoto']));
       }
 
-      $mailer->setFrom($sender)
-        ->setEmailFormat('both');
+      try {
+        $mailer->setFrom($sender)
+          ->setEmailFormat('both');
 
-      if (isset($d['_replyto']) && !empty($d['_replyto'])) {
-        $mailer->setReplyTo($d['_replyto']);
-      } 
-      
-      $mailer->setTo($destination)
-        ->setSubject(isset($d['_subject']) ? $d['_subject'] : 'Messaggio dal Web')
-        ->deliver($msg);
+        if (isset($d['_replyto']) && !empty($d['_replyto'])) {
+          $mailer->setReplyTo($d['_replyto']);
+        } 
+        
+        $mailer->setTo($destination)
+          ->setSubject(isset($d['_subject']) ? $d['_subject'] : 'Messaggio dal Web')
+          ->deliver($msg);
 
-      $this->Flash->success('Grazie, ti risponderemo al più presto.');
-      $this->set(compact('referer'));
+        return $this->response
+          ->withType('application/json')
+          ->withStringBody(json_encode([
+            'success' => true, 
+            'message' => 'Grazie, ti risponderemo al più presto.',
+            'referer' => $referer
+          ]));
+      } catch (Exception $e) {
+        return $this->response
+          ->withType('application/json')
+          ->withStatus(500)
+          ->withStringBody(json_encode([
+            'success' => false, 
+            'message' => 'Errore durante l\'invio dell\'email: ' . $e->getMessage()
+          ]));
+      }
     }
+    
+    return $this->response
+      ->withType('application/json')
+      ->withStatus(405)
+      ->withStringBody(json_encode(['success' => false, 'message' => 'Method not allowed']));
   }
 
 

@@ -42,6 +42,7 @@ class UsersController extends AppController
     $users = $this->paginate($query);
 
     $this->set(compact('users'));
+    $this->viewBuilder()->setOption('serialize', ['users']);
   }
 
   /**
@@ -137,4 +138,8 @@ class UsersController extends AppController
 
     return $this->redirect(['action' => 'index']);
   }
+
+
+
+
 }

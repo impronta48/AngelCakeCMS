@@ -48,6 +48,9 @@ use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\ServerRequest;
 use Fetzi\ServerTiming\ServerTimingMiddleware;
 
+use App\Event\SocialAuthListener;
+use Cake\Event\EventManager;
+
 /**
  * Application setup class.
  *
@@ -252,6 +255,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     //https://book.cakephp.org/5/en/development/rest.html#parsing-request-bodies
     $middlewareQueue->add(new BodyParserMiddleware());
 
+    EventManager::instance()->on(new SocialAuthListener());
+    
     return $middlewareQueue;
   }
 
@@ -336,6 +341,16 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     $resolver = new ResolverCollection([$mapResolver, $ormResolver]);
 
     return new AuthorizationService($resolver);
+  }
+
+  public function events(EventManagerInterface $eventManager): EventManagerInterface
+  {
+   
+    $SocialAuthListener = new SocialAuthListener();
+    EventManager::instance()->on($SocialAuthListener);
+   
+
+    return $eventManager;
   }
 
 }

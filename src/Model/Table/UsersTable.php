@@ -11,6 +11,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use \Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 /**
  * Users Model
@@ -157,4 +159,47 @@ class UsersTable extends Table
 
     //return $user;
   }
+
+   public function generateAuthToken($id)
+    {
+        //CakeLog::write('jwt_debug', "Sto generando jwt per " . $user_id);
+
+        $privateKey = file_get_contents(ROOT . DS . 'config' . DS . 'jwtRS256_prenota.key');
+        if ($privateKey === false) {
+            //CakeLog::write('jwt_debug', "La private key non esiste!");
+            return null;
+        }
+        $payload = [
+            "sub" => $id,
+        ];
+
+        try {
+            $jwt = JWT::encode($payload, $privateKey, 'RS256');
+            //CakeLog::write('jwt_debug', "Jwt generato correttamente per " . $user_id);
+            return $jwt;
+        } catch (Exception $e) {
+            //CakeLog::write('jwt_debug', serialize($e));
+            return null;
+        }
+    }
+
+    public function getUserIdFromAuthToken($jwt)
+    {
+        $publicKey = file_get_contents(ROOT . DS . 'config' . DS . 'jwtRS256_prenota.pem');
+        if ($publicKey === false) {
+            //CakeLog::write('jwt_debug', "La public key non esiste!");
+            return null;
+        }
+        try {
+            JWT::$leeway = 60; // $leeway in seconds
+            $decoded = JWT::decode($jwt, new Key($publicKey, 'RS256'));
+
+            //CakeLog::write('jwt_debug', serialize($decoded));
+            return $decoded->sub;
+        } catch (Exception $e) {
+            //CakeLog::write('jwt_debug', serialize($e));
+            return null;
+        }
+    }
+
 }
