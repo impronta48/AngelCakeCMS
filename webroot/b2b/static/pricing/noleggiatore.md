@@ -8,7 +8,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
     <div class="text-center">
         <h4 class="text-primary">Noleggiatori</h4>
         <h2 class="mb-1">Scegli il modello che fa per te</h2>
-        <p class="mb-1">BikeSquare offre diversi piani di affiliazione per meglio adattarsi alle esigenze delal tua realtà</p>
+        <p class="mb-1">BikeSquare offre diversi piani di affiliazione per meglio adattarsi alle esigenze della tua realtà</p>
         <p class="">Per saperne di più non esitare a <a href="/contact">contattaci</a></p>    <button onclick="document.getElementById('confronta-prezzi').scrollIntoView({behavior: 'smooth', block: 'start'})" class="btn btn-outline-primary btn-custom btn-sm mb-5">Dettagli dei piani</button>
     </div>
     <div class="row">
@@ -26,14 +26,15 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                             <b>20%</b> di commissione solo su prenotazioni giunte da BikeSquare 
                         </li>
                         <li class="mb-3">
-                            <b>web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
+                            <b>Web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
                         </li>
                         <li class="mb-3">
                             <b>Notifiche email e cellulare</b>sulle prenotazioni BikeSquare
                         </li>
                     </ul>
                     <div class="text-center mt-4">
-                        <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-outline-primary btn-custom">Inizia</a>
+                        <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
+                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
                     </div>
                 </div>
             </div>
@@ -58,13 +59,13 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                     clip-rule="evenodd"></path>
                             </svg> -->
-                            tuo <b>ecommerce</b> incluso
+                            Tuo <b>ecommerce</b> incluso
                         </li>
                         <li class="mb-3">
-                            <b>web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
+                            <b>Web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
                         </li>
                         <li class="mb-3">
-                            <b>gestionale bici</b> per prenotazoni facili e veloci con gestionale Bikesquare
+                            <b>Gestionale bici</b> per prenotazoni facili e veloci con gestionale Bikesquare
                         </li>
                         <li class="mb-3">
                         <b>Notifiche email e cellulare</b> sulle prenotazioni
@@ -78,7 +79,8 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         </li>
                     </ul>
                     <div class="text-center mt-4">
-                        <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-success btn-custom">Inizia</a>
+                        <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-success btn-custom">Richiedi adesione</a>
+                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
                     </div>
                 </div>
             </div>
@@ -97,19 +99,19 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                             <b>0%</b> commissioni
                         </li>
                         <li class="mb-3">
-                            tuo <b>ecommerce</b> incluso
+                            Tuo <b>ecommerce</b> incluso
                         </li>
                         <li class="mb-3">
-                            <b>web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
+                            <b>Web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
                         </li>
                         <li class="mb-3">
-                            <b>gestionale bici</b> per prenotazoni facili e veloci con gestionale Bikesquare
+                            <b>Gestionale bici</b> per prenotazoni facili e veloci con gestionale Bikesquare
                         </li>
                         <li class="mb-3">
                             <b>Notifiche email e cellulare</b>sulle prenotazioni BikeSquare
                         </li>
                         <li class="mb-3">
-                            <b>tracking GPS</b> per sapere in tempo reale dove stanno pedalano i tuoi clienti
+                            <b>Tracking GPS</b> per sapere in tempo reale dove stanno pedalano i tuoi clienti
                         </li>
                         <li class="mb-3">
                             <b>Fai firmare</b>
@@ -120,7 +122,8 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         </li>
                     </ul>
                     <div class="text-center mt-4">
-                        <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-outline-primary btn-custom">Inizia</a>
+                        <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
+                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
                     </div>
                 </div>
             </div>
@@ -148,16 +151,16 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                             <b>Volantini e materiale promozionale</b> incluso
                         </li>
                         <li class="mb-3">
-                            <b>web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
+                            <b>Web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
                         </li>
                         <li class="mb-3">
-                            <b>gestionale bici</b> per prenotazoni facili e veloci con gestionale Bikesquare
+                            <b>Gestionale bici</b> per prenotazoni facili e veloci con gestionale Bikesquare
                         </li>
                         <li class="mb-3">
                             <b>Notifiche email e cellulare</b>sulle prenotazioni BikeSquare
                         </li>
                         <li class="mb-3">
-                            <b>tracking GPS</b> per sapere in tempo reale dove stanno pedalano i tuoi clienti
+                            <b>Tracking GPS</b> per sapere in tempo reale dove stanno pedalano i tuoi clienti
                         </li>
                         <li class="mb-3">
                             <b>Fai firmare</b>
@@ -168,7 +171,8 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         </li>
                     </ul>
                     <div class="text-center mt-4">
-                        <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-outline-primary btn-custom">Inizia</a>
+                        <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
+                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p> 
                     </div>
                 </div>
             </div>
@@ -229,7 +233,6 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </tr>
                     <tr class="grey-rows">
                         <th class="font-weight-light" scope="row">Paga commissioni per esperienze e eventi venduti su ebike.bikesquare.eu tramite tour operator
-                            <!-- <span class="badge badge-light border rounded-circle hw-18" data-toggle="popover" role="button" data-trigger="hover" data-placement="top" data-content="Group Messaging is characterized by an SMS conversation among 3 or more recipients at the same time." data-original-title="" title="">?</span> -->
                         </th>
                         <td class="text-center">20%</td>
                         <td class="text-center">15%</td>
@@ -274,7 +277,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <td class="py-3 border-0"></td>
                     </tr>
                     <tr class="grey-rows">
-                        <th class="font-weight-light" scope="row">Presenza del noleggiatore su ebike.bikesquare.eu  
+                        <th class="font-weight-light" scope="row">Presenza del noleggiatore su ebike.bikesquare.eu 
                         </th>
                         <td class="text-center"><span class="say-yes"></span></td>
                         <td class="text-center"><span class="say-yes"></span></td>
@@ -282,7 +285,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <td class="text-center"><span class="say-yes"></span></td>
                     </tr>
                     <tr class="grey-rows">
-                        <th class="font-weight-light" scope="row">Può inserire contenuti su ebike.bikesquare.eu</th>
+                        <th class="font-weight-light" scope="row">Può inserire contenuti su ebike.bikesquare.eu&nbsp;<span class="badge badge-light border rounded-circle hw-18" data-toggle="popover" role="button" data-trigger="hover focus" data-placement="top" data-content="Relativi alla propria destinazione" data-original-title="" title="">?</span></th>
                         <td class="text-center"><span class="say-yes"></span></td>
                         <td class="text-center"><span class="say-yes"></span></td>
                         <td class="text-center"><span class="say-yes"></span></td>
@@ -328,7 +331,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <td class="text-center">50%</td>
                     </tr>
                     <tr class="grey-rows">
-                        <th class="font-weight-light" scope="row">Riceve commissioni commerciali per affiliazione partner locali per quanto tempo (anni) 
+                        <th class="font-weight-light" scope="row">Riceve commissioni commerciali per affiliazione partner locali&nbsp;<span class="badge badge-light border rounded-circle hw-18" data-toggle="popover" role="button" data-trigger="hover focus" data-placement="top" data-content="per quanto tempo (anni)" data-original-title="" title="">?</span> 
                         </th>
                         <td class="text-center">-</td>
                         <td class="text-center">Illimitato</td>
@@ -360,7 +363,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <td class="text-center">36</td>
                     </tr>
                     <tr class="grey-rows">
-                        <th class="font-weight-light" scope="row">Accede a B2rm e lo usa come gestionale
+                        <th class="font-weight-light" scope="row">Accede a B2rm e lo usa come gestionale&nbsp;<span class="badge badge-light border rounded-circle hw-18" data-toggle="popover" role="button" data-trigger="hover focus" data-placement="top" data-content="B2rm è il nostro software di gestione per flotte di ebike" data-original-title="" title="">?</span>
                         </th>
                         <td class="text-center"><span class="say-no"></span></td>
                         <td class="text-center"><span class="say-yes"></span></td>
@@ -464,10 +467,10 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </tr>
                      <tr class="grey-rows">
                         <th class="font-weight-light" scope="row">Può accedere con più utenti a B2RM</th>
-                        <td class="text-center"><span class="say-yes">1</span></td>
-                        <td class="text-center"><span class="say-yes">3</span></td>
-                        <td class="text-center"><span class="say-yes">10</span></td>
-                        <td class="text-center"><span class="say-yes">illimitati</span></td>
+                        <td class="text-center">1</span></td>
+                        <td class="text-center">3</span></td>
+                        <td class="text-center">10</span></td>
+                        <td class="text-center">illimitati</span></td>
                     </tr>
                      <tr class="grey-rows">
                         <th class="font-weight-light" scope="row">Può usare i sistema di monitoraggio manutenzione bici</th>
@@ -477,7 +480,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <td class="text-center">coming-soon</td>
                     </tr>
                     <tr class="grey-rows">
-                        <th class="font-weight-light" scope="row">Richiesta recensione automatica ai suoi clienti</th>
+                        <th class="font-weight-light" scope="row">Richiesta recensione automatica ai suoi clienti&nbsp;<span class="badge badge-light border rounded-circle hw-18" data-toggle="popover" role="button" data-trigger="hover focus" data-placement="top" data-content="Via mail" data-original-title="" title="">?</span></th>
                         <td class="text-center"><span class="say-no"></span></td>
                         <td class="text-center"><span class="say-yes"></span></td>
                         <td class="text-center"><span class="say-yes"></span></td>
@@ -519,14 +522,14 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <td class="py-3 border-0"></td>
                     </tr>
                     <tr class="grey-rows">
-                        <th class="font-weight-light" scope="row">Facciamo campagne motori di ricerca (costo vivo escluso)</th>
+                        <th class="font-weight-light" scope="row">Facciamo campagne motori di ricerca&nbsp;<span class="badge badge-light border rounded-circle hw-18" data-toggle="popover" role="button" data-trigger="hover focus" data-placement="top" data-content="costo vivo escluso" data-original-title="" title="">?</span></th>
                         <td class="text-center"><span class="say-no"></span></td>
                         <td class="text-center"><span class="say-no"></span></td>
                         <td class="text-center">a pagamento</td>
                         <td class="text-center"><span class="say-yes"></span></td>
                     </tr>
                     <tr class="grey-rows">
-                        <th class="font-weight-light" scope="row">Facciamo campagne social (costo vivo escluso)</th>
+                        <th class="font-weight-light" scope="row">Facciamo campagne social <span class="badge badge-light border rounded-circle hw-18" data-toggle="popover" role="button" data-trigger="hover focus" data-placement="top" data-content="costo vivo escluso" data-original-title="" title="">?</span></th>
                         <td class="text-center"><span class="say-no"></span></td>
                         <td class="text-center"><span class="say-no"></span></td>
                         <td class="text-center">a pagamento</td>
@@ -582,7 +585,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <td class="text-center"><span class="say-yes"></span></td>
                     </tr>
                     <tr class="grey-rows">
-                        <th class="font-weight-light" scope="row">Volantino standard (prenota@ 01731996118) incluso (1000 ITA + 1000 ENG)</th>
+                        <th class="font-weight-light" scope="row">Volantino standard&nbsp;<span class="badge badge-light border rounded-circle hw-18" data-toggle="popover" role="button" data-trigger="hover focus" data-placement="top" data-content="(prenota@ 01731996118) incluso (1000 ITA + 1000 ENG)" data-original-title="" title="">?</span></th>
                         <td class="text-center"><span class="say-no"></span></td>
                         <td class="text-center">a pagamento</span></td>
                         <td class="text-center">a pagamento</span></td>
@@ -644,7 +647,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <td class="text-center"><span class="say-yes"></span></td>
                         <td class="text-center"><span class="say-yes"></span></td>
                     </tr>
-                    <tr class="text-center buttons-row grey-rows">
+                   <!--  <tr class="text-center buttons-row grey-rows">
                         <th scope="col"></th>
                         <th scope="col" class="text-center text-nowrap">
                             <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-white btn-sm waves-effect mt-3" role="button">Start</a>
@@ -658,11 +661,15 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <th scope="col" class="text-center text-nowrap">
                             <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-white btn-sm waves-effect mt-3" role="button">Franchise</a>
                         </th>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>
     </div>
+
+<a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn- btn-primary btn-lg floating-cta" data-aos="fade-up" data-aos-delay="500">
+    <span class="cta-text">Richiedi adesione a un piano</span>
+</a>
 
 <style>
     body {
@@ -830,7 +837,7 @@ td {
 }
 
 .pricing-features .btn {
-    width:100%;
+    width:90%;
 }
 
 .btn-custom {
@@ -908,4 +915,52 @@ td {
 .buttons-row .btn {
     min-width: 0;
 }
+
+.floating-cta {
+    position: fixed;
+    bottom: 30px;
+    right: 10vw;
+    z-index: 1000;
+    border-radius: 50px;
+    padding: 20px 60px;
+    font-weight: 700;
+    font-size: 20px;
+    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);  /* Smoother easing */
+    animation: pulse-shadow 2s infinite;
+}
+
+.floating-cta:hover {
+    transform: translateY(-8px) scale(1.08);  /* Slightly more dramatic */
+    box-shadow: 0 12px 35px rgba(0, 123, 255, 0.8);  /* Stronger shadow */
+    animation: none;
+}
+
+@keyframes pulse-shadow {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(0, 123, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 4px 30px rgba(0, 123, 255, 0.8);
+    }
+}
+
+@media (max-width: 767px) {
+    .floating-cta {
+        bottom: 20px;
+        left: 2vw;
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+}
 </style>
+
+<script>
+// Initialize Bootstrap popovers
+document.addEventListener('DOMContentLoaded', function () {
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'));
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl);
+  });
+});
+</script>
