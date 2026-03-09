@@ -117,10 +117,13 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     //Convert I18Languages array to the required format
     $languages = Configure::read('I18n.languages');
     $res_lang = [];
-    foreach ($languages as $key => $l) {
-      $res_lang[$l] = [
-        'locale'  => $l,
-      ];
+    if(is_array($languages)){
+      foreach ($languages as $key => $l) {
+        $res_lang[$l] = [
+          'locale'  => $l,
+        ];
+
+      }
     }
     $middlewareQueue
       // Catch any exceptions in the lower layers,
