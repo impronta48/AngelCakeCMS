@@ -60,6 +60,7 @@ class Destination extends Entity
 		$img = $this->_getAttachmentImage('copertina');
 		return $img;
 	}
+
 	
 	public function _getLogoSponsor()
 	{

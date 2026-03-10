@@ -81,6 +81,21 @@ class DestinationsController extends AppController
       throw new NotFoundException(__('Invalid Destination'));
     }
 
+     $prezzi = $this->request->getQuery('prezzi');
+    if (!empty($prezzi)) {
+      $this->loadModel('Cyclomap.Tipibici');
+   
+      $minprice = $this->Tipibici->find()
+      ->select(['tariffa_intera'])
+      ->where(['destination_id' => $destination->id, 'published' => 1, 'tariffa_intera >' => 0])
+      ->order(['tariffa_intera' => 'ASC'])
+      ->first();
+
+      $val = $minprice ? $minprice->tariffa_intera : null;
+      $destination->min_price = $val;
+      
+    }
+
     // Ritorna il numero di noleggiatori per una data destinazione
     $hasRenters = $this->request->getQuery('hasRenters');
     $rentersCount = 0;
@@ -236,8 +251,7 @@ class DestinationsController extends AppController
       $query->limit($limit);
     }
 
-    $prezzi = $this->request->getQuery('prezzi');
-    $this->set(compact('prezzi'));
+   
 
     
     $count = $this->request->getQuery('count');
@@ -377,6 +391,17 @@ class DestinationsController extends AppController
     ])->toArray();
     $this->set('addons', $addon_list);
 
+  
+    $this->loadModel('Cyclomap.Tipibici');
+    $min_price = $this->Tipibici->find()
+    ->select(['tariffa_intera'])
+    ->where(['destination_id' => $destination->id, 'published' => 1, 'tariffa_intera >' => 0])
+    ->order(['tariffa_intera' => 'ASC'])
+    ->first();  
+
+    $this->set('min_price', $min_price); 
+
+
     /*  $this->loadModel('Cyclomap.Percorsi');
     $esperienze = $this->Percorsi->find()
       ->where([
@@ -387,7 +412,7 @@ class DestinationsController extends AppController
     $this->set('esperienze', $esperienze);
 
     $percorsi = $this->Percorsi->find()
-      ->where([
+      ->where([ 
         'destination_id' => $destination->id,
         'published' => 1,
         'tipo_id' => 2,
