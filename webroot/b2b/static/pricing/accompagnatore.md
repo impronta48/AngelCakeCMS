@@ -37,7 +37,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </ul>
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/accompagnatori" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
-                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
+                    <p class="text-center text-muted small mt-2">adesione minima 1 mese</p>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </ul>
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/accompagnatori" class="btn btn-success btn-custom">Richiedi adesione</a>
-                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
+                    <p class="text-center text-muted small mt-2">adesione minima 6 mesi</p>
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </ul>
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/accompagnatori" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
-                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
+                    <p class="text-center text-muted small mt-2">adesione minima 12 mesi</p>
                     </div>
                 </div>
             </div>

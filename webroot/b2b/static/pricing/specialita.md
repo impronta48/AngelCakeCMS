@@ -37,7 +37,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </ul>
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/specialita" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
-                     <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
+                     <p class="text-center text-muted small mt-2">adesione minima 1 mese</p>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/specialita" class="btn btn-success btn-custom">Richiedi adesione</a>
                     </div>
-                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
+                    <p class="text-center text-muted small mt-2">adesione minima 6 mesi</p>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </ul>
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/specialita" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
-                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
+                    <p class="text-center text-muted small mt-2">adesione minima 12 mesi</p>
                     </div>
                 </div>
             </div>
@@ -172,7 +172,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     <tr class="grey-rows">
                         <th class="font-weight-light" scope="row">Non metto booking.com ma il tuo booking diretto (costo per lead)
                         </th>
-                        <td class="text-center">1.5€</td>
+                        <td class="text-center">1.50€</td>
                         <td class="text-center">1€</td>
                         <td class="text-center">0.50€</td>
                     </tr>

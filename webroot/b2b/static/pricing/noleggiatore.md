@@ -34,7 +34,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </ul>
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
-                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
+                    <p class="text-center text-muted small mt-2">adesione minima 1 mese</p>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                 <div class="card-body pricing-features">
                     <ul class="list-unstyled">
                     <li class="mb-3">
-                            <b>15%</b> commissioni
+                            <b>15%</b> di commissione solo su prenotazioni giunte da BikeSquare 
                         </li>
                         <li class="mb-3">
                             <!-- <svg class="feature-icon text-success" fill="currentColor" viewBox="0 0 20 20"
@@ -59,7 +59,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                     clip-rule="evenodd"></path>
                             </svg> -->
-                            Tuo <b>ecommerce</b> incluso
+                            <b>Incorpora modulo prenotazione</b> sul tuo sito con BikeSquare
                         </li>
                         <li class="mb-3">
                             <b>Web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
@@ -68,7 +68,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                             <b>Gestionale bici</b> per prenotazoni facili e veloci con gestionale Bikesquare
                         </li>
                         <li class="mb-3">
-                        <b>Notifiche email e cellulare</b> sulle prenotazioni
+                        <b>Notifiche email e cellulare</b> sulle prenotazioni BikeSquare
                         </li>
                         <li class="mb-3">
                             <b>Fai firmare</b>
@@ -80,7 +80,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </ul>
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-success btn-custom">Richiedi adesione</a>
-                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
+                    <p class="text-center text-muted small mt-2">adesione minima 6 mesi</p>
                     </div>
                 </div>
             </div>
@@ -96,10 +96,10 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                 <div class="card-body pricing-features">
                     <ul class="list-unstyled">
                     <li class="mb-3">
-                            <b>0%</b> commissioni
+                            <b>0%</b> di commissione su tutte le prenotazioni
                         </li>
                         <li class="mb-3">
-                            Tuo <b>ecommerce</b> incluso
+                            <b>Incorpora modulo prenotazione</b> sul tuo sito
                         </li>
                         <li class="mb-3">
                             <b>Web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
@@ -108,7 +108,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                             <b>Gestionale bici</b> per prenotazoni facili e veloci con gestionale Bikesquare
                         </li>
                         <li class="mb-3">
-                            <b>Notifiche email e cellulare</b>sulle prenotazioni BikeSquare
+                            <b>Notifiche email e cellulare</b>sulle prenotazioni
                         </li>
                         <li class="mb-3">
                             <b>Tracking GPS</b> per sapere in tempo reale dove stanno pedalano i tuoi clienti
@@ -123,7 +123,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </ul>
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
-                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p>
+                    <p class="text-center text-muted small mt-2">adesione minima 12 mesi</p>
                     </div>
                 </div>
             </div>
@@ -139,13 +139,10 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                 <div class="card-body pricing-features">
                     <ul class="list-unstyled">
                     <li class="mb-3">
-                            <b>0%</b> commissioni
+                            <b>0%</b> di commissione su tutte le prenotazioni
                         </li>
                         <li class="mb-3">
-                            <b>Affiliate</b> program su Booking.com o simili
-                        </li>
-                        <li class="mb-3">
-                           <b>E-commerce incluso</b> in BikeSquare
+                           <b>Usa il brand BikeSquare</b> come se fosse il tuo
                         </li>
                         <li class="mb-3">
                             <b>Volantini e materiale promozionale</b> incluso
@@ -157,7 +154,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                             <b>Gestionale bici</b> per prenotazoni facili e veloci con gestionale Bikesquare
                         </li>
                         <li class="mb-3">
-                            <b>Notifiche email e cellulare</b>sulle prenotazioni BikeSquare
+                            <b>Notifiche email e cellulare</b>sulle prenotazioni
                         </li>
                         <li class="mb-3">
                             <b>Tracking GPS</b> per sapere in tempo reale dove stanno pedalano i tuoi clienti
@@ -172,7 +169,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                     </ul>
                     <div class="text-center mt-4">
                         <a href="https://crm.bikesquare.eu/partners/start/noleggiatore" class="btn btn-outline-primary btn-custom">Richiedi adesione</a>
-                    <p class="text-center text-muted small mt-2">adesione 12 mesi</p> 
+                    <p class="text-center text-muted small mt-2">adesione minima 12 mesi</p> 
                     </div>
                 </div>
             </div>
@@ -476,8 +473,8 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         <th class="font-weight-light" scope="row">Può usare i sistema di monitoraggio manutenzione bici</th>
                         <td class="text-center"><span class="say-no"></span></td>
                         <td class="text-center"><span class="say-no"></span></td>
-                        <td class="text-center">coming-soon</span></td>
-                        <td class="text-center">coming-soon</td>
+                        <td class="text-center">presto disponbile</span></td>
+                        <td class="text-center">presto disponibile</td>
                     </tr>
                     <tr class="grey-rows">
                         <th class="font-weight-light" scope="row">Richiesta recensione automatica ai suoi clienti&nbsp;<span class="badge badge-light border rounded-circle hw-18" data-toggle="popover" role="button" data-trigger="hover focus" data-placement="top" data-content="Via mail" data-original-title="" title="">?</span></th>
