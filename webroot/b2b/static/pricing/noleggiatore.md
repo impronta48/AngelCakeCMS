@@ -23,7 +23,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                 <div class="card-body pricing-features">
                     <ul class="list-unstyled">
                         <li class="mb-3">
-                            <b>20%</b> di commissione solo su prenotazioni giunte da BikeSquare 
+                            <b>20%</b> di commissione solo su prenotazioni da BikeSquare 
                         </li>
                         <li class="mb-3">
                             <b>Web page e app</b> con i tuoi percorsi e i tuoi punti di interesse
@@ -50,7 +50,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                 <div class="card-body pricing-features">
                     <ul class="list-unstyled">
                     <li class="mb-3">
-                            <b>15%</b> di commissione solo su prenotazioni giunte da BikeSquare 
+                            <b>15%</b> di commissione solo su prenotazioni da BikeSquare 
                         </li>
                         <li class="mb-3">
                             <!-- <svg class="feature-icon text-success" fill="currentColor" viewBox="0 0 20 20"
