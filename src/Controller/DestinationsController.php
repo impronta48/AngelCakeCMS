@@ -81,21 +81,6 @@ class DestinationsController extends AppController
       throw new NotFoundException(__('Invalid Destination'));
     }
 
-     $prezzi = $this->request->getQuery('prezzi');
-    if (!empty($prezzi)) {
-      $this->loadModel('Cyclomap.Tipibici');
-   
-      $minprice = $this->Tipibici->find()
-      ->select(['tariffa_intera'])
-      ->where(['destination_id' => $destination->id, 'published' => 1, 'tariffa_intera >' => 0])
-      ->order(['tariffa_intera' => 'ASC'])
-      ->first();
-
-      $val = $minprice ? $minprice->tariffa_intera : null;
-      $destination->min_price = $val;
-      
-    }
-
     // Ritorna il numero di noleggiatori per una data destinazione
     $hasRenters = $this->request->getQuery('hasRenters');
     $rentersCount = 0;
