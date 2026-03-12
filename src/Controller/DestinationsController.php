@@ -236,8 +236,7 @@ class DestinationsController extends AppController
       $query->limit($limit);
     }
 
-    $prezzi = $this->request->getQuery('prezzi');
-    $this->set(compact('prezzi'));
+   
 
     
     $count = $this->request->getQuery('count');
@@ -377,6 +376,17 @@ class DestinationsController extends AppController
     ])->toArray();
     $this->set('addons', $addon_list);
 
+  
+    $this->loadModel('Cyclomap.Tipibici');
+    $min_price = $this->Tipibici->find()
+    ->select(['tariffa_intera'])
+    ->where(['destination_id' => $destination->id, 'published' => 1, 'tariffa_intera >' => 0])
+    ->order(['tariffa_intera' => 'ASC'])
+    ->first();  
+
+    $this->set('min_price', $min_price); 
+
+
     /*  $this->loadModel('Cyclomap.Percorsi');
     $esperienze = $this->Percorsi->find()
       ->where([
@@ -387,7 +397,7 @@ class DestinationsController extends AppController
     $this->set('esperienze', $esperienze);
 
     $percorsi = $this->Percorsi->find()
-      ->where([
+      ->where([ 
         'destination_id' => $destination->id,
         'published' => 1,
         'tipo_id' => 2,
