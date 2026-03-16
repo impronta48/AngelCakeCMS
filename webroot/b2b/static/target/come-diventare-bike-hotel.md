@@ -3,7 +3,7 @@ title: Diventa Bike Hotel
 description: Diventare una struttura amica delle biciclette senza investimenti per ospitare turisti in bici 
 keywords: bike hotel, bici hotel, b&b amico della bici
 copertina: hotel.jpg
-modelsLink: https://l.b2b.bikesquare.eu/pricing/hotel
+modelsLink: /pricing/hotel
 vantaggi: 
     - Puoi farti conoscere come punto 'bike-friendly'
     - Puoi invitare i tuoi ospiti a noleggiare una e-bike (e ricevere una commissione)

@@ -2,7 +2,7 @@
 title: I servizi di BikeSquare per i Tour Operator specializzati in viaggi in bici
 description: BikeSquare è il tuo partner locale per servizi di successo.
 copertina: tour-operator-2.jpg
-modelsLink: https://l.b2b.bikesquare.eu/pricing/accompagnatore
+modelsLink: /pricing/accompagnatore
 credit: ''
 vantaggi: 
     - Presenti in tanti punti in Italia, Spagna e Slovenia

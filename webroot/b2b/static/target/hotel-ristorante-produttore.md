@@ -3,7 +3,7 @@ title: Hotel, ristorante, B&B, produttore di prodotti tipici
 description: la rete di strutture turistiche 'bike friendly'
 keywords: bike friendly hotel, hotel per le bici, ricaricare le bici in hotel
 copertina: ristorante-1.jpg
-modelsLink: https://l.b2b.bikesquare.eu/pricing/specialita
+modelsLink: /pricing/specialita
 vantaggi: 
     - Puoi farti conoscere come punto 'bike-friendly'
     - Puoi invitare i tuoi ospiti a noleggiare una e-bike (e ricevere una commissione)
