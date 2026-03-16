@@ -36,19 +36,9 @@ class Destination extends Entity
 		'*' => true,
 	];
 
-	protected $_virtual = ['image', 'copertina', 'url','logo_sponsor', 'min_price'];
+	protected $_virtual = ['image', 'copertina', 'url','logo_sponsor' ];
 
-	public function _getMinPrice()
-	{
-		$tipibiciTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Cyclomap.Tipibici');
-		$minprice = $tipibiciTable->find()
-			->select(['tariffa_intera'])
-			->where(['destination_id' => $this->id, 'published' => 1, 'tariffa_intera >' => 0])
-			->order(['tariffa_intera' => 'ASC'])
-			->first();
-
-		return $minprice ? $minprice->tariffa_intera : null;
-	}
+	
 
 	public function _getUrl() {
 		$locale = I18n::getLocale();
