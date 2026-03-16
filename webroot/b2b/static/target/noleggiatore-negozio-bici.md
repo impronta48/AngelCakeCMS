@@ -4,7 +4,7 @@ description: BikeSquare Rental Manager <br> Soluzioni per noleggiatori e-bike e 
 keywords: noleggiatore, noleggio bici, negozio bici, software negozio bici
 copertina: noleggiatori.jpg
 credit: https://www.flickr.com/photos/carlotardani/
-modelsLink: https://l.b2b.bikesquare.eu/pricing/noleggiatore
+modelsLink: /pricing/noleggiatore
 
 vantaggi: 
     - Risparmi tempo ed elimini gli errori, grazie alle prenotazioni online

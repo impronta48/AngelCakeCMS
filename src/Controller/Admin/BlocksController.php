@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use App\Lib\AttachmentManager;
+use Cake\Filesystem\Folder;
 
 /**
  * Blocks Controller
@@ -35,10 +37,25 @@ class BlocksController extends AppController
 	 */
 	public function add() {
 		$block = $this->Blocks->newEmptyEntity();
+		$new = true;
 		if ($this->request->is('post')) {
 			$block = $this->Blocks->patchEntity($block, $this->request->getData());
 			$this->Authorization->authorize($block);
 			if ($this->Blocks->save($block)) {
+				$upload_session_fields = $this->request->getData('upload_session_id');
+				if (!empty($upload_session_fields)) {
+					foreach ($upload_session_fields as $ses) {
+						if (!empty($ses)) {
+							$ses = explode('|', $ses);
+							$tmpath = AttachmentManager::buildPath('Blocks', null, $ses[0], $ses[1]);
+							if (is_dir(TMP . $tmpath)) {
+								$finalpath = AttachmentManager::buildPath('Blocks', null, $block->id, $ses[1]);
+								$dir = new Folder(WWW_ROOT . $finalpath, true);
+								rename(TMP . $tmpath, WWW_ROOT . $finalpath);
+							}
+						}
+					}
+				}
 				$this->Flash->success(__('The block has been saved.'));
 
 				return $this->redirect(['action' => 'index']);
@@ -47,7 +64,7 @@ class BlocksController extends AppController
 		} else {
 			$this->Authorization->skipAuthorization();
 		}
-		$this->set(compact('block'));
+		$this->set(compact('block', 'new'));
 	}
 
 	/**
@@ -62,6 +79,7 @@ class BlocksController extends AppController
 		'contain' => [],
 		]);
 		$this->Authorization->authorize($block);
+		$new = $block->isNew();
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$block = $this->Blocks->patchEntity($block, $this->request->getData());
 			$this->Authorization->authorize($block);
@@ -77,7 +95,7 @@ class BlocksController extends AppController
 			}
 			$this->Flash->error(__('The block could not be saved. Please, try again.'));
 		}
-		$this->set(compact('block'));
+		$this->set(compact('block', 'new'));
 	}
 
 	/**
