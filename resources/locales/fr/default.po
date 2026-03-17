@@ -120,10 +120,10 @@ msgid "Viaggi accompagnati"
 msgstr "Voyages accompagnés"
 
 msgid "Autonomia"
-msgstr "Voyages en libertèe"
+msgstr "Voyages en libertè"
 
 msgid "Viaggi in autonomia"
-msgstr "Voyages en libertèe"
+msgstr "Voyages en libertè"
 
 msgid "Formazione" 
 msgstr "Formation"
