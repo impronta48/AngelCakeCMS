@@ -133,8 +133,8 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
             <div class="card h-100 pricing-card">
                 <div class="pricing-header bg-primary text-white text-center">
                     <h4 class="mb-0">Franchising</h4>
-                    <div class="display-4 fw-bold ">499€/mese</div>
-                    <p class="mb-0 text-white"><b>4990€/anno</b></p>
+                    <div class="display-4 fw-bold ">399€/mese</div>
+                    <p class="mb-0 text-white"><b>3990€/anno</b></p>
                 </div>
                 <div class="card-body pricing-features">
                     <ul class="list-unstyled">
@@ -202,7 +202,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         </th>
                         <th scope="col" class="text-center text-nowrap">
                             <div class="h4 font-weight-bold mb-0">Franchising</div>
-                            <p class="font-weight-light text-muted">399€/mese<br>$4990€/anno</p>
+                            <p class="font-weight-light text-muted">399€/mese<br>3990€/anno</p>
                         </th>
                     </tr>
                 </thead>
