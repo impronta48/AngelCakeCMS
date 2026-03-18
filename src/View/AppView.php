@@ -44,6 +44,7 @@ class AppView extends UIView
 		parent::initialize();
 		$this->loadHelper('Authentication.Identity');
 		$this->loadHelper('AssetMix.AssetMix');
+		$this->loadHelper('Ebike2021.Link');
 
 		$lang = I18n::getLocale();
 		$base = ROOT;
