@@ -157,6 +157,7 @@ class DestinationsController extends AppController
 				'keyField' => 'id',
 				'valueField' => 'name'
 			])
+			->order(['name' => 'ASC'])
 			->toArray();
 
 		$this->set(compact('destinationsList'));
