@@ -45,6 +45,7 @@ class DestinationsController extends AppController
 		$destinations = $this->paginate($query);
 
 		$this->set(compact('destinations', 'q'));
+
 	}
 
 	/**
@@ -150,6 +151,15 @@ class DestinationsController extends AppController
 
 		$this->set('destination', $destination);
 		$this->set('new', $new);
+
+		$destinationsList = $this->Destinations
+			->find('list', [
+				'keyField' => 'id',
+				'valueField' => 'name'
+			])
+			->toArray();
+
+		$this->set(compact('destinationsList'));
 	}
 
 	/**
