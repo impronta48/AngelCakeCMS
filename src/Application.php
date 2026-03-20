@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Authenticator\CookieJwtAuthenticator;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
@@ -42,6 +43,8 @@ use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use ADmad\SocialAuth\Middleware\SocialAuthMiddleware;
 use Authorization\Middleware\RequestAuthorizationMiddleware;
+use Authorization\Exception\MissingIdentityException;
+use Cake\Http\Exception\ForbiddenException;
 use App\Policy\RequestPolicy;
 use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
@@ -50,6 +53,7 @@ use Fetzi\ServerTiming\ServerTimingMiddleware;
 
 use App\Event\SocialAuthListener;
 use Cake\Event\EventManager;
+use Cake\Event\EventManagerInterface;
 
 /**
  * Application setup class.
@@ -322,11 +326,28 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
     // Load identifiers
     $service->loadIdentifier('Authentication.Password', compact('fields'));
+    $service->loadIdentifier('Authentication.JwtSubject', [
+      'tokenField' => 'id',
+      'dataField' => 'sub',
+      'resolver' => [
+        'className' => 'Authentication.Orm',
+        'userModel' => 'Users',
+      ],
+    ]);
     
     // If the user is on the login page, check for a cookie as well.
     $service->loadAuthenticator('Authentication.Cookie', [
       'fields' => $fields,
       'loginUrl' => '/users/login',
+    ]);
+
+     $service->loadAuthenticator(CookieJwtAuthenticator::class, [
+      //'secretKey' => Security::getSalt(), //file_get_contents(CONFIG . '/jwt.pem'),
+      'algorithms' => ['HS256'],
+      'returnPayload' => false,
+      'cookie' => 'jwt_token',     // legge dal cookie
+      'logAttempts' => true,
+      // 'resolver' => $resolver,
     ]);
 
     return $service;
