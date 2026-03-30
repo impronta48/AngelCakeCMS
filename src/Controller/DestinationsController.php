@@ -115,6 +115,11 @@ class DestinationsController extends AppController
       $nomeseo = $destination->preposition . ' ' . $destination->name;
     }
 
+    if($destination->parent_id) {
+      $parent = $this->Destinations->get($destination->parent_id);
+      $destination->parent = $parent;
+    }
+
     //Forzo e-tag in modo da cancellare la cache
     $lastModified = $destination->modified ? $destination->modified->getTimestamp() : time();
     $locale = I18n::getLocale();
