@@ -45,7 +45,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                 <div class="pricing-header bg-success text-white text-center">
                     <h4 class="mb-0">Basic</h4>
                     <div class="display-4 fw-bold ">39.90€/mese</div>
-                    <p class="mb-0 text-white"><b>499€/anno</b></p>
+                    <p class="mb-0 text-white"><b>399€/anno</b></p>
                 </div>
                 <div class="card-body pricing-features">
                     <ul class="list-unstyled">
@@ -194,7 +194,7 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
                         </th>
                         <th scope="col" class="text-center text-nowrap">
                             <div class="h4 font-weight-bold mb-0">Basic</div>
-                            <p class="font-weight-light text-muted">39,90€/mese<br>499€/anno</p>
+                            <p class="font-weight-light text-muted">39,90€/mese<br>399€/anno</p>
                         </th>
                         <th scope="col" class="text-center text-nowrap">
                             <div class="h4 font-weight-bold mb-0">Advanced</div>
