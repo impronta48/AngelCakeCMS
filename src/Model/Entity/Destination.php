@@ -36,7 +36,7 @@ class Destination extends Entity
 		'*' => true,
 	];
 
-	protected $_virtual = ['image', 'copertina', 'url','logo_sponsor' ];
+	protected $_virtual = ['image', 'copertina', 'url','logo_sponsor', 'logo_ciclovia' ];
 
 	
 
@@ -69,11 +69,16 @@ class Destination extends Entity
 		return $this->_getAttachmentImage('logo_sponsor');
 	}
 
+	public function _getLogoCiclovia()
+	{
+		return $this->_getAttachmentImage('logo_ciclovia');
+	}
+
 	public function _getAttachmentImage($field_name = null) {		
 		$fullDir = AttachmentManager::buildPath($this->getSource(), $this->slug, $this->id, $field_name);
 
 		$dir = new Folder(WWW_ROOT . $fullDir);
-		$files = $dir->find(".*\.(jpg|jpeg|gif|png|webp)", true);
+		$files = $dir->find(".*\.(jpg|jpeg|gif|png|webp|svg)", true);
 
 		/*Controllo se è vuoto*/
 		if (!$files) {
