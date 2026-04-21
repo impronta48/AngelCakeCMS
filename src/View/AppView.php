@@ -44,7 +44,6 @@ class AppView extends UIView
 		parent::initialize();
 		$this->loadHelper('Authentication.Identity');
 		$this->loadHelper('AssetMix.AssetMix');
-		$this->loadHelper('Ebike2021.Link');
 
 		$lang = I18n::getLocale();
 		$base = ROOT;
@@ -55,6 +54,10 @@ class AppView extends UIView
 		$localized_directory = $base . DS . $lang . DS . $this->getTemplate() . '.php';
 		if (file_exists($localized_directory)) {
 			$this->setTemplatePath($this->getTemplatePath() . DS . $lang);
+		}
+
+		if ($this->theme === 'Ebike2021') {
+			$this->loadHelper('Ebike2021.Link');
 		}
 	}
 }
