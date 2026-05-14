@@ -55,6 +55,11 @@ class DestinationsTable extends Table
 			'foreignKey' => 'destination_id',
 		]);
 		$this->hasMany('Articles');
+		$this->belongsTo('Parent', [
+			'className' => 'Destinations',
+			'foreignKey' => 'parent_id',
+		]);
+		
 	}
 
 	public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
@@ -86,4 +91,19 @@ class DestinationsTable extends Table
 
 		return $validator;
 	}
+
+	public function getChildren($id)
+	{	
+		if (!$id) return [];
+		$children = $this->find()
+        ->select(['id','slug', 'name']) 
+        ->where(['parent_id' => $id, 'published' => 1])
+        ->all()
+        ->toArray();
+		foreach ($children as $child) {
+			$child->children = $this->getChildren($child->id);
+		}
+		return $children;
+	}
+
 }
