@@ -20,8 +20,7 @@ use Cake\Core\Configure;
   <?= $this->Html->css('/js/node_modules/bootstrap-vue/dist/bootstrap-vue.css') ?>
   <?= $this->Html->css('/js/node_modules/bootstrap-icons/font/bootstrap-icons.css') ?>
 
-  <!-- Load polyfills to support older browsers -->
-  <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
+  <!-- Load polyfills to support older browsers (Removed polyfill.io as it is hijacked and hangs pages) -->
 
   <!-- Custom styles for this template -->
   <?= $this->Html->css('admin-style') ?>
