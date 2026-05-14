@@ -86,18 +86,36 @@ class DestinationsController extends AppController
     $rentersCount = 0;
 
     if (!empty($hasRenters)) {
-      // Contiamo i POI di categoria 3 associati a questa destinazione
-      $rentersCount = $this->fetchTable('CategoriePoi')
+    // IDs da considerare: la destinazione corrente + eventuali figli
+    $destinationIds = [$destination->id];
+
+    // Recupera i figli diretti pubblicati
+    $children = $this->Destinations
+        ->find()
+        ->select(['id'])
+        ->where([
+            'parent_id'  => $destination->id,
+            'published'  => 1,
+        ])
+        ->all();
+
+    foreach ($children as $child) {
+        $destinationIds[] = $child->id;
+    }
+
+    // Conta i POI di categoria 3 associati alla destinazione e ai suoi figli
+    $rentersCount = $this->fetchTable('CategoriePoi')
         ->find()
         ->innerJoin(['P' => 'poi'], ['P.id = CategoriePoi.poi_id'])
         ->where([
-          'P.destination_id' => $destination->id,
-          'P.published' => 1,
-          'CategoriePoi.categoria_id' => 3
+            'P.destination_id IN' => $destinationIds,
+            'P.published'         => 1,
+            'CategoriePoi.categoria_id' => 3,
         ])
         ->count();
 
-      $destination->renters_count = $rentersCount;
+    $destination->renters_count = $rentersCount;
+
     }
 
     //Creo un array dai nomiseo
