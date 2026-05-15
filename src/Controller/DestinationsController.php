@@ -86,22 +86,8 @@ class DestinationsController extends AppController
     $rentersCount = 0;
 
     if (!empty($hasRenters)) {
-    // IDs da considerare: la destinazione corrente + eventuali figli
+    // IDs da considerare: solo la destinazione corrente (evitando query su parent_id)
     $destinationIds = [$destination->id];
-
-    // Recupera i figli diretti pubblicati
-    $children = $this->Destinations
-        ->find()
-        ->select(['id'])
-        ->where([
-            'parent_id'  => $destination->id,
-            'published'  => 1,
-        ])
-        ->all();
-
-    foreach ($children as $child) {
-        $destinationIds[] = $child->id;
-    }
 
     // Conta i POI di categoria 3 associati alla destinazione e ai suoi figli
     $rentersCount = $this->fetchTable('CategoriePoi')
