@@ -8,6 +8,7 @@ use Cake\Utility\Text;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 
 /**
  * Destinations Controller
@@ -483,6 +484,16 @@ class DestinationsController extends AppController
     // Recuperiamo il parametro lang (?lang=eng o ?lang=ita)
     $lang = $this->request->getQuery('lang');
 
+    $toAbsoluteUrl = function (?string $url): ?string {
+      if (empty($url)) {
+        return null;
+      }
+      if (preg_match('/^https?:\/\//i', $url) === 1) {
+        return $url;
+      }
+      return Router::url($url, true);
+    };
+
     $destinations = $this->Destinations->find('all')
       ->where(['Destinations.published' => true])
       ->toArray();
@@ -490,6 +501,30 @@ class DestinationsController extends AppController
     $urls = [];
 
     foreach ($destinations as $destination) {
+      $rawImages = array_values(array_unique(array_filter(array_merge(
+        !empty($destination->image) ? [$destination->image] : [],
+        !empty($destination->copertina) ? [$destination->copertina] : []
+      ))));
+
+      $captionParts = array_filter([
+        $destination->preposition ?? null,
+        $destination->name ?? null,
+      ]);
+      $caption = !empty($captionParts) ? implode(' ', $captionParts) : null;
+
+      $images = array_values(array_filter(array_map(function ($img) use ($toAbsoluteUrl, $destination, $caption) {
+        $absUrl = $toAbsoluteUrl(is_string($img) ? $img : null);
+        if (empty($absUrl)) {
+          return null;
+        }
+
+        return [
+          'loc' => $absUrl,
+          'title' => $destination->name,
+          'caption' => $caption,
+        ];
+      }, $rawImages)));
+
       // --- URL BASE DESTINAZIONE ---
       $this->_addUrl($urls, $destination, "{$destination->slug}", "{$destination->slug}", 0.8, $lang);
 
@@ -527,13 +562,21 @@ class DestinationsController extends AppController
             ];
 
             // Applichiamo il filtro lingua anche alle rotte SEO
+            $seoData = [
+              'lastmod' => $destination->modified ? $destination->modified->format('Y-m-d') : null,
+              'changefreq' => 'yearly',
+              'priority' => $route['pri'],
+              'alternatives' => $alternatives,
+              'images' => $images,
+            ];
+
             if ($lang === 'eng') {
-              $urls[] = ['loc' => $enPathSeo, 'alternatives' => $alternatives, 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => $route['pri']];
+              $urls[] = array_merge($seoData, ['loc' => $enPathSeo]);
             } elseif ($lang === 'ita') {
-              $urls[] = ['loc' => $itPathSeo, 'alternatives' => $alternatives, 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => $route['pri']];
+              $urls[] = array_merge($seoData, ['loc' => $itPathSeo]);
             } else {
-              $urls[] = ['loc' => $itPathSeo, 'alternatives' => $alternatives, 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => $route['pri']];
-              $urls[] = ['loc' => $enPathSeo, 'alternatives' => $alternatives, 'lastmod' => null, 'changefreq' => 'yearly', 'priority' => $route['pri']];
+              $urls[] = array_merge($seoData, ['loc' => $itPathSeo]);
+              $urls[] = array_merge($seoData, ['loc' => $enPathSeo]);
             }
           }
         }
