@@ -98,18 +98,22 @@ class Destination extends Entity
 
 	public function _getMinPrice()
 	{
-		if (empty($this->id)) {
+		try {
+			if (empty($this->id)) {
+				return null;
+			}
+
+			$tipibiciTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Cyclomap.Tipibici');
+			$minprice = $tipibiciTable->find()
+				->select(['tariffa_intera'])
+				->where(['destination_id' => $this->id, 'published' => 1, 'tariffa_intera >' => 0])
+				->order(['tariffa_intera' => 'ASC'])
+				->first();
+
+			return $minprice ? $minprice->tariffa_intera : null;
+		} catch (\Throwable $exception) {
 			return null;
 		}
-
-		$tipibiciTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Cyclomap.Tipibici');
-		$minprice = $tipibiciTable->find()
-			->select(['tariffa_intera'])
-			->where(['destination_id' => $this->id, 'published' => 1, 'tariffa_intera >' => 0])
-			->order(['tariffa_intera' => 'ASC'])
-			->first();
-
-		return $minprice ? $minprice->tariffa_intera : null;
 	}
 
 }
