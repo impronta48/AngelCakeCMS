@@ -28,7 +28,7 @@ class ContactsController extends AppController
       $d = $this->request->getData();
 
       //honeypot
-      if (isset($d['admin_email']) && $d['admin_email'] != '') {
+      if ((isset($d['admin_email']) && $d['admin_email'] != '') || (isset($d['website']) && $d['website'] != '')) {
         return $this->response
           ->withType('application/json')
           ->withStringBody(json_encode(['success' => false, 'message' => 'Invalid request']));
@@ -91,13 +91,18 @@ class ContactsController extends AppController
           ->setSubject(isset($d['_subject']) ? $d['_subject'] : 'Messaggio dal Web')
           ->deliver($msg);
 
+        if ($this->request->is('ajax')) {
         return $this->response
           ->withType('application/json')
           ->withStringBody(json_encode([
             'success' => true, 
             'message' => 'Grazie, ti risponderemo al più presto.',
             'referer' => $referer
-          ]));
+          ]));        
+        } else {
+            $this->Flash->success('Grazie, ti risponderemo al più presto.');
+            return $this->redirect($referer);
+        }
       } catch (Exception $e) {
         return $this->response
           ->withType('application/json')
