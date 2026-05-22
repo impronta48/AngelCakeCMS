@@ -96,6 +96,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     $this->addPlugin('BootstrapUI');
     $this->addPlugin('ADmad/Glide');
     $this->addPlugin('ADmad/SocialAuth');
+    $this->addPlugin('Tags');
     //$this->addPlugin('Notifications');
     
 

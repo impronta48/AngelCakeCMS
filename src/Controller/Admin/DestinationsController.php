@@ -120,6 +120,10 @@ class DestinationsController extends AppController
 		}
 		$new = $destination->isNew();
 		$this->Authorization->authorize($destination);
+		
+		// aggiungi nella Table con namespace vuoto/default
+		$this->Destinations->addBehavior('Tags.Tag');
+		$this->Destinations->behaviors()->get('Tag')->setConfig('namespace', (string)$id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$data = $this->request->getData();

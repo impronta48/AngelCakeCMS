@@ -53,14 +53,14 @@ class DestinationsController extends AppController
         $destination->select($only);
       }
 
-      $destination = $destination->first();
+      $destination = $destination->contain(['Tags'])->first();
     } else {
       $destination = $this->Destinations->findBySlugAndPublished($nomeseo, 1);
       if ($only) {
         $destination->select($only);
       }
 
-      $destination = $destination->first();
+      $destination = $destination->contain(['Tags'])->first();
     }
 
     if (empty($destination)) {
@@ -188,9 +188,12 @@ class DestinationsController extends AppController
 
     $query = $this->Destinations->find()
       ->where(['Destinations.published' => true])
-      ->contain(['Parent' => [
-        'fields' => ['id', 'slug', 'name']
-      ]]);
+      ->contain([
+        'Parent' => [
+          'fields' => ['id', 'slug', 'name']
+        ],
+        'Tags'
+      ]);
     
 
     $specific_id = $this->request->getQuery('id');

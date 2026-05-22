@@ -20,6 +20,7 @@
     echo $this->Form->control('slug');
     echo $this->Form->control('preposition');
     echo $this->Form->control('nazione_id', ['options' => $countriesWithIndices]);
+    
     echo $this->Form->control('nomiseo');
     echo $this->Form->control('published');
     ?>

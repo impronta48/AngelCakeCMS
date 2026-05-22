@@ -59,6 +59,11 @@ class DestinationsTable extends Table
 			'className' => 'Destinations',
 			'foreignKey' => 'parent_id',
 		]);
+
+
+		
+		//Anche le destinazioni sono taggabili, può essere aggiunto un namespace a livello di controller 
+		$this->addBehavior('Tags.Tag', ['taggedCounter' => false]);
 		
 	}
 
