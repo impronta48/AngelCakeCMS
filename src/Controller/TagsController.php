@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 
-namespace App\Controller\;
+namespace App\Controller;
 
 /**
  * Tags Controller
@@ -43,10 +43,11 @@ class TagsController extends AppController
 	public function view($id = null)
 	{
 		$tag = $this->Tags->get($id, [
-			'contain' => ['Articles'],
+			'contain' => ['TagsEnhancements'],
 		]);
-
 		$this->set('tag', $tag);
+		$this->viewBuilder()->setOption('serialize', 'tag');
+
 	}
 
 }

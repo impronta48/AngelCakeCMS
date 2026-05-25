@@ -3,9 +3,14 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Event\EventInterface;
+use Cake\Datasource\EntityInterface;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Utility\Text;
+use ArrayObject;
 
 /**
  * Tags Model
@@ -34,18 +39,28 @@ class TagsTable extends Table
 	public function initialize(array $config): void {
 		parent::initialize($config);
 
-		$this->setTable('tags');
-		$this->setDisplayField('title');
+		$this->setTable('tags_tags');
+		$this->setDisplayField('label');
 		$this->setPrimaryKey('id');
 
 		$this->addBehavior('Timestamp');
 
-		$this->belongsToMany('Articles', [
-			'foreignKey' => 'tag_id',
-			'targetForeignKey' => 'article_id',
-			'joinTable' => 'articles_tags',
+		$this->belongsTo('Destinations', [
+			'className' => 'Destinations',
+			'foreignKey' => 'namespace',
+			'bindingKey' => 'id',
+			'joinType' => 'LEFT',
 		]);
+
+		$this->hasOne('TagsEnhancements', [
+            'foreignKey' => 'tag_id',
+            'className'  => 'TagsEnhancements',
+        ]);
+
 	}
+
+
+	
 
 	/**
 	 * Default validation rules.
@@ -59,10 +74,11 @@ class TagsTable extends Table
 			->allowEmpty('id', 'create');
 
 		$validator
-			->scalar('title')
-			->maxLength('title', 191)
-			->allowEmpty('title')
-			->add('title', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+			->scalar('label')
+			->maxLength('label', 255)
+			->requirePresence('label', 'create')
+			->notEmptyString('label')
+			->add('label', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
 		return $validator;
 	}
@@ -75,8 +91,27 @@ class TagsTable extends Table
 	 * @return \Cake\ORM\RulesChecker
 	 */
 	public function buildRules(RulesChecker $rules): \Cake\ORM\RulesChecker {
-		$rules->add($rules->isUnique(['title']));
+		$rules->add($rules->isUnique(['label']));
 
 		return $rules;
 	}
+
+	public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
+	{
+		if ($entity->isNew() || $entity->isDirty('label')) {
+			$slug = Text::slug((string)$entity->get('label'));
+			$entity->set('slug', strtolower($slug));
+		}
+	}
+
+
+
+	 // Enhancement automatico su ogni find()
+    public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options): void
+    {
+        $contain = $query->getContain();
+        if (!isset($contain['TagsEnhancements'])) {
+            $query->contain(['TagsEnhancements']);
+        }
+    }
 }

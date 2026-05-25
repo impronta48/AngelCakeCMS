@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * Tags Controller
@@ -15,6 +16,33 @@ use App\Controller\AppController;
  */
 class TagsController extends AppController
 {
+	private function saveTag(?int $id = null)
+	{
+		$tag = $id === null
+			? $this->Tags->newEmptyEntity()
+			: $this->Tags->get($id, ['contain' => ['TagsEnhancements']]);
+
+		$this->Authorization->authorize($tag);
+
+		if ($this->request->is(['post', 'patch', 'put'])) {
+			$tag = $this->Tags->patchEntity($tag, $this->request->getData(), [
+				'associated' => ['TagsEnhancements'],
+			]);
+
+			if ($this->Tags->save($tag, ['associated' => ['TagsEnhancements']])) {
+				$this->Flash->success(__('The tag has been saved.'));
+
+				return $this->redirect(['action' => 'index']);
+			}
+
+			$this->Flash->error(__('The tag could not be saved. Please, try again.'));
+		}
+
+		$this->set(compact('tag'));
+
+		return $tag;
+	}
+
 	/**
 	 * Index method
 	 *
@@ -23,8 +51,8 @@ class TagsController extends AppController
 	public function index()
 	{
 		$this->Authorization->skipAuthorization();
-		$query = $this->Tags->find();
-
+		$query = $this->Tags->find()->contain(['Destinations']);
+		
 		if (!$this->request->is('json')) {
 			$tags = $query->all();
 		} else {
@@ -44,10 +72,7 @@ class TagsController extends AppController
 	 */
 	public function view($id = null)
 	{
-
-		$tag = $this->Tags->get($id, [
-			'contain' => ['Articles'],
-		]);
+		$tag = $this->Tags->get($id, ['contain' => ['Destinations', 'TagsEnhancements']]);
 		$this->Authorization->authorize($tag);
 		$this->set('tag', $tag);
 	}
@@ -59,19 +84,9 @@ class TagsController extends AppController
 	 */
 	public function add()
 	{
-		$tag = $this->Tags->newEmptyEntity();
-		$this->Authorization->authorize($tag);
-		if ($this->request->is('post')) {
-			$tag = $this->Tags->patchEntity($tag, $this->request->getData());
-			if ($this->Tags->save($tag)) {
-				$this->Flash->success(__('The tag has been saved.'));
-
-				return $this->redirect(['action' => 'index']);
-			}
-			$this->Flash->error(__('The tag could not be saved. Please, try again.'));
-		}
-		$articles = $this->Tags->Articles->find('list', ['limit' => 200]);
-		$this->set(compact('tag', 'articles'));
+		$tag = $this->saveTag();
+		$this->set(compact('tag'));
+		$this->viewBuilder()->setTemplate('add');
 	}
 
 	/**
@@ -83,21 +98,9 @@ class TagsController extends AppController
 	 */
 	public function edit($id = null)
 	{
-		$tag = $this->Tags->get($id, [
-			'contain' => ['Articles'],
-		]);
-		$this->Authorization->authorize($tag);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$tag = $this->Tags->patchEntity($tag, $this->request->getData());
-			if ($this->Tags->save($tag)) {
-				$this->Flash->success(__('The tag has been saved.'));
-
-				return $this->redirect(['action' => 'index']);
-			}
-			$this->Flash->error(__('The tag could not be saved. Please, try again.'));
-		}
-		$articles = $this->Tags->Articles->find('list', ['limit' => 200]);
-		$this->set(compact('tag', 'articles'));
+		$tag = $this->saveTag((int)$id);
+		$this->set(compact('tag'));
+		$this->viewBuilder()->setTemplate('edit');
 	}
 
 	/**

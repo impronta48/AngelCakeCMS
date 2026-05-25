@@ -2,7 +2,8 @@
   <thead>
     <tr>
       <th><?= $this->Paginator->sort('id'); ?></th>
-      <th><?= $this->Paginator->sort('title'); ?></th>
+      <th><?= $this->Paginator->sort('label'); ?></th>
+      <th><?= $this->Paginator->sort('namespace (destination reference)'); ?></th>
       <th><?= $this->Paginator->sort('created'); ?></th>
       <th><?= $this->Paginator->sort('modified'); ?></th>
       <th class="actions"><?= __('Actions'); ?></th>
@@ -12,7 +13,8 @@
     <?php foreach ($tags as $tag) : ?>
       <tr>
         <td><?= $this->Number->format($tag->id) ?></td>
-        <td><?= h($tag->title) ?></td>
+        <td><?= h($tag->label) ?></td>
+        <td><?= h($tag->destination?->name) ?></td>
         <td><?= h($tag->created) ?></td>
         <td><?= h($tag->modified) ?></td>
         <td class="actions">

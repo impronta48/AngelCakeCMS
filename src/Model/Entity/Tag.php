@@ -3,17 +3,23 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Lib\AttachmentManager;
+use Cake\Core\Configure;
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 
 /**
  * Tag Entity
  *
  * @property int $id
- * @property string $title
+ * @property string $label
+ * @property string|null $slug
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Article[] $articles
+ * @property \App\Model\Entity\TagsEnhancement|null $tags_enhancement
  */
 class Tag extends Entity
 {
@@ -28,9 +34,15 @@ class Tag extends Entity
 	 * @var array
 	 */
 	protected $_accessible = [
-		'title' => true,
+		'label' => true,
+		'slug' => false,
 		'created' => true,
 		'modified' => true,
 		'articles' => true,
+		'tags_enhancement' => true,
 	];
+
+
+	
+
 }

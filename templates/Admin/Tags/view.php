@@ -1,3 +1,5 @@
+<?php /** @var \App\Model\Entity\Tag $tag */ ?>
+
 <div class="panel panel-default">
   <!-- Panel header -->
   <div class="panel-heading">
@@ -5,8 +7,12 @@
   </div>
   <table class="table table-striped" cellpadding="0" cellspacing="0">
     <tr>
-      <td><?= __('Title') ?></td>
-      <td><?= h($tag->title) ?></td>
+      <td><?= __('Label') ?></td>
+      <td><?= h($tag->label) ?></td>
+    </tr>
+    <tr>
+      <td><?= __('Slug') ?></td>
+      <td><?= h($tag->slug) ?></td>
     </tr>
     <tr>
       <td><?= __('Id') ?></td>
@@ -20,13 +26,39 @@
       <td><?= __('Modified') ?></td>
       <td><?= h($tag->modified) ?></td>
     </tr>
+    <?php if (!empty($tag->tags_enhancement)) : ?>
+      <tr>
+        <td><?= __('Nome ciclovia') ?></td>
+        <td><?= h($tag->tags_enhancement->alt_name) ?></td>
+      </tr>
+      <tr>
+        <td><?= __('Colore') ?></td>
+        <td><?= h($tag->tags_enhancement->color) ?></td>
+      </tr>
+      <tr>
+        <td><?= __('Immagine') ?></td>
+       <td>
+          <?php if (!empty($tag->tags_enhancement?->image)): ?>
+              <?= $this->Html->image(
+                  \Cake\Routing\Router::url('/' . trim($tag->tags_enhancement->image, '/'), true),
+                  [
+                      'alt' => h($tag->tags_enhancement->alt_name),
+                      'style' => 'height: 80px; object-fit: contain;'
+                  ]
+              ) ?>
+          <?php else: ?>
+              <span class="text-muted">—</span>
+          <?php endif; ?>
+      </td>
+      </tr>
+    <?php endif; ?>
   </table>
 </div>
 
 <div class="panel panel-default">
   <!-- Panel header -->
   <div class="panel-heading">
-    <h3 class="panel-title"><?= __('Related Articles') ?></h3>
+    <h3 class="panel-title"><?= __('Percorsi taggati') ?></h3>
   </div>
   <?php if (!empty($tag->articles)) : ?>
     <table class="table table-striped">
