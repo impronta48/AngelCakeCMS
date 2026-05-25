@@ -2,9 +2,6 @@
 	"folders": [
     {
       "path": "."
-    },
-    {
-      "path": "../b2/shop"
     }
   ],
   "settings": {

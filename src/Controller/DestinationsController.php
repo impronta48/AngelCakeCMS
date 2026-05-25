@@ -239,6 +239,7 @@ class DestinationsController extends AppController
     $only = $this->request->getQuery('only');
     if (!empty($only)) {
       $columns = explode(',', $only);
+      $columns = array_intersect($columns, $existing_columns);
       if (array_search('payment_conf', $columns) !== false) {
         unset($columns[array_search('payment_conf', $columns)]);
       }
