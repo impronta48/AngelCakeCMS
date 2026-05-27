@@ -342,171 +342,138 @@ description: Bikesquare offred iversi modelli per chi vuole avviare un'attività
     body {
     background-color: #f8f9fa;
 }
-
 .container-custom {
     margin-left:10vw;
     margin-right:10vw;
 }
-
 @media (max-width: 767px) {
     .container-custom {
         margin-left: 0;
         margin-right: 0;
     }
 }
-
 @media (min-width: 768px) and (max-width: 991px) {
     .container-custom {
         margin-left: 5vw;
         margin-right: 5vw;
     }
 }
-
 td {
     vertical-align: middle;
 }
-
 .table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
-
 /* Base table styles for all screen sizes */
 .table {
     table-layout: fixed;
     width: 100%;
 }
-
 .table th,
 .table td {
     white-space: normal;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
-
 .table th:first-child,
 .table td:first-child {
     width: 30%;
 }
-
 .table th:not(:first-child),
 .table td:not(:first-child) {
     width: 17.5%;
 }
-
 @media (max-width: 991px) {
     .table {
         font-size: 0.75rem;
     }
-    
     .table th,
     .table td {
         padding: 0.3rem 0.15rem;
     }
-    
     .table th:first-child,
     .table td:first-child {
         width: 35%;
         font-size: 0.7rem;
     }
-    
     .table th:not(:first-child),
     .table td:not(:first-child) {
         width: 16.25%;
     }
-    
     .h4 {
         font-size: 0.9rem;
     }
-    
     .btn-sm {
         padding: 0.15rem 0.25rem;
         font-size: 0.65rem;
     }
-    
     .badge {
         display: none;
     }
-    
     .say-yes, .say-yes:before,
     .say-no, .say-no:before {
         height: 1rem;
         width: 1rem;
     }
 }
-
 @media (max-width: 767px) {
     .table {
         font-size: 0.6rem;
     }
-    
     .table th:first-child,
     .table td:first-child {
         width: 40%;
         font-size: 0.55rem;
     }
-    
     .table th:not(:first-child),
     .table td:not(:first-child) {
         width: 15%;
     }
-    
     .h4 {
         font-size: 0.75rem;
     }
-    
     .font-weight-light {
         font-size: 0.55rem;
     }
-    
     .btn-sm {
         padding: 0.1rem 0.2rem;
         font-size: 0.55rem;
     }
-    
     .say-yes, .say-yes:before,
     .say-no, .say-no:before {
         height: 0.8rem;
         width: 0.8rem;
     }
 }
-
 .pricing-card {
     border: none;
     border-radius: 15px;
     transition: all 0.3s ease;
 }
-
 .pricing-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
-
 .pricing-header {
     border-radius: 15px 15px 0 0;
     padding: 1.5rem 0.75rem;
 }
-
 .pricing-header h4 {
     font-size: 1.25rem;
 }
-
 .pricing-header .display-4 {
     font-size: 2.5rem;
 }
-
 .pricing-header p {
     font-size: 0.875rem;
 }
-
 .pricing-features {
     padding: 1.5rem 0.85rem;
 }
-
 .pricing-features .btn {
     width:90%;
 }
-
 .btn-custom {
     border-radius: 50px;
     padding: 0.75rem 2rem;
@@ -515,11 +482,9 @@ td {
     letter-spacing: 1px;
     transition: all 0.3s ease;
 }
-
 .btn-custom:hover {
     transform: scale(1.05);
 }
-
 .feature-icon {
     width: 20px;
     height: 20px;
@@ -529,8 +494,6 @@ td {
     padding-right: 8px;
     padding-left: 8px;
 }
-
-
 .say-yes:before {
     content: "";
     vertical-align: middle;
@@ -541,7 +504,6 @@ td {
     height: 1.5rem;
     width: 1.5rem;
 }
-
 .say-yes {
     position: relative;
     display: block;
@@ -553,12 +515,10 @@ td {
     display: inline-block;
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg height='24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23dc3545' stroke='%23dc3545' stroke-width='2' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'/%3E%3C/svg%3E");
 }
-
 .say-no, .say-no:before {
     height: 1.5rem;
     width: 1.5rem;
 }
-
 .say-no {
     position: relative;
     display: block;
@@ -582,7 +542,6 @@ td {
 .buttons-row .btn {
     min-width: 0;
 }
-
 .floating-cta {
     position: fixed;
     bottom: 30px;
@@ -596,13 +555,11 @@ td {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);  /* Smoother easing */
     animation: pulse-shadow 2s infinite;
 }
-
 .floating-cta:hover {
     transform: translateY(-8px) scale(1.08);  /* Slightly more dramatic */
     box-shadow: 0 12px 35px rgba(0, 123, 255, 0.8);  /* Stronger shadow */
     animation: none;
 }
-
 @keyframes pulse-shadow {
     0%, 100% {
         box-shadow: 0 4px 20px rgba(0, 123, 255, 0.5);
@@ -611,7 +568,6 @@ td {
         box-shadow: 0 4px 30px rgba(0, 123, 255, 0.8);
     }
 }
-
 @media (max-width: 767px) {
     .floating-cta {
         bottom: 20px;
@@ -621,7 +577,6 @@ td {
     }
 }
 </style>
-
 <script>
 // Initialize Bootstrap popovers
 document.addEventListener('DOMContentLoaded', function () {
