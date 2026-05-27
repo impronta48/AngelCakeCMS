@@ -11,19 +11,31 @@ var app = new Vue({
         'v-select': vSelect,
     },
     data() {
-    return {
-        loading: false,
-        form: { tags: [] },
-        selectOptionsTags: (() => {
-            try {
-                const raw = document.getElementById('app').dataset.tags;
-                console.log('tags raw:', raw);
-                return JSON.parse(raw || '[]');
-            } catch(e) {
-                console.error('JSON parse error:', e);
-                return [];
-            }
-        })()
+
+   
+        let appEl = document.getElementById('app');
+  
+
+        let tagsList =  JSON.parse(document.getElementById('tags-data').textContent);
+        let destTags =  JSON.parse(document.getElementById('dest-tags-data').textContent);
+        
+      
+
+        let initialTags = [];
+        if (destTags && destTags.length > 0) {
+            initialTags = destTags.map(t => t.name || t.label);
+        } else if (destTagListRaw) {
+            initialTags = destTagListRaw.split(',').map(t => t.trim()).filter(t => t).map(t => {
+                let tag = tagsList.find(tagItem => tagItem.name === t || tagItem.label === t);
+                return tag ? (tag.name || tag.label) : t;
+            });
+        }
+
+
+        return {
+            loading: false,
+            form: { tags: initialTags },
+            selectOptionsTags: tagsList
         }
     },
     mounted() {

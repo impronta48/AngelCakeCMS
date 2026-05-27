@@ -46,6 +46,7 @@ class DestinationsController extends AppController
     if (!empty($only)) {
       $only = explode(",", $only);
     }
+    
 
     if (is_numeric($nomeseo)) {
       $destination = $this->Destinations->findByIdAndPublished($nomeseo, 1);
@@ -185,6 +186,8 @@ class DestinationsController extends AppController
     ];
     $select_columns = array_intersect($existing_columns, $desired_columns);
     $order_columns = ['Destinations.nazione_id', 'Destinations.name'];
+   
+
 
     $query = $this->Destinations->find()
       ->where(['Destinations.published' => true])

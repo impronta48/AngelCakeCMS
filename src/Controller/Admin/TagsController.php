@@ -86,7 +86,7 @@ class TagsController extends AppController
 	{
 		$tag = $this->saveTag();
 		$this->set(compact('tag'));
-		$this->viewBuilder()->setTemplate('add');
+		$this->viewBuilder()->setTemplate('edit');
 	}
 
 	/**

@@ -109,6 +109,7 @@ class TagsTable extends Table
 	 // Enhancement automatico su ogni find()
     public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options): void
     {
+
         $contain = $query->getContain();
         if (!isset($contain['TagsEnhancements'])) {
             $query->contain(['TagsEnhancements']);

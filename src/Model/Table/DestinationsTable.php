@@ -32,6 +32,8 @@ class DestinationsTable extends Table
 	 */
 	public function initialize(array $config): void
 	{
+		parent::initialize($config);
+
 		$this->addBehavior('Translate', [
 			'fields' => [
 				'nomiseo',
@@ -45,7 +47,6 @@ class DestinationsTable extends Table
 			// 'allowEmptyTranslations' => false,
 		]);
 
-		parent::initialize($config);
 
 		$this->setTable('destinations');
 		$this->setDisplayField('name');
@@ -59,11 +60,12 @@ class DestinationsTable extends Table
 			'className' => 'Destinations',
 			'foreignKey' => 'parent_id',
 		]);
+		
 
 
 		
 		//Anche le destinazioni sono taggabili, può essere aggiunto un namespace a livello di controller 
-		$this->addBehavior('Tags.Tag', ['taggedCounter' => false]);
+		$this->addBehavior('App.Tag', ['taggedCounter' => false]);
 		
 	}
 

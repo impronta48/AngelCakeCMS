@@ -1,6 +1,4 @@
 <?php /** @var \App\Model\Entity\Tag $tag */ ?>
-<?= $this->Html->script('/js/Admin/Tags/edit.js', ['type' => 'module']) ?>
-
 <div id="app">
     <?= $this->Form->create($tag, ['ref' => 'form']); ?>
     <fieldset>
@@ -9,8 +7,10 @@
             echo $this->Form->control('label', ['label' => 'Nome tag']);
             echo $this->Form->control('slug', ['label' => 'URL slug (generato automaticamente)', 'readonly' => true]);
             echo $this->Form->control('tags_enhancement.alt_name', ['label' => 'Nome ciclovia']);
-            echo $this->Form->control('tags_enhancement.color', ['label' => 'Colore']);
-        ?>
+            echo $this->Form->control('tags_enhancement.color', [
+                'label' => 'Colore',
+                'type'  => 'color',
+            ]);        ?>
         <div class="card card-info mt-3">
         <div class="card-body">
             <h3 class="card-title"><i class="bi bi-image"></i> Immagine tag</h3>

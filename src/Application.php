@@ -99,7 +99,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     $this->addPlugin('Tags');
     //$this->addPlugin('Notifications');
     
-
+  
     if (Configure::check('AngelCake.plugins')) {
       $plugins = Configure::read('AngelCake.plugins');
       if (!empty($plugins)) {

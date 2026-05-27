@@ -116,13 +116,13 @@ class DestinationsController extends AppController
 		if (is_null($id)) {
 			$destination = $this->Destinations->newEmptyEntity();
 		} else {
-			$destination = $this->Destinations->get($id);
+			$destination = $this->Destinations->get($id, ['contain' => ['Tags']]);
 		}
 		$new = $destination->isNew();
 		$this->Authorization->authorize($destination);
 		
 		// aggiungi nella Table con namespace vuoto/default
-		$this->Destinations->addBehavior('Tags.Tag');
+		$this->Destinations->addBehavior('App.Tag');
 		$this->Destinations->behaviors()->get('Tag')->setConfig('namespace', (string)$id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
@@ -155,7 +155,7 @@ class DestinationsController extends AppController
 
 		$this->set('destination', $destination);
 		$this->set('new', $new);
-
+ 
 		$destinationsList = $this->Destinations
 			->find('list', [
 				'keyField' => 'id',
@@ -164,7 +164,17 @@ class DestinationsController extends AppController
 			->order(['name' => 'ASC'])
 			->toArray();
 
-		$this->set(compact('destinationsList'));
+		$tagsTable = $this->fetchTable('Tags');
+		$tagsList = $tagsTable->find('all')->toArray();
+		$tagsJson = json_encode(array_map(fn($t) => ['id' => $t->id, 'name' => $t->label], $tagsList));
+		$destTagList = isset($destination->id) ? $tagsTable->find()->matching('Destinations', function($q) use ($destination) {
+			return $q->where(['Destinations.id' => $destination->id]);
+		})->toArray() : [];
+
+
+		$this->set(compact('tagsJson', 'destTagList'));
+
+		$this->set(compact('destinationsList', 'tagsList'));
 	}
 
 	/**

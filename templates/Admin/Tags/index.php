@@ -1,3 +1,10 @@
+<div class="row pb-3 items-end">
+      <div class="col-md-12 ">
+        <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right mt-4"><i class="bi bi-plus-square"></i> Aggiungi tag</a>
+      </div>
+    </div>
+
+
 <table class="table table-striped" cellpadding="0" cellspacing="0">
   <thead>
     <tr>
