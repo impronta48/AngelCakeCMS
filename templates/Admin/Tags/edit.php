@@ -19,6 +19,7 @@
                 'field' => 'tag',
                 'multiple' => false,
                 'temp' => false,
+                'convert' => false,
                 'filetype' => 'image/*',
             ] + (!empty($tag->id) ? [
                 'destination' => $tag->slug,
