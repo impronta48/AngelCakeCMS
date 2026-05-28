@@ -24,12 +24,7 @@ var app = new Vue({
         let initialTags = [];
         if (destTags && destTags.length > 0) {
             initialTags = destTags.map(t => t.name || t.label);
-        } else if (destTagListRaw) {
-            initialTags = destTagListRaw.split(',').map(t => t.trim()).filter(t => t).map(t => {
-                let tag = tagsList.find(tagItem => tagItem.name === t || tagItem.label === t);
-                return tag ? (tag.name || tag.label) : t;
-            });
-        }
+        } 
 
 
         return {
