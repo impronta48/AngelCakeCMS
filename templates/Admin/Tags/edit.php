@@ -1,4 +1,7 @@
-<?php /** @var \App\Model\Entity\Tag $tag */ ?>
+<?php
+/** @var \App\Model\Entity\Tag $tag */
+$this->assign('vue_override', 'mix/Admin/Destinations/edit');
+?>
 <div id="app">
     <?= $this->Form->create($tag, ['ref' => 'form']); ?>
     <fieldset>
@@ -16,7 +19,7 @@
             <h3 class="card-title"><i class="bi bi-image"></i> Immagine tag</h3>
             <?= $this->element('upload', [
                 'model' => 'TagsEnhancements',
-                'field' => 'tag',
+                'field' => 'image',
                 'multiple' => false,
                 'temp' => false,
                 'convert' => false,

@@ -3,6 +3,7 @@
 use Cake\Core\Configure;
 
 $v = $this->fetch('vue');
+$vue_override = $this->fetch('vue_override');
 $d = Configure::read('debug');
 
 // Carico le librerie statiche
@@ -20,7 +21,10 @@ echo $this->Html->script('node_modules/axios/dist/axios.min');
 // Carico l'asset mix
 $p = $this->request->getParam('prefix') ? $this->request->getParam('prefix') . '/' : '';
 
-if ($v === "mix") {
+// Se la view ha impostato un override, usa quello
+if (!empty($vue_override)) {
+  $vue_name = $vue_override;
+} else if ($v === "mix") {
   if ($this->request->getParam('action') !== "display") {    
     $vue_name = "mix/" . $p. $this->request->getParam('controller') . '/' . $this->request->getParam('action');
   } else {
