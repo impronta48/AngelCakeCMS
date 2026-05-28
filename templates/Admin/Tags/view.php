@@ -49,6 +49,7 @@
           <?php else: ?>
               <span class="text-muted">—</span>
           <?php endif; ?>
+          <pre><?= h($tag->tags_enhancement?->image) ?></pre>
       </td>
       </tr>
     <?php endif; ?>

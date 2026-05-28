@@ -19,7 +19,7 @@ $this->assign('vue_override', 'mix/Admin/Destinations/edit');
             <h3 class="card-title"><i class="bi bi-image"></i> Immagine tag</h3>
             <?= $this->element('upload', [
                 'model' => 'TagsEnhancements',
-                'field' => 'image',
+                'field' => 'tag',
                 'multiple' => false,
                 'temp' => false,
                 'convert' => false,

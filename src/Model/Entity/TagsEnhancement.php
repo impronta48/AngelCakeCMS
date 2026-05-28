@@ -52,7 +52,7 @@ class TagsEnhancement extends Entity
 		return AttachmentManager::getFile(
 			$this->getSource(),
 			null,
-			$this->id,
+			$this->tag_id,
 			$fieldDir,
 			$allowed_extensions,
 			$firstonly,
