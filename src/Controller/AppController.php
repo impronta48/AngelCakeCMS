@@ -79,9 +79,12 @@ class AppController extends Controller
 
     //This way i load a different layout and I request authentication just for admin/
     if ($this->request->getParam('prefix') === 'Admin') {
-		  if (! $user || !in_array($user->group_id, [ROLE_BAM, ROLE_EON, ROLE_ADMIN, ROLE_EDITOR, ROLE_RENTER, ROLE_EON_PLUS, ROLE_COMMERCIALE])) { // kinda raw, there's probably a nicer way, TODO
-        $this->Flash->error('Questo utente non è autorizzato ad accedere ad Admin');
-		  	$this->redirect('/');
+      
+		  if (!in_array($user->group_id, [ROLE_BAM, ROLE_EON, ROLE_ADMIN, ROLE_EDITOR, ROLE_RENTER, ROLE_EON_PLUS, ROLE_COMMERCIALE])) { // kinda raw, there's probably a nicer way, TODO
+        if($user) {
+          $this->Flash->error('Questo utente non è autorizzato ad accedere ad Admin');
+		  	  $this->redirect('/');
+        }
 		  } else {
         $this->viewBuilder()->setLayout('admin');
       }
