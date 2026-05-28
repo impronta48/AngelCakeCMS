@@ -3,50 +3,56 @@ import MappaPercorsi from '../../../../plugins/Cyclomap/assets/js/components/Map
 import vSelect from 'vue-select';
 import "vue-select/dist/vue-select.css";
 
-var app = new Vue({
-    el: '#app',
-    components: {        
-        'file-uploader': FileUploader,
-        'mappa-percorsi': MappaPercorsi,
-        'v-select': vSelect,
-    },
-    data() {
+function parseJsonScript(id, fallback = []) {
+    const el = document.getElementById(id);
+    if (!el || !el.textContent) return fallback;
+    try {
+        return JSON.parse(el.textContent);
+    } catch (e) {
+        console.error(`[edit.js] JSON non valido in #${id}`, e);
+        return fallback;
+    }
+}
 
-   
-        let appEl = document.getElementById('app');
-  
+const appEl = document.getElementById('app');
 
-        let tagsList =  JSON.parse(document.getElementById('tags-data').textContent);
-        let destTags =  JSON.parse(document.getElementById('dest-tags-data').textContent);
-        
-      
+if (appEl) {
+    new Vue({
+        el: '#app',
+        components: {
+            'file-uploader': FileUploader,
+            'mappa-percorsi': MappaPercorsi,
+            'v-select': vSelect,
+        },
+        data() {
+            const tagsList = parseJsonScript('tags-data', []);
+            const destTags = parseJsonScript('dest-tags-data', []);
 
-        let initialTags = [];
-        if (destTags && destTags.length > 0) {
-            initialTags = destTags.map(t => t.name || t.label);
-        } 
+            const initialTags = Array.isArray(destTags)
+                ? destTags.map(t => t?.name || t?.label).filter(Boolean)
+                : [];
 
-
-        return {
-            loading: false,
-            form: { tags: initialTags },
-            selectOptionsTags: tagsList
-        }
-    },
-    mounted() {
-        this.$nextTick(() => {
-            const tagList = window.jQuery ? window.jQuery('#tag-list') : null;
-            if (tagList && typeof tagList.select2 === 'function') {
-                if (tagList.hasClass('select2-hidden-accessible')) {
-                    tagList.select2('destroy');
+            return {
+                loading: false,
+                form: { tags: initialTags },
+                selectOptionsTags: Array.isArray(tagsList) ? tagsList : []
+            };
+        },
+        mounted() {
+            this.$nextTick(() => {
+                const tagList = window.jQuery ? window.jQuery('#tag-list') : null;
+                if (tagList && typeof tagList.select2 === 'function') {
+                    if (tagList.hasClass('select2-hidden-accessible')) {
+                        tagList.select2('destroy');
+                    }
+                    tagList.select2({
+                        placeholder: 'Seleziona tag...',
+                        allowClear: true,
+                        width: '100%',
+                        theme: 'bootstrap4'
+                    });
                 }
-                tagList.select2({
-                    placeholder: 'Seleziona tag...',
-                    allowClear: true,
-                    width: '100%',
-                    theme: 'bootstrap4'
-                });
-            }
-        });
-    },
-});
+            });
+        },
+    });
+}
