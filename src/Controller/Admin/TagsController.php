@@ -51,7 +51,7 @@ class TagsController extends AppController
 	public function index()
 	{
 		$this->Authorization->skipAuthorization();
-		$query = $this->Tags->find()->contain(['Destinations']);
+		$query = $this->Tags->find(); 
 		
 		if (!$this->request->is('json')) {
 			$tags = $query->all();
