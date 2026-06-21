@@ -344,10 +344,12 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
      $service->loadAuthenticator(CookieJwtAuthenticator::class, [
       //'secretKey' => Security::getSalt(), //file_get_contents(CONFIG . '/jwt.pem'),
-      'algorithms' => ['HS256'],
+      'secretKey' => file_get_contents(CONFIG . 'jwtRS256_prenota.pem'),
+      'algorithm' => 'RS256',
       'returnPayload' => false,
       'cookie' => 'jwt_token',     // legge dal cookie
       'logAttempts' => true,
+      'domain' => Configure::read('App.cookie.domain', null),
       // 'resolver' => $resolver,
     ]);
 

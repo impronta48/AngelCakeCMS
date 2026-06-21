@@ -52,3 +52,5 @@ package-lock.json
 node_modules
 
 *.lock
+
+/config/jwtRS256_prenota.pem
