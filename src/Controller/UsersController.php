@@ -75,9 +75,6 @@ class UsersController extends AppController
       return $this->redirect('/admin');
       
     return $this->redirect('/viaggi/index');
-
-    
-
   }
 
    private function _returnHttpOnlyCookies($entity): Response

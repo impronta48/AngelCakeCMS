@@ -18,7 +18,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Authenticator\CookieJwtAuthenticator;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
@@ -38,22 +37,18 @@ use Authorization\Middleware\AuthorizationMiddleware;
 use Authorization\Policy\ResolverCollection;
 use Authorization\Policy\MapResolver;
 use Authorization\Policy\OrmResolver;
-use Psr\Http\Message\ResponseInterface;
 use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use ADmad\SocialAuth\Middleware\SocialAuthMiddleware;
-use Authorization\Middleware\RequestAuthorizationMiddleware;
 use Authorization\Exception\MissingIdentityException;
 use Cake\Http\Exception\ForbiddenException;
-use App\Policy\RequestPolicy;
 use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
-use Cake\Http\ServerRequest;
-use Fetzi\ServerTiming\ServerTimingMiddleware;
 
 use App\Event\SocialAuthListener;
 use Cake\Event\EventManager;
 use Cake\Event\EventManagerInterface;
+use CookieJwtAuth\Authenticator\CookieJwtAuthenticator;
 
 /**
  * Application setup class.
@@ -96,7 +91,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     $this->addPlugin('BootstrapUI');
     $this->addPlugin('ADmad/Glide');
     $this->addPlugin('ADmad/SocialAuth');
-    $this->addPlugin('Tags');
+    $this->addPlugin('Tags');    
     //$this->addPlugin('Notifications');
     
   
@@ -342,16 +337,21 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
       'loginUrl' => '/users/login',
     ]);
 
-     $service->loadAuthenticator(CookieJwtAuthenticator::class, [
-      //'secretKey' => Security::getSalt(), //file_get_contents(CONFIG . '/jwt.pem'),
-      'secretKey' => file_get_contents(CONFIG . 'jwtRS256_prenota.pem'),
-      'algorithm' => 'RS256',
-      'returnPayload' => false,
-      'cookie' => 'jwt_token',     // legge dal cookie
-      'logAttempts' => true,
-      'domain' => Configure::read('App.cookie.domain', null),
-      // 'resolver' => $resolver,
-    ]);
+    if (\Cake\Core\Plugin::isLoaded('CookieJwtAuth')) {
+      $service->loadAuthenticator(CookieJwtAuthenticator::class, [
+        //'secretKey' => Security::getSalt(), //file_get_contents(CONFIG . '/jwt.pem'),
+        'secretKey' => file_get_contents(CONFIG . 'jwtRS256_prenota.pem'),
+        'algorithm' => 'RS256',
+        'returnPayload' => false,
+        'cookie' => 'jwt_token',     // legge dal cookie
+        'clearCookies' => ['jwt_refresh_token', 'user'], // invalidati anche al logout
+        'logAttempts' => true,
+        'domain' => Configure::read('App.cookie.domain', null),
+        'cookieDomain' => Configure::read('App.cookie.domain', null),
+        'cookieSameSite' => 'None',
+        // 'resolver' => $resolver,
+      ]);
+    }
 
     return $service;
   }

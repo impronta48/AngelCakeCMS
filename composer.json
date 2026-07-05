@@ -68,7 +68,8 @@
             "Cribyoo\\": "plugins/Cribyoo/src/",
             "Cyclomap\\": "plugins/Cyclomap/src/",
             "TelegramLogin\\": "plugins/TelegramLogin/src/",
-            "Satispay\\": "plugins/Satispay/src/"
+            "Satispay\\": "plugins/Satispay/src/",
+            "CookieJwtAuth\\": "plugins/CookieJwtAuth/src/"
         }
     },
     "autoload-dev": {
