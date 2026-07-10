@@ -16,6 +16,7 @@ if ($d) {
 }
 
 echo $this->Html->script('node_modules/bootstrap-vue/dist/bootstrap-vue-icons.min.js');
+echo $this->Html->script('node_modules/vue-carousel/dist/vue-carousel.min.js');
 echo $this->Html->script('node_modules/axios/dist/axios.min');
 
 // Carico l'asset mix
