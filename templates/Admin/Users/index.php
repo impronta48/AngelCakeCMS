@@ -25,7 +25,7 @@ use Cake\Core\Configure;
     <tr>
       <td><?= $u->gmail ?></td>
       <td><?= $u->username ?></td>
-      <td><?= Configure::read('groups')[$u->group_id] ?></td>
+      <td><?= Configure::read('groups')[$u->group_id]  ?? '-' ?></td>
       <td><?= empty($u->destination) ? '*' : $u->destination->name ?></td>
       <td class="actions">
         <?= $this->Html->link('', ['action' => 'edit', $u->id], ['title' => __('Edit'), 'class' => 'btn btn-default bi bi-pencil']) ?>

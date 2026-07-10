@@ -40,7 +40,7 @@ class UsersController extends AppController
   }
 
   public function logout()
-  {
+  {        
     $this->Authentication->logout();
     return $this->redirect(['controller' => 'Users', 'action' => 'login']);
   }
@@ -75,9 +75,6 @@ class UsersController extends AppController
       return $this->redirect('/admin');
       
     return $this->redirect('/viaggi/index');
-
-    
-
   }
 
    private function _returnHttpOnlyCookies($entity): Response

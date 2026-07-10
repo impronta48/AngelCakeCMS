@@ -201,8 +201,3 @@ $routes->scope('/', function (RouteBuilder $builder) { // Last, build generic fa
  * ```
  */
 
-/*  $routes->plugin('Ebike2021', ['path' => 'ebike'], function (RouteBuilder $routes) {
-   $routes->connect('/tlogin', ['controller' => 'Users', 'action' => 'tlogin']);
- });
-
- */
