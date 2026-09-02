@@ -19,6 +19,7 @@ namespace App\View;
 use BootstrapUI\View\UIView;
 use Cake\I18n\I18n;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 /**
  * Application View
@@ -58,6 +59,10 @@ class AppView extends UIView
 
 		if ($this->theme === 'Ebike2021') {
 			$this->loadHelper('Ebike2021.Link');
+		}
+
+		if (Plugin::isLoaded('Cyclomap')) {
+			$this->loadHelper('Cyclomap.Image');
 		}
 	}
 }
