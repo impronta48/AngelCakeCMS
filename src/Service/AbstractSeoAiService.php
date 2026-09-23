@@ -46,9 +46,11 @@ PROMPT;
     abstract protected function buildContext(mixed $entity): array;
 
     /**
+     * @param string|null $user Username di chi ha richiesto la generazione (bottone admin);
+     *   null (default, es. da un comando batch) viene loggato come 'system' su AiGenerations.
      * @return array{seo_description: string, seo_keywords: string}|null
      */
-    public function generate(mixed $entity, ?string $model = null): ?array
+    public function generate(mixed $entity, ?string $model = null, ?string $user = null): ?array
     {
         $model ??= (string)(Configure::read('AiRouter.default_model') ?? 'gemini');
 
@@ -66,6 +68,7 @@ PROMPT;
         $raw = $this->aiRouter->callAiRaw($model, $systemPrompt, $userMessage, resourceContext: [
             'fk_model' => $entity->getSource() ?: null,
             'fk_id'    => $entity->id ?? null,
+            'user'     => $user ?: 'system',
         ]);
         if ($raw === null) {
             return null;

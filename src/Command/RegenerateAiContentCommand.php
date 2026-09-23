@@ -32,15 +32,16 @@ use Cyclomap\Service\PoiSeoAiService;
  *   HTTP_HOST=l.ebike.bikesquare.eu bin/cake regenerate_ai_content --type=seo
  *
  * NOTA: `descr` su Poi/Percorsi è un campo obbligatorio in validazione, quindi in pratica
- * quasi nessuna riga esistente lo ha vuoto — senza `--id`, un run con --type=description su
- * Poi/Percorsi troverà verosimilmente 0 risultati (non è un bug: usa --id per rigenerare
- * descrizioni già compilate).
+ * quasi nessuna riga esistente lo ha vuoto — senza `--id`/`--force-override`, un run con
+ * --type=description su Poi/Percorsi troverà verosimilmente 0 risultati (non è un bug: usa
+ * --id o --force-override per rigenerare descrizioni già compilate).
  *
  * Uso:
  *   bin/cake regenerate_ai_content --type=seo                              # tutte le risorse pubblicate senza SEO
  *   bin/cake regenerate_ai_content --type=description --model=Destinations # solo Destinations, descrizione mancante
  *   bin/cake regenerate_ai_content --type=seo --model=Percorsi --destination=1,2
  *   bin/cake regenerate_ai_content --type=seo --model=Poi --id=11,22       # forza quei Poi anche se già compilati
+ *   bin/cake regenerate_ai_content --type=seo --model=Percorsi --force-override  # sovrascrive TUTTI i Percorsi pubblicati
  *   bin/cake regenerate_ai_content --type=seo --dry-run                    # mostra solo l'elenco
  *   bin/cake regenerate_ai_content --type=seo --ai-model=claude --sleep=5
  */
@@ -116,6 +117,11 @@ class RegenerateAiContentCommand extends Command
                 'default' => false,
                 'help' => 'Mostra solo l\'elenco: nessuna chiamata AI, nessun salvataggio, nessuna conferma richiesta.',
             ])
+            ->addOption('force-override', [
+                'boolean' => true,
+                'default' => false,
+                'help' => 'Ignora il filtro "campo mancante": rigenera e sovrascrive anche le risorse già compilate (rispetta comunque --model/--destination, e "published").',
+            ])
             ->addOption('yes', [
                 'short' => 'y',
                 'boolean' => true,
@@ -142,6 +148,7 @@ class RegenerateAiContentCommand extends Command
         $sleepSeconds = max(0, (int)$args->getOption('sleep'));
         $dryRun = (bool)$args->getOption('dry-run');
         $skipConfirm = (bool)$args->getOption('yes');
+        $forceOverride = (bool)$args->getOption('force-override');
 
         if ($idOption && !$modelOption) {
             $io->error('--id richiede --model (Poi, Percorsi o Destinations): un id da solo è ambiguo tra le tabelle.');
@@ -181,6 +188,8 @@ class RegenerateAiContentCommand extends Command
 
             if ($ids !== null) {
                 $query->where(["$alias.id IN" => $ids]);
+            } elseif ($forceOverride) {
+                $query->where(["$alias.published" => 1]);
             } else {
                 $fieldToCheck = $type === 'seo' ? 'seo_description' : $config['descriptionField'];
                 $query->where([
@@ -204,6 +213,9 @@ class RegenerateAiContentCommand extends Command
         $total = count($jobs);
         $io->out("Tipo contenuto: <info>{$type}</info>");
         $io->out('Risorse: <info>' . implode(', ', $targetNames) . '</info>');
+        if ($ids === null && $forceOverride) {
+            $io->warning('Modalità: --force-override attivo, verranno sovrascritte anche le risorse già compilate.');
+        }
         $io->out("Totale da processare: <info>{$total}</info>");
         $io->hr();
 
@@ -235,6 +247,8 @@ class RegenerateAiContentCommand extends Command
         $ok = 0;
         $failed = 0;
         $lastIndex = count($jobs) - 1;
+        $startTime = microtime(true);
+        $startGenerationId = $this->currentMaxGenerationId();
 
         foreach (array_values($jobs) as $i => $job) {
             $entity = $job['entity'];
@@ -287,7 +301,84 @@ class RegenerateAiContentCommand extends Command
 
         $io->hr();
         $io->out("Completati: <info>{$ok}</info>, falliti: <info>{$failed}</info>");
+        $io->out('Tempo impiegato: <info>' . $this->formatDuration(microtime(true) - $startTime) . '</info>');
+
+        $credits = $this->creditsSpentSince($startGenerationId);
+        if ($credits === null) {
+            $io->out('Crediti spesi: <info>n/d</info> (tabella ai_generations non disponibile su questo sito)');
+        } else {
+            $io->out(sprintf(
+                'Crediti spesi: <info>%d</info> generazioni, <info>%d</info> token totali, <info>$%s</info>',
+                $credits['count'],
+                $credits['total_tokens'],
+                number_format($credits['total_cost'], 6)
+            ));
+        }
 
         return $failed === 0 ? static::CODE_SUCCESS : static::CODE_ERROR;
+    }
+
+    /**
+     * Id massimo attuale in AiGenerations, usato come "spartiacque" per isolare solo le righe
+     * inserite da questo run (vedi creditsSpentSince()). Null se la tabella non è disponibile
+     * su questo sito (non ancora migrata) — in quel caso il resoconto crediti viene omesso.
+     */
+    private function currentMaxGenerationId(): ?int
+    {
+        try {
+            $table = TableRegistry::getTableLocator()->get('AiGenerations');
+            $query = $table->find();
+            $row = $query->select(['maxId' => $query->func()->max('id')])->first();
+
+            return (int)($row->maxId ?? 0);
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    /**
+     * Somma token/costo/numero di generazioni registrate in AiGenerations con id > $sinceId,
+     * cioè quelle prodotte da questo run (loggate automaticamente da AiRouterService::callAiRaw()
+     * per ogni chiamata OpenRouter, anche quando la generazione fallisce nel parsing a valle:
+     * il costo è comunque stato addebitato da OpenRouter). Null se non disponibile.
+     */
+    private function creditsSpentSince(?int $sinceId): ?array
+    {
+        if ($sinceId === null) {
+            return null;
+        }
+
+        try {
+            $table = TableRegistry::getTableLocator()->get('AiGenerations');
+            $query = $table->find();
+            $row = $query
+                ->select([
+                    'count' => $query->func()->count('id'),
+                    'total_tokens' => $query->func()->sum('total_tokens'),
+                    'total_cost' => $query->func()->sum('cost'),
+                ])
+                ->where(['id >' => $sinceId])
+                ->first();
+
+            return [
+                'count' => (int)($row->count ?? 0),
+                'total_tokens' => (int)($row->total_tokens ?? 0),
+                'total_cost' => (float)($row->total_cost ?? 0),
+            ];
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    private function formatDuration(float $seconds): string
+    {
+        if ($seconds < 60) {
+            return sprintf('%.1fs', $seconds);
+        }
+
+        $minutes = (int)floor($seconds / 60);
+        $rest = (int)round($seconds - $minutes * 60);
+
+        return sprintf('%dm %02ds', $minutes, $rest);
     }
 }

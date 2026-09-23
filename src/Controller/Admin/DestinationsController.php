@@ -115,6 +115,7 @@ class DestinationsController extends AppController
 	 */
 	public function edit($id = null)
 	{
+		$user = $this->request->getAttribute('identity');
 		if (is_null($id)) {
 			$destination = $this->Destinations->newEmptyEntity();
 		} else {
@@ -150,7 +151,7 @@ class DestinationsController extends AppController
 					}
 				}
 				if (isset($data['regenerate-seo'])) {
-					$seo = (new DestinationSeoAiService())->generate($destination);
+					$seo = (new DestinationSeoAiService())->generate($destination, user: $user->username);
 					if ($seo) {
 						$destination->seo_description = $seo['seo_description'];
 						$destination->seo_keywords = $seo['seo_keywords'];
@@ -163,7 +164,7 @@ class DestinationsController extends AppController
 				}
 
 				if (isset($data['regenerate-descr'])) {
-					$descr = (new DestinationDescriptionAiService())->generate($destination);
+					$descr = (new DestinationDescriptionAiService())->generate($destination, user: $user->username);
 					if ($descr) {
 						$destination->descrizione = $descr;
 						$this->Destinations->save($destination);
