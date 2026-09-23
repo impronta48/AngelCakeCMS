@@ -6,6 +6,8 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use App\Lib\AttachmentManager;
+use App\Service\DestinationDescriptionAiService;
+use App\Service\DestinationSeoAiService;
 use Cake\Cache\Cache;
 use Cake\Routing\Router;
 use Psr\Log\LogLevel;
@@ -147,6 +149,31 @@ class DestinationsController extends AppController
 						}
 					}
 				}
+				if (isset($data['regenerate-seo'])) {
+					$seo = (new DestinationSeoAiService())->generate($destination);
+					if ($seo) {
+						$destination->seo_description = $seo['seo_description'];
+						$destination->seo_keywords = $seo['seo_keywords'];
+						$this->Destinations->save($destination);
+						$this->Flash->success(__('SEO rigenerata con AI.'));
+					} else {
+						$this->Flash->error(__('Impossibile generare la SEO con AI. Riprova.'));
+					}
+					return $this->redirect(['action' => 'edit', $destination->id]);
+				}
+
+				if (isset($data['regenerate-descr'])) {
+					$descr = (new DestinationDescriptionAiService())->generate($destination);
+					if ($descr) {
+						$destination->descrizione = $descr;
+						$this->Destinations->save($destination);
+						$this->Flash->success(__('Descrizione rigenerata con AI.'));
+					} else {
+						$this->Flash->error(__('Impossibile generare la descrizione con AI. Riprova.'));
+					}
+					return $this->redirect(['action' => 'edit', $destination->id]);
+				}
+
 				$this->Flash->success(__('The Destination has been saved.'));
 				return $this->redirect([
 					'prefix' => false,
