@@ -67,6 +67,26 @@ use Cake\Core\Configure;
   ?>
   <?= $this->fetch('script') ?>
 
+  <script>
+    // Bottoni "Rigenera ... con AI" (name="regenerate-*"): spinner e niente doppio invio.
+    // Delegato su document perché Vue ricompila #app; disabilito dopo il submit, altrimenti
+    // il bottone disabilitato non verrebbe incluso nei dati del form (e il controller non saprebbe cosa fare).
+    document.addEventListener('submit', function (e) {
+      var form = e.target;
+      if (form.dataset.aiBusy) {
+        e.preventDefault();
+        return;
+      }
+      var btn = e.submitter;
+      if (!btn || !/^regenerate-/.test(btn.name || '')) return;
+      form.dataset.aiBusy = '1';
+      setTimeout(function () {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>' + btn.innerHTML;
+      });
+    });
+  </script>
+
 </body>
 
 </html>
