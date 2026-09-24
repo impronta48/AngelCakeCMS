@@ -10,6 +10,8 @@ use Cake\I18n\I18n;
 use Cake\Utility\Text;
 use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
+use isobutil\GoogleTranslate;
 
 /**
  * Destination Entity
@@ -116,4 +118,24 @@ class Destination extends Entity
 		}
 	}
 
+	public function autoTranslate($field, $author_id)
+	{
+		$apiKey = Configure::read('GoogleTranslate.LANGUAGE_TRANSLATOR_APIKEY');
+		$w = new GoogleTranslate($apiKey);
+
+		$history = TableRegistry::getTableLocator()->get('AutoTranslationHistory');
+
+		if (!empty($this->{$field})) {
+			$translateInput = html_entity_decode($this->{$field});
+			$res = $w->translateSentence($translateInput, 'it', 'en');
+			$this->{$field} = $res;
+			// traduzione ottenuta, salva nella history
+			$historyLog = $history->newEmptyEntity();
+			$historyLog->context = 'Destination->' . $field;
+			$historyLog->source = $translateInput;
+			$historyLog->translation = $this->{$field};
+			$historyLog->user_id = $author_id;
+			$history->save($historyLog);
+		}
+	}
 }

@@ -40,7 +40,9 @@ class DestinationsTable extends Table
 				'title',
 				'name',
 				'descrizione',
-				'preposition'
+				'preposition',
+				'seo_description',
+				'seo_keywords',
 			],
 			'referenceName' => 'Destination', //Importante per garantire la compatibilità con cake2
 			'defaultLocale' => 'ita',

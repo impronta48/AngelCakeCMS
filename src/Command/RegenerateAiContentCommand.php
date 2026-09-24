@@ -6,11 +6,13 @@ namespace App\Command;
 
 use App\Service\DestinationDescriptionAiService;
 use App\Service\DestinationSeoAiService;
+use App\Service\AutoTranslateService;
 use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
 use Cyclomap\Service\PercorsoDescriptionAiService;
 use Cyclomap\Service\PercorsoSeoAiService;
@@ -22,7 +24,9 @@ use Cyclomap\Service\PoiSeoAiService;
  *
  * Genera in batch (via AI/OpenRouter) i campi SEO (seo_description/seo_keywords) o la
  * descrizione editoriale (descr/descrizione) di Poi, Percorsi e/o Destinations, riusando
- * gli stessi service dei bottoni "Rigenera... con AI" nell'admin.
+ * gli stessi service dei bottoni "Rigenera... con AI" nell'admin. Come nell'admin, dopo ogni
+ * generazione il testo viene tradotto in inglese (AutoTranslateService), salvo --skip-translate.
+ * Solo traduzione, senza AI: vedi translate_content.
  *
  * IMPORTANTE: la configurazione (OpenRouter.apiKey, ecc.) è per-sito e viene risolta da
  * conf_path() in base a $_SERVER['HTTP_HOST'] (config/paths.php), che in CLI è sempre
@@ -50,8 +54,11 @@ class RegenerateAiContentCommand extends Command
     /**
      * Mappa risorsa -> tabella/service/campi. 'contain' è l'unione di ciò che serve sia al
      * flusso SEO sia a quello descrizione, per non dover ramificare la query in base a --type.
+     * Usata anche da TranslateContentCommand.
      */
-    private const TARGETS = [
+    public const SEO_FIELDS = ['seo_description', 'seo_keywords'];
+
+    public const TARGETS = [
         'Poi' => [
             'table' => 'Cyclomap.Poi',
             'contain' => ['Categorie', 'Destinations', 'Percorsi'],
@@ -122,6 +129,11 @@ class RegenerateAiContentCommand extends Command
                 'default' => false,
                 'help' => 'Ignora il filtro "campo mancante": rigenera e sovrascrive anche le risorse già compilate (rispetta comunque --model/--destination, e "published").',
             ])
+            ->addOption('skip-translate', [
+                'boolean' => true,
+                'default' => false,
+                'help' => 'Non tradurre in inglese il contenuto generato.',
+            ])
             ->addOption('yes', [
                 'short' => 'y',
                 'boolean' => true,
@@ -139,6 +151,12 @@ class RegenerateAiContentCommand extends Command
             $io->error('In CLI la config per-sito richiede HTTP_HOST: HTTP_HOST=<sito> bin/cake regenerate_ai_content ...');
             return static::CODE_ERROR;
         }
+
+        // In CLI I18n parte da App.defaultLocale (it_IT), che il Translate behavior (defaultLocale
+        // 'ita') tratterebbe come una traduzione: leggiamo/salviamo sulla tabella principale.
+        I18n::setLocale('ita');
+        $translate = !$args->getOption('skip-translate');
+        $translator = new AutoTranslateService();
 
         $type = (string)$args->getOption('type');
         $modelOption = $args->getOption('model');
@@ -270,6 +288,9 @@ class RegenerateAiContentCommand extends Command
                     if ($table->save($entity)) {
                         $io->out("  seo_description: {$result['seo_description']}");
                         $ok++;
+                        if ($translate) {
+                            $this->translate($translator, $table, $entity, self::SEO_FIELDS, $io);
+                        }
                     } else {
                         $io->error('  Salvataggio fallito.');
                         $failed++;
@@ -287,6 +308,9 @@ class RegenerateAiContentCommand extends Command
                     if ($table->save($entity)) {
                         $io->out("  {$descField} aggiornato.");
                         $ok++;
+                        if ($translate) {
+                            $this->translate($translator, $table, $entity, [$descField], $io);
+                        }
                     } else {
                         $io->error('  Salvataggio fallito.');
                         $failed++;
@@ -316,6 +340,20 @@ class RegenerateAiContentCommand extends Command
         }
 
         return $failed === 0 ? static::CODE_SUCCESS : static::CODE_ERROR;
+    }
+
+    /**
+     * Traduzione in inglese del contenuto appena generato: un errore qui non conta come
+     * generazione fallita (l'italiano è già salvato), viene solo segnalato.
+     */
+    private function translate(AutoTranslateService $translator, $table, $entity, array $fields, ConsoleIo $io): void
+    {
+        try {
+            $translator->toEnglish($table, $entity, $fields);
+            $io->out('  tradotto in inglese: ' . implode(', ', $fields));
+        } catch (\Throwable $e) {
+            $io->warning('  Traduzione in inglese fallita: ' . $e->getMessage());
+        }
     }
 
     /**

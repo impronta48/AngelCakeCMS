@@ -157,6 +157,7 @@ class DestinationsController extends AppController
 						$destination->seo_keywords = $seo['seo_keywords'];
 						$this->Destinations->save($destination);
 						$this->Flash->success(__('SEO rigenerata con AI.'));
+						$this->translateAiFields($this->Destinations, $destination, ['seo_description', 'seo_keywords'], $user->id);
 					} else {
 						$this->Flash->error(__('Impossibile generare la SEO con AI. Riprova.'));
 					}
@@ -169,6 +170,7 @@ class DestinationsController extends AppController
 						$destination->descrizione = $descr;
 						$this->Destinations->save($destination);
 						$this->Flash->success(__('Descrizione rigenerata con AI.'));
+						$this->translateAiFields($this->Destinations, $destination, ['descrizione'], $user->id);
 					} else {
 						$this->Flash->error(__('Impossibile generare la descrizione con AI. Riprova.'));
 					}
