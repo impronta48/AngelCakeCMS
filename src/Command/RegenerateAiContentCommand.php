@@ -46,6 +46,7 @@ use Cyclomap\Service\PoiSeoAiService;
  *   bin/cake regenerate_ai_content --type=seo --model=Percorsi --destination=1,2
  *   bin/cake regenerate_ai_content --type=seo --model=Poi --id=11,22       # forza quei Poi anche se già compilati
  *   bin/cake regenerate_ai_content --type=seo --model=Percorsi --force-override  # sovrascrive TUTTI i Percorsi pubblicati
+ *   bin/cake regenerate_ai_content --type=description --override-if-less=500 # vuote o con meno di 500 caratteri di testo
  *   bin/cake regenerate_ai_content --type=seo --dry-run                    # mostra solo l'elenco
  *   bin/cake regenerate_ai_content --type=seo --ai-model=claude --sleep=5
  */
@@ -129,6 +130,9 @@ class RegenerateAiContentCommand extends Command
                 'default' => false,
                 'help' => 'Ignora il filtro "campo mancante": rigenera e sovrascrive anche le risorse già compilate (rispetta comunque --model/--destination, e "published").',
             ])
+            ->addOption('override-if-less', [
+                'help' => 'Seleziona anche le risorse il cui testo (senza HTML) è più corto di N caratteri, oltre a quelle vuote.',
+            ])
             ->addOption('skip-translate', [
                 'boolean' => true,
                 'default' => false,
@@ -167,6 +171,11 @@ class RegenerateAiContentCommand extends Command
         $dryRun = (bool)$args->getOption('dry-run');
         $skipConfirm = (bool)$args->getOption('yes');
         $forceOverride = (bool)$args->getOption('force-override');
+        $minLength = (int)$args->getOption('override-if-less');
+        if ($args->getOption('override-if-less') !== null && $minLength <= 0) {
+            $io->error('--override-if-less richiede un numero di caratteri maggiore di 0.');
+            return static::CODE_ERROR;
+        }
 
         if ($idOption && !$modelOption) {
             $io->error('--id richiede --model (Poi, Percorsi o Destinations): un id da solo è ambiguo tra le tabelle.');
@@ -204,12 +213,13 @@ class RegenerateAiContentCommand extends Command
                 $query->contain($config['contain']);
             }
 
+            $fieldToCheck = $type === 'seo' ? 'seo_description' : $config['descriptionField'];
             if ($ids !== null) {
                 $query->where(["$alias.id IN" => $ids]);
-            } elseif ($forceOverride) {
+            } elseif ($forceOverride || $minLength > 0) {
+                // con --override-if-less il filtro sulla lunghezza è in PHP (serve il testo senza HTML)
                 $query->where(["$alias.published" => 1]);
             } else {
-                $fieldToCheck = $type === 'seo' ? 'seo_description' : $config['descriptionField'];
                 $query->where([
                     "$alias.published" => 1,
                     'OR' => [
@@ -224,6 +234,9 @@ class RegenerateAiContentCommand extends Command
             }
 
             foreach ($query->all() as $entity) {
+                if ($ids === null && !$forceOverride && $minLength > 0 && self::textLength($entity->$fieldToCheck) >= $minLength) {
+                    continue;
+                }
                 $jobs[] = ['target' => $targetName, 'entity' => $entity, 'config' => $config];
             }
         }
@@ -233,6 +246,8 @@ class RegenerateAiContentCommand extends Command
         $io->out('Risorse: <info>' . implode(', ', $targetNames) . '</info>');
         if ($ids === null && $forceOverride) {
             $io->warning('Modalità: --force-override attivo, verranno sovrascritte anche le risorse già compilate.');
+        } elseif ($ids === null && $minLength > 0) {
+            $io->out("Filtro: vuote o con meno di <info>{$minLength}</info> caratteri di testo");
         }
         $io->out("Totale da processare: <info>{$total}</info>");
         $io->hr();
@@ -406,6 +421,16 @@ class RegenerateAiContentCommand extends Command
         } catch (\Throwable) {
             return null;
         }
+    }
+
+    /**
+     * Lunghezza del testo visibile: senza tag HTML ed entità, spazi compattati.
+     */
+    public static function textLength(?string $value): int
+    {
+        $text = html_entity_decode(strip_tags((string)$value), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return mb_strlen(trim((string)preg_replace('/\s+/u', ' ', $text)));
     }
 
     private function formatDuration(float $seconds): string
