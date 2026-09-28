@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use App\Lib\AttachmentManager;
+use Cyclomap\Lib\TracksBundle;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Configure;
 use Cake\Utility\Text;
@@ -70,6 +71,7 @@ class AttachmentsController extends AppController
     $files = $this->request->getUploadedFiles();
 
     $res = AttachmentManager::putFile($files, $model, $destination, $id, $field, $temporary, $deleteBefore);
+    $this->invalidateTracks($model, $id, $field, $temporary);
 
     $this->set($res);
 
@@ -103,6 +105,7 @@ class AttachmentsController extends AppController
     $this->RequestHandler->renderAs($this, 'json');
 
     $res = AttachmentManager::popFile($model, $destination, $id, $field, $name, $temporary);
+    $this->invalidateTracks($model, $id, $field, $temporary);
     
     $this->set($res);
 
@@ -110,5 +113,18 @@ class AttachmentsController extends AppController
       $this->response = $this->response->withStatus(500);
       return;
     } 
+  }
+
+  // il KML di un percorso e' cambiato: il bundle tracce della mappa va rigenerato (TracksBundle)
+  private function invalidateTracks($model, $id, $field, $temporary)
+  {
+    if ($temporary || $field !== 'kml' || strtolower($model) !== 'percorsi') {
+      return;
+    }
+    $percorso = TableRegistry::getTableLocator()->get('Cyclomap.Percorsi')->find()
+      ->select(['destination_id'])->where(['id' => $id])->first();
+    if ($percorso) {
+      TracksBundle::invalidate($percorso->destination_id);
+    }
   }
 }
