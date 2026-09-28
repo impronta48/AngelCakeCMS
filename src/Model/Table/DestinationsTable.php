@@ -74,6 +74,7 @@ class DestinationsTable extends Table
 	public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
 	{
 		Cache::clear('_cake_routes_');
+		Cache::clearGroup('destinations'); // urls() della sitemap
 	}
 
 	/**
