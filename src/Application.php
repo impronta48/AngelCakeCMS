@@ -293,15 +293,28 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
   {
     $service = new AuthenticationService();
 
-    // Define where users should be redirected to when they are not authenticated
-    $service->setConfig([
-      'unauthenticatedRedirect' => Router::url([
+    // Define where users should be redirected to when they are not authenticated.
+    // Sites can opt into a centralized login (e.g. crm.bikesquare.eu) via the
+    // 'CentralAuth.loginUrl' config key instead of the local /users/login page.
+    $centralLoginUrl = Configure::read('CentralAuth.loginUrl');
+    if ($centralLoginUrl) {
+      $referalParam = Configure::read('CentralAuth.referalParam', 'referal');
+      $separator = strpos($centralLoginUrl, '?') !== false ? '&' : '?';
+      $unauthenticatedRedirect = $centralLoginUrl . $separator . $referalParam . '=' . urlencode((string)$request->getUri());
+      $queryParam = null;
+    } else {
+      $unauthenticatedRedirect = Router::url([
         'prefix' => false,
         'plugin' => null,
         'controller' => 'Users',
         'action' => 'login',
-      ]),
-      'queryParam' => 'redirect',
+      ]);
+      $queryParam = 'redirect';
+    }
+
+    $service->setConfig([
+      'unauthenticatedRedirect' => $unauthenticatedRedirect,
+      'queryParam' => $queryParam,
     ]);
 
     $fields = [

@@ -8,18 +8,20 @@
 	}
 
 	// Make array of existing files to pass them to Vue
+	$imageOptimizer = $this->helpers()->has('Image') ? $this->Image : null;
+
 	$existingImages = [];
 	if (isset($files)) {
 		foreach ($files as $img) {
 			if (!empty($img)) {
 				//Strip trailing slash
-				$img = rtrim($img, '/');				
+				$img = rtrim($img, '/');
 				$fname = basename($img);
 				if (file_exists(WWW_ROOT . $img)){
 					$existingImages[] = [
 						'name' => $fname,
 						'size' => filesize(WWW_ROOT . $img),
-						'thumbnail_url' => "/images/$img?w=200&h=200&fit=crop", // TODO non-image files cannot be previewed by glide!
+						'thumbnail_url' => $imageOptimizer ? $imageOptimizer->optimize($img) : "/images/$img?w=200&h=200&fit=crop", // TODO non-image files cannot be previewed by glide!
 						'raw_url' => $img,
 					];
 				}

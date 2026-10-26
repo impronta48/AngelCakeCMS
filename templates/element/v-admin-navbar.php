@@ -5,6 +5,7 @@ use \Cake\Core\Configure;
 use \Cake\I18n\I18n;
 
 $contr = strtolower($this->request->getParam('controller'));
+$linkHelper = new \Ebike2021\View\Helper\LinkHelper($this);
 ?>
 
 <div class="v-admin-navbar">
@@ -13,7 +14,21 @@ $contr = strtolower($this->request->getParam('controller'));
       <b-nav-item active href="<?= Router::url(['prefix' => 'Admin', 'controller' => $contr, 'action' => 'edit', $event->id]) ?>">
         Edit
       </b-nav-item>
-      <b-nav-item href="<?= Router::url(['prefix' => false, 'action' => 'view', $event->id, 'target' => 'preview']) ?>">
+      <?php
+      if (Configure::read('FrontendUrl')) {
+     
+        if ($event instanceof \Cyclomap\Model\Entity\Percorso) {
+          $viewUrl = $linkHelper->percorso($event);
+        } elseif ($event instanceof \Cyclomap\Model\Entity\Poi) {
+          $viewUrl = $linkHelper->poi($event);
+        } else {
+          $viewUrl = $linkHelper->view($event, $contr);
+        }
+      } else {
+        $viewUrl = Router::url(['prefix' => false, 'action' => 'view', $event->id, 'target' => 'preview']);
+      }
+      ?>
+      <b-nav-item href="<?= $viewUrl ?>">
         View
       </b-nav-item>
         <b-nav-item  href="<?= Router::url(['prefix' => 'Admin', 'controller' => $contr, 'action' => 'duplicate', $event->id]) ?>">

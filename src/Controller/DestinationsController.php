@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Utility\Text;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\I18n;
@@ -491,6 +492,9 @@ class DestinationsController extends AppController
     // Recuperiamo il parametro lang (?lang=eng o ?lang=ita)
     $lang = $this->request->getQuery('lang');
 
+    // scansioni su disco per le immagini: in cache (gruppo 'destinations', svuotata da DestinationsTable::beforeSave)
+    $urls = Cache::remember('destinations-urls-' . ($lang ?: 'all'), function () use ($lang) {
+
     $toAbsoluteUrl = function (?string $url): ?string {
       if (empty($url)) {
         return null;
@@ -589,6 +593,9 @@ class DestinationsController extends AppController
         }
       }
     }
+
+    return $urls;
+    });
 
     $this->set('urls', $urls);
     $this->viewBuilder()->setOption('serialize', 'urls');
