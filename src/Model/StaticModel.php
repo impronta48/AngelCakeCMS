@@ -9,8 +9,10 @@ use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Log\Log;
 use Cake\Utility\Text;
 use Cake\View\Exception\MissingTemplateException;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 class StaticModel
 {
@@ -118,9 +120,21 @@ class StaticModel
 			$miniPath = str_replace(Configure::read('sitedir') . '/static', '', $miniPath);
 
 			$contents = $file->read();
-			$result = $parser->parse($contents);
+			$frontmatterRotto = false;
+			try {
+				$result = $parser->parse($contents);
+			} catch (ParseException $e) {
+				//Un frontmatter YAML non valido non deve bloccare tutto il sito (le route chiamano findAll)
+				Log::error("Frontmatter YAML non valido in $path/$bname: " . $e->getMessage());
+				$result = (new \hkod\frontmatter\Parser(fn() => [], new \hkod\frontmatter\MarkdownParser()))->parse($contents);
+				$frontmatterRotto = true;
+			}
 			$body = $result->getBody();
-			$variabili = $result->getFrontmatter();
+			$variabili = $result->getFrontmatter() ?: [];
+			if ($frontmatterRotto) {
+				//Lo escludo da sitemap e route finché non viene corretto
+				$variabili['sitemap'] = false;
+			}
 
 			$variabili['id'] = $fname;
 
