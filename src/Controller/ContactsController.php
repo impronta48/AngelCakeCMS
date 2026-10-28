@@ -8,7 +8,8 @@ use Cake\Core\Configure;
 use Cake\Mailer\Email;
 use Cake\Mailer\Mailer;
 use Cake\Routing\Router;
-use Exception;
+use Cake\Log\Log;
+use Throwable;
 
 class ContactsController extends AppController
 {
@@ -103,13 +104,18 @@ class ContactsController extends AppController
             $this->Flash->success('Grazie, ti risponderemo al più presto.');
             return $this->redirect($referer);
         }
-      } catch (Exception $e) {
+      } catch (Throwable $e) {
+        Log::error('Contacts: invio email fallito: ' . $e->getMessage());
+        if (!$this->request->is('ajax')) {
+          $this->Flash->error('Errore durante l\'invio del messaggio, riprova più tardi.');
+          return $this->redirect($referer);
+        }
         return $this->response
           ->withType('application/json')
           ->withStatus(500)
           ->withStringBody(json_encode([
             'success' => false, 
-            'message' => 'Errore durante l\'invio dell\'email: ' . $e->getMessage()
+            'message' => 'Errore durante l\'invio dell\'email'
           ]));
       }
     }
