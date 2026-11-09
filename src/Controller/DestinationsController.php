@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Cache\Cache;
-use Cake\View\Exception\MissingTemplateException;
-use Psr\Log\LogLevel;
 use Cake\Utility\Text;
 use Cake\Http\Exception\NotFoundException;
+use Cake\I18n\I18n;
+use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 
 /**
  * Destinations Controller
@@ -20,9 +21,10 @@ use Cake\Http\Exception\NotFoundException;
 class DestinationsController extends AppController
 {
 
-  public function initialize(): void {
+  public function initialize(): void
+  {
     parent::initialize();
-    $this->Authentication->allowUnauthenticated(['prenota','index','experience','activities','tours','addioNubilato','rent','view','count','prezzi']);
+    $this->Authentication->allowUnauthenticated(['prenota', 'index', 'experience', 'activities', 'tours', 'addioNubilato', 'rent', 'view', 'count', 'prezzi', 'urls']);
   }
 
   public $paginate = [
@@ -42,24 +44,25 @@ class DestinationsController extends AppController
   private function get_seo_destination_name($nomeseo = null)
   {
     $only = $this->request->getQuery('only');
-    if (!empty($only)){
-      $only = explode(",",$only);
+    if (!empty($only)) {
+      $only = explode(",", $only);
     }
+    
 
     if (is_numeric($nomeseo)) {
       $destination = $this->Destinations->findByIdAndPublished($nomeseo, 1);
-      if ($only){
+      if ($only) {
         $destination->select($only);
       }
-                    
-      $destination = $destination->first();
+
+      $destination = $destination->contain(['Tags'])->first();
     } else {
       $destination = $this->Destinations->findBySlugAndPublished($nomeseo, 1);
       if ($only) {
         $destination->select($only);
       }
 
-      $destination = $destination->first();
+      $destination = $destination->contain(['Tags'])->first();
     }
 
     if (empty($destination)) {
@@ -81,6 +84,29 @@ class DestinationsController extends AppController
       throw new NotFoundException(__('Invalid Destination'));
     }
 
+    // Ritorna il numero di noleggiatori per una data destinazione
+    $hasRenters = $this->request->getQuery('hasRenters');
+    $rentersCount = 0;
+
+    if (!empty($hasRenters)) {
+    // IDs da considerare: solo la destinazione corrente (evitando query su parent_id)
+    $destinationIds = [$destination->id];
+
+    // Conta i POI di categoria 3 associati alla destinazione e ai suoi figli
+    $rentersCount = $this->fetchTable('CategoriePoi')
+        ->find()
+        ->innerJoin(['P' => 'poi'], ['P.id = CategoriePoi.poi_id'])
+        ->where([
+            'P.destination_id IN' => $destinationIds,
+            'P.published'         => 1,
+            'CategoriePoi.categoria_id' => 3,
+        ])
+        ->count();
+
+    $destination->renters_count = $rentersCount;
+
+    }
+
     //Creo un array dai nomiseo
     if (isset($destination->nomiseo) && !empty($destination->nomiseo)) {
       $nomiseo = explode(',', $destination->nomiseo);
@@ -94,6 +120,33 @@ class DestinationsController extends AppController
       }
     } else {
       $nomeseo = $destination->preposition . ' ' . $destination->name;
+    }
+
+   
+    if ($destination->parent_id) {
+      $parent = $this->Destinations->get($destination->parent_id);
+      $parent->children = $this->Destinations->getChildren($destination->parent_id);
+      $destination->parent = $parent;
+    } else {
+      $children = $this->Destinations->getChildren($destination->id);
+      $destination->children = $children;
+    }
+      
+
+
+    //Forzo e-tag in modo da cancellare la cache
+    $lastModified = $destination->modified ? $destination->modified->getTimestamp() : time();
+    $locale = I18n::getLocale();
+    $etag = md5($lastModified . '-' . $destination->id . '-' . $locale);
+
+    header("ETag: \"$etag\"");
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified) . " GMT");
+    $this->response = $this->response->withHeader('Vary', 'Accept-Language');
+
+    // Verifica ETag del client
+    if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && @trim($_SERVER['HTTP_IF_NONE_MATCH']) === "\"$etag\"") {
+      header("HTTP/1.1 304 Not Modified");
+      exit;
     }
 
     $this->set('nomeseo', $nomeseo);
@@ -115,29 +168,82 @@ class DestinationsController extends AppController
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
     $desired_columns = [
-      'id', 'name', 'slug', 'preposition', 'nazione_id', 'regione', 'lat', 'lon', 'description', 'nomiseo', 'published', 'published', 'created', 'modified','chiuso', 'level'
+      'id',
+      'name',
+      'slug',
+      'preposition',
+      'nazione_id',
+      'parent_id',
+      'regione',
+      'lat',
+      'lon',
+      'description',
+      'nomiseo',
+      'published',
+      'created',
+      'modified',
+      'chiuso',
+      'level'
     ];
     $select_columns = array_intersect($existing_columns, $desired_columns);
-    $order_columns = array_intersect($existing_columns, ['nazione_id', 'name']);
-    
+    $order_columns = ['Destinations.nazione_id', 'Destinations.name'];
+   
+
+
     $query = $this->Destinations->find()
-      ->where(['published' => true]);
+      ->where(['Destinations.published' => true])
+      ->contain([
+        'Parent' => [
+          'fields' => ['id', 'slug', 'name']
+        ],
+        'Tags'
+      ]);
+    
 
     $specific_id = $this->request->getQuery('id');
     if (!empty($specific_id)) {
-      $query->where(['id' => $specific_id]);
+      $query->where(['Destinations.id' => $specific_id]);
     }
+
+
+
+    $percorsi_count = $this->request->getQuery('percorsi_count');
+    if (!empty($percorsi_count)) {
+      $query->select(array_merge($select_columns, [
+        'percorsi_count' => $query->func()->count('Percorsi.id')
+      ]))
+        ->leftJoin(
+          ['Percorsi' => 'percorsi'],
+          ['Percorsi.destination_id = Destinations.id', 'Percorsi.published' => 1]
+        )
+        ->group(['Destinations.id']);
+    }
+
+    $slider = $this->request->getQuery('slider');
+    if (!empty($slider)) {
+      $query->select(array_merge($select_columns, [
+        'percorsi_count' => $query->func()->count('Percorsi.id')
+      ]))
+        ->leftJoin(
+          ['Percorsi' => 'percorsi'],
+          ['Percorsi.destination_id = Destinations.id', 'Percorsi.published' => 1]
+        )
+        ->group(['Destinations.id'])
+        ->order(['percorsi_count' => 'DESC']);
+    }
+
 
     $random = $this->request->getQuery('random');
     if (!empty($random)) {
       $query->order('rand()');
-    } else {
+    } else if (empty($slider)) {
       $query->order($order_columns);
     }
 
     $only = $this->request->getQuery('only');
     if (!empty($only)) {
       $columns = explode(',', $only);
+      $columns = array_intersect($columns, $existing_columns);
       if (array_search('payment_conf', $columns) !== false) {
         unset($columns[array_search('payment_conf', $columns)]);
       }
@@ -151,7 +257,7 @@ class DestinationsController extends AppController
       }
     } else {
       $query->select($select_columns)
-            ->contain(['Articles']);
+        ->contain(['Articles']);
     }
 
     $limit = $this->request->getQuery('limit');
@@ -159,20 +265,34 @@ class DestinationsController extends AppController
       $query->limit($limit);
     }
 
-    $prezzi = $this->request->getQuery('prezzi');
-    $this->set(compact('prezzi'));
-    
+
+
+
     $count = $this->request->getQuery('count');
     if (!empty($count)) {
       $count = $query->count();
       $this->set('count', $count);
       $this->viewBuilder()->setOption('serialize', 'count');
     } else {
-      $ckey = 'destinations-' . md5(serialize($this->request->getQuery()));
-      if (!$this->request->is('json')) {        
-        $destinations = $this->paginate($query->cache($ckey));
+      $locale = I18n::getLocale();
+      //$ckey = $locale . '-destinations-' . md5(serialize($this->request->getQuery()));
+
+      $all = $this->request->getQuery('all');
+      if (!empty($all)) {
+        //$destinations = $query->all()->cache($ckey);
+        $destinations = $query->all();
       } else {
-        $destinations = $query->cache($ckey);
+        //$destinations = $this->paginate($query->cache($ckey));
+        $destinations = $this->paginate($query);
+      }
+
+      foreach ($destinations as $destination) {
+        $children = $this->Destinations->getChildren($destination->id);
+        if (!empty($children)) {
+          $destination->children = $children;
+        } else {
+          $destination->children = [];
+        }
       }
 
       $this->set(compact('destinations'));
@@ -208,6 +328,7 @@ class DestinationsController extends AppController
       ->limit(10)
       ->toArray();
     $this->set('percorsi', $percorsi);
+    $this->viewBuilder()->setOption('serialize', 'percorsi');
   }
 
   public function tours($nomeseo = null)
@@ -223,6 +344,7 @@ class DestinationsController extends AppController
       ->limit(10)
       ->toArray();
     $this->set('percorsi', $percorsi);
+    $this->viewBuilder()->setOption('serialize', 'percorsi');
   }
 
   public function addioNubilato($nomeseo = null)
@@ -241,7 +363,7 @@ class DestinationsController extends AppController
     $this->get_seo_destination_name($nomeseo);
     $this->viewBuilder()->setOption('serialize', 'destination');
   }
-  
+
   public function count()
   {
     $this->Destinations->recursive = -1;
@@ -262,9 +384,9 @@ class DestinationsController extends AppController
     if (empty($nomeseo)) {
       return $this->redirect(['controller' => 'Destinations', 'action' => 'index', '?' => ['prezzi' => true]]);
     }
-    $destination = $this->get_seo_destination_name($nomeseo);  
+    $destination = $this->get_seo_destination_name($nomeseo);
     $this->set(compact('destination'));
-    
+
     // tipi di bici disponibili
     $this->loadModel('Cyclomap.Tipibici');
     $tipibici = $this->Tipibici->find(
@@ -272,7 +394,7 @@ class DestinationsController extends AppController
       [
         'recursive' => -1,
         'conditions' => [
-          'destination_id' => $destination->id, 
+          'destination_id' => $destination->id,
           'published' => 1,
         ],
         'order' => 'tariffa_intera ASC'
@@ -292,7 +414,18 @@ class DestinationsController extends AppController
     ])->toArray();
     $this->set('addons', $addon_list);
 
-   /*  $this->loadModel('Cyclomap.Percorsi');
+
+    $this->loadModel('Cyclomap.Tipibici');
+    $min_price = $this->Tipibici->find()
+      ->select(['tariffa_intera'])
+      ->where(['destination_id' => $destination->id, 'published' => 1, 'tariffa_intera >' => 0])
+      ->order(['tariffa_intera' => 'ASC'])
+      ->first();
+
+    $this->set('min_price', $min_price);
+
+
+    /*  $this->loadModel('Cyclomap.Percorsi');
     $esperienze = $this->Percorsi->find()
       ->where([
         'destination_id' => $destination->id,
@@ -302,7 +435,7 @@ class DestinationsController extends AppController
     $this->set('esperienze', $esperienze);
 
     $percorsi = $this->Percorsi->find()
-      ->where([
+      ->where([ 
         'destination_id' => $destination->id,
         'published' => 1,
         'tipo_id' => 2,
@@ -311,13 +444,20 @@ class DestinationsController extends AppController
 
     $destinations = $this->Destinations->find('all')->toArray();
     $this->set('destinations', $destinations);
+
+    $this->viewBuilder()->setOption('serialize', ['destination', 'tipibici', 'addons', 'destinations']);
   }
-  
+
   public function prenota($destination = null)
   {
     $existing_columns = $this->Destinations->getSchema()->columns();
     $desired_columns = [
-      'id', 'name', 'slug', 'nazione_id', 'regione', 'published',
+      'id',
+      'name',
+      'slug',
+      'nazione_id',
+      'regione',
+      'published',
     ];
     $destinations = $this->Destinations->find()
       ->select($desired_columns)
@@ -328,6 +468,7 @@ class DestinationsController extends AppController
     }
 
     $this->set('destinations', $destinations);
+    $this->viewBuilder()->setOption('serialize', 'destinations');
   }
 
   /**
@@ -343,5 +484,148 @@ class DestinationsController extends AppController
     $this->destination_in_session($destination);
 
     return true; // suppongo che venga sempre invocato via request action
+  }
+
+
+  public function urls()
+  {
+    // Recuperiamo il parametro lang (?lang=eng o ?lang=ita)
+    $lang = $this->request->getQuery('lang');
+
+    // scansioni su disco per le immagini: in cache (gruppo 'destinations', svuotata da DestinationsTable::beforeSave)
+    $urls = Cache::remember('destinations-urls-' . ($lang ?: 'all'), function () use ($lang) {
+
+    $toAbsoluteUrl = function (?string $url): ?string {
+      if (empty($url)) {
+        return null;
+      }
+      if (preg_match('/^https?:\/\//i', $url) === 1) {
+        return $url;
+      }
+      return Router::url($url, true);
+    };
+
+    $destinations = $this->Destinations->find('all')
+      ->where(['Destinations.published' => true])
+      ->toArray();
+
+    $urls = [];
+
+    foreach ($destinations as $destination) {
+      $rawImages = array_values(array_unique(array_filter(array_merge(
+        !empty($destination->image) ? [$destination->image] : [],
+        !empty($destination->copertina) ? [$destination->copertina] : []
+      ))));
+
+      $captionParts = array_filter([
+        $destination->preposition ?? null,
+        $destination->name ?? null,
+      ]);
+      $caption = !empty($captionParts) ? implode(' ', $captionParts) : null;
+
+      $images = array_values(array_filter(array_map(function ($img) use ($toAbsoluteUrl, $destination, $caption) {
+        $absUrl = $toAbsoluteUrl(is_string($img) ? $img : null);
+        if (empty($absUrl)) {
+          return null;
+        }
+
+        return [
+          'loc' => $absUrl,
+          'title' => $destination->name,
+          'caption' => $caption,
+        ];
+      }, $rawImages)));
+
+      // --- URL BASE DESTINAZIONE ---
+      $this->_addUrl($urls, $destination, "{$destination->slug}", "{$destination->slug}", 0.8, $lang);
+
+      // --- URL PREZZI ---
+      $this->_addUrl($urls, $destination, "{$destination->slug}/prezzi", "{$destination->slug}/prices", 0.5, $lang);
+
+      // --- URL PERCORSI ---
+      $this->_addUrl($urls, $destination, "{$destination->slug}/percorsi", "{$destination->slug}/percorsi", 0.5, $lang);
+
+      // --- GESTIONE NOMI SEO PER DESTINAZIONE ---
+      if (!empty($destination->nomiseo)) {
+        $nomi = explode(',', $destination->nomiseo);
+        $nomi[] = $destination->slug;
+        foreach ($nomi as $n) {
+          $n = trim($n);
+          if (empty($n)) continue;
+
+          $nomeSeo = strtolower(\Cake\Utility\Text::slug($n));
+
+          $seoRoutes = [
+            ['path' => 'rent', 'pri' => 0.9],
+            ['path' => 'activities', 'pri' => 0.8],
+            ['path' => 'tours', 'pri' => 0.9],
+            ['path' => 'addio-nubilato', 'pri' => 0.8],
+            ['path' => 'experience', 'pri' => 0.9],
+          ];
+
+          foreach ($seoRoutes as $route) {
+            $itPathSeo = "/ita/destinations/{$route['path']}/$nomeSeo";
+            $enPathSeo = "/eng/destinations/{$route['path']}/$nomeSeo";
+
+            $alternatives = [
+              ['hreflang' => 'eng', 'href' => $enPathSeo],
+              ['hreflang' => 'ita', 'href' => $itPathSeo],
+            ];
+
+            // Applichiamo il filtro lingua anche alle rotte SEO
+            $seoData = [
+              'lastmod' => $destination->modified ? $destination->modified->format('Y-m-d') : null,
+              'changefreq' => 'yearly',
+              'priority' => $route['pri'],
+              'alternatives' => $alternatives,
+              'images' => $images,
+            ];
+
+            if ($lang === 'eng') {
+              $urls[] = array_merge($seoData, ['loc' => $enPathSeo]);
+            } elseif ($lang === 'ita') {
+              $urls[] = array_merge($seoData, ['loc' => $itPathSeo]);
+            } else {
+              $urls[] = array_merge($seoData, ['loc' => $itPathSeo]);
+              $urls[] = array_merge($seoData, ['loc' => $enPathSeo]);
+            }
+          }
+        }
+      }
+    }
+
+    return $urls;
+    });
+
+    $this->set('urls', $urls);
+    $this->viewBuilder()->setOption('serialize', 'urls');
+  }
+
+  // Modificato helper per accettare il parametro $lang
+  private function _addUrl(&$urls, $dest, $itPath, $enPath, $priority, $lang = null)
+  {
+    $itFull = "/ita/$itPath";
+    $enFull = "/eng/$enPath";
+
+    $alternatives = [
+      ['hreflang' => 'eng', 'href' => $enFull],
+      ['hreflang' => 'ita', 'href' => $itFull],
+    ];
+
+    $baseData = [
+      'lastmod' => $dest->modified ? $dest->modified->format('Y-m-d') : null,
+      'changefreq' => 'yearly',
+      'priority' => $priority,
+      'alternatives' => $alternatives
+    ];
+
+    if ($lang === 'eng') {
+      $urls[] = array_merge($baseData, ['loc' => $enFull]);
+    } elseif ($lang === 'ita') {
+      $urls[] = array_merge($baseData, ['loc' => $itFull]);
+    } else {
+      $urls[] = array_merge($baseData, ['loc' => $itFull]);
+      $urls[] = array_merge($baseData, ['loc' => $enFull]);
+    }
   }
 }

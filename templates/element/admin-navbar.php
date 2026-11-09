@@ -11,5 +11,8 @@
 
   <li class="nav-item"><?= $this->Html->link(__('List'), ['prefix' => 'Admin', 'action' => 'index'], ['class' => 'nav-link']) ?> </li>
 
+    <li class="nav-item"><?= $this->Html->link(__('Duplicate'), ['prefix' => 'Admin', 'action' => 'duplicate', $event->id], ['class' => 'nav-link']) ?> </li>
+
+
   <li class="nav-item"><?= $this->Html->link(__('Admin Home'), '/admin', ['class' => 'nav-link']) ?> </li>
 </ul>

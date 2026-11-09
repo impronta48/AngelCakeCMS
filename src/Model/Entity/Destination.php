@@ -10,6 +10,8 @@ use Cake\I18n\I18n;
 use Cake\Utility\Text;
 use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
+use isobutil\GoogleTranslate;
 
 /**
  * Destination Entity
@@ -36,7 +38,9 @@ class Destination extends Entity
 		'*' => true,
 	];
 
-	protected $_virtual = ['image', 'copertina', 'url','logo_sponsor'];
+	protected $_virtual = ['image', 'copertina', 'url','logo_sponsor', 'logo_ciclovia', 'min_price'];
+	
+	
 
 	public function _getUrl() {
 		$locale = I18n::getLocale();
@@ -60,17 +64,23 @@ class Destination extends Entity
 		$img = $this->_getAttachmentImage('copertina');
 		return $img;
 	}
+
 	
 	public function _getLogoSponsor()
 	{
 		return $this->_getAttachmentImage('logo_sponsor');
 	}
 
+	public function _getLogoCiclovia()
+	{
+		return $this->_getAttachmentImage('logo_ciclovia');
+	}
+
 	public function _getAttachmentImage($field_name = null) {		
 		$fullDir = AttachmentManager::buildPath($this->getSource(), $this->slug, $this->id, $field_name);
 
 		$dir = new Folder(WWW_ROOT . $fullDir);
-		$files = $dir->find(".*\.(jpg|jpeg|gif|png|webp)", true);
+		$files = $dir->find(".*\.(jpg|jpeg|gif|png|webp|svg)", true);
 
 		/*Controllo se è vuoto*/
 		if (!$files) {
@@ -88,4 +98,44 @@ class Destination extends Entity
 		return $asd;
 	}
 
+	public function _getMinPrice()
+	{
+		try {
+			if (empty($this->id)) {
+				return null;
+			}
+
+			$tipibiciTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Cyclomap.Tipibici');
+			$minprice = $tipibiciTable->find()
+				->select(['tariffa_intera'])
+				->where(['destination_id' => $this->id, 'published' => 1, 'tariffa_intera >' => 0])
+				->order(['tariffa_intera' => 'ASC'])
+				->first();
+
+			return $minprice ? $minprice->tariffa_intera : null;
+		} catch (\Throwable $exception) {
+			return null;
+		}
+	}
+
+	public function autoTranslate($field, $author_id)
+	{
+		$apiKey = Configure::read('GoogleTranslate.LANGUAGE_TRANSLATOR_APIKEY');
+		$w = new GoogleTranslate($apiKey);
+
+		$history = TableRegistry::getTableLocator()->get('AutoTranslationHistory');
+
+		if (!empty($this->{$field})) {
+			$translateInput = html_entity_decode($this->{$field});
+			$res = $w->translateSentence($translateInput, 'it', 'en');
+			$this->{$field} = $res;
+			// traduzione ottenuta, salva nella history
+			$historyLog = $history->newEmptyEntity();
+			$historyLog->context = 'Destination->' . $field;
+			$historyLog->source = $translateInput;
+			$historyLog->translation = $this->{$field};
+			$historyLog->user_id = $author_id;
+			$history->save($historyLog);
+		}
+	}
 }

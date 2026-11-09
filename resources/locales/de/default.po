@@ -1,0 +1,1268 @@
+msgid "Destinazione"
+msgstr "Ziel"
+
+msgid "Destinazioni"
+msgstr "Ziele"
+
+msgid "Percorso"
+msgstr "Route"
+
+msgid "Punti di Interesse"
+msgstr "Sehenswürdigkeiten"
+
+msgid "Mappa"
+msgstr "Karte"
+
+msgid "Noleggia ora"
+msgstr "Jetzt mieten"
+
+msgid "E-bike usate"
+msgstr "Gebrauchte E-Bikes"
+
+msgid "Chi siamo"
+msgstr "Über uns"
+
+msgid "Contatti"
+msgstr "Kontakte"
+
+msgid "Per le aziende"
+msgstr "Für Unternehmen"
+
+msgid "Altri link"
+msgstr "Weitere Links"
+
+msgid "Percorsi"
+msgstr "Routen"
+
+msgid "Dove vuoi andare?"
+msgstr "Wohin möchten Sie gehen?"
+
+msgid "Attività in evidenza"
+msgstr "Empfohlene Aktivitäten"
+
+msgid "Punti di Noleggio"
+msgstr "Verleihstellen"
+
+msgid "Agriturismi, bar, ristoranti e produttori"
+msgstr "Bauernhöfe, Bars, Restaurants und Produzenten"
+
+msgid "Come diventare BikeHotel BikeSquare"
+msgstr "Wie wird man ein BikeSquare BikeHotel?"
+
+msgid "Noleggiatore"
+msgstr "Verleiher"
+
+msgid "Come aprire un punto di noleggio e-bike?"
+msgstr "Wie eröffnet man eine E-Bike-Verleihstelle?"
+
+msgid "Produttore di bici"
+msgstr "Fahrradhersteller"
+
+msgid "Territorio, PA, Consorzio"
+msgstr "Gebiet, Verwaltung, Konsortium"
+
+msgid "Tour Operator, blogger e Ciclo Guide"
+msgstr "Reiseveranstalter, Blogger und Fahrradführer"
+
+msgid "Galleria Fotografica"
+msgstr "Fotogalerie"
+
+msgid "In queste località è possibile <b>noleggiare una e-bike</b> oppure fare un'esperienza sul territorio."
+msgstr "An diesen Orten können Sie <b>ein E-Bike mieten</b> oder eine lokale Erfahrung machen."
+
+msgid "Noleggio e-bike in {0}, esperienze e bike hotel in {1}"
+msgstr "E-Bike-Verleih in {0}, Erlebnisse und Bike-Hotels in {1}"
+
+msgid "Noleggio Bici - E-bike Rental {0} | Bike Tour"
+msgstr "Fahrradverleih - E-Bike-Verleih {0} | Fahrradtour"
+
+msgid "Informazioni"
+msgstr "Informationen"
+
+msgid "A partire da"
+msgstr "Ab"
+
+msgid "a persona"
+msgstr "pro Person"
+
+msgid "Richiedi tour personalizzato"
+msgstr "Individuelle Tour anfragen"
+
+msgid "Verifica disponibilità ebike"
+msgstr "Verfügbarkeit von E-Bikes prüfen"
+
+msgid "Acquista un buono regalo"
+msgstr "Geschenkgutschein kaufen"
+
+msgid "Trovi questo percorso sull'App BikeSquare con il codice"
+msgstr "Sie finden diese Route in der BikeSquare-App mit dem Code"
+
+msgid "Si parte da"
+msgstr "Abfahrt von"
+
+msgid "Addio al Nubilato"
+msgstr "Junggesellinnenabschied"
+
+msgid "Esperienze"
+msgstr "Erlebnisse"
+
+msgid "chiedi"
+msgstr "fragen"
+
+msgid "Prezzi per il noleggio di ebike"
+msgstr "Preise für den E-Bike-Verleih"
+
+msgid "Il miglior rapporto qualità prezzo per il noleggio e-bike"
+msgstr "Das beste Preis-Leistungs-Verhältnis für den E-Bike-Verleih"
+
+msgid "Prezzi"
+msgstr "Preise"
+
+msgid "Costo noleggio e-bike"
+msgstr "Kosten für den E-Bike-Verleih"
+
+msgid "Dubbi? Leggi le domande frequenti"
+msgstr "Fragen? Lesen Sie die häufig gestellten Fragen"
+
+msgid "Prezzi per il noleggio di"
+msgstr "Preise für den Verleih von"
+
+msgid "Giornata Intera"
+msgstr "Ganzer Tag"
+
+msgid "Mezza Giornata"
+msgstr "Halber Tag"
+
+msgid "Prenota"
+msgstr "Buchen"
+
+msgid "Accessori disponibili in questa destinazione"
+msgstr "Zubehör verfügbar an diesem Zielort"
+
+msgid "Esperienze tutto compreso in e-bike"
+msgstr "All-inclusive-Erlebnisse mit dem E-Bike"
+
+msgid "I nostri suggerimenti per percorsi autoguidati"
+msgstr "Unsere Vorschläge für selbstgeführte Routen"
+
+msgid "Viaggi incentive"
+msgstr "Incentive-Reisen"
+
+msgid "Hotel, B&B, Agriturismi, Bar, Ristoranti"
+msgstr "Hotels, B&Bs, Bauernhöfe, Bars, Restaurants"
+
+msgid "Gestione dei Noleggi"
+msgstr "Verwaltung der Verleihstellen"
+
+msgid "Kit GPS"
+msgstr "GPS-Kit"
+
+msgid "Indirizzo:"
+msgstr "Adresse:"
+
+msgid "Email:"
+msgstr "E-Mail:"
+
+msgid "Social media:"
+msgstr "Soziale Medien:"
+
+msgid "Cosa puoi fare con BikeSquare"
+msgstr "Was Sie mit BikeSquare machen können"
+
+msgid "Esperienze tutto compreso"
+msgstr "All-inclusive-Erlebnisse"
+
+msgid "Scopri le nostre esperienze tutto compreso"
+msgstr "Entdecken Sie unsere All-inclusive-Erlebnisse"
+
+msgid "Percorsi top"
+msgstr "Top-Routen"
+
+msgid "Scopri i nostri {0} percorsi"
+msgstr "Entdecken Sie unsere {0} Routen"
+
+msgid "I nostri partner"
+msgstr "Unsere Partner"
+
+msgid "Tour personalizzato"
+msgstr "Individuelle Tour"
+
+msgid "Usa il form qui sotto <br/>per richiedere tour in ebike come lo vuoi tu!"
+msgstr "Verwenden Sie das untenstehende Formular, um eine E-Bike-Tour nach Ihren Wünschen anzufordern!"
+
+msgid "Richiedi tour personalizzato"
+msgstr "Individuelle Tour anfragen"
+
+msgid "percorso e-bike"
+msgstr "E-Bike-Route"
+
+msgid "percorso autoguidato, ebike, noleggio ebike, ebike rental, percorsi bici, app cicloturismo in"
+msgstr "selbstgeführte Route, E-Bike, E-Bike-Verleih, Fahrradrouten, Fahrrad-App in"
+
+msgid "Percorsi"
+msgstr "Routen"
+
+msgid "Trovi questo percorso sull'App BikeSquare con il codice"
+msgstr "Sie finden diese Route in der BikeSquare-App mit dem Code"
+
+msgid "Difficoltà"
+msgstr "Schwierigkeit"
+
+msgid "Informazioni"
+msgstr "Informationen"
+
+msgid "A partire da"
+msgstr "Ab"
+
+msgid "a persona"
+msgstr "pro Person"
+
+msgid "Verifica disponibilità ebike"
+msgstr "Verfügbarkeit von E-Bikes prüfen"
+
+msgid "Acquista un buono regalo"
+msgstr "Geschenkgutschein kaufen"
+
+msgid "Si parte da"
+msgstr "Abfahrt von"
+
+msgid "Galleria Fotografica"
+msgstr "Fotogalerie"
+
+msgid "Servizi e Attrazioni"
+msgstr "Dienstleistungen und Attraktionen"
+
+msgid "cosa c'è da sapere"
+msgstr "was man wissen sollte"
+
+msgid "Dove si trova"
+msgstr "Wo es sich befindet"
+
+msgid "Foto"
+msgstr "Fotos"
+
+msgid "mappa a schermo intero"
+msgstr "Vollbildkarte"
+
+msgid "I percorsi che passano da questo punto:"
+msgstr "Routen, die diesen Punkt passieren:"
+
+msgid "Scarica <br /> la nostra app"
+msgstr "Laden Sie <br/> unsere App herunter"
+
+msgid "Vuoi vedere i percorsi proposti da BikeSquare? Non vuoi perderti con la bici e vuoi essere sicuro di fare la strada giusta?"
+msgstr "Möchten Sie die von BikeSquare vorgeschlagenen Routen sehen? Möchten Sie sich nicht verirren und sicher sein, den richtigen Weg zu nehmen?"
+
+msgid "Con l'APP BikeSquare puoi scegliere il percorso, visualizzarlo per avere un'anticipazione di ciò che vedrai, ma soprattutto potrai usare la funzionalità navigatore per essere sicuro di non perderti mentre pedali. Sull'APP trovi inoltre i punti di interesse, gli hotel, i ristoranti, i musei e le cantine amici della bici (elettrica). In questi punti sarai sicuro di essere accolto con simpatia e avrai modo di conoscere da vicino chi abita e lavora sul luogo che hai scelto di visitare. Le bici elettriche di BikeSquare sono dotate di un supporto da manubrio per poter usare il navigatore con semplicità mentre si pedala."
+msgstr "Mit der BikeSquare-App können Sie eine Route auswählen und anzeigen, um sich auf das vorzubereiten, was Sie sehen werden. Vor allem können Sie die Navigationsfunktion nutzen, um sicherzustellen, dass Sie sich während der Fahrt nicht verirren. In der App finden Sie außerdem interessante Punkte, Hotels, Restaurants, Museen und fahrradfreundliche Weinkeller. An diesen Punkten können Sie sicher sein, dass Sie herzlich willkommen sind und die Menschen und Orte kennenlernen, die Sie besuchen möchten. Die E-Bikes von BikeSquare sind mit einer Halterung ausgestattet, um die Navigation während der Fahrt einfach zu nutzen."
+
+msgid "Entra nel network Bikesquare"
+msgstr "Treten Sie dem BikeSquare-Netzwerk bei"
+
+msgid "Vai al sito B2B Bikesquare"
+msgstr "Besuchen Sie die B2B-Website von BikeSquare"
+
+msgid "Noleggiatori"
+msgstr "Verleiher"
+
+msgid "Produttori di e-bike"
+msgstr "E-Bike-Hersteller"
+
+msgid "Territorio"
+msgstr "Gebiet"
+
+msgid "Mappa"
+msgstr "Karte"
+
+msgid "Noleggia ora"
+msgstr "Jetzt mieten"
+
+msgid "Agriturismi, bar, ristoranti e produttori"
+msgstr "Bauernhöfe, Bars, Restaurants und Produzenten"
+
+msgid "Come diventare BikeHotel BikeSquare"
+msgstr "Wie wird man ein BikeSquare BikeHotel?"
+
+msgid "Come aprire un punto di noleggio e-bike?"
+msgstr "Wie eröffnet man eine E-Bike-Verleihstelle?"
+
+msgid "Altri link"
+msgstr "Weitere Links"
+
+msgid "Chi siamo"
+msgstr "Über uns"
+
+msgid "Contatti"
+msgstr "Kontakte"
+
+msgid "Scopri l'Italia e <br /> l'Europa in e-bike"
+msgstr "Entdecken Sie Italien und <br/> Europa mit dem E-Bike"
+
+msgid "Dove"
+msgstr "Wo"
+
+msgid "Digita la località"
+msgstr "Geben Sie den Ort ein"
+
+msgid "Attività"
+msgstr "Aktivitäten"
+
+msgid "Caricamento..."
+msgstr "Laden..."
+
+msgid "Cerca"
+msgstr "Suchen"
+
+msgid "Ebike usate"
+msgstr "Gebrauchte E-Bikes"
+
+msgid "Che cosa incontrerai lungo il percorso"
+msgstr "Was Sie entlang der Route finden"
+
+msgid "Buono Regalo"
+msgstr "Geschenkkarte"
+
+msgid "Prenota una e-bike, scegli la destinazione"
+msgstr "Buchen Sie ein E-Bike, wählen Sie das Ziel"
+
+msgid "Per prima cosa scegli dove vuoi pedalare"
+msgstr "Wählen Sie zuerst, wo Sie radeln möchten"
+
+msgid "Punti di interesse"
+msgstr "Sehenswürdigkeiten"
+
+msgid "Aggiornamenti"
+msgstr "Neuigkeiten"
+
+msgid "Strutture Ricettive"
+msgstr "Unterkünfte"
+
+msgid "Aggiornamenti"
+msgstr "Neuigkeiten"
+
+msgid "L'App che ti guida"
+msgstr "Die App, die Sie führt"
+
+msgid "Bere e Mangiare"
+msgstr "Essen und Trinken"
+
+msgid "Chiese"
+msgstr "Kirchen"
+
+msgid "Noleggio attrezzatura"
+msgstr "Ausrüstungsverleih"
+
+msgid "Da vedere"
+msgstr "Sehenswert"
+
+msgid "Scarica l'APP"
+msgstr "Laden Sie die App herunter"
+
+msgid "scopri percorsi, strutture, soste, basiliche"
+msgstr "Entdecken Sie Routen, Unterkünfte, Stopps, Basiliken"
+
+msgid "Accessibilità"
+msgstr "Barrierefreiheit"
+
+msgid "Informativa Cookie"
+msgstr "Cookie-Richtlinie"
+
+msgid "Note Legali"
+msgstr "Rechtliche Hinweise"
+
+msgid "Cammino dei Grandi Santuari Mariani"
+msgstr "Weg der großen Marienheiligtümer"
+
+msgid "Un filo rosso che unisce i principali Santuari dedicati al culto di Maria tra il Veneto e il Trentino Alto Adige attraverso bellissimi paesaggi e riserve naturali"
+msgstr "Ein roter Faden, der die wichtigsten Heiligtümer, die dem Marienkult gewidmet sind, zwischen Venetien und Trentino-Südtirol durch wunderschöne Landschaften und Naturschutzgebiete verbindet"
+
+msgid "Le tappe"
+msgstr "Die Etappen"
+
+msgid "Scopri le tappe"
+msgstr "Entdecken Sie die Etappen"
+
+msgid "Sotto trovi alcune delle tappe in evidenza, ma puoi vederle tutte sulla pagina dei"
+msgstr "Unten finden Sie einige der Highlights, aber Sie können sie alle auf der Seite der"
+
+msgid "percorsi"
+msgstr "Routen"
+
+msgid "Caratteristiche del percorso"
+msgstr "Merkmale der Route"
+
+msgid "Tempo Percorrenza"
+msgstr "Dauer der Route"
+
+msgid "Lunghezza"
+msgstr "Länge"
+
+msgid "Punti di interesse su questo percorso"
+msgstr "Sehenswürdigkeiten entlang dieser Route"
+
+msgid "Percorsi Collegati"
+msgstr "Verbundene Routen"
+
+msgid "Punto di noleggio e-bike a {0}"
+msgstr "E-Bike-Verleihstelle in {0}"
+
+msgid "Viaggi"
+msgstr "Reisen"
+
+msgid "In Partenza"
+msgstr "Bald startend"
+
+msgid "Scuola"
+msgstr "Schule"
+
+msgid "Corsi"
+msgstr "Kurse"
+
+msgid "INIZIA IL TUO VIAGGIO DA QUI"
+msgstr "STARTEN SIE IHRE REISE HIER"
+
+msgid "Lasciati ispirare dalle nostre proposte..."
+msgstr "Lassen Sie sich von unseren Vorschlägen inspirieren..."
+
+msgid "Iscriviti alla Newsletter"
+msgstr "Abonnieren Sie den Newsletter"
+
+msgid "Iscriviti al Canale Telegram"
+msgstr "Abonnieren Sie den Telegram-Kanal"
+
+msgid "Servizi"
+msgstr "Dienstleistungen"
+
+msgid "Noleggio"
+msgstr "Verleih"
+
+msgid "Organizzazione Eventi"
+msgstr "Eventorganisation"
+
+msgid "In partenza"
+msgstr "Bald startend"
+
+msgid "Nessun evento disponibile"
+msgstr "Kein Ereignis verfügbar"
+
+msgid "si parte!"
+msgstr "Los geht's!"
+
+msgid "Scegli la tua attività preferita nella natura"
+msgstr "Wählen Sie Ihre Lieblingsaktivität in der Natur"
+
+msgid "costruiamo insieme un'esperienza divertente, responsabile e sostenibile"
+msgstr "Lassen Sie uns gemeinsam ein unterhaltsames, verantwortungsbewusstes und nachhaltiges Erlebnis schaffen"
+
+msgid "Da non perdere"
+msgstr "Nicht verpassen"
+
+msgid "Scopri"
+msgstr "Entdecken"
+
+msgid "Le nostre esperienze preferite"
+msgstr "Unsere Lieblingserlebnisse"
+
+msgid "Lasciati ispirare"
+msgstr "Lassen Sie sich inspirieren"
+
+msgid "Dettagli"
+msgstr "Details"
+
+msgid "Scopri le nostre"
+msgstr "Entdecken Sie unsere"
+
+msgid "proposte"
+msgstr "Vorschläge"
+
+msgid "Creiamo valore viaggiando insieme"
+msgstr "Wir schaffen Wert, indem wir gemeinsam reisen"
+
+msgid "A noi piace viaggiare con Cribyoo!"
+msgstr "Wir reisen gerne mit Cribyoo!"
+
+msgid "Recensioni e testimonianze"
+msgstr "Bewertungen und Erfahrungsberichte"
+
+msgid "Turismo Responsabile & Sostenibile"
+msgstr "Verantwortungsvoller & Nachhaltiger Tourismus"
+
+msgid "Esplora l'Italia con Cribyoo"
+msgstr "Entdecken Sie Italien mit Cribyoo"
+
+msgid "Esplora"
+msgstr "Entdecken"
+
+msgid "In autonomia con la nostra app"
+msgstr "Unabhängig mit unserer App"
+
+msgid "Esperienze outdoor"
+msgstr "Outdoor-Erlebnisse"
+
+msgid "Rilassati e divertiti, pensiamo a tutto noi"
+msgstr "Entspannen Sie sich und haben Sie Spaß, wir kümmern uns um alles"
+
+msgid "Esplora nuovi percorsi"
+msgstr "Entdecken Sie neue Wege"
+
+msgid "Scarica la app e scopri la natura con semplicità"
+msgstr "Laden Sie die App herunter und entdecken Sie die Natur mit Leichtigkeit"
+
+msgid "Turismo scolastico"
+msgstr "Schultourismus"
+
+msgid "Educazione ambientale per le scuole"
+msgstr "Umweltbildung für Schulen"
+
+msgid "Citizen Science"
+msgstr "Citizen Science"
+
+msgid "Diventa il protagonista della ricerca scientifica"
+msgstr "Werden Sie zum Protagonisten der wissenschaftlichen Forschung"
+
+msgid "Cosa abbiamo in partenza?"
+msgstr "Was haben wir im Angebot?"
+
+msgid "Unisciti al gruppo Cribyoo, parti!"
+msgstr "Schließen Sie sich der Cribyoo-Gruppe an, los geht's!"
+
+msgid "Solo per noi bambini"
+msgstr "Nur für uns Kinder"
+
+msgid "Viaggi ed esperienze creati su misura accompagnati da guide ed educatori"
+msgstr "Maßgeschneiderte Reisen und Erlebnisse, begleitet von Führern und Pädagogen"
+
+msgid "Trekking, kayak, bici, barca a vela, sci, multi sport"
+msgstr "Trekking, Kajak, Fahrrad, Segelboot, Skifahren, Multisport"
+
+msgid "intervento cofinanziato da P.O.R. FESR Liguria 2014-2020"
+msgstr "Maßnahme kofinanziert durch P.O.R. FESR Ligurien 2014-2020"
+
+msgid "B2B"
+msgstr "B2B"
+
+msgmsgid "Destinazione"
+msgstr "Ziel"
+
+msgid "Destinazioni"
+msgstr "Ziele"
+
+msgid "Percorso"
+msgstr "Route"
+
+msgid "Punti di Interesse"
+msgstr "Sehenswürdigkeiten"
+
+msgid "Mappa"
+msgstr "Karte"
+
+msgid "Noleggia ora"
+msgstr "Jetzt mieten"
+
+msgid "E-bike usate"
+msgstr "Gebrauchte E-Bikes"
+
+msgid "Chi siamo"
+msgstr "Über uns"
+
+msgid "Contatti"
+msgstr "Kontakte"
+
+msgid "Per le aziende"
+msgstr "Für Unternehmen"
+
+msgid "Altri link"
+msgstr "Weitere Links"
+
+msgid "Percorsi"
+msgstr "Routen"
+
+msgid "Dove vuoi andare?"
+msgstr "Wohin möchten Sie gehen?"
+
+msgid "Attività in evidenza"
+msgstr "Empfohlene Aktivitäten"
+
+msgid "Punti di Noleggio"
+msgstr "Verleihstellen"
+
+msgid "Agriturismi, bar, ristoranti e produttori"
+msgstr "Bauernhöfe, Bars, Restaurants und Produzenten"
+
+msgid "Come diventare BikeHotel BikeSquare"
+msgstr "Wie wird man ein BikeSquare BikeHotel?"
+
+msgid "Noleggiatore"
+msgstr "Verleiher"
+
+msgid "Come aprire un punto di noleggio e-bike?"
+msgstr "Wie eröffnet man eine E-Bike-Verleihstelle?"
+
+msgid "Produttore di bici"
+msgstr "Fahrradhersteller"
+
+msgid "Territorio, PA, Consorzio"
+msgstr "Gebiet, Verwaltung, Konsortium"
+
+msgid "Tour Operator, blogger e Ciclo Guide"
+msgstr "Reiseveranstalter, Blogger und Fahrradführer"
+
+msgid "Galleria Fotografica"
+msgstr "Fotogalerie"
+
+msgid "In queste località è possibile <b>noleggiare una e-bike</b> oppure fare un'esperienza sul territorio."
+msgstr "An diesen Orten können Sie <b>ein E-Bike mieten</b> oder eine lokale Erfahrung machen."
+
+msgid "Noleggio e-bike in {0}, esperienze e bike hotel in {1}"
+msgstr "E-Bike-Verleih in {0}, Erlebnisse und Bike-Hotels in {1}"
+
+msgid "Noleggio Bici - E-bike Rental {0} | Bike Tour"
+msgstr "Fahrradverleih - E-Bike-Verleih {0} | Fahrradtour"
+
+msgid "Informazioni"
+msgstr "Informationen"
+
+msgid "A partire da"
+msgstr "Ab"
+
+msgid "a persona"
+msgstr "pro Person"
+
+msgid "Richiedi tour personalizzato"
+msgstr "Individuelle Tour anfragen"
+
+msgid "Verifica disponibilità ebike"
+msgstr "Verfügbarkeit von E-Bikes prüfen"
+
+msgid "Acquista un buono regalo"
+msgstr "Geschenkgutschein kaufen"
+
+msgid "Trovi questo percorso sull'App BikeSquare con il codice"
+msgstr "Sie finden diese Route in der BikeSquare-App mit dem Code"
+
+msgid "Si parte da"
+msgstr "Abfahrt von"
+
+msgid "Addio al Nubilato"
+msgstr "Junggesellinnenabschied"
+
+msgid "Esperienze"
+msgstr "Erlebnisse"
+
+msgid "chiedi"
+msgstr "fragen"
+
+msgid "Prezzi per il noleggio di ebike"
+msgstr "Preise für den E-Bike-Verleih"
+
+msgid "Il miglior rapporto qualità prezzo per il noleggio e-bike"
+msgstr "Das beste Preis-Leistungs-Verhältnis für den E-Bike-Verleih"
+
+msgid "Prezzi"
+msgstr "Preise"
+
+msgid "Costo noleggio e-bike"
+msgstr "Kosten für den E-Bike-Verleih"
+
+msgid "Dubbi? Leggi le domande frequenti"
+msgstr "Fragen? Lesen Sie die häufig gestellten Fragen"
+
+msgid "Prezzi per il noleggio di"
+msgstr "Preise für den Verleih von"
+
+msgid "Giornata Intera"
+msgstr "Ganzer Tag"
+
+msgid "Mezza Giornata"
+msgstr "Halber Tag"
+
+msgid "Prenota"
+msgstr "Buchen"
+
+msgid "Accessori disponibili in questa destinazione"
+msgstr "Zubehör verfügbar an diesem Zielort"
+
+msgid "Esperienze tutto compreso in e-bike"
+msgstr "All-inclusive-Erlebnisse mit dem E-Bike"
+
+msgid "I nostri suggerimenti per percorsi autoguidati"
+msgstr "Unsere Vorschläge für selbstgeführte Routen"
+
+msgid "Viaggi incentive"
+msgstr "Incentive-Reisen"
+
+msgid "Hotel, B&B, Agriturismi, Bar, Ristoranti"
+msgstr "Hotels, B&Bs, Bauernhöfe, Bars, Restaurants"
+
+msgid "Gestione dei Noleggi"
+msgstr "Verwaltung der Verleihstellen"
+
+msgid "Kit GPS"
+msgstr "GPS-Kit"
+
+msgid "Indirizzo:"
+msgstr "Adresse:"
+
+msgid "Email:"
+msgstr "E-Mail:"
+
+msgid "Social media:"
+msgstr "Soziale Medien:"
+
+msgid "Cosa puoi fare con BikeSquare"
+msgstr "Was Sie mit BikeSquare machen können"
+
+msgid "Esperienze tutto compreso"
+msgstr "All-inclusive-Erlebnisse"
+
+msgid "Scopri le nostre esperienze tutto compreso"
+msgstr "Entdecken Sie unsere All-inclusive-Erlebnisse"
+
+msgid "Percorsi top"
+msgstr "Top-Routen"
+
+msgid "Scopri i nostri {0} percorsi"
+msgstr "Entdecken Sie unsere {0} Routen"
+
+msgid "I nostri partner"
+msgstr "Unsere Partner"
+
+msgid "Tour personalizzato"
+msgstr "Individuelle Tour"
+
+msgid "Usa il form qui sotto <br/>per richiedere tour in ebike come lo vuoi tu!"
+msgstr "Verwenden Sie das untenstehende Formular, um eine E-Bike-Tour nach Ihren Wünschen anzufordern!"
+
+msgid "Richiedi tour personalizzato"
+msgstr "Individuelle Tour anfragen"
+
+msgid "percorso e-bike"
+msgstr "E-Bike-Route"
+
+msgid "percorso autoguidato, ebike, noleggio ebike, ebike rental, percorsi bici, app cicloturismo in"
+msgstr "selbstgeführte Route, E-Bike, E-Bike-Verleih, Fahrradrouten, Fahrrad-App in"
+
+msgid "Percorsi"
+msgstr "Routen"
+
+msgid "Trovi questo percorso sull'App BikeSquare con il codice"
+msgstr "Sie finden diese Route in der BikeSquare-App mit dem Code"
+
+msgid "Difficoltà"
+msgstr "Schwierigkeit"
+
+msgid "Informazioni"
+msgstr "Informationen"
+
+msgid "A partire da"
+msgstr "Ab"
+
+msgid "a persona"
+msgstr "pro Person"
+
+msgid "Verifica disponibilità ebike"
+msgstr "Verfügbarkeit von E-Bikes prüfen"
+
+msgid "Acquista un buono regalo"
+msgstr "Geschenkgutschein kaufen"
+
+msgid "Si parte da"
+msgstr "Abfahrt von"
+
+msgid "Galleria Fotografica"
+msgstr "Fotogalerie"
+
+msgid "Servizi e Attrazioni"
+msgstr "Dienstleistungen und Attraktionen"
+
+msgid "cosa c'è da sapere"
+msgstr "was man wissen sollte"
+
+msgid "Dove si trova"
+msgstr "Wo es sich befindet"
+
+msgid "Foto"
+msgstr "Fotos"
+
+msgid "mappa a schermo intero"
+msgstr "Vollbildkarte"
+
+msgid "I percorsi che passano da questo punto:"
+msgstr "Routen, die diesen Punkt passieren:"
+
+msgid "Scarica <br /> la nostra app"
+msgstr "Laden Sie <br/> unsere App herunter"
+
+msgid "Vuoi vedere i percorsi proposti da BikeSquare? Non vuoi perderti con la bici e vuoi essere sicuro di fare la strada giusta?"
+msgstr "Möchten Sie die von BikeSquare vorgeschlagenen Routen sehen? Möchten Sie sich nicht verirren und sicher sein, den richtigen Weg zu nehmen?"
+
+msgid "Con l'APP BikeSquare puoi scegliere il percorso, visualizzarlo per avere un'anticipazione di ciò che vedrai, ma soprattutto potrai usare la funzionalità navigatore per essere sicuro di non perderti mentre pedali. Sull'APP trovi inoltre i punti di interesse, gli hotel, i ristoranti, i musei e le cantine amici della bici (elettrica). In questi punti sarai sicuro di essere accolto con simpatia e avrai modo di conoscere da vicino chi abita e lavora sul luogo che hai scelto di visitare. Le bici elettriche di BikeSquare sono dotate di un supporto da manubrio per poter usare il navigatore con semplicità mentre si pedala."
+msgstr "Mit der BikeSquare-App können Sie eine Route auswählen und anzeigen, um sich auf das vorzubereiten, was Sie sehen werden. Vor allem können Sie die Navigationsfunktion nutzen, um sicherzustellen, dass Sie sich während der Fahrt nicht verirren. In der App finden Sie außerdem interessante Punkte, Hotels, Restaurants, Museen und fahrradfreundliche Weinkeller. An diesen Punkten können Sie sicher sein, dass Sie herzlich willkommen sind und die Menschen und Orte kennenlernen, die Sie besuchen möchten. Die E-Bikes von BikeSquare sind mit einer Halterung ausgestattet, um die Navigation während der Fahrt einfach zu nutzen."
+
+msgid "Entra nel network Bikesquare"
+msgstr "Treten Sie dem BikeSquare-Netzwerk bei"
+
+msgid "Vai al sito B2B Bikesquare"
+msgstr "Besuchen Sie die B2B-Website von BikeSquare"
+
+msgid "Noleggiatori"
+msgstr "Verleiher"
+
+msgid "Produttori di e-bike"
+msgstr "E-Bike-Hersteller"
+
+msgid "Territorio"
+msgstr "Gebiet"
+
+msgid "Mappa"
+msgstr "Karte"
+
+msgid "Noleggia ora"
+msgstr "Jetzt mieten"
+
+msgid "Agriturismi, bar, ristoranti e produttori"
+msgstr "Bauernhöfe, Bars, Restaurants und Produzenten"
+
+msgid "Come diventare BikeHotel BikeSquare"
+msgstr "Wie wird man ein BikeSquare BikeHotel?"
+
+msgid "Come aprire un punto di noleggio e-bike?"
+msgstr "Wie eröffnet man eine E-Bike-Verleihstelle?"
+
+msgid "Altri link"
+msgstr "Weitere Links"
+
+msgid "Chi siamo"
+msgstr "Über uns"
+
+msgid "Contatti"
+msgstr "Kontakte"
+
+msgid "Scopri l'Italia e <br /> l'Europa in e-bike"
+msgstr "Entdecken Sie Italien und <br/> Europa mit dem E-Bike"
+
+msgid "Dove"
+msgstr "Wo"
+
+msgid "Digita la località"
+msgstr "Geben Sie den Ort ein"
+
+msgid "Attività"
+msgstr "Aktivitäten"
+
+msgid "Caricamento..."
+msgstr "Laden..."
+
+msgid "Cerca"
+msgstr "Suchen"
+
+msgid "Ebike usate"
+msgstr "Gebrauchte E-Bikes"
+
+msgid "Che cosa incontrerai lungo il percorso"
+msgstr "Was Sie entlang der Route finden"
+
+msgid "Buono Regalo"
+msgstr "Geschenkkarte"
+
+msgid "Prenota una e-bike, scegli la destinazione"
+msgstr "Buchen Sie ein E-Bike, wählen Sie das Ziel"
+
+msgid "Per prima cosa scegli dove vuoi pedalare"
+msgstr "Wählen Sie zuerst, wo Sie radeln möchten"
+
+msgid "Punti di interesse"
+msgstr "Sehenswürdigkeiten"
+
+msgid "Aggiornamenti"
+msgstr "Neuigkeiten"
+
+msgid "Strutture Ricettive"
+msgstr "Unterkünfte"
+
+msgid "Aggiornamenti"
+msgstr "Neuigkeiten"
+
+msgid "L'App che ti guida"
+msgstr "Die App, die Sie führt"
+
+msgid "Bere e Mangiare"
+msgstr "Essen und Trinken"
+
+msgid "Chiese"
+msgstr "Kirchen"
+
+msgid "Noleggio attrezzatura"
+msgstr "Ausrüstungsverleih"
+
+msgid "Da vedere"
+msgstr "Sehenswert"
+
+msgid "Scarica l'APP"
+msgstr "Laden Sie die App herunter"
+
+msgid "scopri percorsi, strutture, soste, basiliche"
+msgstr "Entdecken Sie Routen, Unterkünfte, Stopps, Basiliken"
+
+msgid "Accessibilità"
+msgstr "Barrierefreiheit"
+
+msgid "Informativa Cookie"
+msgstr "Cookie-Richtlinie"
+
+msgid "Note Legali"
+msgstr "Rechtliche Hinweise"
+
+msgid "Cammino dei Grandi Santuari Mariani"
+msgstr "Weg der großen Marienheiligtümer"
+
+msgid "Un filo rosso che unisce i principali Santuari dedicati al culto di Maria tra il Veneto e il Trentino Alto Adige attraverso bellissimi paesaggi e riserve naturali"
+msgstr "Ein roter Faden, der die wichtigsten Heiligtümer, die dem Marienkult gewidmet sind, zwischen Venetien und Trentino-Südtirol durch wunderschöne Landschaften und Naturschutzgebiete verbindet"
+
+msgid "Le tappe"
+msgstr "Die Etappen"
+
+msgid "Scopri le tappe"
+msgstr "Entdecken Sie die Etappen"
+
+msgid "Sotto trovi alcune delle tappe in evidenza, ma puoi vederle tutte sulla pagina dei"
+msgstr "Unten finden Sie einige der Highlights, aber Sie können sie alle auf der Seite der"
+
+msgid "percorsi"
+msgstr "Routen"
+
+msgid "Caratteristiche del percorso"
+msgstr "Merkmale der Route"
+
+msgid "Tempo Percorrenza"
+msgstr "Dauer der Route"
+
+msgid "Lunghezza"
+msgstr "Länge"
+
+msgid "Punti di interesse su questo percorso"
+msgstr "Sehenswürdigkeiten entlang dieser Route"
+
+msgid "Percorsi Collegati"
+msgstr "Verbundene Routen"
+
+msgid "Punto di noleggio e-bike a {0}"
+msgstr "E-Bike-Verleihstelle in {0}"
+
+msgid "Viaggi"
+msgstr "Reisen"
+
+msgid "In Partenza"
+msgstr "Bald startend"
+
+msgid "Scuola"
+msgstr "Schule"
+
+msgid "Corsi"
+msgstr "Kurse"
+
+msgid "INIZIA IL TUO VIAGGIO DA QUI"
+msgstr "STARTEN SIE IHRE REISE HIER"
+
+msgid "Lasciati ispirare dalle nostre proposte..."
+msgstr "Lassen Sie sich von unseren Vorschlägen inspirieren..."
+
+msgid "Iscriviti alla Newsletter"
+msgstr "Abonnieren Sie den Newsletter"
+
+msgid "Iscriviti al Canale Telegram"
+msgstr "Abonnieren Sie den Telegram-Kanal"
+
+msgid "Servizi"
+msgstr "Dienstleistungen"
+
+msgid "Noleggio"
+msgstr "Verleih"
+
+msgid "Organizzazione Eventi"
+msgstr "Eventorganisation"
+
+msgid "In partenza"
+msgstr "Bald startend"
+
+msgid "Nessun evento disponibile"
+msgstr "Kein Ereignis verfügbar"
+
+msgid "si parte!"
+msgstr "Los geht's!"
+
+msgid "Scegli la tua attività preferita nella natura"
+msgstr "Wählen Sie Ihre Lieblingsaktivität in der Natur"
+
+msgid "costruiamo insieme un'esperienza divertente, responsabile e sostenibile"
+msgstr "Lassen Sie uns gemeinsam ein unterhaltsames, verantwortungsbewusstes und nachhaltiges Erlebnis schaffen"
+
+msgid "Da non perdere"
+msgstr "Nicht verpassen"
+
+msgid "Scopri"
+msgstr "Entdecken"
+
+msgid "Le nostre esperienze preferite"
+msgstr "Unsere Lieblingserlebnisse"
+
+msgid "Lasciati ispirare"
+msgstr "Lassen Sie sich inspirieren"
+
+msgid "Dettagli"
+msgstr "Details"
+
+msgid "Scopri le nostre"
+msgstr "Entdecken Sie unsere"
+
+msgid "proposte"
+msgstr "Vorschläge"
+
+msgid "Creiamo valore viaggiando insieme"
+msgstr "Wir schaffen Wert, indem wir gemeinsam reisen"
+
+msgid "A noi piace viaggiare con Cribyoo!"
+msgstr "Wir reisen gerne mit Cribyoo!"
+
+msgid "Recensioni e testimonianze"
+msgstr "Bewertungen und Erfahrungsberichte"
+
+msgid "Turismo Responsabile & Sostenibile"
+msgstr "Verantwortungsvoller & Nachhaltiger Tourismus"
+
+msgid "Esplora l'Italia con Cribyoo"
+msgstr "Entdecken Sie Italien mit Cribyoo"
+
+msgid "Esplora"
+msgstr "Entdecken"
+
+msgid "In autonomia con la nostra app"
+msgstr "Unabhängig mit unserer App"
+
+msgid "Esperienze outdoor"
+msgstr "Outdoor-Erlebnisse"
+
+msgid "Rilassati e divertiti, pensiamo a tutto noi"
+msgstr "Entspannen Sie sich und haben Sie Spaß, wir kümmern uns um alles"
+
+msgid "Esplora nuovi percorsi"
+msgstr "Entdecken Sie neue Wege"
+
+msgid "Scarica la app e scopri la natura con semplicità"
+msgstr "Laden Sie die App herunter und entdecken Sie die Natur mit Leichtigkeit"
+
+msgid "Turismo scolastico"
+msgstr "Schultourismus"
+
+msgid "Educazione ambientale per le scuole"
+msgstr "Umweltbildung für Schulen"
+
+msgid "Citizen Science"
+msgstr "Citizen Science"
+
+msgid "Diventa il protagonista della ricerca scientifica"
+msgstr "Werden Sie zum Protagonisten der wissenschaftlichen Forschung"
+
+msgid "Cosa abbiamo in partenza?"
+msgstr "Was haben wir im Angebot?"
+
+msgid "Unisciti al gruppo Cribyoo, parti!"
+msgstr "Schließen Sie sich der Cribyoo-Gruppe an, los geht's!"
+
+msgid "Solo per noi bambini"
+msgstr "Nur für uns Kinder"
+
+msgid "Viaggi ed esperienze creati su misura accompagnati da guide ed educatori"
+msgstr "Maßgeschneiderte Reisen und Erlebnisse, begleitet von Führern und Pädagogen"
+
+msgid "Trekking, kayak, bici, barca a vela, sci, multi sport"
+msgstr "Trekking, Kajak, Fahrrad, Segelboot, Skifahren, Multisport"
+
+msgid "intervento cofinanziato da P.O.R. FESR Liguria 2014-2020"
+msgstr "Maßnahme kofinanziert durch P.O.R. FESR Ligurien 2014-2020"
+
+msgid "B2B"
+msgstr "B2B"
+
+msgid "Sede"
+msgstr "Hauptsitz"
+
+msgid "Non ci sono"
+msgstr "Es gibt keine"
+
+msgid "percorsi in questa categoria"
+msgstr "Routen in dieser Kategorie"
+
+msgid "Filtra"
+msgstr "Filtern"
+
+msgid "Vicino a Te"
+msgstr "In Ihrer Nähe"
+
+msgid "Ricerca"
+msgstr "Suche"
+
+msgid "Tutte le destinazioni"
+msgstr "Alle Ziele"
+
+msgid "Gratuito"
+msgstr "Kostenlos"
+
+msgid "su richiesta"
+msgstr "auf Anfrage"
+
+msgid "persona"
+msgstr "Person"
+
+msgid "a partire da"
+msgstr "ab"
+
+msgid "Che cosa incontrerai lungo il percorso"
+msgstr "Was Sie entlang der Route finden"
+
+msgid "Le Destinazioni Gold offrono il meglio dell'offerta BikeSquare per chi ama la bicicletta elettrica. Qui troverai i migliori servizi di noleggio e-bike, le esperienze più interessanti e gli hotel più attrezzati per i cicloturisti. I servizi minimi garantiti sono: <b>recupero in emergenza</b>, <b>consegne</b>, <b>partnership con bike hotel</b>, <b>percorsi e esperienze</b>. Una destinazione è Gold se almeno uno dei suoi noleggiatori è Gold."
+msgstr "Gold-Destinationen bieten das Beste von BikeSquare für E-Bike-Liebhaber. Hier finden Sie die besten E-Bike-Verleihdienste, die interessantesten Erlebnisse und die am besten ausgestatteten Hotels für Radfahrer. Die garantierten Mindestleistungen sind: <b>Notfallabholung</b>, <b>Lieferungen</b>, <b>Partnerschaften mit Bike-Hotels</b>, <b>Routen und Erlebnisse</b>. Ein Ziel ist Gold, wenn mindestens einer seiner Verleiher Gold ist."
+
+msgid "Le Destinazioni Silver offrono un servizio BikeSquare quasi completo, mancherà qualche elemento, ma puoi aspettarti un'esperienza molto buona."
+msgstr "Silber-Destinationen bieten einen nahezu vollständigen BikeSquare-Service, es könnten einige Elemente fehlen, aber Sie können eine sehr gute Erfahrung erwarten."
+
+msgid "Le destinazioni Bronze sono quelle che offrono un servizio base, ma che non hanno ancora raggiunto il livello di servizio di BikeSquare. Può darsi che non offrano la consegna, oppure i servizi per i bambini.<br> Può darsi che non ci sia ancora un noleggiatore, ma solo i percorsi, quindi puoi fare un'esperienza con la tua bici e l'<a href=\"/app\">APP gratuita di BikeSquare</a>."
+msgstr "Bronze-Destinationen sind diejenigen, die einen Basisservice bieten, aber noch nicht das Servicelevel von BikeSquare erreicht haben. Es kann sein, dass sie keine Lieferung oder keine Dienstleistungen für Kinder anbieten.<br> Es kann sein, dass es noch keinen Verleiher gibt, sondern nur die Routen, sodass Sie ein Erlebnis mit Ihrem Fahrrad und der <a href=\"/app\">kostenlosen BikeSquare-App</a> haben können."
+
+msgid "Destinazioni Gold"
+msgstr "Gold-Destinationen"
+
+msgid "Destinazioni Silver"
+msgstr "Silber-Destinationen"
+
+msgid "Destinazioni Bronze"
+msgstr "Bronze-Destinationen"
+
+msgid "Destinazione Gold"
+msgstr "Gold-Destination"
+
+msgid "Destinazione Silver"
+msgstr "Silber-Destination"
+
+msgid "Destinazione Bronze"
+msgstr "Bronze-Destination"
+
+msgid "Categoria"
+msgstr "Kategorie"
+
+msgid "Quota di partecipazione su richiesta"
+msgstr "Teilnahmegebühr auf Anfrage"
+
+msgid "Durata"
+msgstr "Dauer"
+
+msgid "Si parte da"
+msgstr "Abfahrt von"
+
+msgid "Scopri di più"
+msgstr "Erfahren Sie mehr"
+
+msgid "ora_e"
+msgstr "{0,plural,=0{} =1{1 Stunde} other{{1} Stunden}}"
+
+msgid "giorno_i"
+msgstr "{0,plural,=0{} =1{1 Tag} other{{1} Tage}}"
+
+msgid "minuto_i"
+msgstr "{0,plural,=0{} =1{1 Minute} other{{1} Minuten}}"
+
+msgid "secondo_i"
+msgstr "{0,plural,=0{} =1{1 Sekunde} other{{1} Sekunden}}"
+
+msgid "Scarica la traccia KML"
+msgstr "KML-Track herunterladen"
+
+msgid "Percorsi collegati o tappe"
+msgstr "Verbundene Routen oder Etappen"
+
+msgid "Prodotti e servizi"
+msgstr "Produkte und Dienstleistungen"
+
+msgid "Vuoi saperne di più?"
+msgstr "Möchten Sie mehr erfahren?"
+
+msgid "Consulenza e innovazione"
+msgstr "Beratung und Innovation"
+
+msgid "Portale Turistico"
+msgstr "Tourismusportal"
+
+msgid "Vendita e-bike"
+msgstr "E-Bike-Verkauf"
+
+## Valdaso
+msgid "Scopri i percorsi"
+msgstr "Entdecken Sie die Routen"
+
+msgid "Sotto trovi alcuni dei percorsi in evidenza, ma puoi vederli tutte sulla pagina dei"
+msgstr "Unten finden Sie einige der Highlights, aber Sie können sie alle auf der Seite der"
+
+msgid "La WebAPP che ti guida"
+msgstr "Die WebAPP, die Sie führt"
+
+msgid "Scarica la Web APP Valdaso Outdoor e scopri percorsi trekking, percorsi ciclabili, strutture ricettive e molto altro."
+msgstr "Laden Sie die WebAPP Valdaso Outdoor herunter und entdecken Sie Wanderwege, Radwege, Unterkünfte und vieles mehr."
+
+msgid "Percorsi"
+msgstr "Routen"
+
+msgid "Da vedere"
+msgstr "Sehenswert"
+
+msgid "Strutture Ricettive"
+msgstr "Unterkünfte"
+
+msgid "Bere e Mangiare"
+msgstr "Essen und Trinken"
+
+msgid "WebApp"
+msgstr "WebApp"
+
+msgid "Play Store"
+msgstr "Play Store"
+
+msgid "Apple Store"
+msgstr "Apple Store"
+
+msgid "Immergiti nella Valdaso, dai Monti Sibillini fino al mare"
+msgstr "Tauche ein ins Valdaso, von den Sibillini-Bergen bis zum Meer"
+
+msgid "Un'oasi di tranquillità, ideale per chi ama la natura, il silenzio e i tempi rilassati. Pedala e cammina nel verde, scopri borghi autentici, assapora la cucina locale: vivi un'esperienza outdoor indimenticabile"
+msgstr "Eine Oase der Ruhe, ideal für alle, die Natur, Stille und entspannte Momente lieben. Radle und spaziere im Grünen, entdecke authentische Dörfer, genieße die lokale Küche: Erlebe ein unvergessliches Outdoor-Erlebnis."
+
+msgid "A PIEDI"
+msgstr "ZU FUß"
+
+msgid "IN BICI"
+msgstr "MIT DEM FAHRRAD"
+
+msgid "Logo Valdaso Outdoor"
+msgstr "Logo Valdaso Outdoor"
+
+msgid "Esplora il territorio della Valdaso<br> a Piedi o in Bicicletta."
+msgstr "Erkunde das Gebiet von Valdaso<br> zu Fuß oder mit dem Fahrrad."
+
+msgid "Responsabile del progetto GAL Piceno Leader"
+msgstr "Projektleiter GAL Piceno Leader"
+
+msgid "Sede legale Via Episcopio, 8 - Montalto delle Marche(AP)<br>
+info@galpiceno.it - picenoleader@per.it"
+msgstr "Rechtssitz Via Episcopio, 8 - Montalto delle Marche(AP)<br>
+info@galpiceno.it - picenoleader@per.it"
+
+msgid "Privacy"
+msgstr "Datenschutz"
+
+msgid "Regione Marche"
+msgstr "Region Marken"
+
+msgid "Tutti i percorsi"
+msgstr "Alle Routen"
+
+msgid "Legenda"
+msgstr "Legende"

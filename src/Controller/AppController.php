@@ -18,12 +18,16 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\AutoTranslateService;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Cookie\CookieInterface;
+use Cake\Datasource\EntityInterface;
 use Cake\I18n\I18n;
+use Cake\Log\Log;
+use Cake\ORM\Table;
 use DateTime;
 
 /**
@@ -79,15 +83,20 @@ class AppController extends Controller
 
     //This way i load a different layout and I request authentication just for admin/
     if ($this->request->getParam('prefix') === 'Admin') {
-		  if (! $user || !in_array($user->group_id, [ROLE_BAM, ROLE_EON, ROLE_ADMIN, ROLE_EDITOR, ROLE_RENTER, ROLE_EON_PLUS, ROLE_COMMERCIALE])) { // kinda raw, there's probably a nicer way, TODO
-        $this->Flash->error('Questo utente non è autorizzato ad accedere ad Admin');
-		  	$this->redirect('/');
-		  } else {
+      
+		  if ($user  && !in_array($user?->group_id, [ROLE_BAM, ROLE_EON, ROLE_ADMIN, ROLE_EDITOR, ROLE_RENTER, ROLE_EON_PLUS, ROLE_COMMERCIALE])) { // kinda raw, there's probably a nicer way, TODO
+          if($user) {
+            $this->Flash->error('Questo utente non è autorizzato ad accedere ad Admin');
+            $this->redirect('/');
+          }
+		  } 
+      else {
         $this->viewBuilder()->setLayout('admin');
       }
-    } else {
-      $this->Authentication->allowUnauthenticated(['index', 'view', 'display', 'login', 'logout', 'options']);
-      $this->Authorization->skipAuthorization();
+    } 
+    else {
+        $this->Authentication->allowUnauthenticated(['index', 'view', 'display', 'login', 'logout', 'options']);
+        $this->Authorization->skipAuthorization();
     }
 
    
@@ -119,6 +128,26 @@ class AppController extends Controller
 
     if (Configure::check('theme')) {
       $this->viewBuilder()->setTheme(Configure::read('theme'));
+    }
+  }
+
+  /**
+   * Dopo una generazione AI (in italiano, già salvata): traduce $fields in inglese con
+   * AutoTranslateService e salva la traduzione 'eng'. Mostra il popup flash/translated se va a buon fine.
+   * Se si sta editando la versione inglese non fa nulla: il testo generato è già lì.
+   */
+  protected function translateAiFields(Table $table, EntityInterface $entity, array $fields, int $userId): void
+  {
+    if ($this->request->getParam('lang', 'ita') !== 'ita') {
+      return;
+    }
+    try {
+      (new AutoTranslateService())->toEnglish($table, $entity, $fields, $userId);
+      $this->Flash->set(__('Il contenuto generato con AI è stato tradotto automaticamente in inglese.'), ['element' => 'translated']);
+    } catch (\Throwable $e) {
+      // il testo italiano è già salvato: si segnala solo la traduzione mancata
+      Log::error('Traduzione AI in inglese fallita: ' . $e->getMessage());
+      $this->Flash->error(__('Traduzione automatica in inglese non riuscita.'));
     }
   }
 }

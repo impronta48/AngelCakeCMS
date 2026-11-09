@@ -40,7 +40,13 @@
             <td><?= h($destination->name) ?></td>
             <td><?= h($destination->slug) ?></td>
             <td class="actions">
-              <?= $this->Html->link('', ['prefix' => false, 'action' => 'view', $destination->slug], ['title' => __('View'), 'class' => 'btn btn-default bi bi-eye']) ?>
+                <?php 
+                $viewUrl = '/destinations/view/' . $destination->slug;
+                if ($this->helpers()->has('Link')) {
+                  $viewUrl = $this->Link->view($destination, 'destinations') ?: $viewUrl;
+                }
+                ?>
+                <?= $this->Html->link('', $viewUrl, ['title' => __('View'), 'class' => 'btn btn-default bi bi-eye', 'target' => 'preview']) ?>
               <?= $this->Html->link('', ['action' => 'edit', $destination->id], ['title' => __('Edit'), 'class' => 'btn btn-default bi bi-pencil']) ?>
               <?= $this->Html->link('', ['action' => 'delete', $destination->id], ['confirm' => __('Are you sure you want to delete # {0}?', $destination->slug), 'title' => __('Delete'), 'class' => 'btn btn-default bi bi-trash']) ?>
             </td>

@@ -11,6 +11,7 @@
 
   <!-- Bootstrap core CSS -->
   <?= $this->Html->css('/js/node_modules/bootstrap/dist/css/bootstrap.min') ?>
+  
 
   <!-- Custom styles for this template -->
   <?= $this->Html->css('style') ?>
@@ -37,6 +38,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
   <?= $this->Html->script('/js/node_modules/bootstrap/dist/js/bootstrap.min') ?>
+ 
 </body>
 
 </html>

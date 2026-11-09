@@ -37,17 +37,22 @@ use Authorization\Middleware\AuthorizationMiddleware;
 use Authorization\Policy\ResolverCollection;
 use Authorization\Policy\MapResolver;
 use Authorization\Policy\OrmResolver;
-use Psr\Http\Message\ResponseInterface;
 use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use ADmad\SocialAuth\Middleware\SocialAuthMiddleware;
-use Authorization\Middleware\RequestAuthorizationMiddleware;
-use App\Policy\RequestPolicy;
+use Authorization\Exception\MissingIdentityException;
+use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\ServerRequest;
 use Fetzi\ServerTiming\ServerTimingMiddleware;
 // ini_set('memory_limit', '300M');
+
+use App\Event\SocialAuthListener;
+use Cake\Event\EventManager;
+use Cake\Event\EventManagerInterface;
+use CookieJwtAuth\Authenticator\CookieJwtAuthenticator;
+
 /**
  * Application setup class.
  *
@@ -89,9 +94,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     $this->addPlugin('BootstrapUI');
     $this->addPlugin('ADmad/Glide');
     $this->addPlugin('ADmad/SocialAuth');
+    $this->addPlugin('Tags');    
     //$this->addPlugin('Notifications');
     
-
+  
     if (Configure::check('AngelCake.plugins')) {
       $plugins = Configure::read('AngelCake.plugins');
       if (!empty($plugins)) {
@@ -116,10 +122,13 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     //Convert I18Languages array to the required format
     $languages = Configure::read('I18n.languages');
     $res_lang = [];
-    foreach ($languages as $key => $l) {
-      $res_lang[$l] = [
-        'locale'  => $l,
-      ];
+    if(is_array($languages)){
+      foreach ($languages as $key => $l) {
+        $res_lang[$l] = [
+          'locale'  => $l,
+        ];
+
+      }
     }
     $middlewareQueue
       // Catch any exceptions in the lower layers,
@@ -263,6 +272,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     //https://book.cakephp.org/5/en/development/rest.html#parsing-request-bodies
     $middlewareQueue->add(new BodyParserMiddleware());
 
+    EventManager::instance()->on(new SocialAuthListener());
+    
     return $middlewareQueue;
   }
 
@@ -296,15 +307,28 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
   {
     $service = new AuthenticationService();
 
-    // Define where users should be redirected to when they are not authenticated
-    $service->setConfig([
-      'unauthenticatedRedirect' => Router::url([
+    // Define where users should be redirected to when they are not authenticated.
+    // Sites can opt into a centralized login (e.g. crm.bikesquare.eu) via the
+    // 'CentralAuth.loginUrl' config key instead of the local /users/login page.
+    $centralLoginUrl = Configure::read('CentralAuth.loginUrl');
+    if ($centralLoginUrl) {
+      $referalParam = Configure::read('CentralAuth.referalParam', 'referal');
+      $separator = strpos($centralLoginUrl, '?') !== false ? '&' : '?';
+      $unauthenticatedRedirect = $centralLoginUrl . $separator . $referalParam . '=' . urlencode((string)$request->getUri());
+      $queryParam = null;
+    } else {
+      $unauthenticatedRedirect = Router::url([
         'prefix' => false,
         'plugin' => null,
         'controller' => 'Users',
         'action' => 'login',
-      ]),
-      'queryParam' => 'redirect',
+      ]);
+      $queryParam = 'redirect';
+    }
+
+    $service->setConfig([
+      'unauthenticatedRedirect' => $unauthenticatedRedirect,
+      'queryParam' => $queryParam,
     ]);
 
     $fields = [
@@ -325,12 +349,36 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
     // Load identifiers
     $service->loadIdentifier('Authentication.Password', compact('fields'));
+    $service->loadIdentifier('Authentication.JwtSubject', [
+      'tokenField' => 'id',
+      'dataField' => 'sub',
+      'resolver' => [
+        'className' => 'Authentication.Orm',
+        'userModel' => 'Users',
+      ],
+    ]);
     
     // If the user is on the login page, check for a cookie as well.
     $service->loadAuthenticator('Authentication.Cookie', [
       'fields' => $fields,
       'loginUrl' => '/users/login',
     ]);
+
+    if (\Cake\Core\Plugin::isLoaded('CookieJwtAuth')) {
+      $service->loadAuthenticator(CookieJwtAuthenticator::class, [
+        //'secretKey' => Security::getSalt(), //file_get_contents(CONFIG . '/jwt.pem'),
+        'secretKey' => file_get_contents(CONFIG . 'jwtRS256_prenota.pem'),
+        'algorithm' => 'RS256',
+        'returnPayload' => false,
+        'cookie' => 'jwt_token',     // legge dal cookie
+        'clearCookies' => ['jwt_refresh_token', 'user'], // invalidati anche al logout
+        'logAttempts' => true,
+        'domain' => Configure::read('App.cookie.domain', null),
+        'cookieDomain' => Configure::read('App.cookie.domain', null),
+        'cookieSameSite' => 'None',
+        // 'resolver' => $resolver,
+      ]);
+    }
 
     return $service;
   }
@@ -347,6 +395,16 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     $resolver = new ResolverCollection([$mapResolver, $ormResolver]);
 
     return new AuthorizationService($resolver);
+  }
+
+  public function events(EventManagerInterface $eventManager): EventManagerInterface
+  {
+   
+    $SocialAuthListener = new SocialAuthListener();
+    EventManager::instance()->on($SocialAuthListener);
+   
+
+    return $eventManager;
   }
 
 }

@@ -20,8 +20,7 @@ use Cake\Core\Configure;
   <?= $this->Html->css('/js/node_modules/bootstrap-vue/dist/bootstrap-vue.css') ?>
   <?= $this->Html->css('/js/node_modules/bootstrap-icons/font/bootstrap-icons.css') ?>
 
-  <!-- Load polyfills to support older browsers -->
-  <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
+  <!-- Load polyfills to support older browsers (Removed polyfill.io as it is hijacked and hangs pages) -->
 
   <!-- Custom styles for this template -->
   <?= $this->Html->css('admin-style') ?>
@@ -67,6 +66,26 @@ use Cake\Core\Configure;
   <?= $this->element('v-autoload')  //Carica automaticamente lo script /theme/js/vue/{Controller}/{action}.js
   ?>
   <?= $this->fetch('script') ?>
+
+  <script>
+    // Bottoni "Rigenera ... con AI" (name="regenerate-*"): spinner e niente doppio invio.
+    // Delegato su document perché Vue ricompila #app; disabilito dopo il submit, altrimenti
+    // il bottone disabilitato non verrebbe incluso nei dati del form (e il controller non saprebbe cosa fare).
+    document.addEventListener('submit', function (e) {
+      var form = e.target;
+      if (form.dataset.aiBusy) {
+        e.preventDefault();
+        return;
+      }
+      var btn = e.submitter;
+      if (!btn || !/^regenerate-/.test(btn.name || '')) return;
+      form.dataset.aiBusy = '1';
+      setTimeout(function () {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>' + btn.innerHTML;
+      });
+    });
+  </script>
 
 </body>
 

@@ -112,7 +112,9 @@ class ArticlesController extends AppController
 					->firstOrFail();
 				//Importante questo è necessario altrimenti non si aggiorna la route cache
 				Cache::clear('_cake_routes_');
+				//Chiamo nginx purge
 
+				
 				$upload_session_fields = $this->request->getData('upload_session_id');
 				if ($new && !empty($upload_session_fields)) {
 					foreach ($upload_session_fields as $ses) {

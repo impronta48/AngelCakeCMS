@@ -162,6 +162,25 @@ class EventsController extends AppController
 		return $this->redirect(['action' => 'index']);
 	}
 
+	public function wipeOld() {
+		//Verifica autorizzazione 
+		$this->Authorization->authorize($this->Events->newEmptyEntity());
+
+		$events = $this->Events->find('all', [
+			'conditions' => ['end_time <' => date('Y-m-d H:i:s')],
+		]);
+		foreach ($events as $event) {
+			if ($this->Events->delete($event)) {
+				$this->log("Deleted event with id {$event->id}", 'info');
+			} else {
+				$this->log("Could not delete event with id {$event->id}", 'error');
+			}
+	
+		}
+		$this->Flash->success(__('Old events have been deleted.'));
+		return $this->redirect(['action' => 'index']);
+	}	
+
 	/**
 	 * View method
 	 *

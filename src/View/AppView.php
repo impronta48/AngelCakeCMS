@@ -19,6 +19,7 @@ namespace App\View;
 use BootstrapUI\View\UIView;
 use Cake\I18n\I18n;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 /**
  * Application View
@@ -54,6 +55,14 @@ class AppView extends UIView
 		$localized_directory = $base . DS . $lang . DS . $this->getTemplate() . '.php';
 		if (file_exists($localized_directory)) {
 			$this->setTemplatePath($this->getTemplatePath() . DS . $lang);
+		}
+
+		if ($this->theme === 'Ebike2021') {
+			$this->loadHelper('Ebike2021.Link');
+		}
+
+		if (Plugin::isLoaded('Cyclomap')) {
+			$this->loadHelper('Cyclomap.Image');
 		}
 	}
 }

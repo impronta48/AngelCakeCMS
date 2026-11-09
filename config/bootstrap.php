@@ -240,12 +240,12 @@ Type::map('json', 'Cake\Database\Type\JsonType');
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
-require_once 'events.php';
+
 
 // Get the API whitelist. If this is empty, all requests will have CORS enabled
 $api_whitelist = Configure::read('api-whitelist');
 
-// header('Access-Control-Allow-Methods: POST, GET, PUT, PATCH, DELETE, OPTIONS');
+header('Access-Control-Allow-Methods: POST, GET, PUT, PATCH, DELETE, OPTIONS');
 // header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Accept, Accept-Encoding, Accept-Language');
 // header('Access-Control-Allow-Type: application/json');
 

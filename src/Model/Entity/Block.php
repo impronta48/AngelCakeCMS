@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Lib\AttachmentManager;
 use Cake\ORM\Entity;
 
 /**
@@ -28,4 +29,17 @@ class Block extends Entity
 		'title' => true,
 		'body' => true,
 	];
+
+	protected $_virtual = ['allegati'];
+
+	public function _getAllegati()
+	{
+		return AttachmentManager::getFile(
+			$this->getSource(),
+			null,
+			$this->id,
+			'allegati',
+			'jpg|jpeg|png|gif|webp'
+		);
+	}
 }

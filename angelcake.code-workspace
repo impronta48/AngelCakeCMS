@@ -1,9 +1,9 @@
 {
 	"folders": [
-		{
-			"path": "."
-		}
-	],
+    {
+      "path": "."
+    }
+  ],
   "settings": {
     "files.watcherExclude": {
       "**/webroot/**": true,

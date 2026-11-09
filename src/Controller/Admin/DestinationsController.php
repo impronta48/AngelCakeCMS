@@ -6,6 +6,9 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use App\Lib\AttachmentManager;
+use App\Service\DestinationDescriptionAiService;
+use App\Service\DestinationSeoAiService;
+use Cake\Cache\Cache;
 use Cake\Routing\Router;
 use Psr\Log\LogLevel;
 use Cake\Event\EventInterface;
@@ -32,17 +35,19 @@ class DestinationsController extends AppController
 	{
 		$query = $this->Destinations->find()
 			->contain(['Articles']);
+
 		//Se mi hai passato dei parametri in query filtro su quelli
 		$q = $this->request->getQuery('q');
 		if (!empty($q)) {
 			$query->where(['name LIKE' => "%$q%"]);
 		}
-		
+
 		$this->Authorization->applyScope($query);
 
 		$destinations = $this->paginate($query);
 
-		$this->set(compact('destinations','q'));
+		$this->set(compact('destinations', 'q'));
+
 	}
 
 	/**
@@ -97,8 +102,8 @@ class DestinationsController extends AppController
 	public function add()
 	{
 		$this->set('new', true);
-    	$this->edit();
-    	$this->viewBuilder()->setTemplate('edit');
+		$this->edit();
+		$this->viewBuilder()->setTemplate('edit');
 	}
 
 	/**
@@ -110,13 +115,18 @@ class DestinationsController extends AppController
 	 */
 	public function edit($id = null)
 	{
+		$user = $this->request->getAttribute('identity');
 		if (is_null($id)) {
 			$destination = $this->Destinations->newEmptyEntity();
 		} else {
-			$destination = $this->Destinations->get($id);
+			$destination = $this->Destinations->get($id, ['contain' => ['Tags']]);
 		}
 		$new = $destination->isNew();
 		$this->Authorization->authorize($destination);
+		
+		// aggiungi nella Table con namespace vuoto/default
+		$this->Destinations->addBehavior('App.Tag');
+		$this->Destinations->behaviors()->get('Tag')->setConfig('namespace', (string)$id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$data = $this->request->getData();
@@ -124,6 +134,7 @@ class DestinationsController extends AppController
 			$this->Authorization->authorize($destination);
 
 			if ($this->Destinations->save($destination)) {
+				Cache::clearAll();
 				$destination = $this->Destinations->get($destination->id);
 				$upload_session_fields = $this->request->getData('upload_session_id');
 				if ($new && !empty($upload_session_fields)) {
@@ -139,14 +150,66 @@ class DestinationsController extends AppController
 						}
 					}
 				}
-				$this->Flash->success(__('The percorso has been saved.'));
-				return $this->redirect(['prefix' => false, 'action' => 'view', $destination->id]);
+				if (isset($data['regenerate-seo'])) {
+					$seo = (new DestinationSeoAiService())->generate($destination, user: $user->username);
+					if ($seo) {
+						$destination->seo_description = $seo['seo_description'];
+						$destination->seo_keywords = $seo['seo_keywords'];
+						$this->Destinations->save($destination);
+						$this->Flash->success(__('SEO rigenerata con AI.'));
+						$this->translateAiFields($this->Destinations, $destination, ['seo_description', 'seo_keywords'], $user->id);
+					} else {
+						$this->Flash->error(__('Impossibile generare la SEO con AI. Riprova.'));
+					}
+					return $this->redirect(['action' => 'edit', $destination->id]);
+				}
+
+				if (isset($data['regenerate-descr'])) {
+					$descr = (new DestinationDescriptionAiService())->generate($destination, user: $user->username);
+					if ($descr) {
+						$destination->descrizione = $descr;
+						$this->Destinations->save($destination);
+						$this->Flash->success(__('Descrizione rigenerata con AI.'));
+						$this->translateAiFields($this->Destinations, $destination, ['descrizione'], $user->id);
+					} else {
+						$this->Flash->error(__('Impossibile generare la descrizione con AI. Riprova.'));
+					}
+					return $this->redirect(['action' => 'edit', $destination->id]);
+				}
+
+				$this->Flash->success(__('The Destination has been saved.'));
+				return $this->redirect([
+					'prefix' => false,
+					'controller' => 'Destinations',
+					'action' => 'view',
+					$destination->slug
+				]);
 			}
-			$this->Flash->error(__('The percorso could not be saved. Please, try again.'));
+			$this->Flash->error(__('The Destination could not be saved. Please, try again.'));
 		}
 
 		$this->set('destination', $destination);
 		$this->set('new', $new);
+ 
+		$destinationsList = $this->Destinations
+			->find('list', [
+				'keyField' => 'id',
+				'valueField' => 'name'
+			])
+			->order(['name' => 'ASC'])
+			->toArray();
+
+		$tagsTable = $this->fetchTable('Tags');
+		$tagsList = $tagsTable->find('all')->toArray();
+		$tagsJson = json_encode(array_map(fn($t) => ['id' => $t->id, 'name' => $t->label], $tagsList));
+		$destTagList = isset($destination->id) ? $tagsTable->find()->matching('Destinations', function($q) use ($destination) {
+			return $q->where(['Destinations.id' => $destination->id]);
+		})->toArray() : [];
+
+
+		$this->set(compact('tagsJson', 'destTagList'));
+
+		$this->set(compact('destinationsList', 'tagsList'));
 	}
 
 	/**
@@ -157,7 +220,7 @@ class DestinationsController extends AppController
 	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
 	 */
 	public function delete($id = null)
-	{		
+	{
 		$destination = $this->Destinations->get($id);
 		$this->Authorization->authorize($destination);
 

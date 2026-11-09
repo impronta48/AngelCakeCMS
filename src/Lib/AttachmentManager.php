@@ -8,6 +8,7 @@ use Cake\Utility\Text;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
+use Cyclomap\Lib\kmlCleaner;
 use \Error;
 
 class AttachmentManager
@@ -44,23 +45,25 @@ class AttachmentManager
 	static function buildPath($model, $destination, $id, $field = '', $fname = '')
 	{
 		$fullDirTemplate = Configure::read('copertina-pattern', ':sitedir/:model/:destination/:id/:field/');
-		
-		$save_dir = str_replace([
-			':sitedir', 
-			':model', 
-			':destination', 
-			':id', 
-			':field', 			
+
+		$save_dir = str_replace(
+			[
+				':sitedir',
+				':model',
+				':destination',
+				':id',
+				':field',
 			],
 			[
 				Configure::read('sitedir'),
 				empty($model) ? 'attachments' : strtolower($model),
 				empty($destination)  || ($destination == "null") ? 'none' : strtolower($destination),
 				empty($id) ? '' : $id,
-				empty($field) ? '' : $field,	
-			], 
-			$fullDirTemplate);
-		
+				empty($field) ? '' : $field,
+			],
+			$fullDirTemplate
+		);
+
 		// TODO do this in a nicer way!
 		$save_dir = str_replace("//", "/", $save_dir);
 		$save_dir = str_replace("cyclomap.", "", $save_dir);
@@ -116,7 +119,7 @@ class AttachmentManager
 		/*Controllo se è vuoto*/
 		if (!$files) {
 			if ($default) {
-    			return Router::url(Configure::read('default-image', null));
+				return Router::url(Configure::read('default-image', null));
 			}
 			if ($firstonly) {
 				return null;
@@ -158,7 +161,8 @@ class AttachmentManager
 		return true;
 	}
 
-	static function moveChangeDestination($model, $id, $from_slug, $to_slug ){
+	static function moveChangeDestination($model, $id, $from_slug, $to_slug)
+	{
 		$from_path = WWW_ROOT . self::buildPath($model, $from_slug, $id, null, null);
 		$dest_folder = WWW_ROOT . self::buildPath($model, $to_slug, null, null, null);
 		$dest_folder = rtrim($dest_folder, "/");
@@ -166,21 +170,21 @@ class AttachmentManager
 		//Devo cambiare la umask per consetire a mkdir di avere i permessi di scrittura
 		//https://stackoverflow.com/questions/7878784/php-mkdir-permissions
 		//Prima controllo se la cartella esiste, se non esiste la creo
-		if (!file_exists($dest_folder)){
+		if (!file_exists($dest_folder)) {
 			$old = umask(0);
 			mkdir($dest_folder, 0777, true);
-			umask($old); 
+			umask($old);
 		}
 
 		$to_path = WWW_ROOT . self::buildPath($model, $to_slug, $id, null, null);
-		$from_path = rtrim($from_path,"/");
-		$to_path = rtrim($to_path,"/");
-		
+		$from_path = rtrim($from_path, "/");
+		$to_path = rtrim($to_path, "/");
+
 		$cmd = "mv $from_path $dest_folder";
 
 		exec($cmd, $output, $return_val);
 
-		return $return_val;	
+		return $return_val;
 	}
 
 	static function renameFile($from, $to, $fname, $new_fname = null)
@@ -207,6 +211,8 @@ class AttachmentManager
 					if ($err == 0) {
 						$fname = self::replaceExtension($file->getClientFileName());
 						$file->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . $fname); // Will raise an exc if something goes wrong
+
+
 						$results["upload$n"] = 'OK';
 					} else {
 						$results['error'] = $errors[$err];
@@ -218,6 +224,11 @@ class AttachmentManager
 				if ($err == 0) {
 					$fname = self::replaceExtension($files[$field]->getClientFileName());
 					$files[$field]->moveTo(($temporary ? TMP : WWW_ROOT) . $save_dir . $fname); // Will raise an exc if something goes wrong
+					//se il file è un KML devo chiamare il KML cleaner
+					if (strtolower(pathinfo($fname, PATHINFO_EXTENSION)) == 'kml') {
+						$kml_cleaner = new kmlCleaner(($temporary ? TMP : WWW_ROOT) . $save_dir . $fname);
+						$kml_cleaner->clean();
+					}
 					$results['upload'] = 'OK';
 				} else {
 					$results['error'] = $errors[$err];

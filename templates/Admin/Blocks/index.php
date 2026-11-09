@@ -31,3 +31,12 @@
   </ul>
   <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
 </div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h5 class="card-title">Come usare i blocchi</h5>
+    <p class="card-text">I blocchi sono elementi di contenuto che possono essere posizionati in diverse aree del sito. Per creare un blocco, clicca su "New Block" e inserisci un titolo. Dopo aver creato il blocco, puoi modificarlo per aggiungere il contenuto desiderato.</p>
+    <p class="card-text">Una volta creato, puoi posizionare il blocco nelle aree del sito tramite il comando</p>
+    <pre> <?= $this->cell('Block', ['nome-blocco']); ?></pre>
+  </div>
+</div>  

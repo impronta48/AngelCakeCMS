@@ -48,7 +48,6 @@ export default {
                         var _ref;
                         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
                     } catch (error) {
-                        console.log(error);
                     }
                 },
                 maxFiles: (this.multiple ? undefined : 1),

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -29,17 +30,25 @@ class DestinationsTable extends Table
 	 * @param array $config The configuration for the Table.
 	 * @return void
 	 */
-	public function initialize(array $config): void {
+	public function initialize(array $config): void
+	{
+		parent::initialize($config);
+
 		$this->addBehavior('Translate', [
 			'fields' => [
-				'nomiseo', 'title', 'name', 'descrizione',
+				'nomiseo',
+				'title',
+				'name',
+				'descrizione',
+				'preposition',
+				'seo_description',
+				'seo_keywords',
 			],
 			'referenceName' => 'Destination', //Importante per garantire la compatibilità con cake2
 			'defaultLocale' => 'ita',
 			// 'allowEmptyTranslations' => false,
 		]);
 
-		parent::initialize($config);
 
 		$this->setTable('destinations');
 		$this->setDisplayField('name');
@@ -49,11 +58,23 @@ class DestinationsTable extends Table
 			'foreignKey' => 'destination_id',
 		]);
 		$this->hasMany('Articles');
+		$this->belongsTo('Parent', [
+			'className' => 'Destinations',
+			'foreignKey' => 'parent_id',
+		]);
+		
+
+
+		
+		//Anche le destinazioni sono taggabili, può essere aggiunto un namespace a livello di controller 
+		$this->addBehavior('App.Tag', ['taggedCounter' => false]);
+		
 	}
 
 	public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
 	{
 		Cache::clear('_cake_routes_');
+		Cache::clearGroup('destinations'); // urls() della sitemap
 	}
 
 	/**
@@ -62,7 +83,8 @@ class DestinationsTable extends Table
 	 * @param \Cake\Validation\Validator $validator Validator instance.
 	 * @return \Cake\Validation\Validator
 	 */
-	public function validationDefault(Validator $validator): \Cake\Validation\Validator {
+	public function validationDefault(Validator $validator): \Cake\Validation\Validator
+	{
 		$validator
 			->integer('id')
 			->allowEmpty('id', 'create');
@@ -79,4 +101,19 @@ class DestinationsTable extends Table
 
 		return $validator;
 	}
+
+	public function getChildren($id)
+	{	
+		if (!$id) return [];
+		$children = $this->find()
+        ->select(['id','slug', 'name']) 
+        ->where(['parent_id' => $id, 'published' => 1])
+        ->all()
+        ->toArray();
+		foreach ($children as $child) {
+			$child->children = $this->getChildren($child->id);
+		}
+		return $children;
+	}
+
 }

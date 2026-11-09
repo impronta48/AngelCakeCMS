@@ -13,14 +13,17 @@
     ]
   ); ?>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <?php echo $this->Form->input('q', ['label' => 'Cerca Evento', 'value' => $q]); ?>
     </div>
     <div class="col-md-3">
       <?php echo $this->Form->submit('Filtra', ['class' => 'btn btn-filtra']); ?>
     </div>
-    <div class="col-md-3">
-      <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right"><i class="bi bi-plus-square"></i> Aggiungi Evento</a>
+    <div class="col-md-2">
+      <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-primary float-right"><i class="bi bi-plus-square"></i> Aggiungi Evento</a>
+    </div>
+    <div class="col-md-2">
+      <a href="<?= Cake\Routing\Router::url(['action' => 'wipeOld']) ?>" class="btn btn-outline-warning float-right"><i class="bi bi-trash"></i> Elimina eventi scaduti</a>
     </div>
   </div>
   <?php echo $this->Form->end(); ?>

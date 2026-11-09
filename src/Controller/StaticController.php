@@ -122,6 +122,11 @@ class StaticController extends AppController
 		if (in_array($path[0], $special_template)) {
 			$this->render($path[0]);
 		}
+
+	  //Se la pagina è in pricing, uso il template pricing
+		if (in_array('pricing', $path)) {
+			$this->render('pricing');
+		}
 	}
 
 	//Restituisce l'articolo specifico per il blog il cui nome è contenuto nella variabile $param 

@@ -7,6 +7,9 @@ msgstr "Destinations"
 msgid "Percorso"
 msgstr "Route"
 
+msgid "Punti di Interesse"
+msgstr "Points of Interest"
+
 msgid "Mappa"
 msgstr "Map"
 
@@ -24,6 +27,37 @@ msgstr "Contacts"
 
 msgid "Per le aziende"
 msgstr "For Companies"
+
+msgid "Restiamo in contatto" 
+msgstr "Keep in touch"
+
+msgid "Scrivici liberamente" 
+msgstr "Feel free to write to us"
+
+msgid "Se hai idee o suggerimenti, lasciaci un messaggio" 
+msgstr "If you have any ideas or suggestions, please leave us a message."
+
+
+msgid "Nome"
+msgstr "Name"
+
+msgid "Indirizzo email"
+msgstr "Email address"
+
+msgid "Numero di Telefono"
+msgstr "Phone number"
+
+msgid "Titolo"
+msgstr "Subject"
+
+msgid "Scrivi qui il tuo messaggio"
+msgstr "Write your message here"
+
+msgid "Scegli la tua avventura preferita"
+msgstr "Choose your favorite adventure" 
+
+msgid "Invia ora"
+msgstr "Send now"
 
 msgid "Altri link"
 msgstr "More links"
@@ -292,6 +326,14 @@ msgstr "You can find this route on BikeSquare App with code"
 msgid "Difficoltà"
 msgstr "Difficulty"
 
+#: Percorsi/view.php:87
+msgid "Facile"
+msgstr "Easy"
+
+#: Percorsi/view.php:87
+msgid "Difficile"
+msgstr "Hard"
+
 #: Percorsi/view.php:119
 msgid "Informazioni"
 msgstr "Informations"
@@ -339,6 +381,21 @@ msgstr "Photo"
 #: Poi/view.php:139
 msgid "mappa a schermo intero"
 msgstr "full-screen map"
+
+msgid "Località"
+msgstr "Location"
+
+msgid "Apertura"
+msgstr "Opens"
+
+msgid "Telefono"
+msgstr "Telephone"
+
+msgid "Sito"
+msgstr "Site"
+
+msgid "anni"
+msgstr "years"
 
 #: Poi/view.php:167
 msgid "I percorsi che passano da questo punto:"
@@ -468,6 +525,24 @@ msgstr "News"
 msgid "Strutture Ricettive"
 msgstr "Hospitality"
 
+msgid "La WebAPP che ti guida"
+msgstr "The WebAPP that guides you"
+
+msgid "Scarica la Web APP  Valdaso  e scopri percorsi trekking, percorsi ciclabili, strutture ricettive e molto altro."
+msgstr "Download the Outdoor Valdaso Web APP and discover trekking routes, cycling routes, accommodations, and much more."
+
+msgid "Immergiti nella Valdaso, dai Monti Sibillini fino al mare"
+msgstr "Immerse yourself in Valdaso, from the Sibillini Mountains to the sea"
+
+msgid "Un'oasi di tranquillità, ideale per chi ama la natura, il silenzio e i tempi rilassati. Pedala e cammina nel verde, scopri borghi autentici, assapora la cucina locale: vivi un'esperienza outdoor indimenticabile"
+msgstr "An oasis of tranquility, ideal for those who love nature, silence, and relaxed times. Ride and walk in the green, discover authentic villages, savor local cuisine: live an unforgettable outdoor experience"
+
+msgid "A PIEDI"
+msgstr "ON FOOT"
+
+msgid "IN BICI"
+msgstr "BY BIKE"
+
 msgid "Aggiornamenti"
 msgstr "News"
 
@@ -547,7 +622,10 @@ msgid "Scuola"
 msgstr "School"
 
 msgid "Corsi"
-msgstr "Courses"
+msgstr "Skills in nature"
+
+msgid "Percorsi formativi per chi lavora con le persone, nel benessere e nei territori."
+msgstr "Training courses for those who work with people, in wellness and in local areas." 
 
 msgid "INIZIA IL TUO VIAGGIO DA QUI"
 msgstr "START YOUR JOURNEY FROM HERE"
@@ -569,6 +647,9 @@ msgstr "Rental"
 
 msgid "Organizzazione Eventi"
 msgstr "Event Organization"
+
+msgid "Eventi" 
+msgstr "Events"
 
 msgid "In partenza"
 msgstr "Starting soon"
@@ -624,6 +705,13 @@ msgstr "Explore Italy with Cribyoo"
 msgid "Esplora"
 msgstr "Explore"
 
+
+msgid "Autonomia"
+msgstr "Self guided"
+
+msgid "In autonomia" 
+msgstr "self guided"
+
 msgid "In autonomia con la nostra app"
 msgstr "Independently with our app"
 
@@ -633,17 +721,20 @@ msgstr "Outdoor experiences"
 msgid "Rilassati e divertiti, pensiamo a tutto noi"
 msgstr "Relax and have fun, we take care of everything"
 
-msgid "Esplora nuovi percorsi"
+msgid "Esplora nuovi itinerari"
 msgstr "Explore new paths"
 
 msgid "Scarica la app e scopri la natura con semplicità"
 msgstr "Download the app and discover nature with ease"
 
-msgid "Turismo scolastico"
-msgstr "School tourism"
+msgid "Organizzazione completa, libertà totale. Tu segui il tuo ritmo, l’app ti accompagna" 
+msgstr "Complete organization, total freedom. You set your own pace, the app accompanies you"
 
-msgid "Educazione ambientale per le scuole"
-msgstr "Environmental education for schools"
+msgid "Outdoor Education"
+msgstr "Outdoor Education"
+
+msgid "Per scuole e gruppi. Percorsi educativi in natura, tra esplorazione, benessere e scienza partecipata."
+msgstr "For schools and groups. Educational programmes in nature, combining exploration, well-being and citizen science."
 
 msgid "Citizen Science"
 msgstr "Citizen Science"
@@ -672,6 +763,22 @@ msgstr "intervention co-financed by P.O.R. FESR Liguria 2014-2020"
 
 msgid "B2B"
 msgstr "B2B"
+
+msgid "Viaggi accompagnati"
+msgstr "Guided trips"
+
+msgid "Viaggi in autonomia"
+msgstr "Self-guided trips"
+
+msgid "Formazione" 
+msgstr "Formation"
+
+msgid "Educazione in natura"
+msgstr "Education in nature "
+
+msgid "Corsi per professionisti"
+msgstr "Courses for professionals"
+
 
 msgid "Sede"
 msgstr "Headquarters"
@@ -735,8 +842,12 @@ msgstr "Gold Destination"
 msgid "Destinazione Silver"
 msgstr "Silver Destination"
 
+
 msgid "Destinazione Bronze"
 msgstr "Bronze Destination"
+
+msgid "Base nautica"
+msgstr "Nautical base" 
 
 msgid "Categoria"
 msgstr "Category"
@@ -788,3 +899,171 @@ msgstr "Tourist Portal"
 
 msgid "Vendita e-bike"
 msgstr "E-bike sales"
+
+## Valdaso
+msgid "Scopri i percorsi"
+msgstr "Discover the paths"
+
+msgid "Sotto trovi alcuni dei percorsi in evidenza, ma puoi vederli tutte sulla pagina dei"
+msgstr "Below you can find some of the highlighted paths, but you can see them all on the page of the"
+
+msgid "La WebAPP che ti guida"
+msgstr "The WebAPP that guides you"
+
+msgid "Scarica la Web APP Valdaso Outdoor e scopri percorsi trekking, percorsi ciclabili, strutture ricettive e molto altro."
+msgstr "Download the Valdaso Outdoor Web APP and discover trekking routes, cycling paths, accommodations, and much more."
+
+msgid "Percorsi"
+msgstr "Routes"
+
+msgid "Da vedere"
+msgstr "Must-see"
+
+msgid "Strutture Ricettive"
+msgstr "Accommodations"
+
+msgid "Bere e Mangiare"
+msgstr "Food and Drink"
+
+msgid "WebApp"
+msgstr "WebApp"
+
+msgid "Play Store"
+msgstr "Play Store"
+
+msgid "Apple Store"
+msgstr "Apple Store"
+
+msgid "Immergiti nella Valdaso, dai Monti Sibillini fino al mare"
+msgstr "Immerse yourself in Valdaso, from the Sibillini Mountains to the sea"
+
+msgid "Un'oasi di tranquillità, ideale per chi ama la natura, il silenzio e i tempi rilassati. Pedala e cammina nel verde, scopri borghi autentici, assapora la cucina locale: vivi un'esperienza outdoor indimenticabile"
+msgstr "An oasis of tranquility, ideal for those who love nature, silence, and a relaxed pace. Cycle and walk in the greenery, discover authentic villages, savor local cuisine: live an unforgettable outdoor experience"
+
+msgid "A PIEDI"
+msgstr "ON FOOT"
+
+msgid "IN BICI"
+msgstr "BY BIKE"
+
+msgid "Logo Valdaso Outdoor"
+msgstr "Valdaso Outdoor Logo"
+
+msgid "Esplora il territorio della Valdaso<br> a Piedi o in Bicicletta."
+msgstr "Explore the Valdaso area<br> on Foot or by Bicycle."
+
+msgid "Responsabile del progetto GAL Piceno Leader"
+msgstr "Project Manager GAL Piceno Leader"
+
+msgid "Sede legale Via Episcopio, 8 - Montalto delle Marche(AP)<br>
+info@galpiceno.it - picenoleader@per.it"
+msgstr "Registered office Via Episcopio, 8 - Montalto delle Marche(AP)<br>
+info@galpiceno.it - picenoleader@per.it"
+
+msgid "Privacy"
+msgstr "Privacy"
+
+msgid "Regione Marche"
+msgstr "Marche Region"
+
+msgid "Tutti i percorsi"
+msgstr "All routes"
+
+msgid "Legenda"
+msgstr "Legend"
+
+msgid "Descrizione"
+msgstr "Description"
+
+msgid "Durata:"
+msgstr "Duration:"
+
+msgid "Lunghezza:"
+msgstr "Length:"
+
+msgid "Periodo dell'anno:"
+msgstr "Season:"
+
+msgid "Età minima:"
+msgstr "Minimum age:"
+
+msgid "Altimetria:"
+msgstr "Altitude:"
+
+msgid "Calorie:"
+msgstr "Calories:"
+
+msgid "Prossime partenze:"
+msgstr "Next departures:"
+
+msgid "La quota comprende"
+msgstr "The price includes"
+
+msgid "Foto"
+msgstr "Photos"
+
+msgid "Posti da scoprire lungo questo percorso"
+msgstr "Places to discover along this route"
+
+msgid "Prenota ora!"
+msgstr "Book now!"
+
+msgid "Nome"
+msgstr "Name"
+
+msgid "Cognome"
+msgstr "Surname"
+
+msgid "Data di Nascita"
+msgstr "Date of Birth"
+
+msgid "Luogo di Nascita"
+msgstr "Place of Birth"
+
+msgid "Città di Residenza"
+msgstr "City of Residence"
+
+msgid "Indirizzo"
+msgstr "Address"
+
+msgid "Data"
+msgstr "Date"
+
+msgid "Autorizzo Cribyoo al trattamento dei dati per le sole comunicazioni legate alla vita associativa"
+msgstr "I authorize Cribyoo to process data only for communications related to association activities"
+
+msgid "Prenota ora"
+msgstr "Book now"
+
+msgid "Letta l\'informativa sopra riportata, esprimo il consenso al trattamento, secondo le modalità indicate, dei miei dati personali per le finalità indicate ai punti a) e b) (finalità relativa alla prestazione contrattuale e di legge). *"
+msgstr "Having read the above information, I consent to the processing, according to the methods indicated, of my personal data for the purposes indicated in points a) and b) (purposes related to contractual performance and law)."
+
+msgid "Acconsento"
+msgstr "I consent"
+
+msgid "Letta l'informativa sopra riportata, esprimo il consenso al trattamento, secondo le modalità indicate, dei miei dati personali per le finalità indicate al punto c) (finalità legate al business e statistiche)."
+msgstr "Having read the above information, I consent to the processing, according to the methods indicated, of my personal data for the purposes indicated in point c) (business and statistical purposes)."
+
+msgid "Non acconsento"
+msgstr "I deny consent"
+
+msgid "Letta l'informativa sopra riportata, esprimo il consenso al trattamento, secondo le modalità indicate, dei miei dati personali per le finalità indicate al punto d) (finalità di marketing)."
+msgstr "Having read the above information, I consent to the processing, according to the methods indicated, of my personal data for the purposes indicated in point d) (marketing purposes)."
+
+msgid "Richiesta Informazioni"
+msgstr "Information Request"
+
+msgid "Nome e cognome"
+msgstr "Name and surname"
+
+msgid "Tel."
+msgstr "Phone"
+
+msgid "Messaggio"
+msgstr "Message"
+
+msgid "Richiesta prenotazione percorso"
+msgstr "Route booking request"
+
+msgid "Invia"
+msgstr "Send"

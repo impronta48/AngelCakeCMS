@@ -1,8 +1,15 @@
+<div class="row pb-3 items-end">
+      <div class="col-md-12 ">
+        <a href="<?= Cake\Routing\Router::url(['action' => 'add']) ?>" class="btn btn-outline-primary float-right mt-4"><i class="bi bi-plus-square"></i> Aggiungi tag</a>
+      </div>
+    </div>
+
+
 <table class="table table-striped" cellpadding="0" cellspacing="0">
   <thead>
     <tr>
       <th><?= $this->Paginator->sort('id'); ?></th>
-      <th><?= $this->Paginator->sort('title'); ?></th>
+      <th><?= $this->Paginator->sort('label'); ?></th>
       <th><?= $this->Paginator->sort('created'); ?></th>
       <th><?= $this->Paginator->sort('modified'); ?></th>
       <th class="actions"><?= __('Actions'); ?></th>
@@ -12,7 +19,7 @@
     <?php foreach ($tags as $tag) : ?>
       <tr>
         <td><?= $this->Number->format($tag->id) ?></td>
-        <td><?= h($tag->title) ?></td>
+        <td><?= h($tag->label) ?></td>
         <td><?= h($tag->created) ?></td>
         <td><?= h($tag->modified) ?></td>
         <td class="actions">
@@ -24,11 +31,3 @@
     <?php endforeach; ?>
   </tbody>
 </table>
-<div class="paginator">
-  <ul class="pagination">
-    <?= $this->Paginator->prev('< ' . __('previous')) ?>
-    <?= $this->Paginator->numbers(['before' => '', 'after' => '']) ?>
-    <?= $this->Paginator->next(__('next') . ' >') ?>
-  </ul>
-  <p><?= $this->Paginator->counter() ?></p>
-</div>
