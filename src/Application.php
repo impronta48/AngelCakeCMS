@@ -84,6 +84,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 		 * Debug Kit should not be installed on a production system
 		 */
     Configure::write('DebugKit.forceEnable', true);
+    // Routes panel adds ~4s to every request (serializing the route collection)
+    Configure::write('DebugKit.panels', ['DebugKit.Routes' => false]);
     if (Configure::read('debug')) {
       $this->addPlugin('DebugKit');
     }

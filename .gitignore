@@ -55,3 +55,4 @@ node_modules
 
 /config/jwtRS256_prenota.pem
 config/jwtRS256_prenota.key
+config/google_cloud
