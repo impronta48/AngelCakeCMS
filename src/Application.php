@@ -65,8 +65,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
    */
   public function bootstrap(): void
   {
-    $this->addPlugin('DebugKit');
-
     $this->addPlugin('AssetMix');
 
     // Call parent to load bootstrap from files.
@@ -80,7 +78,11 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 		 * Only try to load DebugKit in development mode
 		 * Debug Kit should not be installed on a production system
 		 */
-    //Configure::write('DebugKit.forceEnable', true);
+    // DebugKit ignores domains with a "production" TLD (.eu, .it ...), so on the
+    // local l.*.bikesquare.eu hosts it must be forced on, but only when debug is
+    // enabled AND the request comes from this machine. Never on a real server.
+    Configure::write('DebugKit.forceEnable', fn() => (bool)Configure::read('debug')
+      && in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true));
     if (Configure::read('debug')) {
       $this->addPlugin('DebugKit');
     }
